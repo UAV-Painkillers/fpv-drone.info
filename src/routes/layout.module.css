@@ -1,0 +1,9 @@
+.appContainer {
+  width: calc(100vw - 15%);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contentContainer {
+  min-height: 100vh;
+}

@@ -1,5 +1,8 @@
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
-import Counter from "./counter/counter";
+import { Card, CardVariant } from "./card/card";
+import { Logo } from "./logo/logo";
+import { PageHeadline } from "./page-headline/page-headline";
+import { ArticleGrid } from "./article-grid/article-grid";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -13,12 +16,62 @@ import Counter from "./counter/counter";
  */
 export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   {
-    component: Counter,
-    name: "Counter",
+    component: Card,
+    name: "Card",
     inputs: [
       {
-        name: "initialValue",
-        type: "number",
+        name: "variant",
+        type: "string",
+        enum: Object.values(CardVariant),
+        required: true,
+      },
+      {
+        name: "title",
+        type: "string",
+        required: true,
+      },
+      {
+        name: "description",
+        type: "string",
+        required: false,
+      },
+      {
+        name: "headerImageUrl",
+        type: "file",
+        allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
+        required: false,
+      },
+    ],
+  },
+  {
+    component: Logo,
+    name: "Logo",
+    inputs: [],
+  },
+  {
+    component: PageHeadline,
+    name: "PageHeadline",
+    inputs: [
+      {
+        name: "title",
+        type: "string",
+        required: true,
+      },
+      {
+        name: "subtitle",
+        type: "string",
+        required: false,
+      },
+    ],
+  },
+  {
+    component: ArticleGrid,
+    name: "ArticleGrid",
+    inputs: [
+      {
+        name: "articleType",
+        type: "string",
+        required: true,
       },
     ],
   },

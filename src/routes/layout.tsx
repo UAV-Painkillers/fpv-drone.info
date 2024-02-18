@@ -1,15 +1,21 @@
 import { component$, Slot } from "@builder.io/qwik";
 import Header from "../components/header/header";
-import Footer from "../components/footer/footer";
+import "@fontsource/libre-barcode-128-text/400.css";
+import "@fontsource-variable/montserrat/wght.css";
+import styles from "./layout.module.css";
+import "./normalize.css";
+import { Footer } from "~/components/footer/footer";
 
 export default component$(() => {
   return (
-    <>
-      <Header />
-      <main>
-        <Slot />
-      </main>
+    <div class={styles.appContainer}>
+      <div class={styles.contentContainer}>
+        <Header />
+        <main>
+          <Slot />
+        </main>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 });

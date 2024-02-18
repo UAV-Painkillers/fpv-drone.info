@@ -1,14 +1,22 @@
 import { component$ } from "@builder.io/qwik";
+import { DynamicLinkList } from "../dynamic-link-list/dynamic-link-list";
 import styles from "./footer.module.css";
+import { NavLink } from "../nav-link/nav-link";
 
-export default component$(() => {
+export const Footer = component$(() => {
   return (
-    <footer>
-      <div class={styles.wrapper}>
-        <a href="https://www.builder.io/" target="_blank" class={styles.anchor}>
-          <span>Made with ♡ by Builder.io</span>
-        </a>
-      </div>
+    <footer class={styles.container}>
+      <DynamicLinkList linkModel="footer-link" />
+      <p>
+        fpv-drone.info is a{" "}
+        <NavLink href="https://uav-painkillers.de" target="_blank">
+          UAV-Painkillers
+        </NavLink>{" "}
+        project
+        <br />
+        <br />
+        &copy; 2024 Jaap und Piskun GbR - UAV Painkillers
+      </p>
     </footer>
   );
 });
