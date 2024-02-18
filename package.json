@@ -46,6 +46,7 @@
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.0.17",
     "@fontsource/libre-barcode-128-text": "^5.0.18",
+    "@vercel/analytics": "^1.2.0",
     "classnames": "^2.5.1"
   }
 }

@@ -5,8 +5,11 @@ import "@fontsource-variable/montserrat/wght.css";
 import styles from "./layout.module.css";
 import "./normalize.css";
 import { Footer } from "~/components/footer/footer";
+import { inject as injectVercelAnalytics } from '@vercel/analytics';
 
-export default component$(() => {
+export default component$(() => { 
+  injectVercelAnalytics();
+
   return (
     <div class={styles.appContainer}>
       <div class={styles.contentContainer}>
