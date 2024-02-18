@@ -31,6 +31,16 @@ interface Props {
   articleType: string;
 }
 
+interface Article {
+  id: string;
+  data: {
+    title: string;
+    description: string;
+    previewImage: string;
+    url: string;
+  };
+}
+
 export const ArticleGrid = component$((props: Props) => {
   const matchingArticles = useResource$(() =>
     getAllContent({
@@ -42,9 +52,9 @@ export const ArticleGrid = component$((props: Props) => {
         },
       },
     }).then((articles) => {
-      const rows = [];
+      const rows: Array<Article[]> = [];
 
-      articles.results.forEach((article, index) => {
+      (articles as {results: Article[]}).results.forEach((article, index) => {
         if (index % 3 === 0) {
           rows.push([]);
         }
@@ -62,7 +72,7 @@ export const ArticleGrid = component$((props: Props) => {
       onRejected={(error) => <>Error: {error.message}</>}
       onResolved={(rows) => (
         <div class={styles.grid}>
-          {rows.map((row, rowIndex) => (
+          {(rows as Array<Article[]>).map((row, rowIndex) => (
             <ArticleRow
               key={`row-${rowIndex}`}
               variant={

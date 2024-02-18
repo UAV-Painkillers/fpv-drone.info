@@ -2,6 +2,18 @@ import { Resource, component$, useResource$ } from "@builder.io/qwik";
 import { getAllContent } from "@builder.io/sdk-qwik";
 import { NavLink } from "../nav-link/nav-link";
 
+interface LinkDocument {
+  data: {
+    label: {
+      Default: string;
+    };
+    href: {
+      Default: string;
+    };
+    order: number;
+  };
+}
+
 interface Props {
   linkModel: string;
 }
@@ -11,7 +23,7 @@ export const DynamicLinkList = component$((props: Props) => {
       model: props.linkModel,
       apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
     }).then((links) => {
-      links.results.sort((a, b) => a.data.order - b.data.order);
+      (links as {results: LinkDocument[]}).results.sort((a, b) => a.data.order - b.data.order);
       return links;
     }),
   );
@@ -23,7 +35,7 @@ export const DynamicLinkList = component$((props: Props) => {
       onRejected={(error) => <>Error: {error.message}</>}
       onResolved={(links) => (
         <ul>
-          {links.results.map((link) => (
+          {(links as {results: LinkDocument[]}).results.map((link) => (
             <li
               key={`link-${link.data.href.Default}-${link.data.label.Default}`}
             >
