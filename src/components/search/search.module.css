@@ -1,0 +1,9 @@
+.button {
+  background: none;
+  border: none;
+}
+
+.searchIcon {
+  --color-start: var(--anchor-gradient-start);
+  --color-end: var(--anchor-gradient-end);
+}

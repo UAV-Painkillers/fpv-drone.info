@@ -1,0 +1,23 @@
+/* should be one column of 40%, and two columns of 30%, and should be the same but reversed for the next row */
+
+.grid {
+  --grid-gap: 25px;
+
+  display: grid;
+  grid-gap: var(--grid-gap);
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+
+.gridRow {
+  display: grid;
+  grid-gap: var(--grid-gap);
+}
+
+.variantOne {
+  grid-template-columns: 4fr 3fr 3fr;
+}
+
+.variantTwo {
+  grid-template-columns: 3fr 3fr 4fr;
+}
