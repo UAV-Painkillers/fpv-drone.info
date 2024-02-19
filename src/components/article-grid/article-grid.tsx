@@ -19,7 +19,7 @@ const ArticleRow = component$((props: ArticleRowProps) => {
         styles.gridRow,
         props.variant === ArticleRowVariant.one
           ? styles.variantOne
-          : styles.variantTwo,
+          : styles.variantTwo
       )}
     >
       <Slot />
@@ -34,8 +34,10 @@ interface Props {
 interface Article {
   id: string;
   data: {
-    title: string;
-    description: string;
+    content: {
+      title: string;
+      description: string;
+    };
     previewImage: string;
     url: string;
   };
@@ -54,7 +56,7 @@ export const ArticleGrid = component$((props: Props) => {
     }).then((articles) => {
       const rows: Array<Article[]> = [];
 
-      (articles as {results: Article[]}).results.forEach((article, index) => {
+      (articles as { results: Article[] }).results.forEach((article, index) => {
         if (index % 3 === 0) {
           rows.push([]);
         }
@@ -62,7 +64,7 @@ export const ArticleGrid = component$((props: Props) => {
       });
 
       return rows;
-    }),
+    })
   );
 
   return (
@@ -96,9 +98,9 @@ export const ArticleGrid = component$((props: Props) => {
                   <Card
                     key={`article-${article.id}`}
                     variant={variant}
-                    title={article.data.title}
+                    title={article.data.content.title}
                     headerImageUrl={article.data.previewImage}
-                    description={article.data.description}
+                    description={article.data.content.description}
                     href={article.data.url}
                   />
                 );
