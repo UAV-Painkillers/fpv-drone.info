@@ -23,7 +23,7 @@ export const Prerequesites = component$<PrerequesitesProps>((props) => {
         }
         <ul class={styles.list}>
           {props.items.map((item, index) => (
-            <li key={`prerequesite-${index}`}>
+            <li key={`prerequesite-${index}`} class={styles.listItem}>
               <label class="clickable">
                 <input type="checkbox" class={styles.checkbox} />
                 <span>{item.label}</span>
