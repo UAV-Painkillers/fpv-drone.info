@@ -4,7 +4,7 @@
   --card--shadow-x: 3px;
   --card--shadow-y: 3px;
   --card--shadow-blur: 7px;
-  --card--rounding: 15px;
+  --card--rounding: var(--border-rounding);
 
   padding: 25px;
   border-radius: var(--card--rounding);

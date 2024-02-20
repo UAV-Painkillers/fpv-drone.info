@@ -23,7 +23,9 @@ export const DynamicLinkList = component$((props: Props) => {
       model: props.linkModel,
       apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
     }).then((links) => {
-      (links as {results: LinkDocument[]}).results.sort((a, b) => a.data.order - b.data.order);
+      (links as { results: LinkDocument[] }).results.sort(
+        (a, b) => a.data.order - b.data.order,
+      );
       return links;
     }),
   );
@@ -31,11 +33,10 @@ export const DynamicLinkList = component$((props: Props) => {
   return (
     <Resource
       value={linksResource}
-      onPending={() => <>Loading...</>}
       onRejected={(error) => <>Error: {error.message}</>}
       onResolved={(links) => (
         <ul>
-          {(links as {results: LinkDocument[]}).results.map((link) => (
+          {(links as { results: LinkDocument[] }).results.map((link) => (
             <li
               key={`link-${link.data.href.Default}-${link.data.label.Default}`}
             >

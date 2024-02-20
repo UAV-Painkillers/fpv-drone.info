@@ -1,0 +1,26 @@
+.title {
+  font-size: 42px;
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/4;
+  border-radius: var(--border-rounding);
+}
+
+.imageWrapper:focus .image {
+  object-fit: scale-down;
+}
+
+.list {
+  list-style: none;
+}

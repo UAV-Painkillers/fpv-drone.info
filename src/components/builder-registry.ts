@@ -1,8 +1,10 @@
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import { ArticleGrid } from "./article-grid/article-grid";
 import { Card, CardVariant } from "./card/card";
+import { Instructions } from "./instructions/instructions";
 import { Logo } from "./logo/logo";
 import { PageHeadline } from "./page-headline/page-headline";
-import { ArticleGrid } from "./article-grid/article-grid";
+import { ExpandableImage } from "./expandable-image/expandable-image";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -15,6 +17,17 @@ import { ArticleGrid } from "./article-grid/article-grid";
  * https://www.builder.io/c/docs/guides/components-only-mode
  */
 export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
+  {
+    component: ArticleGrid,
+    name: "ArticleGrid",
+    inputs: [
+      {
+        name: "articleType",
+        type: "string",
+        required: true,
+      },
+    ],
+  },
   {
     component: Card,
     name: "Card",
@@ -44,6 +57,65 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
     ],
   },
   {
+    component: Instructions,
+    name: "Instructions",
+    inputs: [
+      {
+        name: "prerequesites",
+        type: "object",
+        required: true,
+        subFields: [
+          {
+            name: "title",
+            type: "string",
+            required: false,
+          },
+          {
+            name: "items",
+            type: "list",
+            required: true,
+            subFields: [
+              {
+                name: "label",
+                type: "string",
+                required: true,
+              },
+            ],
+          },
+          {
+            name: "image",
+            type: "file",
+            required: true,
+            allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
+          },
+        ],
+      },
+      {
+        name: "steps",
+        type: "list",
+        required: true,
+        subFields: [
+          {
+            name: "title",
+            type: "string",
+            required: true,
+          },
+          {
+            name: "image",
+            type: "file",
+            required: false,
+            allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
+          },
+          {
+            name: "description",
+            type: "richText",
+            required: true,
+          },
+        ],
+      },
+    ],
+  },
+  {
     component: Logo,
     name: "Logo",
     inputs: [],
@@ -65,12 +137,28 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
     ],
   },
   {
-    component: ArticleGrid,
-    name: "ArticleGrid",
+    component: ExpandableImage,
+    name: "ExpandableImage",
     inputs: [
       {
-        name: "articleType",
+        name: "src",
+        type: "file",
+        required: true,
+        allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
+      },
+      {
+        name: "alt",
         type: "string",
+        required: true,
+      },
+      {
+        name: "width",
+        type: "number",
+        required: true,
+      },
+      {
+        name: "height",
+        type: "number",
         required: true,
       },
     ],

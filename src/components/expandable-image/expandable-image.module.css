@@ -1,0 +1,25 @@
+.container {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 3.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  color: white;
+  border-radius: var(--border-rounding);
+
+  transition: opacity 0.3s;
+}
+
+.label:hover,
+.label:focus {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}

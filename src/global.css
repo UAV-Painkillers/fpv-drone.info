@@ -11,6 +11,8 @@
   );
   --anchor-border-color: var(--anchor-gradient-end);
   --anchor-active-border-color: var(--anchor-gradient-start);
+
+  --border-rounding: 15px;
 }
 
 body {
@@ -104,4 +106,56 @@ a {
 ul {
   margin: 0;
   padding-left: 20px;
+}
+
+@property --checkbox-background-color-start {
+  syntax: "<color>";
+  initial-value: white;
+  inherits: false;
+}
+
+@property --checkbox-background-color-end {
+  syntax: "<color>";
+  initial-value: white;
+  inherits: false;
+}
+
+input[type="checkbox"] {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  transform: translate(0, -2px);
+  margin-left: 15px;
+  margin-right: 15px;
+
+  border-radius: var(--border-rounding) !important;
+  border: 1px solid var(--text-color);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+
+  --background-color-start: white;
+  --background-color-end: white;
+
+  transition:
+    --checkbox-background-color-start 0.5s ease-in-out,
+    --checkbox-background-color-end 0.5s ease-in-out;
+
+  background-image: linear-gradient(
+    var(--checkbox-background-color-start),
+    var(--checkbox-background-color-end)
+  );
+}
+
+input[type="checkbox"]:checked {
+  --checkbox-background-color-start: var(--anchor-gradient-start);
+  --checkbox-background-color-end: var(--anchor-gradient-end);
+}
+
+hr {
+  margin-block: 50px;
+}
+
+.clickable {
+  cursor: pointer;
 }

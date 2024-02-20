@@ -19,7 +19,7 @@ const ArticleRow = component$((props: ArticleRowProps) => {
         styles.gridRow,
         props.variant === ArticleRowVariant.one
           ? styles.variantOne
-          : styles.variantTwo
+          : styles.variantTwo,
       )}
     >
       <Slot />
@@ -64,13 +64,12 @@ export const ArticleGrid = component$((props: Props) => {
       });
 
       return rows;
-    })
+    }),
   );
 
   return (
     <Resource
       value={matchingArticles}
-      onPending={() => <>Loading...</>}
       onRejected={(error) => <>Error: {error.message}</>}
       onResolved={(rows) => (
         <div class={styles.grid}>
