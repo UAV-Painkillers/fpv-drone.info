@@ -2,7 +2,6 @@ import { component$, Slot, useVisibleTask$ } from "@builder.io/qwik";
 import "@fontsource/libre-barcode-128-text/400.css";
 import "@fontsource-variable/montserrat/wght.css";
 import styles from "./layout.module.css";
-import "./normalize.css";
 import { Footer } from "~/components/footer/footer";
 import { inject as injectVercelAnalytics } from "@vercel/analytics";
 import { Logo } from "~/components/logo/logo";
