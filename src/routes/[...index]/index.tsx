@@ -44,42 +44,51 @@ export const usePage = routeLoader$(async ({ url }) => {
   // If there's no content, throw a 404.
   // You can use your own 404 component here
   if (!foundPage && !isPreviewing) {
-    return null;
+    return { page: null };
   }
 
   // return content fetched from Builder, which is JSON
-  return normalPage ?? articlePage;
+  return { page: normalPage ?? articlePage, isArticle: !!articlePage };
 });
 
 export default component$(() => {
-  const page = usePage();
+  const pageData = usePage();
 
-  if (!page.value) {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!pageData.value) {
     return <PageHeadline title="404" subtitle="Page not found" />;
   }
 
   // RenderContent component uses the `content` prop to render
   // the page, specified by the API Key, at the current URL path.
   return (
-    <RenderContent
-      model="page"
-      content={page.value}
-      apiKey={import.meta.env.PUBLIC_BUILDER_API_KEY}
-      customComponents={CUSTOM_COMPONENTS}
-    />
+    <>
+      {pageData.value.isArticle && (
+        <PageHeadline
+          title={pageData.value.page?.data?.content.title ?? ''}
+          subtitle={pageData.value.page?.data?.content.description}
+        />
+      )}
+      <RenderContent
+        model="page"
+        content={pageData.value.page}
+        apiKey={import.meta.env.PUBLIC_BUILDER_API_KEY}
+        customComponents={CUSTOM_COMPONENTS}
+      />
+    </>
   );
 });
 
 export const head: DocumentHead = ({ resolveValue }) => {
   const builderContent = resolveValue(usePage);
 
-  if (!builderContent) {
+  if (!builderContent.page) {
     return {
       title: "404 - Page not found",
     };
   }
 
   return {
-    title: builderContent.data?.title,
+    title: builderContent.page.data?.title,
   };
 };
