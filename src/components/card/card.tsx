@@ -13,21 +13,31 @@ interface Props {
   title: string;
   description?: string;
   variant: CardVariant;
-  headerImageUrl?: string;
+  headerImageSrc?: string;
+  headerImageSrcSet?: string;
   href?: string;
 }
 
 export const Card = component$((props: Props) => {
   const nav = useNavigate();
-  const { title, description, variant, headerImageUrl, href } = props;
+  const { title, description, variant, headerImageSrc, headerImageSrcSet, href } = props;
 
   return (
     <div
       class={classNames(styles.card, { [styles.withLink]: !!href })}
       onClick$={() => (href ? nav(href) : {})}
     >
-      {headerImageUrl && (
-        <img src={headerImageUrl} alt={title} class={styles.headerImage} />
+      {headerImageSrc && (
+        <img
+          loading="lazy"
+          src={headerImageSrc}
+          srcset={
+            headerImageSrcSet ??
+            `${headerImageSrc}?width=100 100w, ${headerImageSrc}?width=200 200w, ${headerImageSrc}?width=400 400w, ${headerImageSrc}?width=800 800w`
+          }
+          alt={title}
+          class={styles.headerImage}
+        />
       )}
       <h3 class={styles.title}>{title}</h3>
       {variant !== CardVariant.small && (
