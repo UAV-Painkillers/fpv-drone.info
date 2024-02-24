@@ -56,12 +56,14 @@ export const ArticleGrid = component$((props: Props) => {
     }).then((articles) => {
       const rows: Array<Article[]> = [];
 
-      (articles as { results: Article[] }).results.forEach((article, index) => {
-        if (index % 3 === 0) {
-          rows.push([]);
-        }
-        rows[rows.length - 1].push(article);
-      });
+      (articles as { results: Article[] } | undefined)?.results.forEach(
+        (article, index) => {
+          if (index % 3 === 0) {
+            rows.push([]);
+          }
+          rows[rows.length - 1].push(article);
+        },
+      );
 
       return rows;
     }),

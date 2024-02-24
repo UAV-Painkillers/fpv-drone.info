@@ -1,36 +1,31 @@
-.container {
-  padding-bottom: 5rem;
-}
-
 @keyframes scale {
   0% {
-    font-size: calc(var(--font-size) * 1.5);
+    transform: scale(1.2);
   }
   50% {
-    font-size: calc(var(--font-size) * 1.5);
+    transform: scale(1.2);
   }
   100% {
-    font-size: var(--font-size);
+    transform: scale(1);
   }
+}
+
+.container {
+  padding-bottom: 5rem;
+
+  animation: scale 1.5s ease-out;
+  animation-fill-mode: forwards;
 }
 
 .title,
 .subtitle {
   text-align: center;
-  --font-size: 52px;
-  animation: scale 1.5s ease-out;
-  animation-fill-mode: forwards;
-  white-space: nowrap;
-  word-break: keep-all;
   max-width: 100%;
-  overflow: hidden;
   margin: 0;
 }
 
-.title {
-  font-weight: lighter;
-}
-
-.subtitle {
-  font-weight: normal;
+@media screen and (max-width: 768px) {
+  .container {
+    padding-bottom: 2.5rem;
+  }
 }

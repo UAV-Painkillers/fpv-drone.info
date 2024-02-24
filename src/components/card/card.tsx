@@ -29,7 +29,7 @@ export const Card = component$((props: Props) => {
       {headerImageUrl && (
         <img src={headerImageUrl} alt={title} class={styles.headerImage} />
       )}
-      <h1 class={styles.title}>{title}</h1>
+      <h3 class={styles.title}>{title}</h3>
       {variant !== CardVariant.small && (
         <p class={styles.description}>{description}</p>
       )}

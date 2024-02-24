@@ -1,9 +1,73 @@
 .appContainer {
-  width: calc(100vw - 15%);
-  max-width: 1200px;
   margin: 0 auto;
+  min-height: calc(100vh - 2rem);
+
+  padding-top: 2rem;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: min-content auto;
+  grid-template-areas:
+    "logo navigation search"
+    "main main main";
 }
 
-.contentContainer {
-  min-height: 100vh;
+.logo {
+  grid-area: logo;
+  justify-self: start;
+  align-self: center;
+}
+
+.navigation {
+  grid-area: navigation;
+  justify-self: center;
+  align-self: center;
+}
+
+.search {
+  grid-area: search;
+  justify-self: end;
+  align-self: center;
+}
+
+.main {
+  grid-area: main;
+}
+
+@media screen and (max-width: 768px) {
+  .appContainer {
+    display: block;
+  }
+
+  .logo {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .search {
+    position: fixed;
+    bottom: 2rem;
+    right: 0.5rem;
+    z-index: 1001;
+    background: rgba(var(--body-background), 0.9) !important;
+    backdrop-filter: blur(10px);
+    border-radius: 100%;
+    padding: 0.5rem;
+  }
+
+  .navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding-block: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    backdrop-filter: blur(10px);
+    background: rgba(var(--body-background), 0.9);
+  }
 }

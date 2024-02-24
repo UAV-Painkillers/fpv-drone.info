@@ -1,6 +1,6 @@
 :root {
   --text-color: #3e3e3e;
-  --body-background: #ffffff;
+  --body-background: 255, 255, 255;
 
   --anchor-gradient-start: #16c99e;
   --anchor-gradient-end: #1653c9;
@@ -13,20 +13,35 @@
   --anchor-active-border-color: var(--anchor-gradient-start);
 
   --border-rounding: 15px;
+
+  /** just for reference :/ doesnt yet work in css ... */
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet: 1024px;
+  --breakpoint-desktop: 1200px;
 }
 
 body {
   padding: 0;
-  margin: 0;
   color: var(--text-color);
   line-height: inherit;
-  background: var(--body-background);
+  background: rgb(var(--body-background));
   min-height: 100vh;
+  max-width: min(1200px, 85vw);
+  overflow-x: hidden;
+  padding-inline: 50px;
+  width: 85vw;
+  margin: 0 auto;
 
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding-inline: 25px;
+  }
 }
 
 h1,
@@ -36,34 +51,32 @@ h3 {
 }
 
 h1 {
-  font-size: 3.2rem;
+  font-size: 52px;
   text-align: center;
-}
-h1 .highlight,
-h3 .highlight {
+  font-weight: normal;
 }
 
 h2 {
   font-weight: 400;
-  font-size: 2.4rem;
-}
-h2 .highlight {
-  font-weight: 700;
+  font-size: 52px;
+  font-weight: lighter;
 }
 
 h3 {
-  font-size: 2rem;
+  font-size: 32px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
   h1 {
-    font-size: 5rem;
+    font-size: 32px;
   }
+
   h2 {
-    font-size: 3.4rem;
+    font-size: 32px;
   }
+
   h3 {
-    font-size: 3rem;
+    font-size: 24px;
   }
 }
 

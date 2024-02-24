@@ -2,24 +2,53 @@
   position: relative;
 }
 
+.image {
+  transition: filter 0.3s ease;
+}
+
+.container:hover .image,
+.container:focus .image {
+  filter: blur(5px);
+}
+
 .label {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 3.5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  color: white;
-  border-radius: var(--border-rounding);
+  color: transparent;
 
-  transition: opacity 0.3s;
+  text-align: center;
+  padding-top: 1rem;
+
+  transition: color 0.3s ease 0.15s;
 }
 
-.label:hover,
-.label:focus {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, 0.5);
+.container:hover .label,
+.container:focus .label {
+  color: white;
+}
+
+.dialogImage {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.openInNewTabLinkContainer {
+  text-align: center;
+  width: 100%;
+  background-color: rgba(var(--body-background), 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-rounding);
+  padding-block: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .label {
+    color: white;
+  }
+
+  .image {
+    filter: blur(5px);
+  }
 }

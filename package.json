@@ -1,6 +1,6 @@
 {
-  "name": "my-qwik-site-with-visual-cms",
-  "description": "Site integrated with Builder.io for visual editing",
+  "name": "fpv-drone.info",
+  "description": "News, Guides, Reviews and more for the FPV Community",
   "engines": {
     "node": ">=15.0.0"
   },
