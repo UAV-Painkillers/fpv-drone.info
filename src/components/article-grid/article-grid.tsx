@@ -100,7 +100,7 @@ export const ArticleGrid = component$((props: Props) => {
                     key={`article-${article.id}`}
                     variant={variant}
                     title={article.data.content.title}
-                    headerImageUrl={article.data.previewImage}
+                    headerImageSrc={article.data.previewImage}
                     description={article.data.content.description}
                     href={article.data.url}
                   />

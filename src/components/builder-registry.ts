@@ -49,7 +49,7 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
         required: false,
       },
       {
-        name: "headerImageUrl",
+        name: "headerImageSrc",
         type: "file",
         allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
         required: false,
