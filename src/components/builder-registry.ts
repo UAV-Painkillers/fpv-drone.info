@@ -63,7 +63,7 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
       {
         name: "prerequesites",
         type: "object",
-        required: true,
+        required: false,
         subFields: [
           {
             name: "title",
