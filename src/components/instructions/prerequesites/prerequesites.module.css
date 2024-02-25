@@ -10,9 +10,11 @@
   grid-template-areas: "image list";
 }
 
-.image {
-  grid-area: "image";
+.contentContainerNoImage {
+  margin-top: 2rem;
+}
 
+.image {
   height: auto;
   width: 100%;
 
@@ -20,12 +22,14 @@
   aspect-ratio: 3/4;
 
   border-radius: var(--border-rounding);
+
+  grid-area: "image";
 }
 
 .list {
-  grid-area: list;
   list-style: none;
   padding-left: 0;
+  grid-area: list;
 }
 
 .listItem {
@@ -35,6 +39,10 @@
 .labelContainer {
   display: grid;
   grid-template-columns: min-content auto;
+}
+
+.checkboxNoImage {
+  margin-left: 0 !important;
 }
 
 @media screen and (max-width: 768px) {

@@ -9,6 +9,8 @@ export interface StepProps {
   image?: string;
 }
 export const Step = component$<StepProps>((props) => {
+  const formattedDescription = props.description.replace('<a', '<a target="_blank" class="anchor"');
+
   return (
     <section>
       <h3 class={styles.index}>Step {props.index}</h3>
@@ -16,7 +18,7 @@ export const Step = component$<StepProps>((props) => {
       {props.image && (
         <ExpandableImage src={props.image} class={styles.image} />
       )}
-      <div dangerouslySetInnerHTML={props.description} class={styles.content} />
+      <div dangerouslySetInnerHTML={formattedDescription} class={styles.content} />
     </section>
   );
 });

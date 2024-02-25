@@ -15,7 +15,7 @@ export const Prerequesites = component$<PrerequesitesProps>((props) => {
       <h2 class={styles.title}>
         {props.title ? props.title : "Prerequesites"}
       </h2>
-      <div class={styles.contentContainer}>
+      <div class={classNames({[styles.contentContainer]: !!props.image}, {[styles.contentContainerNoImage]: !props.image})}>
         {
           // eslint-disable-next-line qwik/jsx-img
           props.image && (
@@ -29,7 +29,7 @@ export const Prerequesites = component$<PrerequesitesProps>((props) => {
           {props.items.map((item, index) => (
             <li key={`prerequesite-${index}`} class={styles.listItem}>
               <label class={classNames("clickable", styles.labelContainer)}>
-                <input type="checkbox" class={styles.checkbox} />
+                <input type="checkbox" class={classNames(styles.checkbox, {[styles.checkboxNoImage]: !props.image})} />
                 <span>{item.label}</span>
               </label>
             </li>
