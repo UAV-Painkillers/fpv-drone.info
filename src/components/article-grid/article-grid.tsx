@@ -1,8 +1,16 @@
-import { Resource, Slot, component$, useResource$ } from "@builder.io/qwik";
+import {
+  Resource,
+  Slot,
+  component$,
+  useResource$,
+  useSignal,
+} from "@builder.io/qwik";
 import styles from "./article-grid.module.css";
 import classnames from "classnames";
 import { Card, CardVariant } from "../card/card";
 import { getAllContent } from "@builder.io/sdk-qwik";
+import { Link } from "@builder.io/qwik-city";
+import classNames from "classnames";
 
 enum ArticleRowVariant {
   one = "one",
@@ -19,7 +27,7 @@ const ArticleRow = component$((props: ArticleRowProps) => {
         styles.gridRow,
         props.variant === ArticleRowVariant.one
           ? styles.variantOne
-          : styles.variantTwo,
+          : styles.variantTwo
       )}
     >
       <Slot />
@@ -27,8 +35,11 @@ const ArticleRow = component$((props: ArticleRowProps) => {
   );
 });
 
-interface Props {
+interface ArticleGridProps {
   articleType: string;
+  title?: string;
+  hideTitleIfEmpty?: boolean;
+  href?: string;
 }
 
 interface Article {
@@ -43,7 +54,20 @@ interface Article {
   };
 }
 
-export const ArticleGrid = component$((props: Props) => {
+const LoadingState = component$(() => {
+  return (
+    <ArticleRow variant={ArticleRowVariant.one}>
+      <Card title="" variant={CardVariant.large} isLoading />
+      <Card title="" variant={CardVariant.small} isLoading />
+      <Card title="" variant={CardVariant.small} isLoading />
+    </ArticleRow>
+  );
+});
+
+export const ArticleGrid = component$((props: ArticleGridProps) => {
+  const showTitle = useSignal(!!props.title);
+  const hideTitleIfEmpty = props.hideTitleIfEmpty ?? false;
+
   const matchingArticles = useResource$(() =>
     getAllContent({
       model: "article",
@@ -54,62 +78,76 @@ export const ArticleGrid = component$((props: Props) => {
         },
       },
     }).then((articles) => {
+      const typedArticles = articles as { results: Article[] } | undefined;
+      if (typedArticles?.results.length === 0 && hideTitleIfEmpty) {
+        showTitle.value = false;
+      }
+
       const rows: Array<Article[]> = [];
 
-      (articles as { results: Article[] } | undefined)?.results.forEach(
-        (article, index) => {
-          if (index % 3 === 0) {
-            rows.push([]);
-          }
-          rows[rows.length - 1].push(article);
-        },
-      );
+      typedArticles?.results.forEach((article, index) => {
+        if (index % 3 === 0) {
+          rows.push([]);
+        }
+        rows[rows.length - 1].push(article);
+      });
 
       return rows;
-    }),
+    })
   );
 
   return (
-    <Resource
-      value={matchingArticles}
-      onRejected={(error) => <>Error: {error.message}</>}
-      onResolved={(rows) => (
-        <div class={styles.grid}>
-          {(rows as Array<Article[]>).map((row, rowIndex) => (
-            <ArticleRow
-              key={`row-${rowIndex}`}
-              variant={
-                rowIndex % 2 === 0
-                  ? ArticleRowVariant.one
-                  : ArticleRowVariant.two
-              }
-            >
-              {row.map((article, articleIndex) => {
-                let variant = CardVariant.small;
-
-                if (rowIndex % 2 === 0 && articleIndex === 0) {
-                  variant = CardVariant.large;
+    <div class={styles.grid}>
+      {showTitle.value &&
+        (props.href ? (
+          <Link class={classNames("anchor", styles.title)} href={props.href}>
+            {props.title}
+          </Link>
+        ) : (
+          <span class={styles.title}>{props.title}</span>
+        ))}
+      <Resource
+        value={matchingArticles}
+        onPending={() => <LoadingState />}
+        onRejected={(error) => <>Error: {error.message}</>}
+        onResolved={(rows) => (
+          <>
+            {(rows as Array<Article[]>).map((row, rowIndex) => (
+              <ArticleRow
+                key={`row-${rowIndex}`}
+                variant={
+                  rowIndex % 2 === 0
+                    ? ArticleRowVariant.one
+                    : ArticleRowVariant.two
                 }
+              >
+                {row.map((article, articleIndex) => {
+                  let variant = CardVariant.small;
 
-                if (rowIndex % 2 !== 0 && articleIndex === 2) {
-                  variant = CardVariant.large;
-                }
+                  if (rowIndex % 2 === 0 && articleIndex === 0) {
+                    variant = CardVariant.large;
+                  }
 
-                return (
-                  <Card
-                    key={`article-${article.id}`}
-                    variant={variant}
-                    title={article.data.content.title}
-                    headerImageSrc={article.data.previewImage}
-                    description={article.data.content.description}
-                    href={article.data.url}
-                  />
-                );
-              })}
-            </ArticleRow>
-          ))}
-        </div>
-      )}
-    />
+                  if (rowIndex % 2 !== 0 && articleIndex === 2) {
+                    variant = CardVariant.large;
+                  }
+
+                  return (
+                    <Card
+                      key={`article-${article.id}`}
+                      variant={variant}
+                      title={article.data.content.title}
+                      headerImageSrc={article.data.previewImage}
+                      description={article.data.content.description}
+                      href={article.data.url}
+                    />
+                  );
+                })}
+              </ArticleRow>
+            ))}
+          </>
+        )}
+      />
+    </div>
   );
 });

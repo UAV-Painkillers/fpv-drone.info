@@ -1,6 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import styles from "./step.module.css";
 import { ExpandableImage } from "~/components/expandable-image/expandable-image";
+import { formatHtmlText } from "~/utils/formatHtmlText";
 
 export interface StepProps {
   index: number;
@@ -9,7 +10,7 @@ export interface StepProps {
   image?: string;
 }
 export const Step = component$<StepProps>((props) => {
-  const formattedDescription = props.description.replace('<a', '<a target="_blank" class="anchor"');
+  const formattedDescription = formatHtmlText(props.description);
 
   return (
     <section>

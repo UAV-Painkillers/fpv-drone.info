@@ -1,4 +1,6 @@
-/* should be one column of 40%, and two columns of 30%, and should be the same but reversed for the next row */
+.title {
+  
+}
 
 .grid {
   --grid-gap: 25px;

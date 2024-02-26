@@ -5,6 +5,7 @@ import { Instructions } from "./instructions/instructions";
 import { Logo } from "./logo/logo";
 import { PageHeadline } from "./page-headline/page-headline";
 import { ExpandableImage } from "./expandable-image/expandable-image";
+import { Text } from "./text/text";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -25,6 +26,21 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
         name: "articleType",
         type: "string",
         required: true,
+      },
+      {
+        name: "title",
+        type: "string",
+        required: false,
+      },
+      {
+        name: "hideTitleIfEmpty",
+        type: "boolean",
+        required: false,
+      },
+      {
+        name: "href",
+        type: "string",
+        required: false,
       },
     ],
   },
@@ -163,4 +179,15 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
       },
     ],
   },
+  {
+    component: Text,
+    name: "Text",
+    inputs: [
+      {
+        name: "text",
+        type: "richText",
+        required: true,
+      },
+    ],
+  }
 ];

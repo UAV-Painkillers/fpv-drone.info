@@ -38,3 +38,24 @@
   margin-bottom: 0;
   text-align: center;
 }
+
+/* applied to whole card when in loading/fetching state, should show a skeleton loader animation */
+.isLoading {
+  background: linear-gradient(
+    90deg,
+    var(--card-background) 0%,
+    #e0e0e0 50%,
+    var(--card-background) 100%
+  );
+  background-size: 200% 200%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

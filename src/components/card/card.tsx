@@ -16,15 +16,17 @@ interface Props {
   headerImageSrc?: string;
   headerImageSrcSet?: string;
   href?: string;
+  isLoading?: boolean;
 }
 
 export const Card = component$((props: Props) => {
   const nav = useNavigate();
   const { title, description, variant, headerImageSrc, headerImageSrcSet, href } = props;
+  const isLoading = props.isLoading ?? false;
 
   return (
     <div
-      class={classNames(styles.card, { [styles.withLink]: !!href })}
+      class={classNames(styles.card, { [styles.withLink]: !!href }, { [styles.isLoading]: isLoading })}
       onClick$={() => (href ? nav(href) : {})}
     >
       {headerImageSrc && (
