@@ -3,6 +3,7 @@ import { component$ } from "@builder.io/qwik";
 import styles from "./card.module.css";
 import { useNavigate } from "@builder.io/qwik-city";
 import classNames from "classnames";
+import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 
 export enum CardVariant {
   small = "small",
@@ -21,12 +22,23 @@ interface Props {
 
 export const Card = component$((props: Props) => {
   const nav = useNavigate();
-  const { title, description, variant, headerImageSrc, headerImageSrcSet, href } = props;
+  const {
+    title,
+    description,
+    variant,
+    headerImageSrc,
+    headerImageSrcSet,
+    href,
+  } = props;
   const isLoading = props.isLoading ?? false;
 
   return (
     <div
-      class={classNames(styles.card, { [styles.withLink]: !!href }, { [styles.isLoading]: isLoading })}
+      class={classNames(
+        styles.card,
+        { [styles.withLink]: !!href },
+        { [styles.isLoading]: isLoading }
+      )}
       onClick$={() => (href ? nav(href) : {})}
     >
       {headerImageSrc && (
@@ -48,3 +60,36 @@ export const Card = component$((props: Props) => {
     </div>
   );
 });
+
+export const CardRegistryDefinition: RegisteredComponent = {
+  component: Card,
+  name: "Card",
+  inputs: [
+    {
+      name: "variant",
+      friendlyName: 'Variant',
+      type: "string",
+      enum: Object.values(CardVariant),
+      required: true,
+    },
+    {
+      name: "title",
+      friendlyName: 'Title',
+      type: "string",
+      required: true,
+    },
+    {
+      name: "description",
+      friendlyName: 'Description',
+      type: "string",
+      required: false,
+    },
+    {
+      name: "headerImageSrc",
+      friendlyName: 'Header Image',
+      type: "file",
+      allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
+      required: false,
+    },
+  ],
+};

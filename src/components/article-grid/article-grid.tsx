@@ -8,6 +8,7 @@ import {
 import styles from "./article-grid.module.css";
 import classnames from "classnames";
 import { Card, CardVariant } from "../card/card";
+import type { RegisteredComponent} from "@builder.io/sdk-qwik";
 import { getAllContent } from "@builder.io/sdk-qwik";
 import { Link } from "@builder.io/qwik-city";
 import classNames from "classnames";
@@ -151,3 +152,35 @@ export const ArticleGrid = component$((props: ArticleGridProps) => {
     </div>
   );
 });
+
+
+export const ArticleGridRegistryDefinition: RegisteredComponent = {
+  component: ArticleGrid,
+  name: "ArticleGrid",
+  inputs: [
+    {
+      name: "articleType",
+      friendlyName: 'Type',
+      type: "string",
+      required: true,
+    },
+    {
+      name: "title",
+      friendlyName: 'Title',
+      type: "string",
+      required: false,
+    },
+    {
+      name: "hideTitleIfEmpty",
+      friendlyName: 'Hide if title is empty?',
+      type: "boolean",
+      required: false,
+    },
+    {
+      name: "href",
+      friendlyName: 'href',
+      type: "string",
+      required: false,
+    },
+  ],
+},

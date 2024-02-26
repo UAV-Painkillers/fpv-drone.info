@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import styles from "./page-headline.module.css";
+import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 
 interface Props {
   title: string;
@@ -14,3 +15,22 @@ export const PageHeadline = component$((props: Props) => {
     </header>
   );
 });
+
+export const PageHeadlineRegistryDefinition: RegisteredComponent = {
+  component: PageHeadline,
+  name: "PageHeadline",
+  inputs: [
+    {
+      name: "title",
+      friendlyName: 'Title',
+      type: "string",
+      required: true,
+    },
+    {
+      name: "subtitle",
+      friendlyName: 'Subtitle',
+      type: "string",
+      required: false,
+    },
+  ],
+};

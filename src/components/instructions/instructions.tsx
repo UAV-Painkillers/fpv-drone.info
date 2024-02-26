@@ -3,6 +3,7 @@ import { Step, type StepProps } from "./step/step";
 import type { PrerequesitesProps } from "./prerequesites/prerequesites";
 import { Prerequesites } from "./prerequesites/prerequesites";
 import styles from "./instructions.module.css";
+import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 
 interface Props {
   prerequesites?: PrerequesitesProps;
@@ -29,3 +30,71 @@ export const Instructions = component$<Props>((props) => {
     </article>
   );
 });
+
+export const InstructionsRegistryInformation: RegisteredComponent = {
+  component: Instructions,
+  name: "Instructions",
+  inputs: [
+    {
+      name: "prerequesites",
+      friendlyName: 'Prerequesites',
+      type: "object",
+      required: false,
+      subFields: [
+        {
+          name: "title",
+          friendlyName: 'Title',
+          type: "string",
+          required: false,
+        },
+        {
+          name: "items",
+          friendlyName: 'Items',
+          type: "list",
+          required: true,
+          subFields: [
+            {
+              name: "label",
+              type: "string",
+              required: true,
+            },
+          ],
+        },
+        {
+          name: "image",
+          friendlyName: 'Image',
+          type: "file",
+          required: true,
+          allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
+        },
+      ],
+    },
+    {
+      name: "steps",
+      friendlyName: 'Steps',
+      type: "list",
+      required: true,
+      subFields: [
+        {
+          name: "title",
+          friendlyName: 'Title',
+          type: "string",
+          required: true,
+        },
+        {
+          name: "image",
+          friendlyName: 'Image',
+          type: "file",
+          required: false,
+          allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
+        },
+        {
+          name: "description",
+          friendlyName: 'Description',
+          type: "richText",
+          required: true,
+        },
+      ],
+    },
+  ],
+};

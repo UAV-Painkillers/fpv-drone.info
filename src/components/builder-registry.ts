@@ -1,11 +1,15 @@
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
-import { ArticleGrid } from "./article-grid/article-grid";
-import { Card, CardVariant } from "./card/card";
-import { Instructions } from "./instructions/instructions";
-import { Logo } from "./logo/logo";
-import { PageHeadline } from "./page-headline/page-headline";
-import { ExpandableImage } from "./expandable-image/expandable-image";
-import { Text } from "./text/text";
+import {
+  ArticleGridRegistryDefinition,
+} from "./article-grid/article-grid";
+import { CardRegistryDefinition } from "./card/card";
+import { InstructionsRegistryInformation } from "./instructions/instructions";
+import { LogoRegistryInformation } from "./logo/logo";
+import { PageHeadlineRegistryDefinition } from "./page-headline/page-headline";
+import { ExpandableImageRegistryDefinition } from "./expandable-image/expandable-image";
+import { TextRegistryDefinition } from "./text/text";
+import { TLDRRegistryDefinition } from "./tldr/tldr";
+import { NewsRegistryDefinition } from "./news/news";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -17,177 +21,15 @@ import { Text } from "./text/text";
  * editing to only these components.
  * https://www.builder.io/c/docs/guides/components-only-mode
  */
+
 export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
-  {
-    component: ArticleGrid,
-    name: "ArticleGrid",
-    inputs: [
-      {
-        name: "articleType",
-        type: "string",
-        required: true,
-      },
-      {
-        name: "title",
-        type: "string",
-        required: false,
-      },
-      {
-        name: "hideTitleIfEmpty",
-        type: "boolean",
-        required: false,
-      },
-      {
-        name: "href",
-        type: "string",
-        required: false,
-      },
-    ],
-  },
-  {
-    component: Card,
-    name: "Card",
-    inputs: [
-      {
-        name: "variant",
-        type: "string",
-        enum: Object.values(CardVariant),
-        required: true,
-      },
-      {
-        name: "title",
-        type: "string",
-        required: true,
-      },
-      {
-        name: "description",
-        type: "string",
-        required: false,
-      },
-      {
-        name: "headerImageSrc",
-        type: "file",
-        allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
-        required: false,
-      },
-    ],
-  },
-  {
-    component: Instructions,
-    name: "Instructions",
-    inputs: [
-      {
-        name: "prerequesites",
-        type: "object",
-        required: false,
-        subFields: [
-          {
-            name: "title",
-            type: "string",
-            required: false,
-          },
-          {
-            name: "items",
-            type: "list",
-            required: true,
-            subFields: [
-              {
-                name: "label",
-                type: "string",
-                required: true,
-              },
-            ],
-          },
-          {
-            name: "image",
-            type: "file",
-            required: true,
-            allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
-          },
-        ],
-      },
-      {
-        name: "steps",
-        type: "list",
-        required: true,
-        subFields: [
-          {
-            name: "title",
-            type: "string",
-            required: true,
-          },
-          {
-            name: "image",
-            type: "file",
-            required: false,
-            allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
-          },
-          {
-            name: "description",
-            type: "richText",
-            required: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    component: Logo,
-    name: "Logo",
-    inputs: [],
-  },
-  {
-    component: PageHeadline,
-    name: "PageHeadline",
-    inputs: [
-      {
-        name: "title",
-        type: "string",
-        required: true,
-      },
-      {
-        name: "subtitle",
-        type: "string",
-        required: false,
-      },
-    ],
-  },
-  {
-    component: ExpandableImage,
-    name: "ExpandableImage",
-    inputs: [
-      {
-        name: "src",
-        type: "file",
-        required: true,
-        allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
-      },
-      {
-        name: "alt",
-        type: "string",
-        required: true,
-      },
-      {
-        name: "width",
-        type: "number",
-        required: true,
-      },
-      {
-        name: "height",
-        type: "number",
-        required: true,
-      },
-    ],
-  },
-  {
-    component: Text,
-    name: "Text",
-    inputs: [
-      {
-        name: "text",
-        type: "richText",
-        required: true,
-      },
-    ],
-  }
+  ArticleGridRegistryDefinition,
+  CardRegistryDefinition,
+  InstructionsRegistryInformation,
+  LogoRegistryInformation,
+  PageHeadlineRegistryDefinition,
+  ExpandableImageRegistryDefinition,
+  TextRegistryDefinition,
+  TLDRRegistryDefinition,
+  NewsRegistryDefinition,
 ];
