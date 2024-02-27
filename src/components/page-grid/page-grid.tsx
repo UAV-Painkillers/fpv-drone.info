@@ -40,6 +40,7 @@ enum PageType {
   Page = "page",
   Guide = "guide",
   Product = "product",
+  Tool = "tool",
 }
 
 interface PageGridProps {
