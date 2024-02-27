@@ -37,19 +37,19 @@ export const InstructionsRegistryInformation: RegisteredComponent = {
   inputs: [
     {
       name: "prerequesites",
-      friendlyName: 'Prerequesites',
+      friendlyName: "Prerequesites",
       type: "object",
       required: false,
       subFields: [
         {
           name: "title",
-          friendlyName: 'Title',
+          friendlyName: "Title",
           type: "string",
           required: false,
         },
         {
           name: "items",
-          friendlyName: 'Items',
+          friendlyName: "Items",
           type: "list",
           required: true,
           subFields: [
@@ -62,7 +62,7 @@ export const InstructionsRegistryInformation: RegisteredComponent = {
         },
         {
           name: "image",
-          friendlyName: 'Image',
+          friendlyName: "Image",
           type: "file",
           required: true,
           allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
@@ -71,26 +71,26 @@ export const InstructionsRegistryInformation: RegisteredComponent = {
     },
     {
       name: "steps",
-      friendlyName: 'Steps',
+      friendlyName: "Steps",
       type: "list",
       required: true,
       subFields: [
         {
           name: "title",
-          friendlyName: 'Title',
+          friendlyName: "Title",
           type: "string",
           required: true,
         },
         {
           name: "image",
-          friendlyName: 'Image',
+          friendlyName: "Image",
           type: "file",
           required: false,
           allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
         },
         {
           name: "description",
-          friendlyName: 'Description',
+          friendlyName: "Description",
           type: "richText",
           required: true,
         },

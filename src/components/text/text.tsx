@@ -11,7 +11,7 @@ type ComponentProps = TextProps & IntrinsicElements["div"];
 
 export const Text = component$<ComponentProps>((props) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const html = formatHtmlText(props.text ?? '');
+  const html = formatHtmlText(props.text ?? "");
   return <div {...props} dangerouslySetInnerHTML={html} />;
 });
 
@@ -21,7 +21,7 @@ export const TextRegistryDefinition: RegisteredComponent = {
   inputs: [
     {
       name: "text",
-      friendlyName: 'Text',
+      friendlyName: "Text",
       type: "richText",
       required: true,
     },

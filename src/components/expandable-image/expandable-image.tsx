@@ -29,7 +29,7 @@ export const ExpandableImage = component$<
       if (event.key === "Escape") {
         dialogRef.value?.close();
       }
-    })
+    }),
   );
 
   return (
@@ -77,16 +77,16 @@ export const ExpandableImageRegistryDefinition: RegisteredComponent = {
   inputs: [
     {
       name: "src",
-      friendlyName: 'Image',
+      friendlyName: "Image",
       type: "file",
       required: true,
       allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
     },
     {
       name: "alt",
-      friendlyName: 'Alt Text',
+      friendlyName: "Alt Text",
       type: "string",
       required: true,
-    }
+    },
   ],
 };

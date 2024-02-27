@@ -28,7 +28,7 @@ const PageRow = component$((props: PageRowProps) => {
         styles.gridRow,
         props.variant === PageRowVariant.one
           ? styles.variantOne
-          : styles.variantTwo
+          : styles.variantTwo,
       )}
     >
       <Slot />
@@ -99,7 +99,7 @@ export const PageGrid = component$((props: PageGridProps) => {
       });
 
       return rows;
-    })
+    }),
   );
 
   return (

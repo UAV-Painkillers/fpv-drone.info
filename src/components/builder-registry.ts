@@ -1,7 +1,5 @@
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
-import {
-  ArticleGridRegistryDefinition,
-} from "./page-grid/page-grid";
+import { ArticleGridRegistryDefinition } from "./page-grid/page-grid";
 import { CardRegistryDefinition } from "./card/card";
 import { InstructionsRegistryInformation } from "./instructions/instructions";
 import { LogoRegistryInformation } from "./logo/logo";

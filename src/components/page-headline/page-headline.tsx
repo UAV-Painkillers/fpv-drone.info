@@ -22,13 +22,13 @@ export const PageHeadlineRegistryDefinition: RegisteredComponent = {
   inputs: [
     {
       name: "title",
-      friendlyName: 'Title',
+      friendlyName: "Title",
       type: "string",
       required: true,
     },
     {
       name: "subtitle",
-      friendlyName: 'Subtitle',
+      friendlyName: "Subtitle",
       type: "string",
       required: false,
     },

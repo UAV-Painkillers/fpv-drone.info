@@ -37,7 +37,7 @@ export const Card = component$((props: Props) => {
       class={classNames(
         styles.card,
         { [styles.withLink]: !!href },
-        { [styles.isLoading]: isLoading }
+        { [styles.isLoading]: isLoading },
       )}
       onClick$={() => (href ? nav(href) : {})}
     >
@@ -67,26 +67,26 @@ export const CardRegistryDefinition: RegisteredComponent = {
   inputs: [
     {
       name: "variant",
-      friendlyName: 'Variant',
+      friendlyName: "Variant",
       type: "string",
       enum: Object.values(CardVariant),
       required: true,
     },
     {
       name: "title",
-      friendlyName: 'Title',
+      friendlyName: "Title",
       type: "string",
       required: true,
     },
     {
       name: "description",
-      friendlyName: 'Description',
+      friendlyName: "Description",
       type: "string",
       required: false,
     },
     {
       name: "headerImageSrc",
-      friendlyName: 'Header Image',
+      friendlyName: "Header Image",
       type: "file",
       allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
       required: false,

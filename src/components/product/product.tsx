@@ -105,7 +105,7 @@ export const Product = component$((props: ProductProps) => {
     (props.technicalSpecs?.generic?.length ?? 0) > 0;
 
   const hasFlightControllerTechnicalSpecs = Object.values(
-    props.technicalSpecs?.flightController ?? {}
+    props.technicalSpecs?.flightController ?? {},
   ).some((v) => v !== undefined || v !== null);
 
   const hasTechnicalSpecs =
@@ -116,9 +116,9 @@ export const Product = component$((props: ProductProps) => {
 
   function specKeyToInputFriendlyName(key: string): string {
     const mainInputs = ProductRegistryDefinition.inputs!.find(
-      (input) => input.name === "technicalSpecs"
+      (input) => input.name === "technicalSpecs",
     )!.subFields!.find(
-      (subField) => subField.name === "flightController"
+      (subField) => subField.name === "flightController",
     )!.subFields!;
 
     const keyParts = key.split(".");
@@ -131,7 +131,7 @@ export const Product = component$((props: ProductProps) => {
     while (keyParts.length > 0) {
       const nextKeyPart = keyParts.shift()!;
       parentInput = parentInput.subFields!.find(
-        (input) => input.name === nextKeyPart
+        (input) => input.name === nextKeyPart,
       );
       if (!parentInput) {
         return key;
@@ -156,11 +156,11 @@ export const Product = component$((props: ProductProps) => {
         // combine all mountingPattern inputs into one row
         if (key === "mountingPattern") {
           const acceptedPatterns = Object.entries(
-            value as Record<string, boolean>
+            value as Record<string, boolean>,
           )
             .filter(([, value]) => value)
             .map(([key]) =>
-              specKeyToInputFriendlyName("mountingPattern." + key)
+              specKeyToInputFriendlyName("mountingPattern." + key),
             );
 
           if (acceptedPatterns.length === 0) {
@@ -182,7 +182,7 @@ export const Product = component$((props: ProductProps) => {
           specification: specKeyToInputFriendlyName(key),
           value: value as string,
         });
-      }
+      },
     );
   }
 

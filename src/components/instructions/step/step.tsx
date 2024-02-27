@@ -19,7 +19,10 @@ export const Step = component$<StepProps>((props) => {
       {props.image && (
         <ExpandableImage src={props.image} class={styles.image} />
       )}
-      <div dangerouslySetInnerHTML={formattedDescription} class={styles.content} />
+      <div
+        dangerouslySetInnerHTML={formattedDescription}
+        class={styles.content}
+      />
     </section>
   );
 });
