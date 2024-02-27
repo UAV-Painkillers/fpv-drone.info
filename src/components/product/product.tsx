@@ -11,6 +11,7 @@ import { Table } from "../table/table";
 enum ProductCategory {
   FlightController = "Flight Controller",
   ESC = "ESC",
+  Stack = "Stack",
   Motor = "Motor",
   Propeller = "Propeller",
   Frame = "Frame",
