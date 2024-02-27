@@ -1,7 +1,7 @@
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import {
   ArticleGridRegistryDefinition,
-} from "./article-grid/article-grid";
+} from "./page-grid/page-grid";
 import { CardRegistryDefinition } from "./card/card";
 import { InstructionsRegistryInformation } from "./instructions/instructions";
 import { LogoRegistryInformation } from "./logo/logo";
@@ -10,6 +10,7 @@ import { ExpandableImageRegistryDefinition } from "./expandable-image/expandable
 import { TextRegistryDefinition } from "./text/text";
 import { TLDRRegistryDefinition } from "./tldr/tldr";
 import { NewsRegistryDefinition } from "./news/news";
+import { ProductRegistryDefinition } from "./product/product";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -32,4 +33,5 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   TextRegistryDefinition,
   TLDRRegistryDefinition,
   NewsRegistryDefinition,
+  ProductRegistryDefinition,
 ];

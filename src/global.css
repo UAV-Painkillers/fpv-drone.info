@@ -18,6 +18,9 @@
   --breakpoint-mobile: 768px;
   --breakpoint-tablet: 1024px;
   --breakpoint-desktop: 1200px;
+
+  --table-row-even-background: hsl(220, 80%, 95%);
+  --table-row-uneven-background: white;
 }
 
 body {
@@ -48,6 +51,7 @@ h1,
 h2,
 h3 {
   margin: 0;
+  margin-top: 25px;
 }
 
 h1 {
@@ -189,4 +193,30 @@ hr {
   to {
     transform: scaleX(0);
   }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  margin: 25px 0;
+}
+
+td,
+th {
+  padding: 15px;
+}
+
+td,
+th {
+  text-align: left;
+}
+
+tr:nth-child(even) td {
+  background-color: var(--table-row-even-background);
+}
+
+tr:nth-child(odd) td {
+  background-color: var(--table-row-uneven-background);
 }

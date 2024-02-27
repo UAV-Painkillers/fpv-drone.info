@@ -5,28 +5,28 @@ import {
   useResource$,
   useSignal,
 } from "@builder.io/qwik";
-import styles from "./article-grid.module.css";
+import styles from "./page-grid.module.css";
 import classnames from "classnames";
 import { Card, CardVariant } from "../card/card";
-import type { RegisteredComponent} from "@builder.io/sdk-qwik";
+import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { getAllContent } from "@builder.io/sdk-qwik";
 import { Link } from "@builder.io/qwik-city";
 import classNames from "classnames";
 
-enum ArticleRowVariant {
+enum PageRowVariant {
   one = "one",
   two = "two",
 }
 
-interface ArticleRowProps {
-  variant: ArticleRowVariant;
+interface PageRowProps {
+  variant: PageRowVariant;
 }
-const ArticleRow = component$((props: ArticleRowProps) => {
+const PageRow = component$((props: PageRowProps) => {
   return (
     <div
       class={classnames(
         styles.gridRow,
-        props.variant === ArticleRowVariant.one
+        props.variant === PageRowVariant.one
           ? styles.variantOne
           : styles.variantTwo
       )}
@@ -36,20 +36,25 @@ const ArticleRow = component$((props: ArticleRowProps) => {
   );
 });
 
-interface ArticleGridProps {
-  articleType: string;
+enum PageType {
+  Page = "page",
+  Guide = "guide",
+  Product = "product",
+}
+
+interface PageGridProps {
+  pageType: PageType;
   title?: string;
   hideTitleIfEmpty?: boolean;
   href?: string;
 }
 
-interface Article {
+interface Page {
   id: string;
   data: {
-    content: {
-      title: string;
-      description: string;
-    };
+    type: PageType;
+    title: string;
+    description?: string;
     previewImage: string;
     url: string;
   };
@@ -57,40 +62,40 @@ interface Article {
 
 const LoadingState = component$(() => {
   return (
-    <ArticleRow variant={ArticleRowVariant.one}>
+    <PageRow variant={PageRowVariant.one}>
       <Card title="" variant={CardVariant.large} isLoading />
       <Card title="" variant={CardVariant.small} isLoading />
       <Card title="" variant={CardVariant.small} isLoading />
-    </ArticleRow>
+    </PageRow>
   );
 });
 
-export const ArticleGrid = component$((props: ArticleGridProps) => {
+export const PageGrid = component$((props: PageGridProps) => {
   const showTitle = useSignal(!!props.title);
   const hideTitleIfEmpty = props.hideTitleIfEmpty ?? false;
 
-  const matchingArticles = useResource$(() =>
+  const matches = useResource$(() =>
     getAllContent({
-      model: "article",
+      model: "page",
       apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
       query: {
         data: {
-          articleType: props.articleType,
+          type: props.pageType,
         },
       },
-    }).then((articles) => {
-      const typedArticles = articles as { results: Article[] } | undefined;
-      if (typedArticles?.results.length === 0 && hideTitleIfEmpty) {
+    }).then((_rawPages) => {
+      const pages = _rawPages as { results?: Page[] } | undefined;
+      if (pages?.results?.length === 0 && hideTitleIfEmpty) {
         showTitle.value = false;
       }
 
-      const rows: Array<Article[]> = [];
+      const rows: Array<Page[]> = [];
 
-      typedArticles?.results.forEach((article, index) => {
+      pages?.results?.forEach((page, index) => {
         if (index % 3 === 0) {
           rows.push([]);
         }
-        rows[rows.length - 1].push(article);
+        rows[rows.length - 1].push(page);
       });
 
       return rows;
@@ -108,43 +113,41 @@ export const ArticleGrid = component$((props: ArticleGridProps) => {
           <span class={styles.title}>{props.title}</span>
         ))}
       <Resource
-        value={matchingArticles}
+        value={matches}
         onPending={() => <LoadingState />}
         onRejected={(error) => <>Error: {error.message}</>}
         onResolved={(rows) => (
           <>
-            {(rows as Array<Article[]>).map((row, rowIndex) => (
-              <ArticleRow
+            {(rows as Array<Page[]>).map((row, rowIndex) => (
+              <PageRow
                 key={`row-${rowIndex}`}
                 variant={
-                  rowIndex % 2 === 0
-                    ? ArticleRowVariant.one
-                    : ArticleRowVariant.two
+                  rowIndex % 2 === 0 ? PageRowVariant.one : PageRowVariant.two
                 }
               >
-                {row.map((article, articleIndex) => {
+                {row.map((page, pageIndex) => {
                   let variant = CardVariant.small;
 
-                  if (rowIndex % 2 === 0 && articleIndex === 0) {
+                  if (rowIndex % 2 === 0 && pageIndex === 0) {
                     variant = CardVariant.large;
                   }
 
-                  if (rowIndex % 2 !== 0 && articleIndex === 2) {
+                  if (rowIndex % 2 !== 0 && pageIndex === 2) {
                     variant = CardVariant.large;
                   }
 
                   return (
                     <Card
-                      key={`article-${article.id}`}
+                      key={`page-${page.id}`}
                       variant={variant}
-                      title={article.data.content.title}
-                      headerImageSrc={article.data.previewImage}
-                      description={article.data.content.description}
-                      href={article.data.url}
+                      title={page.data.title}
+                      headerImageSrc={page.data.previewImage}
+                      description={page.data.description}
+                      href={page.data.url}
                     />
                   );
                 })}
-              </ArticleRow>
+              </PageRow>
             ))}
           </>
         )}
@@ -153,34 +156,34 @@ export const ArticleGrid = component$((props: ArticleGridProps) => {
   );
 });
 
-
 export const ArticleGridRegistryDefinition: RegisteredComponent = {
-  component: ArticleGrid,
-  name: "ArticleGrid",
+  component: PageGrid,
+  name: "PageGrid",
   inputs: [
     {
-      name: "articleType",
-      friendlyName: 'Type',
+      name: "pageType",
+      friendlyName: "Type",
       type: "string",
+      enum: Object.values(PageType),
       required: true,
     },
     {
       name: "title",
-      friendlyName: 'Title',
+      friendlyName: "Title",
       type: "string",
       required: false,
     },
     {
       name: "hideTitleIfEmpty",
-      friendlyName: 'Hide if title is empty?',
+      friendlyName: "Hide if title is empty?",
       type: "boolean",
       required: false,
     },
     {
       name: "href",
-      friendlyName: 'href',
+      friendlyName: "href",
       type: "string",
       required: false,
     },
   ],
-},
+};

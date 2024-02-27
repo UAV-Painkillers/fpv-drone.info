@@ -9,69 +9,45 @@ import {
 import { CUSTOM_COMPONENTS } from "../../components/builder-registry";
 import { PageHeadline } from "~/components/page-headline/page-headline";
 
-// This page is a catch-all for all routes that don't have a pre-defined route.
-// Using a catch-all route allows you to dynamically create new pages in Builder.
+function fetchPageOfModel(model: string, url: URL) {
+  return getContent({
+    model,
+    apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
+    options: getBuilderSearchParams(url.searchParams),
+    userAttributes: {
+      urlPath: url.pathname,
+    },
+  });
+}
 
-// Use the `useBuilderContent` route loader to get your content from Builder.
-// `routeLoader$()` takes an async function to fetch content
-// from Builder with using `getContent()`.
 export const usePage = routeLoader$(async ({ url }) => {
   const isPreviewing = url.searchParams.has("builder.preview");
+  const page = await fetchPageOfModel("page", url);
 
-  // Fetch Builder.io Visual CMS content using the Qwik SDK.
-  // The public API key is set in the .env file at the root
-  // https://www.builder.io/c/docs/using-your-api-key
-  const normalPage = await getContent({
-    model: "page",
-    apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
-    options: getBuilderSearchParams(url.searchParams),
-    userAttributes: {
-      urlPath: url.pathname,
-    },
-  });
-
-  const articlePage = await getContent({
-    model: "article",
-    apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
-    options: getBuilderSearchParams(url.searchParams),
-    userAttributes: {
-      urlPath: url.pathname,
-    },
-  });
-
-  const foundPage = !!normalPage || !!articlePage;
-
-  // If there's no content, throw a 404.
-  // You can use your own 404 component here
-  if (!foundPage && !isPreviewing) {
-    return { page: null };
+  if (!page && !isPreviewing) {
+    return null;
   }
 
-  // return content fetched from Builder, which is JSON
-  return { page: normalPage ?? articlePage, isArticle: !!articlePage };
+  return page;
 });
 
 export default component$(() => {
-  const pageData = usePage();
+  const page = usePage();
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!pageData.value) {
+  if (!page.value) {
     return <PageHeadline title="404" subtitle="Page not found" />;
   }
 
-  // RenderContent component uses the `content` prop to render
-  // the page, specified by the API Key, at the current URL path.
   return (
     <>
-      {pageData.value.isArticle && (
-        <PageHeadline
-          title={pageData.value.page?.data?.content.title ?? ''}
-          subtitle={pageData.value.page?.data?.content.description}
-        />
-      )}
+      <PageHeadline
+        title={page.value.data?.content?.title ?? ""}
+        subtitle={page.value.data?.content?.description}
+      />
       <RenderContent
         model="page"
-        content={pageData.value.page}
+        content={page.value}
         apiKey={import.meta.env.PUBLIC_BUILDER_API_KEY}
         customComponents={CUSTOM_COMPONENTS}
       />
@@ -82,13 +58,13 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue }) => {
   const builderContent = resolveValue(usePage);
 
-  if (!builderContent.page) {
+  if (!builderContent) {
     return {
       title: "404 - Page not found",
     };
   }
 
   return {
-    title: builderContent.page.data?.title,
+    title: builderContent.data?.title,
   };
 };
