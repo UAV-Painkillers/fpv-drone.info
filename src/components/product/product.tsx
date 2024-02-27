@@ -29,6 +29,7 @@ enum ProductCategory {
 enum ProductFlightControllerGyro {
   BMI270 = "BMI270",
   MPU6000 = "MPU6000",
+  ICM42688P = "ICM42688P",
 }
 
 enum ProductFlightControllerProcessor {
@@ -60,19 +61,28 @@ enum ProductFlightControllerOnboardVtx {
   Walksnail = "Walksnail",
 }
 
+enum ProductFlightControllerUsbType {
+  MICRO = "Micro",
+  USB_C = "USB-C",
+}
+
+interface MountingPatterns {
+  m2_20x20: boolean;
+  m2_25x25: boolean;
+  m2_30_5x30_5: boolean;
+  m3_20x20: boolean;
+  m3_25x25: boolean;
+  m3_30_5x30_5: boolean;
+}
+
 interface TechnicalSpecsFlightController {
   processor: ProductFlightControllerProcessor;
   gyro: ProductFlightControllerGyro;
-  mountingPattern: {
-    m2_20x20: boolean;
-    m2_25x25: boolean;
-    m2_30x30: boolean;
-    m3_20x20: boolean;
-    m3_25x25: boolean;
-    m3_30x30: boolean;
-  };
+  mountingPattern: MountingPatterns;
   betaflightTarget: string;
+  usbType: ProductFlightControllerUsbType;
   hardwareUartCount: number;
+  hardwareUartCountReserved: number;
   ledStripPadCount: number;
   blackboxType: ProductFlightControllerBlackboxType;
   blackboxSizeInMb?: number;
@@ -85,6 +95,26 @@ interface TechnicalSpecsFlightController {
   onboardVtxPower?: number;
 }
 
+enum ProductESCFirmware {
+  BLHeli_32 = "BLHeli_32",
+  BLHeli_S = "BLHeli_S",
+  KISS = "KISS",
+  Bluejay = "Bluejay",
+}
+
+interface TechnicalSpecsESC {
+  firmware: ProductESCFirmware;
+  firmwareTarget?: string;
+  continuousCurrentInA: number;
+  burstCurrentInA: number;
+  tvsProtectiveDiode: boolean;
+  powerInputMinVoltage: number;
+  powerInputMinS: number;
+  powerInputMaxVoltage: number;
+  powerInputMaxS: number;
+  mountingPattern: MountingPatterns;
+}
+
 export interface ProductProps {
   manufacturer: string;
   name: string;
@@ -95,9 +125,12 @@ export interface ProductProps {
   technicalSpecs?: {
     generic?: Array<{ name: string; value: string }>;
     flightController?: TechnicalSpecsFlightController;
+    esc?: TechnicalSpecsESC;
   };
   manuals?: Array<{ label: string; pdf?: string; image?: string }>;
 }
+
+type SpecPropTypes = keyof Required<ProductProps>["technicalSpecs"];
 
 export const Product = component$((props: ProductProps) => {
   const descriptionHtml = formatHtmlText(props.description ?? "");
@@ -105,22 +138,30 @@ export const Product = component$((props: ProductProps) => {
   const hasGenericTechnicalSpecs =
     (props.technicalSpecs?.generic?.length ?? 0) > 0;
 
-  const hasFlightControllerTechnicalSpecs = Object.values(
-    props.technicalSpecs?.flightController ?? {},
-  ).some((v) => v !== undefined || v !== null);
+  function specPropExists(specKey: SpecPropTypes) {
+    const technicalSpecs = props.technicalSpecs ?? {};
+    return Object.values(technicalSpecs[specKey] ?? {}).some(
+      (v) => v !== undefined || v !== null
+    );
+  }
+
+  const hasFlightControllerTechnicalSpecs = specPropExists("flightController");
+  const hasESCTechnicalSpecs = specPropExists("esc");
 
   const hasTechnicalSpecs =
     hasGenericTechnicalSpecs || hasFlightControllerTechnicalSpecs;
 
   const hasMoreThanOneTechnicalSpecsSection =
-    hasGenericTechnicalSpecs && hasFlightControllerTechnicalSpecs;
+    [hasFlightControllerTechnicalSpecs, hasESCTechnicalSpecs].filter(Boolean)
+      .length > 1;
 
-  function specKeyToInputFriendlyName(key: string): string {
+  function specKeyToInputFriendlyName(
+    key: string,
+    specType: SpecPropTypes
+  ): string {
     const mainInputs = ProductRegistryDefinition.inputs!.find(
-      (input) => input.name === "technicalSpecs",
-    )!.subFields!.find(
-      (subField) => subField.name === "flightController",
-    )!.subFields!;
+      (input) => input.name === "technicalSpecs"
+    )!.subFields!.find((subField) => subField.name === specType)!.subFields!;
 
     const keyParts = key.split(".");
     const firstKeyPart = keyParts.shift()!;
@@ -132,7 +173,7 @@ export const Product = component$((props: ProductProps) => {
     while (keyParts.length > 0) {
       const nextKeyPart = keyParts.shift()!;
       parentInput = parentInput.subFields!.find(
-        (input) => input.name === nextKeyPart,
+        (input) => input.name === nextKeyPart
       );
       if (!parentInput) {
         return key;
@@ -140,6 +181,44 @@ export const Product = component$((props: ProductProps) => {
     }
 
     return parentInput.friendlyName ?? key;
+  }
+
+  function pushSpecDefinitionInToTable<TSpecPropType extends SpecPropTypes>(
+    specProps: Required<ProductProps>["technicalSpecs"][TSpecPropType],
+    specKey: TSpecPropType,
+    tableData: TableData
+  ) {
+    Object.entries(specProps ?? {}).forEach(([key, value]) => {
+      // combine all mountingPattern inputs into one row
+      if (key === "mountingPattern") {
+        const acceptedPatterns = Object.entries(
+          value as Record<string, boolean>
+        )
+          .filter(([, value]) => value)
+          .map(([key]) =>
+            specKeyToInputFriendlyName("mountingPattern." + key, specKey)
+          );
+
+        if (acceptedPatterns.length === 0) {
+          return;
+        }
+
+        const friendlyKeyName = specKeyToInputFriendlyName(key, specKey);
+        const combinedValue = acceptedPatterns.join(", ");
+        tableData.push({
+          __isHeadline__: false,
+          specification: friendlyKeyName,
+          value: combinedValue,
+        });
+        return;
+      }
+
+      tableData.push({
+        __isHeadline__: false,
+        specification: specKeyToInputFriendlyName(key, specKey),
+        value: value as string,
+      });
+    });
   }
 
   const flightControllerTechnicalSpecsTableData: TableData = [];
@@ -152,38 +231,27 @@ export const Product = component$((props: ProductProps) => {
       });
     }
 
-    Object.entries(props.technicalSpecs!.flightController!).forEach(
-      ([key, value]) => {
-        // combine all mountingPattern inputs into one row
-        if (key === "mountingPattern") {
-          const acceptedPatterns = Object.entries(
-            value as Record<string, boolean>,
-          )
-            .filter(([, value]) => value)
-            .map(([key]) =>
-              specKeyToInputFriendlyName("mountingPattern." + key),
-            );
+    pushSpecDefinitionInToTable(
+      props.technicalSpecs!.flightController!,
+      "flightController",
+      flightControllerTechnicalSpecsTableData
+    );
+  }
 
-          if (acceptedPatterns.length === 0) {
-            return;
-          }
+  const escTechnicalSpecsTableData: TableData = [];
+  if (hasESCTechnicalSpecs) {
+    if (hasMoreThanOneTechnicalSpecsSection) {
+      escTechnicalSpecsTableData.push({
+        __isHeadline__: true,
+        specification: "ESC",
+        value: "",
+      });
+    }
 
-          const friendlyKeyName = specKeyToInputFriendlyName(key);
-          const combinedValue = acceptedPatterns.join(", ");
-          flightControllerTechnicalSpecsTableData.push({
-            __isHeadline__: false,
-            specification: friendlyKeyName,
-            value: combinedValue,
-          });
-          return;
-        }
-
-        flightControllerTechnicalSpecsTableData.push({
-          __isHeadline__: false,
-          specification: specKeyToInputFriendlyName(key),
-          value: value as string,
-        });
-      },
+    pushSpecDefinitionInToTable(
+      props.technicalSpecs!.esc!,
+      "esc",
+      escTechnicalSpecsTableData
     );
   }
 
@@ -217,16 +285,45 @@ export const Product = component$((props: ProductProps) => {
     },
   ];
 
+  const specTableDefinitions: Array<{
+    columns: TableColumns;
+    data: TableData;
+  }> = [];
+
+  if (hasFlightControllerTechnicalSpecs) {
+    specTableDefinitions.push({
+      columns: specTableColumns,
+      data: flightControllerTechnicalSpecsTableData,
+    });
+  }
+
+  if (hasESCTechnicalSpecs) {
+    specTableDefinitions.push({
+      columns: specTableColumns,
+      data: escTechnicalSpecsTableData,
+    });
+  }
+
+  if (hasGenericTechnicalSpecs) {
+    specTableDefinitions.push({
+      columns: specTableColumns,
+      data: genericTechnicalSpecsTableData,
+    });
+  }
+
   return (
     <div>
       <PageHeadline title={props.manufacturer} subtitle={props.name} />
       <section>
         <div>
           <small>Category: {props.category}</small>
+          <smal> | </smal>
           {props.officialUrl && (
-            <Link href={props.officialUrl} target="_blank" class="anchor">
-              Official Website
-            </Link>
+            <small>
+              <Link href={props.officialUrl} target="_blank" class="anchor">
+                Official Website
+              </Link>
+            </small>
           )}
         </div>
         <ExpandableImage
@@ -246,21 +343,15 @@ export const Product = component$((props: ProductProps) => {
         <section>
           <h3>Technical Specifications</h3>
 
-          {hasFlightControllerTechnicalSpecs && (
+          {specTableDefinitions.map(({ columns, data }, index) => (
             <Table
-              columns={specTableColumns}
-              data={flightControllerTechnicalSpecsTableData}
+              key={`spec-table-${index}`}
+              columns={columns}
+              data={data}
               showColumnHeaders={!hasMoreThanOneTechnicalSpecsSection}
+              class={styles.specTable}
             />
-          )}
-
-          {hasGenericTechnicalSpecs && (
-            <Table
-              columns={specTableColumns}
-              data={genericTechnicalSpecsTableData}
-              showColumnHeaders={!hasMoreThanOneTechnicalSpecsSection}
-            />
-          )}
+          ))}
         </section>
       )}
 
@@ -294,6 +385,52 @@ export const Product = component$((props: ProductProps) => {
     </div>
   );
 });
+
+const mountingPatternInput = {
+  name: "mountingPattern",
+  friendlyName: "Mounting Pattern",
+  type: "object",
+  required: true,
+  defaultValue: {},
+  subFields: [
+    {
+      name: "m2_20x20",
+      friendlyName: "M2 20x20",
+      type: "boolean",
+      required: false,
+    },
+    {
+      name: "m2_25x25",
+      friendlyName: "M2 25x25",
+      type: "boolean",
+      required: false,
+    },
+    {
+      name: "m2_30_5x30_5",
+      friendlyName: "M2 30.5x30.5",
+      type: "boolean",
+      required: false,
+    },
+    {
+      name: "m3_20x20",
+      friendlyName: "M3 20x20",
+      type: "boolean",
+      required: false,
+    },
+    {
+      name: "m3_25x25",
+      friendlyName: "M3 25x25",
+      type: "boolean",
+      required: false,
+    },
+    {
+      name: "m3_30_5x30_5",
+      friendlyName: "M3 30.5x30.5",
+      type: "boolean",
+      required: false,
+    },
+  ],
+};
 
 export const ProductRegistryDefinition: RegisteredComponent = {
   component: Product,
@@ -383,51 +520,7 @@ export const ProductRegistryDefinition: RegisteredComponent = {
               enum: Object.values(ProductFlightControllerGyro),
               required: true,
             },
-            {
-              name: "mountingPattern",
-              friendlyName: "Mounting Pattern",
-              type: "object",
-              required: true,
-              defaultValue: {},
-              subFields: [
-                {
-                  name: "m2_20x20",
-                  friendlyName: "M2 20x20",
-                  type: "boolean",
-                  required: false,
-                },
-                {
-                  name: "m2_25x25",
-                  friendlyName: "M2 25x25",
-                  type: "boolean",
-                  required: false,
-                },
-                {
-                  name: "m2_30x30",
-                  friendlyName: "M2 30x30",
-                  type: "boolean",
-                  required: false,
-                },
-                {
-                  name: "m3_20x20",
-                  friendlyName: "M3 20x20",
-                  type: "boolean",
-                  required: false,
-                },
-                {
-                  name: "m3_25x25",
-                  friendlyName: "M3 25x25",
-                  type: "boolean",
-                  required: false,
-                },
-                {
-                  name: "m3_30x30",
-                  friendlyName: "M3 30x30",
-                  type: "boolean",
-                  required: false,
-                },
-              ],
-            },
+            mountingPatternInput,
             {
               name: "betaflightTarget",
               friendlyName: "Betaflight Target",
@@ -435,8 +528,21 @@ export const ProductRegistryDefinition: RegisteredComponent = {
               required: true,
             },
             {
+              name: "usbType",
+              friendlyName: "USB Type",
+              type: "text",
+              enum: Object.values(ProductFlightControllerUsbType),
+              required: true,
+            },
+            {
               name: "hardwareUartCount",
               friendlyName: "Hardware UART Count",
+              type: "number",
+              required: true,
+            },
+            {
+              name: "hardwareUartCountReserved",
+              friendlyName: "Hardware UART Count Reserved",
               type: "number",
               required: true,
             },
@@ -503,6 +609,70 @@ export const ProductRegistryDefinition: RegisteredComponent = {
               type: "number",
               required: false,
             },
+          ],
+        },
+        {
+          name: "esc",
+          friendlyName: "ESC",
+          type: "object",
+          required: false,
+          subFields: [
+            {
+              name: "firmware",
+              friendlyName: "Firmware",
+              type: "text",
+              enum: Object.values(ProductESCFirmware),
+              required: true,
+            },
+            {
+              name: "firmwareTarget",
+              friendlyName: "Firmware Target",
+              type: "text",
+              required: false,
+            },
+            {
+              name: "continuousCurrentInA",
+              friendlyName: "Continuous Current (A)",
+              type: "number",
+              required: true,
+            },
+            {
+              name: "burstCurrentInA",
+              friendlyName: "Burst Current (A)",
+              type: "number",
+              required: true,
+            },
+            {
+              name: "tvsProtectiveDiode",
+              friendlyName: "TVS Protective Diode",
+              type: "boolean",
+              required: false,
+            },
+            {
+              name: "powerInputMinVoltage",
+              friendlyName: "Power Input Min Voltage",
+              type: "number",
+              required: false,
+            },
+            {
+              name: "powerInputMinS",
+              friendlyName: "Power Input Min (Lipo Cell Count)",
+              type: "number",
+              required: false,
+            },
+            {
+              name: "powerInputMaxVoltage",
+              friendlyName: "Power Input Max Voltage",
+              type: "number",
+              required: false,
+            },
+            {
+              name: "powerInputMaxS",
+              friendlyName: "Power Input Max (Lipo Cell Count)",
+              type: "number",
+              required: false,
+            },
+            mountingPatternInput,
           ],
         },
       ],

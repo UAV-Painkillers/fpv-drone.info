@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { IntrinsicElements, component$ } from "@builder.io/qwik";
 
 export type TableData = Array<{
   __isHeadline__?: boolean | undefined;
@@ -13,7 +13,9 @@ interface TableProps {
   data: TableData;
 }
 
-export const Table = component$<TableProps>((props) => {
+export const Table = component$<TableProps & IntrinsicElements['table']>((_props) => {
+  const { showColumnHeaders, columns, data, ...tableProps} = _props;
+
   function parseValue(value: string | number | boolean | undefined) {
     if (typeof value === "boolean") {
       return value ? "Yes" : "No";
@@ -26,17 +28,17 @@ export const Table = component$<TableProps>((props) => {
   }
 
   return (
-    <table>
-      {props.showColumnHeaders && (
+    <table {...tableProps}>
+      {showColumnHeaders && (
         <thead>
           <th>Specification</th>
           <th>Value</th>
         </thead>
       )}
       <tbody>
-        {props.data.map((row, rowIndex) => (
+        {data.map((row, rowIndex) => (
           <tr key={`row-${rowIndex}`}>
-            {props.columns.map((column, columnIndex) => (
+            {columns.map((column, columnIndex) => (
               <>
                 {row[column.key] &&
                   (row.__isHeadline__ ? (

@@ -1,5 +1,28 @@
 .image,
 .manualsImage {
   aspect-ratio: 16/5;
-  object-fit: cover;
+  object-fit: contain;
+  width: 100%;
+}
+
+.specTable tr td:nth-child(1),
+.specTable tr th:nth-child(1) {
+  width: 30%;
+}
+
+.specTable tr td:nth-child(2),
+.specTable tr th:nth-child(2) {
+  width: 70%;
+}
+
+@media screen and (max-width: 768px) {
+  .specTable tr td:nth-child(1),
+  .specTable tr th:nth-child(1) {
+    width: 50%;
+  }
+
+  .specTable tr td:nth-child(2),
+  .specTable tr th:nth-child(2) {
+    width: 50%;
+  }
 }
