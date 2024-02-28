@@ -5,6 +5,7 @@ import styles from "./expandable-image.module.css";
 import classNames from "classnames";
 import { Link } from "@builder.io/qwik-city";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import { srcToSrcSet } from "~/utils/srcToSrcSet";
 
 interface Props {
   onClick$?: () => void;
@@ -29,8 +30,11 @@ export const ExpandableImage = component$<
       if (event.key === "Escape") {
         dialogRef.value?.close();
       }
-    }),
+    })
   );
+
+  const srcSet =
+    props.srcset ?? (props.src ? srcToSrcSet(props.src) : undefined);
 
   return (
     <div class={classNames(styles.container, "clickable")}>
@@ -39,10 +43,7 @@ export const ExpandableImage = component$<
         {...props}
         class={classNames(styles.image, props.class)}
         onClick$={openDialog}
-        srcset={
-          props.srcset ??
-          `${props.src}?width=100 100w, ${props.src}?width=200 200w, ${props.src}?width=400 400w, ${props.src}?width=800 800w`
-        }
+        srcset={srcSet}
       />
       <span class={styles.label}>Click to enlarge</span>
 
@@ -55,10 +56,7 @@ export const ExpandableImage = component$<
             width={props.width}
             height={props.height}
             class={styles.dialogImage}
-            srcset={
-              props.srcset ??
-              `${props.src}?width=100 100w, ${props.src}?width=200 200w, ${props.src}?width=400 400w, ${props.src}?width=800 800w`
-            }
+            srcset={srcSet}
           />
           <Link href={props.src} target="_blank">
             <div class={styles.openInNewTabLinkContainer}>

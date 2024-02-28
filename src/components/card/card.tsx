@@ -4,6 +4,7 @@ import styles from "./card.module.css";
 import { useNavigate } from "@builder.io/qwik-city";
 import classNames from "classnames";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import { srcToSrcSet } from "~/utils/srcToSrcSet";
 
 export enum CardVariant {
   small = "small",
@@ -27,17 +28,21 @@ export const Card = component$((props: Props) => {
     description,
     variant,
     headerImageSrc,
-    headerImageSrcSet,
+    headerImageSrcSet: propHeaderImageSrcSet,
     href,
   } = props;
   const isLoading = props.isLoading ?? false;
+
+  const headerImageSrcSet =
+    propHeaderImageSrcSet ??
+    (headerImageSrc ? srcToSrcSet(headerImageSrc) : undefined);
 
   return (
     <div
       class={classNames(
         styles.card,
         { [styles.withLink]: !!href },
-        { [styles.isLoading]: isLoading },
+        { [styles.isLoading]: isLoading }
       )}
       onClick$={() => (href ? nav(href) : {})}
     >
@@ -45,10 +50,7 @@ export const Card = component$((props: Props) => {
         <img
           loading="lazy"
           src={headerImageSrc}
-          srcset={
-            headerImageSrcSet ??
-            `${headerImageSrc}?width=100 100w, ${headerImageSrc}?width=200 200w, ${headerImageSrc}?width=400 400w, ${headerImageSrc}?width=800 800w`
-          }
+          srcset={headerImageSrcSet}
           alt={title}
           class={styles.headerImage}
         />
