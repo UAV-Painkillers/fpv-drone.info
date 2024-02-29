@@ -7,7 +7,7 @@ import {
   getBuilderSearchParams,
 } from "@builder.io/sdk-qwik";
 import { CUSTOM_COMPONENTS } from "../../components/builder-registry";
-import { PageHeadline } from "@jappyjan/qwik-jminimal/src";
+import { PageHeadline } from "~/components/shared/page-headline/page-headline";
 
 function fetchPageOfModel(model: string, url: URL) {
   return fetchOneEntry({

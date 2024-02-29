@@ -4,10 +4,10 @@ import {
   RouterOutlet,
   ServiceWorkerRegister,
 } from "@builder.io/qwik-city";
-import { RouterHead } from "@jappyjan/qwik-jminimal/src";
 
 import "./normalize.css";
 import "./global.css";
+import { RouterHead } from "./components/shared/router-head/router-head";
 
 export default component$(() => {
   /**

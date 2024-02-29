@@ -1,0 +1,3 @@
+[submodule "src/components/shared"]
+	path = src/components/shared
+	url = git@github.com:jappyjan/qwik-jminimal.git

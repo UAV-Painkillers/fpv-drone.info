@@ -3,12 +3,10 @@ import { component$ } from "@builder.io/qwik";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import styles from "./product.module.css";
 import { formatHtmlText } from "~/utils/formatHtmlText";
-import type { TableColumns, TableData } from "@jappyjan/qwik-jminimal/src";
-import {
-  Table,
-  PageHeadline,
-  ExpandableImage,
-} from "@jappyjan/qwik-jminimal/src";
+import { ExpandableImage } from "../shared/expandable-image/expandable-image";
+import { PageHeadline } from "../shared/page-headline/page-headline";
+import type { TableData, TableColumns } from "../shared/table/table";
+import { Table } from "../shared/table/table";
 
 enum ProductCategory {
   FlightController = "Flight Controller",

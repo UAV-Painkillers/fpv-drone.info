@@ -5,8 +5,9 @@ import styles from "./layout.module.css";
 import { Footer } from "~/components/footer/footer";
 import { inject as injectVercelAnalytics } from "@vercel/analytics";
 import { Logo } from "~/components/logo/logo";
-import { Navigation, Search } from "@jappyjan/qwik-jminimal/src";
 import { Link } from "@builder.io/qwik-city";
+import { Navigation } from "~/components/shared/navigation/navigation";
+import { Search } from "~/components/shared/search/search";
 
 export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task

@@ -1,16 +1,14 @@
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
-import {
-  CardRegistryDefinition,
-  ExpandableImageRegistryDefinition,
-  InstructionsRegistryDefinition,
-  NewsRegistryDefinition,
-  PageGridRegistryDefinition,
-  PageHeadlineRegistryDefinition,
-  TLDRRegistryDefinition,
-  TextRegistryDefinition,
-} from "@jappyjan/qwik-jminimal/src";
 import { ProductRegistryDefinition } from "./product/product";
 import { LogoRegistryInformation } from "./logo/logo";
+import { CardRegistryDefinition } from "./shared/card/card";
+import { ExpandableImageRegistryDefinition } from "./shared/expandable-image/expandable-image";
+import { InstructionsRegistryDefinition } from "./shared/instructions/instructions";
+import { NewsRegistryDefinition } from "./shared/news/news";
+import { PageGridRegistryDefinition } from "./shared/page-grid/page-grid";
+import { PageHeadlineRegistryDefinition } from "./shared/page-headline/page-headline";
+import { TextRegistryDefinition } from "./shared/text/text";
+import { TLDRRegistryDefinition } from "./shared/tldr/tldr";
 
 /**
  * This array is used to integrate custom components within Builder.
