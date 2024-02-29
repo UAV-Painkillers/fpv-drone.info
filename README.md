@@ -1,4 +1,4 @@
-# Qwik City App ⚡️
+# fpv-drone.info - A page for the FPV drone community
 
 - [Qwik Docs](https://qwik.builder.io/)
 - [Discord](https://qwik.builder.io/chat)

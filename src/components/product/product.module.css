@@ -1,8 +1,15 @@
 .image,
 .manualsImage {
   aspect-ratio: 16/5;
-  object-fit: contain;
   width: 100%;
+}
+
+.image {
+  object-fit: contain;
+}
+
+.manualsImage {
+  object-fit: cover;
 }
 
 .specTable tr td:nth-child(1),

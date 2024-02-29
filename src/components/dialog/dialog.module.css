@@ -5,6 +5,7 @@
   background: none;
   max-width: calc(100% - 100px);
   max-height: calc(100% - 100px);
+  width: 100%;
 }
 
 .dialog[open] {

@@ -48,7 +48,7 @@ export const ExpandableImage = component$<
       <span class={styles.label}>Click to enlarge</span>
 
       <Dialog ref={dialogRef} onClick$={() => dialogRef.value?.close()}>
-        <div>
+        <div class={styles.dialogContentContainer}>
           <img
             loading="lazy"
             src={props.src}
