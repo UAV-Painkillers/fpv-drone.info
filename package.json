@@ -25,7 +25,7 @@
     "start": "vite --open --mode ssr",
     "qwik": "qwik",
     "upgrade-packages": "npx npm-check-updates --interactive",
-    "vercel-install": "git submodule init && git submodule update && npm ci"
+    "vercell-install": "git submodule init && git submodule update && npm ci"
   },
   "devDependencies": {
     "@builder.io/dev-tools": "^0.2.19",
