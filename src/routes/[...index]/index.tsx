@@ -2,15 +2,15 @@ import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import {
-  getContent,
-  RenderContent,
+  fetchOneEntry,
+  Content,
   getBuilderSearchParams,
 } from "@builder.io/sdk-qwik";
 import { CUSTOM_COMPONENTS } from "../../components/builder-registry";
-import { PageHeadline } from "~/components/page-headline/page-headline";
+import { PageHeadline } from "@jappyjan/qwik-jminimal/src";
 
 function fetchPageOfModel(model: string, url: URL) {
-  return getContent({
+  return fetchOneEntry({
     model,
     apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
     options: getBuilderSearchParams(url.searchParams),
@@ -45,7 +45,7 @@ export default component$(() => {
         title={page.value.data?.content?.title ?? ""}
         subtitle={page.value.data?.content?.description}
       />
-      <RenderContent
+      <Content
         model="page"
         content={page.value}
         apiKey={import.meta.env.PUBLIC_BUILDER_API_KEY}

@@ -5,8 +5,7 @@ import styles from "./layout.module.css";
 import { Footer } from "~/components/footer/footer";
 import { inject as injectVercelAnalytics } from "@vercel/analytics";
 import { Logo } from "~/components/logo/logo";
-import { Navigation } from "~/components/navigation/navigation";
-import { Search } from "~/components/search/search";
+import { Navigation, Search } from "@jappyjan/qwik-jminimal/src";
 import { Link } from "@builder.io/qwik-city";
 
 export default component$(() => {

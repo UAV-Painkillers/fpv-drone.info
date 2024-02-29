@@ -1,14 +1,16 @@
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
-import { ArticleGridRegistryDefinition } from "./page-grid/page-grid";
-import { CardRegistryDefinition } from "./card/card";
-import { InstructionsRegistryInformation } from "./instructions/instructions";
-import { LogoRegistryInformation } from "./logo/logo";
-import { PageHeadlineRegistryDefinition } from "./page-headline/page-headline";
-import { ExpandableImageRegistryDefinition } from "./expandable-image/expandable-image";
-import { TextRegistryDefinition } from "./text/text";
-import { TLDRRegistryDefinition } from "./tldr/tldr";
-import { NewsRegistryDefinition } from "./news/news";
+import {
+  CardRegistryDefinition,
+  ExpandableImageRegistryDefinition,
+  InstructionsRegistryDefinition,
+  NewsRegistryDefinition,
+  PageGridRegistryDefinition,
+  PageHeadlineRegistryDefinition,
+  TLDRRegistryDefinition,
+  TextRegistryDefinition,
+} from "@jappyjan/qwik-jminimal/src";
 import { ProductRegistryDefinition } from "./product/product";
+import { LogoRegistryInformation } from "./logo/logo";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -22,9 +24,9 @@ import { ProductRegistryDefinition } from "./product/product";
  */
 
 export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
-  ArticleGridRegistryDefinition,
+  PageGridRegistryDefinition,
   CardRegistryDefinition,
-  InstructionsRegistryInformation,
+  InstructionsRegistryDefinition,
   LogoRegistryInformation,
   PageHeadlineRegistryDefinition,
   ExpandableImageRegistryDefinition,

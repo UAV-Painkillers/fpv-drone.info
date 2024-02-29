@@ -23,30 +23,32 @@
     "lint": "eslint \"src/**/*.ts*\"",
     "preview": "qwik build preview && vite preview --open",
     "start": "vite --open --mode ssr",
-    "qwik": "qwik"
+    "qwik": "qwik",
+    "upgrade-packages": "npx npm-check-updates --interactive"
   },
   "devDependencies": {
-    "@builder.io/dev-tools": "^0.0.7",
-    "@builder.io/qwik": "^1.4.4",
-    "@builder.io/qwik-city": "^1.4.4",
-    "@builder.io/sdk-qwik": "^0.4.5",
-    "@types/eslint": "^8.56.2",
-    "@types/node": "^20.11.6",
-    "@typescript-eslint/eslint-plugin": "^6.19.1",
-    "@typescript-eslint/parser": "^6.19.1",
-    "eslint": "^8.56.0",
-    "eslint-plugin-qwik": "^1.4.4",
-    "prettier": "^3.2.4",
+    "@builder.io/dev-tools": "^0.2.19",
+    "@builder.io/qwik": "^1.4.5",
+    "@builder.io/qwik-city": "^1.4.5",
+    "@builder.io/sdk-qwik": "^0.14.4",
+    "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.22",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-qwik": "^1.4.5",
+    "prettier": "^3.2.5",
     "typescript": "5.3.3",
     "undici": "*",
-    "vercel": "^29.1.1",
-    "vite": "^5.0.12",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vercel": "^33.5.3",
+    "vite": "^5.1.4",
+    "vite-tsconfig-paths": "^4.3.1"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.0.17",
     "@fontsource/libre-barcode-128-text": "^5.0.18",
-    "@vercel/analytics": "^1.2.0",
+    "@jappyjan/qwik-jminimal": "^0.1.9",
+    "@vercel/analytics": "^1.2.2",
     "classnames": "^2.5.1"
   }
 }

@@ -1,12 +1,14 @@
 import { Link } from "@builder.io/qwik-city";
-import { ExpandableImage } from "../expandable-image/expandable-image";
-import { PageHeadline } from "../page-headline/page-headline";
 import { component$ } from "@builder.io/qwik";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import styles from "./product.module.css";
 import { formatHtmlText } from "~/utils/formatHtmlText";
-import type { TableColumns, TableData } from "../table/table";
-import { Table } from "../table/table";
+import type { TableColumns, TableData } from "@jappyjan/qwik-jminimal/src";
+import {
+  Table,
+  PageHeadline,
+  ExpandableImage,
+} from "@jappyjan/qwik-jminimal/src";
 
 enum ProductCategory {
   FlightController = "Flight Controller",
@@ -141,7 +143,7 @@ export const Product = component$((props: ProductProps) => {
   function specPropExists(specKey: SpecPropTypes) {
     const technicalSpecs = props.technicalSpecs ?? {};
     return Object.values(technicalSpecs[specKey] ?? {}).some(
-      (v) => v !== undefined || v !== null
+      (v) => v !== undefined || v !== null,
     );
   }
 
@@ -157,10 +159,10 @@ export const Product = component$((props: ProductProps) => {
 
   function specKeyToInputFriendlyName(
     key: string,
-    specType: SpecPropTypes
+    specType: SpecPropTypes,
   ): string {
     const mainInputs = ProductRegistryDefinition.inputs!.find(
-      (input) => input.name === "technicalSpecs"
+      (input) => input.name === "technicalSpecs",
     )!.subFields!.find((subField) => subField.name === specType)!.subFields!;
 
     const keyParts = key.split(".");
@@ -173,7 +175,7 @@ export const Product = component$((props: ProductProps) => {
     while (keyParts.length > 0) {
       const nextKeyPart = keyParts.shift()!;
       parentInput = parentInput.subFields!.find(
-        (input) => input.name === nextKeyPart
+        (input) => input.name === nextKeyPart,
       );
       if (!parentInput) {
         return key;
@@ -186,17 +188,17 @@ export const Product = component$((props: ProductProps) => {
   function pushSpecDefinitionInToTable<TSpecPropType extends SpecPropTypes>(
     specProps: Required<ProductProps>["technicalSpecs"][TSpecPropType],
     specKey: TSpecPropType,
-    tableData: TableData
+    tableData: TableData,
   ) {
     Object.entries(specProps ?? {}).forEach(([key, value]) => {
       // combine all mountingPattern inputs into one row
       if (key === "mountingPattern") {
         const acceptedPatterns = Object.entries(
-          value as Record<string, boolean>
+          value as Record<string, boolean>,
         )
           .filter(([, value]) => value)
           .map(([key]) =>
-            specKeyToInputFriendlyName("mountingPattern." + key, specKey)
+            specKeyToInputFriendlyName("mountingPattern." + key, specKey),
           );
 
         if (acceptedPatterns.length === 0) {
@@ -234,7 +236,7 @@ export const Product = component$((props: ProductProps) => {
     pushSpecDefinitionInToTable(
       props.technicalSpecs!.flightController!,
       "flightController",
-      flightControllerTechnicalSpecsTableData
+      flightControllerTechnicalSpecsTableData,
     );
   }
 
@@ -251,7 +253,7 @@ export const Product = component$((props: ProductProps) => {
     pushSpecDefinitionInToTable(
       props.technicalSpecs!.esc!,
       "esc",
-      escTechnicalSpecsTableData
+      escTechnicalSpecsTableData,
     );
   }
 
