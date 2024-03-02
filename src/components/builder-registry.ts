@@ -9,6 +9,7 @@ import { PageGridRegistryDefinition } from "./shared/page-grid/page-grid";
 import { PageHeadlineRegistryDefinition } from "./shared/page-headline/page-headline";
 import { TextRegistryDefinition } from "./shared/text/text";
 import { TLDRRegistryDefinition } from "./shared/tldr/tldr";
+import { PIDToolboxRegistryDefinition } from "./pid-toolbox/pid-toolbox";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -32,4 +33,5 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   TLDRRegistryDefinition,
   NewsRegistryDefinition,
   ProductRegistryDefinition,
+  PIDToolboxRegistryDefinition,
 ];
