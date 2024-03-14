@@ -34,6 +34,7 @@ enum ProductFlightControllerGyro {
 
 enum ProductFlightControllerProcessor {
   STM32F405 = "STM32F405",
+  STM32F722 = "STM32F722"
 }
 
 enum ProductFlightControllerBlackboxType {
