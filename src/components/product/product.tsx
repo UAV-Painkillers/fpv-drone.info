@@ -29,6 +29,7 @@ enum ProductCategory {
 enum ProductFlightControllerGyro {
   BMI270 = "BMI270",
   MPU6000 = "MPU6000",
+  ICM42688 = "ICM42688",
   ICM42688P = "ICM42688P",
 }
 
@@ -79,7 +80,8 @@ interface TechnicalSpecsFlightController {
   processor: ProductFlightControllerProcessor;
   gyro: ProductFlightControllerGyro;
   mountingPattern: MountingPatterns;
-  betaflightTarget: string;
+  betaflightTarget?: string;
+  inavTarget?: string;
   usbType: ProductFlightControllerUsbType;
   hardwareUartCount: number;
   hardwareUartCountReserved: number;
@@ -525,7 +527,13 @@ export const ProductRegistryDefinition: RegisteredComponent = {
               name: "betaflightTarget",
               friendlyName: "Betaflight Target",
               type: "text",
-              required: true,
+              required: false,
+            },
+            {
+              name: "inavTarget",
+              friendlyName: "iNav Target",
+              type: "text",
+              required: false,
             },
             {
               name: "usbType",
