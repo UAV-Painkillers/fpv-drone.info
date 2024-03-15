@@ -1,0 +1,40 @@
+.responsePlotGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content max-content;
+  grid-template-areas:
+    "trace strength"
+    "throttle throttle";
+  gap: 15px;
+}
+
+.responseTrace {
+  grid-area: trace;
+  aspect-ratio: 1;
+}
+
+.responseStrength {
+  grid-area: strength;
+  aspect-ratio: 1;
+}
+
+.responseThrottle {
+  grid-area: throttle;
+  aspect-ratio: 15/1;
+}
+
+.noisePlotGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content max-content;
+  grid-template-areas:
+    "gyroNoise topRight"
+    "bottom bottom";
+  gap: 15px;
+  min-height: 400px;
+}
+
+.noiseGyro {
+  grid-area: topLeft;
+  aspect-ratio: 1;
+}

@@ -21,6 +21,10 @@
 
   --table-row-even-background: hsl(220, 80%, 95%);
   --table-row-uneven-background: white;
+
+  --success-color: #16c969;
+  --warning-color: #c9b716;
+  --alarm-color: #c91652;
 }
 
 body {
