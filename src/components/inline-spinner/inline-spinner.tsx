@@ -8,5 +8,13 @@ interface Props {
   waiting?: boolean;
 }
 export const InlineSpinner = component$((props: Props) => {
-  return <i class={classNames(styles.inlineSpinner, {[styles.success]: props.success, [styles.error]: props.error, [styles.waiting]: props.waiting})}></i>;
+  return (
+    <i
+      class={classNames(styles.inlineSpinner, {
+        [styles.success]: props.success,
+        [styles.error]: props.error,
+        [styles.waiting]: props.waiting,
+      })}
+    ></i>
+  );
 });

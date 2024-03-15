@@ -19,23 +19,23 @@ export class ResponsePlotter {
   private gyroVsThrottleChart: echarts.ECharts;
 
   public static VIRIDIS_COLOR_PALETTE = [
-    '#440154',
-    '#482878',
-    '#3e4a89',
-    '#31688e',
-    '#26828e',
-    '#1f9e89',
-    '#35b779',
-    '#6dcd59',
-    '#b4de2c',
-    '#fde725'
-];
+    "#440154",
+    "#482878",
+    "#3e4a89",
+    "#31688e",
+    "#26828e",
+    "#1f9e89",
+    "#35b779",
+    "#6dcd59",
+    "#b4de2c",
+    "#fde725",
+  ];
 
   constructor(
     traceElement: HTMLElement,
     throttleElement: HTMLElement,
     strengthElement: HTMLElement,
-    responseElement: HTMLElement
+    responseElement: HTMLElement,
   ) {
     this.traceChart = echarts.init(traceElement);
     this.throttleChart = echarts.init(throttleElement);
@@ -54,7 +54,7 @@ export class ResponsePlotter {
 
     const traceLimit = Math.max(
       Math.max(...gyro.map(Math.abs)),
-      Math.max(...input.map(Math.abs))
+      Math.max(...input.map(Math.abs)),
     );
 
     this.traceChart.setOption({
@@ -137,6 +137,7 @@ export class ResponsePlotter {
   private plotStrength() {
     const high_mask: number[] | undefined =
       this.data![this.activeAxis].high_mask;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const highMaskSum = (high_mask ?? [0]).reduce((a, b) => a + b, 0);
     const useHighMask = highMaskSum > 0;
 
@@ -222,42 +223,42 @@ export class ResponsePlotter {
       Math.max(
         this.data.roll.noise_gyro["max"],
         this.data.pitch.noise_gyro["max"],
-        this.data.yaw.noise_gyro["max"]
+        this.data.yaw.noise_gyro["max"],
       ) + 1;
     const maxNoiseDebug =
       Math.max(
         this.data.roll.noise_debug["max"],
         this.data.pitch.noise_debug["max"],
-        this.data.yaw.noise_debug["max"]
+        this.data.yaw.noise_debug["max"],
       ) + 1;
     const maxNoiseD =
       Math.max(
         this.data.roll.noise_d["max"],
         this.data.pitch.noise_d["max"],
-        this.data.yaw.noise_d["max"]
+        this.data.yaw.noise_d["max"],
       ) + 1;
 
     const meanspec = [
       this.data.roll.noise_gyro["hist2d_sm"].reduce(
         (a: number, b: number) => a + b,
-        0
+        0,
       ) / this.data.roll.noise_gyro["hist2d_sm"].length,
       this.data.pitch.noise_gyro["hist2d_sm"].reduce(
         (a: number, b: number) => a + b,
-        0
+        0,
       ) / this.data.pitch.noise_gyro["hist2d_sm"].length,
       this.data.yaw.noise_gyro["hist2d_sm"].reduce(
         (a: number, b: number) => a + b,
-        0
+        0,
       ) / this.data.yaw.noise_gyro["hist2d_sm"].length,
     ];
 
     const thresh = 100;
     const mask = this.data.roll.noise_gyro["freq_axis"].map((value: number) =>
-      value >= thresh ? 1 : 0
+      value >= thresh ? 1 : 0,
     );
     const meanspecMax = Math.max(
-      ...meanspec.map((value: number, index: number) => value * mask[index])
+      ...meanspec.map((value: number, index: number) => value * mask[index]),
     );
 
     this.noise_bounds = [
@@ -291,8 +292,12 @@ export class ResponsePlotter {
       });
     });
 
-    const xAxis = Array.from({length: tr.noise_gyro['hist2d_sm'][0].length}).map((_, i) => i);
-    const yAxis = Array.from({ length: tr.noise_gyro['hist2d_sm'].length }).map((_, i) => i);
+    const xAxis = Array.from({
+      length: tr.noise_gyro["hist2d_sm"][0].length,
+    }).map((_, i) => i);
+    const yAxis = Array.from({ length: tr.noise_gyro["hist2d_sm"].length }).map(
+      (_, i) => i,
+    );
 
     const option = {
       tooltip: {},

@@ -14,8 +14,10 @@ import { ResponsePlotter } from "./response.plotter";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik/types/src/server-index";
 import styles from "./pid-toolbox.module.css";
 import { PIDToolboxStatusDialog } from "./pid-toolbox-status-dialog";
-import { AnalyzerStatus, AnalyzerStepStatus } from "./analyzer-status";
+import type { AnalyzerStatus } from "./analyzer-status";
+import { AnalyzerStepStatus } from "./analyzer-status";
 import { InlineSpinner } from "../inline-spinner/inline-spinner";
+import type { ChangeEvent } from "react";
 
 type AnalyzerStep =
   | "PROCESSING_MAIN_BBL"
@@ -75,8 +77,8 @@ export const PIDToolbox = component$(() => {
         traceChartRef.value!,
         throttleChartRef.value!,
         strengthChartRef.value!,
-        gyroVsThrottleChartRef.value!
-      )
+        gyroVsThrottleChartRef.value!,
+      ),
     );
     plotter.value!.setData(data);
   });
@@ -116,7 +118,7 @@ export const PIDToolbox = component$(() => {
           [stepType]: analyzerStatus.value.progress![stepType] + 1,
         },
       };
-    }
+    },
   );
 
   const updateAnalyzerStatus = $((step: AnalyzerStep, payload?: any) => {
@@ -240,16 +242,16 @@ export const PIDToolbox = component$(() => {
 
         const bytes = await file.arrayBuffer();
         const uint8_view = new Uint8Array(bytes);
-        alert('now analyzing');
+        alert("now analyzing");
         const stepResponseResult = await analyzer.value!.analyze(
           uint8_view,
           (status: string, payload: any) => {
             updateAnalyzerStatus(status as AnalyzerStep, payload);
-          }
+          },
         );
 
         // showPlots.value = true;
-        alert('now plotting');
+        alert("now plotting");
         plotStepResponse(stepResponseResult[0]);
       } finally {
         analyzerStatus.value = {
@@ -268,7 +270,7 @@ export const PIDToolbox = component$(() => {
       if (plotter.value) {
         plotter.value.resize();
       }
-    })
+    }),
   );
 
   if (analyzerStatus.value.state === "loading") {
@@ -298,10 +300,9 @@ export const PIDToolbox = component$(() => {
         <select
           value={analyzerActiveAxis.value}
           onChange$={(e) => {
-            analyzerActiveAxis.value = e!.target!.value as
-              | "roll"
-              | "pitch"
-              | "yaw";
+            analyzerActiveAxis.value = (
+              e as unknown as ChangeEvent<HTMLSelectElement>
+            ).target.value as "roll" | "pitch" | "yaw";
           }}
         >
           <option value="roll">Roll</option>
