@@ -192,7 +192,7 @@ export class ResponsePlotter {
     const data: Array<[number, number, number]> = [];
 
     tr.noise_gyro.hist2d_sm.forEach((row, xIndex) => {
-      return row.forEach((value: number, yIndex: number) => {
+      return row.forEach((value, yIndex) => {
         data.push([yIndex, xIndex, value + 1]);
       });
     });
