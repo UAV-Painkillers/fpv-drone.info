@@ -2,7 +2,7 @@
   "name": "fpv-drone.info",
   "description": "News, Guides, Reviews and more for the FPV Community",
   "engines": {
-    "node": ">=15.0.0"
+    "node": "^20.10.0"
   },
   "private": true,
   "trustedDependencies": [
