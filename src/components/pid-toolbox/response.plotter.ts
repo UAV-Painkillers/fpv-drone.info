@@ -166,7 +166,7 @@ export class ResponsePlotter {
         {
           name: "step response",
           type: "line",
-          data: useHighMask ? resp_high[0] : resp_low[0],
+          data: useHighMask ? resp_high![0] : resp_low[0],
         },
       ],
       grid: {
@@ -186,107 +186,12 @@ export class ResponsePlotter {
     this.plotAll();
   }
 
-  private checkLimsList(): boolean {
-    if (!Array.isArray(this.noise_bounds)) {
-      return false;
-    }
-
-    if (this.noise_bounds.length !== 4) {
-      return false;
-    }
-
-    if (
-      this.noise_bounds.every((item) => {
-        if (!Array.isArray(item)) {
-          return false;
-        }
-
-        if (item.length !== 2) {
-          return false;
-        }
-
-        return item[1] > item[0];
-      })
-    ) {
-      return true;
-    }
-
-    return false;
-  }
-
-  private calculateMaxNoiseAndLims() {
-    if (this.checkLimsList()) {
-      return this.noise_bounds;
-    }
-
-    const maxNoiseGyro =
-      Math.max(
-        this.data.roll.noise_gyro["max"],
-        this.data.pitch.noise_gyro["max"],
-        this.data.yaw.noise_gyro["max"],
-      ) + 1;
-    const maxNoiseDebug =
-      Math.max(
-        this.data.roll.noise_debug["max"],
-        this.data.pitch.noise_debug["max"],
-        this.data.yaw.noise_debug["max"],
-      ) + 1;
-    const maxNoiseD =
-      Math.max(
-        this.data.roll.noise_d["max"],
-        this.data.pitch.noise_d["max"],
-        this.data.yaw.noise_d["max"],
-      ) + 1;
-
-    const meanspec = [
-      this.data.roll.noise_gyro["hist2d_sm"].reduce(
-        (a: number, b: number) => a + b,
-        0,
-      ) / this.data.roll.noise_gyro["hist2d_sm"].length,
-      this.data.pitch.noise_gyro["hist2d_sm"].reduce(
-        (a: number, b: number) => a + b,
-        0,
-      ) / this.data.pitch.noise_gyro["hist2d_sm"].length,
-      this.data.yaw.noise_gyro["hist2d_sm"].reduce(
-        (a: number, b: number) => a + b,
-        0,
-      ) / this.data.yaw.noise_gyro["hist2d_sm"].length,
-    ];
-
-    const thresh = 100;
-    const mask = this.data.roll.noise_gyro["freq_axis"].map((value: number) =>
-      value >= thresh ? 1 : 0,
-    );
-    const meanspecMax = Math.max(
-      ...meanspec.map((value: number, index: number) => value * mask[index]),
-    );
-
-    this.noise_bounds = [
-      [1, maxNoiseGyro],
-      [1, maxNoiseDebug],
-      [1, maxNoiseD],
-      [0, meanspecMax * 1.5],
-    ];
-
-    if (this.noise_bounds[0][1] === 1) {
-      this.noise_bounds[0][1] = 100;
-    }
-    if (this.noise_bounds[1][1] === 1) {
-      this.noise_bounds[1][1] = 100;
-    }
-    if (this.noise_bounds[2][1] === 1) {
-      this.noise_bounds[2][1] = 100;
-    }
-
-    return this.noise_bounds;
-  }
-
   private plotGyroVsThrottleFrequencyHeatmap() {
-    const tr = this.data[this.activeAxis];
+    const tr = this.data![this.activeAxis];
 
     const data: Array<[number, number, number]> = [];
 
-    tr.noise_gyro["hist2d_sm"].forEach((row: number[], xIndex: number) => {
+    tr.noise_gyro.hist2d_sm.forEach((row, xIndex) => {
       return row.forEach((value: number, yIndex: number) => {
         data.push([yIndex, xIndex, value + 1]);
       });
@@ -342,8 +247,6 @@ export class ResponsePlotter {
     if (!this.data) {
       throw new Error("No data to plot");
     }
-
-    this.calculateMaxNoiseAndLims();
 
     this.plotTrace();
     this.plotThrottle();
