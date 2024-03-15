@@ -242,7 +242,6 @@ export const PIDToolbox = component$(() => {
 
         const bytes = await file.arrayBuffer();
         const uint8_view = new Uint8Array(bytes);
-        alert("now analyzing");
         const stepResponseResult = await analyzer.value!.analyze(
           uint8_view,
           (status: string, payload: any) => {
@@ -250,8 +249,7 @@ export const PIDToolbox = component$(() => {
           },
         );
 
-        // showPlots.value = true;
-        alert("now plotting");
+        showPlots.value = true;
         plotStepResponse(stepResponseResult[0]);
       } finally {
         analyzerStatus.value = {

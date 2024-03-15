@@ -28,13 +28,12 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: max-content max-content;
   grid-template-areas:
-    "gyroNoise topRight"
+    "noiseGyro topRight"
     "bottom bottom";
   gap: 15px;
-  min-height: 400px;
 }
 
 .noiseGyro {
-  grid-area: topLeft;
+  grid-area: noiseGyro;
   aspect-ratio: 1;
 }

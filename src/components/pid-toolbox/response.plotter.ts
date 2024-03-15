@@ -6,12 +6,8 @@ type Axis = "roll" | "pitch" | "yaw";
 export class ResponsePlotter {
   private activeAxis: Axis = "roll";
   private data: PIDAnalyzerResult | null = null;
-  private noise_bounds = [
-    [1, 10.1],
-    [1, 100],
-    [1, 100],
-    [0, 4],
-  ];
+  private noiseChartBoundsMin = 1;
+  private noiseChartBoundsMax = 20;
 
   private traceChart: echarts.ECharts;
   private throttleChart: echarts.ECharts;
@@ -215,8 +211,8 @@ export class ResponsePlotter {
         data: yAxis,
       },
       visualMap: {
-        min: this.noise_bounds[0][0],
-        max: this.noise_bounds[0][1],
+        min: this.noiseChartBoundsMin,
+        max: this.noiseChartBoundsMax,
         calculable: true,
         realtime: false,
         inRange: {
