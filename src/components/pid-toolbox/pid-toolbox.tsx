@@ -251,6 +251,12 @@ export const PIDToolbox = component$(() => {
 
         showPlots.value = true;
         plotStepResponse(stepResponseResult[0]);
+
+        setTimeout(() => {
+          if (plotter.value) {
+            plotter.value.resize();
+          }
+        }, 150);
       } finally {
         analyzerStatus.value = {
           ...analyzerStatus.value,
