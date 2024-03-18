@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useContextProvider, useStore } from "@builder.io/qwik";
 import {
   QwikCityProvider,
   RouterOutlet,
@@ -8,6 +8,8 @@ import {
 import "./normalize.css";
 import "./global.css";
 import { RouterHead } from "./components/shared/router-head/router-head";
+import type { AppContextState } from "./app.ctx";
+import { AppContext } from "./app.ctx";
 
 export default component$(() => {
   /**
@@ -17,11 +19,12 @@ export default component$(() => {
    * Don't remove the `<head>` and `<body>` elements.
    */
 
+  const appContextData = useStore<AppContextState>({ showPageHeader: true });
+  useContextProvider(AppContext, appContextData);
+
   return (
     <QwikCityProvider>
       <head>
-        <meta charSet="utf-8" />
-        <link rel="manifest" href="/manifest.json" />
         <RouterHead />
         <ServiceWorkerRegister />
       </head>

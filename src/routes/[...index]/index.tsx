@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import type { DocumentHead, DocumentLink } from "@builder.io/qwik-city";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import {
   fetchOneEntry,
@@ -64,7 +64,17 @@ export const head: DocumentHead = ({ resolveValue }) => {
     };
   }
 
+  const links: DocumentLink[] = [];
+
+  if (builderContent.data?.pwaAlternativeManifestName) {
+    links.push({
+      rel: "manifest",
+      href: `/manifests/${builderContent.data.pwaAlternativeManifestName}.manifest.json`,
+    });
+  }
+
   return {
     title: builderContent.data?.title,
+    links,
   };
 };

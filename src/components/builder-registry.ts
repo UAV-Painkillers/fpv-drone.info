@@ -10,6 +10,7 @@ import { PageHeadlineRegistryDefinition } from "./shared/page-headline/page-head
 import { TextRegistryDefinition } from "./shared/text/text";
 import { TLDRRegistryDefinition } from "./shared/tldr/tldr";
 import { PIDToolboxRegistryDefinition } from "./pid-toolbox/pid-toolbox";
+import { PWAInstallButtonRegistryDefinition } from "./pwa-install-button/pwa-install-button";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -34,4 +35,5 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   NewsRegistryDefinition,
   ProductRegistryDefinition,
   PIDToolboxRegistryDefinition,
+  PWAInstallButtonRegistryDefinition,
 ];

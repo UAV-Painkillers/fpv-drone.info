@@ -9,6 +9,8 @@ import {
   noSerialize,
   useTask$,
   useOnWindow,
+  useComputed$,
+  useContext,
 } from "@builder.io/qwik";
 import { ResponsePlotter } from "./response.plotter";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik/types/src/server-index";
@@ -18,6 +20,16 @@ import type { AnalyzerStatus } from "./analyzer-status";
 import { AnalyzerStepStatus } from "./analyzer-status";
 import { InlineSpinner } from "../inline-spinner/inline-spinner";
 import type { ChangeEvent } from "react";
+import classNames from "classnames";
+import { AppContext } from "~/app.ctx";
+import { useLocation } from "@builder.io/qwik-city";
+
+/**
+ * TODO: List
+ * - [ ] Split into smaller components/functions/files
+ * - [ ] Multiple logs in one plot
+ * - [ ] latency plot (ask discord people what it is)
+ */
 
 type AnalyzerStep =
   | "PROCESSING_MAIN_BBL"
@@ -36,10 +48,15 @@ type AnalyzerStep =
   | "PID_ANALYSIS_COMPLETE";
 
 export const PIDToolbox = component$(() => {
-  const traceChartRef = useSignal<HTMLDivElement>();
-  const throttleChartRef = useSignal<HTMLDivElement>();
-  const strengthChartRef = useSignal<HTMLDivElement>();
-  const gyroVsThrottleChartRef = useSignal<HTMLDivElement>();
+  const responseTraceChartRef = useSignal<HTMLDivElement>();
+  const responseThrottleChartRef = useSignal<HTMLDivElement>();
+  const responseStrengthChartRef = useSignal<HTMLDivElement>();
+  const noiseGyroChartRef = useSignal<HTMLDivElement>();
+  const noiseGyroDebugChartRef = useSignal<HTMLDivElement>();
+  const noiseDTermChartRef = useSignal<HTMLDivElement>();
+  const noiseFrequenciesGyroChartRef = useSignal<HTMLDivElement>();
+  const noiseFrequenciesGyroDebugChartRef = useSignal<HTMLDivElement>();
+  const noiseFrequenciesDTermChartRef = useSignal<HTMLDivElement>();
 
   const analyzerStatus = useSignal<AnalyzerStatus>({
     state: "loading",
@@ -65,22 +82,57 @@ export const PIDToolbox = component$(() => {
   const analyzer = useSignal<NoSerialize<PIDAnalyzer>>();
   const plotter = useSignal<NoSerialize<ResponsePlotter>>();
 
+  const analyzerResults = useSignal<NoSerialize<PIDAnalyzerResult[]>>(
+    noSerialize([]),
+  );
+  const selectedAnalyzerResultIndex = useSignal(0);
+  const analyzerResult = useComputed$(() => {
+    return analyzerResults.value![selectedAnalyzerResultIndex.value] ?? null;
+  });
+
   const plotStepResponse = $((data: PIDAnalyzerResult) => {
-    console.log({
-      traceChartRef: traceChartRef.value,
-      throttleChartRef: throttleChartRef.value,
-      strengthChartRef: strengthChartRef.value,
-      gyroVsThrottleChartRef: gyroVsThrottleChartRef.value,
-    });
     plotter.value = noSerialize(
       new ResponsePlotter(
-        traceChartRef.value!,
-        throttleChartRef.value!,
-        strengthChartRef.value!,
-        gyroVsThrottleChartRef.value!,
+        responseTraceChartRef.value!,
+        responseThrottleChartRef.value!,
+        responseStrengthChartRef.value!,
+        noiseGyroChartRef.value!,
+        noiseGyroDebugChartRef.value!,
+        noiseDTermChartRef.value!,
+        noiseFrequenciesGyroChartRef.value!,
+        noiseFrequenciesGyroDebugChartRef.value!,
+        noiseFrequenciesDTermChartRef.value!,
       ),
     );
     plotter.value!.setData(data);
+  });
+
+  const appContext = useContext(AppContext);
+  const location = useLocation();
+
+  const updatePageHeaderVisibility = $(() => {
+    console.log("updating visibility");
+
+    let displayMode = "browser";
+    const mqStandAlone = "(display-mode: standalone)";
+    if (
+      (navigator as any).standalone ||
+      window.matchMedia(mqStandAlone).matches
+    ) {
+      displayMode = "standalone";
+    }
+
+    appContext.showPageHeader = displayMode !== "standalone";
+  });
+
+  useOnWindow("load", updatePageHeaderVisibility);
+  useOnWindow("resize", updatePageHeaderVisibility);
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    track(location);
+
+    updatePageHeaderVisibility();
   });
 
   useTask$(({ track }) => {
@@ -100,7 +152,9 @@ export const PIDToolbox = component$(() => {
         state: "loading",
       };
       analyzer.value = noSerialize(new PIDAnalyzer());
-      await analyzer.value!.init(`${location.origin}/pid-analyer-dependencies`);
+      await analyzer.value!.init(
+        `${location.url.origin}/pid-analyer-dependencies`,
+      );
     } finally {
       analyzerStatus.value = {
         ...analyzerStatus.value,
@@ -222,6 +276,46 @@ export const PIDToolbox = component$(() => {
     }
   });
 
+  useTask$(({ track }) => {
+    track(analyzerResult);
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (analyzerResult.value) {
+      plotStepResponse(analyzerResult.value);
+    }
+  });
+
+  const openFile = $(async (file?: File) => {
+    if (!file) {
+      console.warn("No file provided");
+      return;
+    }
+
+    try {
+      analyzerStatus.value = {
+        ...analyzerStatus.value,
+        state: "running",
+      };
+
+      const bytes = await file.arrayBuffer();
+      const uint8_view = new Uint8Array(bytes);
+      const stepResponseResult = await analyzer.value!.analyze(
+        uint8_view,
+        (status: string, payload: any) => {
+          updateAnalyzerStatus(status as AnalyzerStep, payload);
+        },
+      );
+
+      showPlots.value = true;
+      analyzerResults.value = noSerialize(stepResponseResult);
+    } finally {
+      analyzerStatus.value = {
+        ...analyzerStatus.value,
+        state: "idle",
+      };
+    }
+  });
+
   const openFilePicker = $(() => {
     const input = document.createElement("input") as HTMLInputElement;
     input.type = "file";
@@ -234,35 +328,7 @@ export const PIDToolbox = component$(() => {
         return;
       }
 
-      try {
-        analyzerStatus.value = {
-          ...analyzerStatus.value,
-          state: "running",
-        };
-
-        const bytes = await file.arrayBuffer();
-        const uint8_view = new Uint8Array(bytes);
-        const stepResponseResult = await analyzer.value!.analyze(
-          uint8_view,
-          (status: string, payload: any) => {
-            updateAnalyzerStatus(status as AnalyzerStep, payload);
-          },
-        );
-
-        showPlots.value = true;
-        plotStepResponse(stepResponseResult[0]);
-
-        setTimeout(() => {
-          if (plotter.value) {
-            plotter.value.resize();
-          }
-        }, 150);
-      } finally {
-        analyzerStatus.value = {
-          ...analyzerStatus.value,
-          state: "idle",
-        };
-      }
+      openFile(file);
     };
 
     input.click();
@@ -280,19 +346,72 @@ export const PIDToolbox = component$(() => {
   if (analyzerStatus.value.state === "loading") {
     return (
       <div>
-        <h1>Loading analyzer...</h1>
         <center>
-          <InlineSpinner />
+          {/*
+          <InlineSpinner
+            id="pid-analyzer-loading-indicator"
+            class={styles.analyzerLoadingSpinner}
+          /> */}
+
+          <img
+            height="300"
+            width="300"
+            style={{
+              height: "30vh !important",
+              width: "auto",
+              display: "block",
+              transition: "height .4s ease",
+            }}
+            // eslint-disable-next-line qwik/jsx-img
+            src="/original_images/racoon_processing-cropped.gif"
+          />
+
+          <br />
+          <label for="pid-analyzer-loading-indicator">
+            Loading analyzer...
+          </label>
         </center>
       </div>
     );
   }
 
+  const isDroppingFile = useSignal(false);
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(() => {
+    window.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      isDroppingFile.value = true;
+    });
+
+    window.addEventListener("dragleave", (e) => {
+      e.preventDefault();
+      isDroppingFile.value = false;
+    });
+
+    window.addEventListener("drop", (e) => {
+      e.preventDefault();
+      isDroppingFile.value = false;
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      openFile(e.dataTransfer?.files?.[0]);
+    });
+  });
+
   return (
-    <>
-      <button type="button" onClick$={openFilePicker}>
+    <div
+      class={classNames(styles.wrapper, {
+        [styles.wrapperDropover]: isDroppingFile.value,
+      })}
+    >
+      <button
+        type="button"
+        onClick$={openFilePicker}
+        class={classNames("button", styles.uploadButton, {
+          [styles.uploadButtonDropover]: isDroppingFile.value,
+        })}
+      >
         {analyzerStatus.value.state === "running" && <InlineSpinner />}
-        Open Blackbox Log
+        Click to open a Blackbox File (.bbl) or drag and drop it here
       </button>
 
       <PIDToolboxStatusDialog
@@ -301,32 +420,97 @@ export const PIDToolbox = component$(() => {
       />
 
       <div style={{ display: showPlots.value ? undefined : "none" }}>
-        <select
-          value={analyzerActiveAxis.value}
-          onChange$={(e) => {
-            analyzerActiveAxis.value = (
-              e as unknown as ChangeEvent<HTMLSelectElement>
-            ).target.value as "roll" | "pitch" | "yaw";
-          }}
-        >
-          <option value="roll">Roll</option>
-          <option value="pitch">Pitch</option>
-          <option value="yaw">Yaw</option>
-        </select>
+        <nav class={styles.plotNavigation}>
+          <select
+            class="button"
+            value={selectedAnalyzerResultIndex.value}
+            onChange$={(e) => {
+              selectedAnalyzerResultIndex.value = (
+                e as unknown as ChangeEvent<HTMLSelectElement>
+              ).target.value as unknown as number;
+            }}
+          >
+            {analyzerResults.value?.map((_, i) => (
+              <option key={`flightlog-select-option-${i}`} value={i}>
+                {`Flightlog #${i + 1}`}
+              </option>
+            ))}
+          </select>
 
-        <div class={styles.responsePlotGrid}>
-          <div class={styles.responseTrace} ref={traceChartRef}></div>
+          <select
+            class="button"
+            value={analyzerActiveAxis.value}
+            onChange$={(e) => {
+              analyzerActiveAxis.value = (
+                e as unknown as ChangeEvent<HTMLSelectElement>
+              ).target.value as "roll" | "pitch" | "yaw";
+            }}
+          >
+            <option value="roll" selected={analyzerActiveAxis.value === "roll"}>
+              Axis: Roll
+            </option>
+            <option
+              value="pitch"
+              selected={analyzerActiveAxis.value === "pitch"}
+            >
+              Axis: Pitch
+            </option>
+            <option value="yaw" selected={analyzerActiveAxis.value === "yaw"}>
+              Axis: Yaw
+            </option>
+          </select>
+        </nav>
 
-          <div class={styles.responseStrength} ref={strengthChartRef}></div>
-
-          <div class={styles.responseThrottle} ref={throttleChartRef}></div>
-        </div>
+        <h2 style={{ marginBottom: "1rem" }}>Filter Tuning</h2>
 
         <div class={styles.noisePlotGrid}>
-          <div class={styles.noiseGyro} ref={gyroVsThrottleChartRef}></div>
+          <div class={styles.noiseGyroDebug} ref={noiseGyroDebugChartRef}></div>
+          <div class={styles.noiseGyro} ref={noiseGyroChartRef}></div>
+          <div class={styles.noiseDTerm} ref={noiseDTermChartRef}></div>
+          <div
+            class={styles.noiseFrequenciesGyro}
+            ref={noiseFrequenciesGyroChartRef}
+          ></div>
+          <div
+            class={styles.noiseFrequenciesGyroDebug}
+            ref={noiseFrequenciesGyroDebugChartRef}
+          ></div>
+          <div
+            class={styles.noiseFrequenciesDTerm}
+            ref={noiseFrequenciesDTermChartRef}
+          ></div>
         </div>
+
+        <hr />
+        <h2 style={{ marginBottom: "1rem" }}>PID Response Tuning</h2>
+
+        <div class={styles.responsePlotGrid}>
+          <div class={styles.responseTrace} ref={responseTraceChartRef}></div>
+
+          <div
+            class={styles.responseStrength}
+            ref={responseStrengthChartRef}
+          ></div>
+
+          <div
+            class={styles.responseThrottle}
+            ref={responseThrottleChartRef}
+          ></div>
+        </div>
+
+        {/* not beautiful but needed for the sticky navigation to not overlay the last chart */}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
-    </>
+    </div>
   );
 });
 

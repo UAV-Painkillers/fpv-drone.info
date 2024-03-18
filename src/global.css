@@ -1,9 +1,18 @@
 :root {
-  --text-color: #3e3e3e;
+  --base-green: #16c99e;
+  --base-blue: #1653c9;
+  --base-black: #3e3e3e;
+  --base-white: #ffffff;
+
+  --success-color: #16c969;
+  --warning-color: #c9b716;
+  --alarm-color: #c91652;
+
+  --text-color: var(--base-black);
   --body-background: 255, 255, 255;
 
-  --anchor-gradient-start: #16c99e;
-  --anchor-gradient-end: #1653c9;
+  --anchor-gradient-start: var(--base-green);
+  --anchor-gradient-end: var(--base-blue);
 
   --anchor-color: linear-gradient(
     var(--anchor-gradient-start),
@@ -20,11 +29,7 @@
   --breakpoint-desktop: 1200px;
 
   --table-row-even-background: hsl(220, 80%, 95%);
-  --table-row-uneven-background: white;
-
-  --success-color: #16c969;
-  --warning-color: #c9b716;
-  --alarm-color: #c91652;
+  --table-row-uneven-background: var(--base-white);
 }
 
 body {
@@ -225,4 +230,87 @@ tr:nth-child(even) td {
 
 tr:nth-child(odd) td {
   background-color: var(--table-row-uneven-background);
+}
+
+/* CSS */
+.button {
+  /* from base-green to base-blue */
+  --button-background: linear-gradient(
+    45deg,
+    var(--base-green),
+    var(--base-blue)
+  );
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: var(--base-white);
+  background: var(--button-background);
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.3s ease;
+}
+
+.button:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    var(--base-black),
+    var(--base-white),
+    var(--base-black)
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.button:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--button-background);
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.button.floating {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  /* make round */
+  border-radius: 50%;
+  aspect-ratio: 1;
 }

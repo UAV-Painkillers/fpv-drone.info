@@ -25,7 +25,8 @@
     "start": "vite --open --mode ssr",
     "qwik": "qwik",
     "upgrade-packages": "npx npm-check-updates --interactive",
-    "vercell-install": "git submodule init && git submodule update && npm ci"
+    "vercell-install": "git submodule init && git submodule update && npm ci",
+    "icon_pwa:update": "npx tsx ./scripts/icon_and_pwa.ts"
   },
   "devDependencies": {
     "@builder.io/dev-tools": "^0.2.19",
@@ -50,7 +51,7 @@
     "@builder.io/qwik-worker": "^0.0.1",
     "@fontsource-variable/montserrat": "^5.0.17",
     "@fontsource/libre-barcode-128-text": "^5.0.18",
-    "@uav.painkillers/pid-analyzer-wasm": "^2.0.5",
+    "@uav.painkillers/pid-analyzer-wasm": "^2.0.7",
     "@vercel/analytics": "^1.2.2",
     "classnames": "^2.5.1",
     "echarts": "^5.5.0",

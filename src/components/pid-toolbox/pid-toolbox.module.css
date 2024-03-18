@@ -1,3 +1,56 @@
+.wrapper {
+  transition: border-color 0.3s ease;
+  border: 2px dashed transparent;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.wrapperDropover {
+  padding: 1rem;
+  border-color: var(--base-black);
+}
+
+.analyzerLoadingSpinner,
+.analyzerLoadingSpinner,
+.analyzerLoadingSpinner:before {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.analyzerLoadingSpinner {
+  margin-bottom: 1rem !important;
+}
+
+.uploadButton {
+  margin-bottom: 2rem;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
+  height: 3rem;
+  width: 100%;
+}
+
+.uploadButtonDropover {
+  margin-bottom: 0;
+  height: 15rem;
+}
+
+.plotNavigation {
+  width: 100%;
+  position: sticky;
+  top: 100%;
+  transform: translateY(calc(-100% - 1rem));
+  z-index: 1;
+  background: var(--base-black);
+  padding: 10px;
+  display: flex;
+  /* all items to the left but with gaps between */
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  border-radius: 10px;
+}
+
 .responsePlotGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -6,6 +59,8 @@
     "trace strength"
     "throttle throttle";
   gap: 15px;
+  row-gap: 25px;
+  align-items: start;
 }
 
 .responseTrace {
@@ -20,20 +75,46 @@
 
 .responseThrottle {
   grid-area: throttle;
-  aspect-ratio: 15/1;
+  aspect-ratio: 4/1;
 }
 
 .noisePlotGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: max-content max-content;
+  grid-template-rows: max-content;
   grid-template-areas:
-    "noiseGyro topRight"
-    "bottom bottom";
+    "noiseGyroDebug noiseGyro"
+    "noiseDTerm noiseFrequenciesGyro"
+    "noiseFrequenciesGyroDebug noiseFrequenciesDTerm";
   gap: 15px;
 }
 
 .noiseGyro {
   grid-area: noiseGyro;
+  aspect-ratio: 1;
+}
+
+.noiseGyroDebug {
+  grid-area: noiseGyroDebug;
+  aspect-ratio: 1;
+}
+
+.noiseDTerm {
+  grid-area: noiseDTerm;
+  aspect-ratio: 1;
+}
+
+.noiseFrequenciesGyro {
+  grid-area: noiseFrequenciesGyro;
+  aspect-ratio: 1;
+}
+
+.noiseFrequenciesGyroDebug {
+  grid-area: noiseFrequenciesGyroDebug;
+  aspect-ratio: 1;
+}
+
+.noiseFrequenciesDTerm {
+  grid-area: noiseFrequenciesDTerm;
   aspect-ratio: 1;
 }
