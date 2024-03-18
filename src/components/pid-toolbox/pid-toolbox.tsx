@@ -29,6 +29,7 @@ import { useLocation } from "@builder.io/qwik-city";
  * - [ ] Split into smaller components/functions/files
  * - [ ] Multiple logs in one plot
  * - [ ] latency plot (ask discord people what it is)
+ * - [ ] analyzer status dialog -> beter readability
  */
 
 type AnalyzerStep =
