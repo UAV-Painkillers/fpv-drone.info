@@ -131,6 +131,7 @@ export interface ProductProps {
     esc?: TechnicalSpecsESC;
   };
   manuals?: Array<{ label: string; pdf?: string; image?: string }>;
+  attachments?: Array<{label: string, file?: string}>;
 }
 
 type SpecPropTypes = keyof Required<ProductProps>["technicalSpecs"];
@@ -380,6 +381,21 @@ export const Product = component$((props: ProductProps) => {
                     class={styles.manualsImage}
                   />
                 </>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {(props.attachments?.length ?? 0) > 0 && (
+        <section>
+          <h3>Attachments</h3>
+          {props.attachments?.map(({ label, file }, index) => (
+            <div key={`attachment-${label}-${index}`}>
+              {file && (
+                <Link href={file} target="_blank" download class="anchor">
+                  Download {label}
+                </Link>
               )}
             </div>
           ))}
@@ -711,6 +727,26 @@ export const ProductRegistryDefinition: RegisteredComponent = {
           type: "file",
           allowedFileTypes: ["pdf"],
           required: false,
+        },
+      ],
+    },
+    {
+      name: "attachments",
+      friendlyName: "Attachments",
+      type: "array",
+      required: false,
+      subFields: [
+        {
+          name: "label",
+          friendlyName: "Label",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "file",
+          friendlyName: "File",
+          type: "file",
+          required: true,
         },
       ],
     },
