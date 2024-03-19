@@ -51,7 +51,7 @@
     "@builder.io/qwik-worker": "^0.0.1",
     "@fontsource-variable/montserrat": "^5.0.17",
     "@fontsource/libre-barcode-128-text": "^5.0.18",
-    "@uav.painkillers/pid-analyzer-wasm": "^2.0.7",
+    "@uav.painkillers/pid-analyzer-wasm": "^3.0.7",
     "@vercel/analytics": "^1.2.2",
     "classnames": "^2.5.1",
     "echarts": "^5.5.0",

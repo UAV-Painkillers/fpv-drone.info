@@ -452,11 +452,19 @@ export class ResponsePlotter {
   }
 
   private plotAll() {
-    this.plotResponseTrace();
-    this.plotResponseThrottle();
-    this.plotResponseStrength();
-    this.plotNoise();
-    this.plotNoiseFrequencies();
+    [
+      this.plotResponseTrace.bind(this),
+      this.plotResponseThrottle.bind(this),
+      this.plotResponseStrength.bind(this),
+      this.plotNoise.bind(this),
+      this.plotNoiseFrequencies.bind(this),
+    ].forEach((renderPlot) => {
+      try {
+        renderPlot();
+      } catch (e) {
+        console.error(e);
+      }
+    });
   }
 
   public resize() {

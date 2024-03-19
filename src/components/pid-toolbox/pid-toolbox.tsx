@@ -1,4 +1,4 @@
-import type { PIDAnalyzerResult } from "@uav.painkillers/pid-analyzer-wasm";
+import type { DecoderResult, PIDAnalyzerResult } from "@uav.painkillers/pid-analyzer-wasm";
 import { PIDAnalyzer } from "@uav.painkillers/pid-analyzer-wasm";
 import type { NoSerialize } from "@builder.io/qwik";
 import {
@@ -166,10 +166,8 @@ export const PIDToolbox = component$(() => {
         ...analyzerStatus.value,
         state: "loading",
       };
-      analyzer.value = noSerialize(new PIDAnalyzer());
-      await analyzer.value!.init(
-        `${location.url.origin}/pid-analyer-dependencies`
-      );
+      analyzer.value = noSerialize(new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`));
+      await analyzer.value!.init();
     } finally {
       analyzerStatus.value = {
         ...analyzerStatus.value,
@@ -287,10 +285,12 @@ export const PIDToolbox = component$(() => {
       }
 
       default:
-        throw new Error(`Unknown step: ${step}`);
+        console.warn("Unknown step", step);
+        // throw new Error(`Unknown step: ${step}`);
     }
   });
 
+  const subLogs = useSignal<NoSerialize<DecoderResult[]>>(noSerialize([]));
   const openFile = $(async (file?: File) => {
     if (!file) {
       console.warn("No file provided");
@@ -304,9 +304,13 @@ export const PIDToolbox = component$(() => {
       };
 
       const bytes = await file.arrayBuffer();
-      const uint8_view = new Uint8Array(bytes);
+      const decoderResults = await analyzer.value!.decodeMainBBL(bytes);
+      subLogs.value = noSerialize(decoderResults);
+
+      // TODO: only analyze whats needed
+
       const stepResponseResult = await analyzer.value!.analyze(
-        uint8_view,
+        decoderResults,
         (status: string, payload: any) => {
           updateAnalyzerStatus(status as AnalyzerStep, payload);
         }
