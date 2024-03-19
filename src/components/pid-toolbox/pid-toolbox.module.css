@@ -41,7 +41,7 @@
   top: 100%;
   transform: translateY(calc(-100% - 1rem));
   z-index: 1;
-  background: var(--base-black);
+  background: var(--text-color);
   padding: 10px;
   display: flex;
   /* all items to the left but with gaps between */
@@ -49,6 +49,7 @@
   gap: 10px;
   align-items: center;
   border-radius: 10px;
+  color: rgb(var(--body-background));
 }
 
 .responsePlotGrid {

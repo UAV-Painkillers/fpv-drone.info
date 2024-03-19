@@ -26,7 +26,8 @@ type ChartBoundariesType = ResponseChartType | NoiseFields | "frequencies";
 
 export class ResponsePlotter {
   private activeAxis: Axis = "roll";
-  private data: PIDAnalyzerResult | null = null;
+  private activeMainIndex = 0;
+  private logs: PIDAnalyzerResult[] = [];
   private readonly chartBoundaries: Partial<
     Record<ChartBoundariesType, { min: number; max: number }>
   > = {
@@ -84,7 +85,7 @@ export class ResponsePlotter {
     noiseDTermElement: HTMLElement,
     frequenciesGyro: HTMLElement,
     frequenciesDebug: HTMLElement,
-    frequenciesDTerm: HTMLElement,
+    frequenciesDTerm: HTMLElement
   ) {
     this.charts = {
       responseTrace: echarts.init(responseTraceContainer),
@@ -99,25 +100,34 @@ export class ResponsePlotter {
     };
   }
 
-  private mapTimeToSeconds(time: number[]) {
+  private mapTimeToSeconds(time?: number[]) {
+    if (!time) {
+      return [];
+    }
+
     return time.map((t) => Math.round(t));
   }
 
-  private plotResponseTrace() {
-    const gyro = this.data![this.activeAxis].gyro;
-    const input = this.data![this.activeAxis].input;
-    const time = this.data![this.activeAxis].time;
+  private indexToLogName(index: number) {
+    return `Log #${index}`;
+  }
 
-    const traceLimit = Math.max(
-      Math.max(...gyro.map(Math.abs)),
-      Math.max(...input.map(Math.abs)),
+  private plotResponseTrace() {
+    const gyros = this.logs.map((log) => log[this.activeAxis].gyro);
+    const inputs = this.logs.map((log) => log[this.activeAxis].input);
+    const times = this.logs.map((log) => log[this.activeAxis].time);
+
+    const traceLimits = gyros.map((gyro, index) =>
+      Math.max(...gyro.map(Math.abs), ...inputs[index].map(Math.abs))
     );
+
+    const traceLimit = Math.max(...traceLimits);
 
     this.charts.responseTrace.setOption({
       ...ResponsePlotter.getBaseOptions("PID Response Trace"),
       legend: {},
       xAxis: {
-        data: this.mapTimeToSeconds(time),
+        data: this.mapTimeToSeconds(times[0]),
         axisTick: {
           show: false,
         },
@@ -130,26 +140,31 @@ export class ResponsePlotter {
         },
       },
       series: [
-        {
-          name: `${this.activeAxis} gyro`,
+        ...gyros.map((gyro, index) => ({
+          name: `${this.indexToLogName(index)} gyro`,
           type: "line",
           data: gyro,
           smooth: true,
-        },
-        {
-          name: `${this.activeAxis} loop input`,
+        })),
+        ...inputs.map((input, index) => ({
+          name: `${this.indexToLogName(index)} loop input`,
           type: "line",
           data: input,
           smooth: true,
-        },
+        })),
       ],
     });
   }
 
   private plotResponseThrottle() {
-    const time = this.data![this.activeAxis].time;
-    const tpaPercent = this.data!.headdict.tpa_percent;
-    const throttle = this.data![this.activeAxis].throttle;
+    const firstLog = this.logs[0];
+    if (!firstLog) {
+      return;
+    }
+
+    const time = firstLog[this.activeAxis].time;
+    const tpaPercent = firstLog.headdict.tpa_percent;
+    const throttles = this.logs.map((log) => log[this.activeAxis].throttle);
 
     this.charts.responseThrottle.setOption({
       ...ResponsePlotter.getBaseOptions("Throttle"),
@@ -175,13 +190,13 @@ export class ResponsePlotter {
             color: "red",
           },
         },
-        {
+        ...throttles.map((throttle, index) => ({
           type: "line",
-          name: "throttle %",
+          name: `${this.indexToLogName(index)} throttle %`,
           data: throttle,
           areaStyle: {},
           smooth: true,
-        },
+        })),
       ],
       grid: {
         show: true,
@@ -193,18 +208,28 @@ export class ResponsePlotter {
   }
 
   private plotResponseStrength() {
-    const high_mask: number[] | undefined =
-      this.data![this.activeAxis].high_mask;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const highMaskSum = (high_mask ?? [0]).reduce((a, b) => a + b, 0);
-    const useHighMask = highMaskSum > 0;
+    const firstLog = this.logs[0];
+    if (!firstLog) {
+      return;
+    }
 
-    const time_resp: number[] = this.data![this.activeAxis].time_resp;
-    const resp_high = this.data![this.activeAxis].resp_high;
-    const resp_low = this.data![this.activeAxis].resp_low;
+    const high_masks: Array<number[] | undefined> = this.logs.map(
+      (log) => log[this.activeAxis].high_mask
+    );
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const highMaskSums = high_masks?.map((mask) =>
+      (mask ?? [0]).reduce((a, b) => a + b, 0)
+    );
+    const useHighMasks = highMaskSums.map((sum) => sum > 0);
+
+    const time_resp = firstLog[this.activeAxis].time_resp;
+    const resp_highs = this.logs.map((log) => log[this.activeAxis].resp_high);
+    const resp_lows = this.logs.map((log) => log[this.activeAxis].resp_low);
 
     this.charts.responseStrength.setOption({
       ...ResponsePlotter.getBaseOptions("Step Response"),
+      legend: {},
       xAxis: {
         data: time_resp.map((t) => t.toFixed(1)),
         axisTick: {
@@ -219,11 +244,11 @@ export class ResponsePlotter {
         },
       },
       series: [
-        {
-          name: "step response",
+        ...useHighMasks.map((useHighMask, index) => ({
+          name: this.indexToLogName(index),
           type: "line",
-          data: useHighMask ? resp_high![0] : resp_low[0],
-        },
+          data: useHighMask ? resp_highs[index]![0] : resp_lows[index][0],
+        })),
       ],
       grid: {
         show: true,
@@ -231,8 +256,13 @@ export class ResponsePlotter {
     });
   }
 
-  public setData(data: PIDAnalyzerResult) {
-    this.data = data;
+  public setData(logs: PIDAnalyzerResult[]) {
+    this.logs = logs;
+    this.plotAll();
+  }
+
+  public setActiveMainLog(index: number) {
+    this.activeMainIndex = index;
     this.plotAll();
   }
 
@@ -243,7 +273,12 @@ export class ResponsePlotter {
   }
 
   private plotNoiseForField(fieldName: NoiseFields, chart: echarts.ECharts) {
-    const tr = this.data![this.activeAxis];
+    const activeLog = this.logs[this.activeMainIndex];
+    if (!activeLog) {
+      return;
+    }
+
+    const tr = activeLog![this.activeAxis];
     const fieldValues = tr[fieldName];
 
     const data: Array<[number, number, number]> = [];
@@ -267,7 +302,7 @@ export class ResponsePlotter {
         fieldName
           .split("_")
           .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-          .join(" "),
+          .join(" ")
       ),
       tooltip: {},
       xAxis: {
@@ -328,15 +363,20 @@ export class ResponsePlotter {
 
   private plotFrequenciesForNoiseAxis(
     noiseAxis: NoiseFields,
-    chart: echarts.ECharts,
+    chart: echarts.ECharts
   ) {
-    const tr = this.data![this.activeAxis];
+    const activeLog = this.logs[this.activeMainIndex];
+    if (!activeLog) {
+      return;
+    }
+
+    const tr = activeLog[this.activeAxis];
     const noise = tr[noiseAxis];
 
     const data = noise.hist2d_sm.map((frequencyAxis) => {
       const sumOfAllThrottlePositions = frequencyAxis.reduce(
         (a, b) => a + b,
-        0,
+        0
       );
 
       const meanOverAllThrottlePositions =
@@ -402,20 +442,16 @@ export class ResponsePlotter {
   private plotNoiseFrequencies() {
     this.plotFrequenciesForNoiseAxis(
       "noise_gyro",
-      this.charts.frequencies_gyro,
+      this.charts.frequencies_gyro
     );
     this.plotFrequenciesForNoiseAxis(
       "noise_debug",
-      this.charts.frequencies_debug,
+      this.charts.frequencies_debug
     );
     this.plotFrequenciesForNoiseAxis("noise_d", this.charts.frequencies_d);
   }
 
   private plotAll() {
-    if (!this.data) {
-      throw new Error("No data to plot");
-    }
-
     this.plotResponseTrace();
     this.plotResponseThrottle();
     this.plotResponseStrength();

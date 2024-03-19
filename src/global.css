@@ -240,6 +240,8 @@ tr:nth-child(odd) td {
     var(--base-green),
     var(--base-blue)
   );
+  --button-hover-scale: 1.05;
+
   padding: 0.6em 2em;
   border: none;
   outline: none;
@@ -302,15 +304,28 @@ tr:nth-child(odd) td {
 }
 
 .button:hover {
-  transform: scale(1.05);
+  transform: scale(var(--button-hover-scale));
 }
 
 .button.floating {
+  --button-floating-translateX: -50%;
+
   position: fixed;
-  bottom: 20px;
-  right: 20px;
   z-index: 100;
-  /* make round */
-  border-radius: 50%;
-  aspect-ratio: 1;
+
+  top: 0;
+  left: 50%;
+  transform: translateX(var(--button-floating-translateX));
+
+  padding-block: 1em;
+}
+
+.button.floating,
+.button.floating:after {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.button.floating:hover {
+  transform: scale(var(--button-hover-scale)) translateX(calc(var(--button-floating-translateX) * (2 - var(--button-hover-scale))));
 }

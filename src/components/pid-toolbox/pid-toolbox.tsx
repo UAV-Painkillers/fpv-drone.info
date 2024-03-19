@@ -9,7 +9,6 @@ import {
   noSerialize,
   useTask$,
   useOnWindow,
-  useComputed$,
   useContext,
 } from "@builder.io/qwik";
 import { ResponsePlotter } from "./response.plotter";
@@ -23,13 +22,14 @@ import type { ChangeEvent } from "react";
 import classNames from "classnames";
 import { AppContext } from "~/app.ctx";
 import { useLocation } from "@builder.io/qwik-city";
-
+import { Dialog } from "../shared/dialog/dialog";
 /**
  * TODO: List
  * - [ ] Split into smaller components/functions/files
  * - [ ] Multiple logs in one plot
  * - [ ] latency plot (ask discord people what it is)
  * - [ ] analyzer status dialog -> beter readability
+ * - [ ] better memory handling by posting from python to js as soon as possible
  */
 
 type AnalyzerStep =
@@ -80,32 +80,46 @@ export const PIDToolbox = component$(() => {
   const analyzerActiveAxis = useSignal<"roll" | "pitch" | "yaw">("roll");
   const showPlots = useSignal(false);
 
+  const selectedLogIndexes = useSignal<number[]>([]);
+
   const analyzer = useSignal<NoSerialize<PIDAnalyzer>>();
   const plotter = useSignal<NoSerialize<ResponsePlotter>>();
 
   const analyzerResults = useSignal<NoSerialize<PIDAnalyzerResult[]>>(
-    noSerialize([]),
+    noSerialize([])
   );
-  const selectedAnalyzerResultIndex = useSignal(0);
-  const analyzerResult = useComputed$(() => {
-    return analyzerResults.value![selectedAnalyzerResultIndex.value] ?? null;
+
+  const plotStepResponse = $((logs: PIDAnalyzerResult[]) => {
+    if (!plotter.value) {
+      plotter.value = noSerialize(
+        new ResponsePlotter(
+          responseTraceChartRef.value!,
+          responseThrottleChartRef.value!,
+          responseStrengthChartRef.value!,
+          noiseGyroChartRef.value!,
+          noiseGyroDebugChartRef.value!,
+          noiseDTermChartRef.value!,
+          noiseFrequenciesGyroChartRef.value!,
+          noiseFrequenciesGyroDebugChartRef.value!,
+          noiseFrequenciesDTermChartRef.value!
+        )
+      );
+    }
+
+    plotter.value!.setData(logs);
   });
 
-  const plotStepResponse = $((data: PIDAnalyzerResult) => {
-    plotter.value = noSerialize(
-      new ResponsePlotter(
-        responseTraceChartRef.value!,
-        responseThrottleChartRef.value!,
-        responseStrengthChartRef.value!,
-        noiseGyroChartRef.value!,
-        noiseGyroDebugChartRef.value!,
-        noiseDTermChartRef.value!,
-        noiseFrequenciesGyroChartRef.value!,
-        noiseFrequenciesGyroDebugChartRef.value!,
-        noiseFrequenciesDTermChartRef.value!,
-      ),
-    );
-    plotter.value!.setData(data);
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    track(analyzerResults);
+    track(selectedLogIndexes);
+
+    const logsToShow =
+      analyzerResults.value?.filter((_, i) =>
+        selectedLogIndexes.value.includes(i)
+      ) ?? [];
+
+    plotStepResponse(logsToShow);
   });
 
   const appContext = useContext(AppContext);
@@ -154,7 +168,7 @@ export const PIDToolbox = component$(() => {
       };
       analyzer.value = noSerialize(new PIDAnalyzer());
       await analyzer.value!.init(
-        `${location.url.origin}/pid-analyer-dependencies`,
+        `${location.url.origin}/pid-analyer-dependencies`
       );
     } finally {
       analyzerStatus.value = {
@@ -173,7 +187,7 @@ export const PIDToolbox = component$(() => {
           [stepType]: analyzerStatus.value.progress![stepType] + 1,
         },
       };
-    },
+    }
   );
 
   const updateAnalyzerStatus = $((step: AnalyzerStep, payload?: any) => {
@@ -277,15 +291,6 @@ export const PIDToolbox = component$(() => {
     }
   });
 
-  useTask$(({ track }) => {
-    track(analyzerResult);
-
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (analyzerResult.value) {
-      plotStepResponse(analyzerResult.value);
-    }
-  });
-
   const openFile = $(async (file?: File) => {
     if (!file) {
       console.warn("No file provided");
@@ -304,11 +309,12 @@ export const PIDToolbox = component$(() => {
         uint8_view,
         (status: string, payload: any) => {
           updateAnalyzerStatus(status as AnalyzerStep, payload);
-        },
+        }
       );
 
       showPlots.value = true;
       analyzerResults.value = noSerialize(stepResponseResult);
+      selectedLogIndexes.value = stepResponseResult.map((_, index) => index);
     } finally {
       analyzerStatus.value = {
         ...analyzerStatus.value,
@@ -341,19 +347,13 @@ export const PIDToolbox = component$(() => {
       if (plotter.value) {
         plotter.value.resize();
       }
-    }),
+    })
   );
 
   if (analyzerStatus.value.state === "loading") {
     return (
       <div>
         <center>
-          {/*
-          <InlineSpinner
-            id="pid-analyzer-loading-indicator"
-            class={styles.analyzerLoadingSpinner}
-          /> */}
-
           <img
             height="300"
             width="300"
@@ -398,6 +398,33 @@ export const PIDToolbox = component$(() => {
     });
   });
 
+  const logSelectionOpen = useSignal(false);
+  const onLogSelectionChange = $((index: number) => {
+    const wasSelected = selectedLogIndexes.value.includes(index);
+
+    if (wasSelected) {
+      selectedLogIndexes.value = selectedLogIndexes.value.filter(
+        (i) => i !== index
+      );
+    } else {
+      selectedLogIndexes.value = [...selectedLogIndexes.value, index];
+    }
+  });
+
+  const onLogSelectionClose = $(() => {
+    logSelectionOpen.value = false;
+  });
+
+  const activeMainLogIndex = useSignal(0);
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    track(activeMainLogIndex);
+    if (plotter.value) {
+      plotter.value.setActiveMainLog(activeMainLogIndex.value);
+    }
+  });
+
   return (
     <div
       class={classNames(styles.wrapper, {
@@ -421,20 +448,47 @@ export const PIDToolbox = component$(() => {
       />
 
       <div style={{ display: showPlots.value ? undefined : "none" }}>
+        <Dialog open={logSelectionOpen.value} onClose={onLogSelectionClose}>
+          <>
+            {analyzerResults.value?.map((_, i) => (
+              <label key={i} style={{ display: "block", marginBlock: "15px" }}>
+                <input
+                  type="checkbox"
+                  checked={selectedLogIndexes.value.includes(i)}
+                  onChange$={() => {
+                    onLogSelectionChange(i);
+                  }}
+                />
+                {`Flightlog #${i + 1}`}
+              </label>
+            ))}
+          </>
+        </Dialog>
+
         <nav class={styles.plotNavigation}>
+          <button
+            class="button"
+            onClick$={() => (logSelectionOpen.value = !logSelectionOpen.value)}
+          >
+            Combined Logs ({selectedLogIndexes.value.length} / {analyzerResults.value?.length})
+          </button>
+
           <select
             class="button"
-            value={selectedAnalyzerResultIndex.value}
             onChange$={(e) => {
-              selectedAnalyzerResultIndex.value = (
-                e as unknown as ChangeEvent<HTMLSelectElement>
-              ).target.value as unknown as number;
+              const selectedIndex = parseInt(
+                (e as unknown as ChangeEvent<HTMLSelectElement>).target.value
+              );
+              console.log("selected index", selectedIndex);
+              activeMainLogIndex.value = selectedIndex;
             }}
           >
             {analyzerResults.value?.map((_, i) => (
-              <option key={`flightlog-select-option-${i}`} value={i}>
-                {`Flightlog #${i + 1}`}
-              </option>
+              <option
+                key={i}
+                selected={activeMainLogIndex.value === i}
+                value={i}
+              >{`Active Flightlog #${i + 1}`}</option>
             ))}
           </select>
 
