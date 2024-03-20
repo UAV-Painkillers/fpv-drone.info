@@ -117,11 +117,20 @@ export class ResponsePlotter {
     const inputs = this.logs.map((log) => log[this.activeAxis].input);
     const times = this.logs.map((log) => log[this.activeAxis].time);
 
-    const traceLimits = gyros.map((gyro, index) =>
-      Math.max(...gyro.map(Math.abs), ...inputs[index].map(Math.abs))
-    );
+    const traceLimits = new Array(gyros.length).fill(0);
 
-    const traceLimit = Math.max(...traceLimits);
+    for (let i = 0; i < gyros.length; i++) {
+      for (let j = 0; j < gyros[i].length; j++) {
+        const absGyro = Math.abs(gyros[i][j]);
+        const absInput = Math.abs(inputs[i][j]);
+        traceLimits[i] = Math.max(traceLimits[i], absGyro, absInput);
+      }
+    }
+
+    let traceLimit = 0;
+    for (let i = 0; i < traceLimits.length; i++) {
+      traceLimit = Math.max(traceLimit, traceLimits[i]);
+    }
 
     this.charts.responseTrace.setOption({
       ...ResponsePlotter.getBaseOptions("PID Response Trace"),
@@ -158,6 +167,7 @@ export class ResponsePlotter {
 
   private plotResponseThrottle() {
     const firstLog = this.logs[0];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!firstLog) {
       return;
     }
@@ -209,6 +219,7 @@ export class ResponsePlotter {
 
   private plotResponseStrength() {
     const firstLog = this.logs[0];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!firstLog) {
       return;
     }
@@ -256,24 +267,9 @@ export class ResponsePlotter {
     });
   }
 
-  public setData(logs: PIDAnalyzerResult[]) {
-    this.logs = logs;
-    this.plotAll();
-  }
-
-  public setActiveMainLog(index: number) {
-    this.activeMainIndex = index;
-    this.plotAll();
-  }
-
-  public setActiveAxis(axis: Axis) {
-    this.activeAxis = axis;
-
-    this.plotAll();
-  }
-
   private plotNoiseForField(fieldName: NoiseFields, chart: echarts.ECharts) {
     const activeLog = this.logs[this.activeMainIndex];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!activeLog) {
       return;
     }
@@ -366,6 +362,7 @@ export class ResponsePlotter {
     chart: echarts.ECharts
   ) {
     const activeLog = this.logs[this.activeMainIndex];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!activeLog) {
       return;
     }
@@ -435,8 +432,6 @@ export class ResponsePlotter {
         },
       ],
     });
-
-    console.log(this.charts.frequencies_gyro.getOption());
   }
 
   private plotNoiseFrequencies() {
@@ -452,19 +447,29 @@ export class ResponsePlotter {
   }
 
   private plotAll() {
-    [
-      this.plotResponseTrace.bind(this),
-      this.plotResponseThrottle.bind(this),
-      this.plotResponseStrength.bind(this),
-      this.plotNoise.bind(this),
-      this.plotNoiseFrequencies.bind(this),
-    ].forEach((renderPlot) => {
-      try {
-        renderPlot();
-      } catch (e) {
-        console.error(e);
-      }
-    });
+    this.plotResponseTrace();
+    this.plotResponseThrottle();
+    this.plotResponseStrength();
+    this.plotNoise();
+    this.plotNoiseFrequencies();
+
+    this.resize();
+  }
+
+  public setData(logs: PIDAnalyzerResult[]) {
+    this.logs = logs;
+    this.plotAll();
+  }
+
+  public setActiveMainLog(index: number) {
+    this.activeMainIndex = index;
+    this.plotAll();
+  }
+
+  public setActiveAxis(axis: Axis) {
+    this.activeAxis = axis;
+
+    this.plotAll();
   }
 
   public resize() {

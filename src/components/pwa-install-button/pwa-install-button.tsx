@@ -25,9 +25,8 @@ export const PWAInstallButton = component$(() => {
     }
 
     const installPrompt = installPromptEvent.value;
-    const result = await installPrompt.prompt();
+    await installPrompt.prompt();
 
-    console.log(`Install prompt was: ${result.outcome}`);
     installPromptEvent.value = noSerialize(undefined);
   });
 

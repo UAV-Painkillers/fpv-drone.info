@@ -1,0 +1,67 @@
+.responsePlotGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content max-content;
+  grid-template-areas:
+    "trace strength"
+    "throttle throttle";
+  gap: 15px;
+  row-gap: 25px;
+  align-items: start;
+}
+
+.responseTrace {
+  grid-area: trace;
+  aspect-ratio: 1;
+}
+
+.responseStrength {
+  grid-area: strength;
+  aspect-ratio: 1;
+}
+
+.responseThrottle {
+  grid-area: throttle;
+  aspect-ratio: 4/1;
+}
+
+.noisePlotGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content;
+  grid-template-areas:
+    "noiseGyroDebug noiseGyro"
+    "noiseDTerm noiseFrequenciesGyro"
+    "noiseFrequenciesGyroDebug noiseFrequenciesDTerm";
+  gap: 15px;
+}
+
+.noiseGyro {
+  grid-area: noiseGyro;
+  aspect-ratio: 1;
+}
+
+.noiseGyroDebug {
+  grid-area: noiseGyroDebug;
+  aspect-ratio: 1;
+}
+
+.noiseDTerm {
+  grid-area: noiseDTerm;
+  aspect-ratio: 1;
+}
+
+.noiseFrequenciesGyro {
+  grid-area: noiseFrequenciesGyro;
+  aspect-ratio: 1;
+}
+
+.noiseFrequenciesGyroDebug {
+  grid-area: noiseFrequenciesGyroDebug;
+  aspect-ratio: 1;
+}
+
+.noiseFrequenciesDTerm {
+  grid-area: noiseFrequenciesDTerm;
+  aspect-ratio: 1;
+}
