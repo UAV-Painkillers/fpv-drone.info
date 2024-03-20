@@ -1,7 +1,6 @@
 import {
   component$,
   useComputed$,
-  useSignal,
 } from "@builder.io/qwik";
 import { Dialog } from "../../shared/dialog/dialog";
 import type {
@@ -18,14 +17,6 @@ interface Props {
 }
 
 export const PIDToolboxStatusDialog = component$((props: Props) => {
-  const dialogRef = useSignal<HTMLDialogElement>();
-
-  if (props.isOpen) {
-    dialogRef.value?.showModal();
-  } else {
-    dialogRef.value?.close();
-  }
-
   const steps = useComputed$(() => {
     const getStateOfItemInIndexArray = (
       indexArray: AnalyzerStepStatusIndexArray,
@@ -108,7 +99,7 @@ export const PIDToolboxStatusDialog = component$((props: Props) => {
   });
 
   return (
-    <Dialog title="PID Analysis Status" ref={dialogRef}>
+    <Dialog isOpen={props.isOpen}>
       <div>
         {steps.value.map((step, index) => (
           <Step {...step} key={`${index}_${step.label}`} />

@@ -32,7 +32,7 @@ export const PlotNavigation = component$(() => {
 
   return (
     <>
-      <Dialog open={showLogSelection.value} onClose={onLogSelectionClose}>
+      <Dialog isOpen={showLogSelection.value} onClose={onLogSelectionClose}>
         <>
           {toolboxContext.results?.map((_, i) => (
             <label key={i} style={{ display: "block", marginBlock: "15px" }}>

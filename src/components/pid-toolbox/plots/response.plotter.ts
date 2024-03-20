@@ -1,8 +1,37 @@
-import * as echarts from "echarts";
+import * as echarts from "echarts/core";
+import {
+  GridComponent,
+  VisualMapComponent,
+  TooltipComponent,
+  TitleComponent,
+  ToolboxComponent,
+  LegendComponent,
+} from "echarts/components";
+import { LineChart } from "echarts/charts";
+import { UniversalTransition } from "echarts/features";
+import { CanvasRenderer } from "echarts/renderers";
+import { HeatmapChart } from "echarts/charts";
+import { BarChart } from "echarts/charts";
+import type { EChartsOption } from "echarts";
+
 import type {
   PIDAnalyzerResult,
   PIDAnalyzerTraceData,
 } from "@uav.painkillers/pid-analyzer-wasm";
+
+echarts.use([
+  GridComponent,
+  LineChart,
+  CanvasRenderer,
+  UniversalTransition,
+  HeatmapChart,
+  VisualMapComponent,
+  TooltipComponent,
+  TitleComponent,
+  BarChart,
+  ToolboxComponent,
+  LegendComponent,
+]);
 
 type Axis = "roll" | "pitch" | "yaw";
 
@@ -62,7 +91,7 @@ export class ResponsePlotter {
     "#b4de2c",
     "#fde725",
   ];
-  public static getBaseOptions(title: string): echarts.EChartsOption {
+  public static getBaseOptions(title: string): EChartsOption {
     return {
       title: {
         show: true,
@@ -142,8 +171,10 @@ export class ResponsePlotter {
         },
       },
       yAxis: {
-        min: -traceLimit * 1.1,
-        max: traceLimit * 1.1,
+        // min: -traceLimit * 1.1,
+        // max: traceLimit * 1.1,
+        min: -500,
+        max: 500,
         axisTick: {
           show: false,
         },
