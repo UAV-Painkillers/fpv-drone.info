@@ -13,7 +13,6 @@ import { inject as injectVercelAnalytics } from "@vercel/analytics";
 import { Logo } from "~/components/logo/logo";
 import { Link, useLocation } from "@builder.io/qwik-city";
 import { Navigation } from "~/components/shared/navigation/navigation";
-import { Search } from "~/components/shared/search/search";
 import { AppContext } from "~/app.ctx";
 
 export default component$(() => {
