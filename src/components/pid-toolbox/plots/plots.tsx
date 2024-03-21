@@ -60,7 +60,7 @@ export const Plots = component$((props: Props) => {
     const mockData = (await fetch("/mock-data.json.gz").then((res) =>
       res.json()
     )) as unknown as PIDAnalyzerResult[];
-    plotStepResponse(mockData);
+    toolboxContext.results = noSerialize(mockData);
   });
 
   /**

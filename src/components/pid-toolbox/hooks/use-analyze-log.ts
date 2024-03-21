@@ -19,7 +19,7 @@ export function useAnalyzeLog() {
   const location = useLocation();
 
   const state = useSignal<"loading" | "idle" | "running" | "error" | "done">(
-    "idle"
+    "loading"
   );
   const progress = useSignal<AnalyzerProgress>(makeEmptyProgress());
   const error = useSignal<string | null>(null);
@@ -379,10 +379,8 @@ export function useAnalyzeLog() {
       state.value = "running";
       progress.value = makeEmptyProgress();
 
-      const bytes = await file.arrayBuffer();
-
       const decoderResults = await analyzer.value!.decodeMainBBL(
-        bytes,
+        await file.arrayBuffer(),
         (status, payload) => {
           onSplitBBLStatusReport(status, payload);
         }

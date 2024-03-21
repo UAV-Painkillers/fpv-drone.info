@@ -12,6 +12,7 @@ export const RouterHead = component$(() => {
       <title>{head.title}</title>
 
       <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
 
       {head.meta.map((m) => (
         <meta key={m.key} {...m} />

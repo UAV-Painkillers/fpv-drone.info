@@ -8,11 +8,16 @@
  * You can also use this file to add more functionality that runs in the service worker.
  */
 import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
+import { registerRoute } from "workbox-routing";
+import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies";
 
 setupServiceWorker();
 
 addEventListener("install", () => self.skipWaiting());
 
 addEventListener("activate", () => self.clients.claim());
+
+registerRoute(({ url }) => url.hostname !== "cdn.builder.io", new StaleWhileRevalidate());
+registerRoute(({ url }) => url.hostname === "cdn.builder.io", new NetworkFirst());
 
 declare const self: ServiceWorkerGlobalScope;

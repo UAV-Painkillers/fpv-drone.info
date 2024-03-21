@@ -6,6 +6,7 @@ import {
   TitleComponent,
   ToolboxComponent,
   LegendComponent,
+  DataZoomComponent,
 } from "echarts/components";
 import { LineChart } from "echarts/charts";
 import { UniversalTransition } from "echarts/features";
@@ -31,6 +32,7 @@ echarts.use([
   BarChart,
   ToolboxComponent,
   LegendComponent,
+  DataZoomComponent,
 ]);
 
 type Axis = "roll" | "pitch" | "yaw";
@@ -77,6 +79,7 @@ export class ResponsePlotter {
     },
   };
   private charts: { [key in PlotName]?: echarts.ECharts } = {};
+  private lowPowerMode = false;
 
   public static VIRIDIS_COLOR_PALETTE = [
     "#440154",
@@ -176,6 +179,9 @@ export class ResponsePlotter {
 
     const gyros = this.logs.map((log) => log[this.activeAxis].gyro);
     const inputs = this.logs.map((log) => log[this.activeAxis].input);
+    const feedforwards = this.logs.map(
+      (log) => log[this.activeAxis].feedforward
+    );
     const times = this.logs.map((log) => log[this.activeAxis].time);
 
     const traceLimits = new Array(gyros.length).fill(0);
@@ -184,7 +190,13 @@ export class ResponsePlotter {
       for (let j = 0; j < gyros[i].length; j++) {
         const absGyro = Math.abs(gyros[i][j]);
         const absInput = Math.abs(inputs[i][j]);
-        traceLimits[i] = Math.max(traceLimits[i], absGyro, absInput);
+        const absFeedforward = Math.abs(feedforwards[i][j]);
+        traceLimits[i] = Math.max(
+          traceLimits[i],
+          absGyro,
+          absInput,
+          absFeedforward
+        );
       }
     }
 
@@ -197,6 +209,17 @@ export class ResponsePlotter {
       this.charts.responseTrace,
       "PID Response Trace",
       {
+        toolbox: {
+          feature: {
+            dataZoom: {},
+          },
+        },
+        dataZoom: [
+          {
+            type: "slider",
+            xAxisIndex: [0],
+          },
+        ],
         xAxis: {
           data: this.mapTimeToSeconds(times[0]),
           axisTick: {
@@ -214,15 +237,21 @@ export class ResponsePlotter {
         },
         series: [
           ...gyros.map((gyro, index) => ({
-            name: `${this.indexToLogName(index)} gyro`,
+            name: `${this.indexToLogName(index)} Gyro`,
             type: "line",
             data: gyro,
             smooth: true,
           })),
           ...inputs.map((input, index) => ({
-            name: `${this.indexToLogName(index)} loop input`,
+            name: `${this.indexToLogName(index)} Setpoint`,
             type: "line",
             data: input,
+            smooth: true,
+          })),
+          ...feedforwards.map((feedforward, index) => ({
+            name: `${this.indexToLogName(index)} Feedforward`,
+            type: "line",
+            data: feedforward,
             smooth: true,
           })),
         ],
@@ -519,12 +548,32 @@ export class ResponsePlotter {
     }
   }
 
+  public setLowPowerMode(lowPowerMode: boolean) {
+    this.lowPowerMode = lowPowerMode;
+  }
+
   private plotAll() {
-    this.plotResponseTrace();
-    this.plotResponseThrottle();
-    this.plotResponseStrength();
-    this.plotNoise();
-    this.plotNoiseFrequencies();
+    const plotter = [
+      this.plotResponseTrace.bind(this),
+      this.plotResponseThrottle.bind(this),
+      this.plotResponseStrength.bind(this),
+      this.plotNoise.bind(this),
+      this.plotNoiseFrequencies.bind(this),
+    ];
+
+    Object.values(this.charts).forEach((chart) => {
+      chart.clear();
+    });
+
+    plotter.forEach((plot, plotIndex) => {
+      if (this.lowPowerMode) {
+        setTimeout(() => {
+          plot();
+        }, plotIndex * 250);
+      } else {
+        plot();
+      }
+    });
 
     this.resize();
   }

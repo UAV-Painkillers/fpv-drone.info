@@ -54,6 +54,7 @@ body {
   font-style: normal;
 }
 
+/** is mobile */
 @media screen and (max-width: 768px) {
   body {
     padding-inline: 25px;
@@ -83,7 +84,8 @@ h3 {
   font-size: 32px;
 }
 
-@media screen and (max-width: 768px) {
+/** is mobile */
+@media screen  and (orientation: portrait) {
   h1 {
     font-size: 32px;
   }

@@ -12,7 +12,7 @@ import { useAnalyzeLog } from "./hooks/use-analyze-log";
 import { PlotName } from "./plots/response.plotter";
 import { AppContext } from "~/app.ctx";
 
-const WILDCARD_PLOTNAME = '*' as const;
+const WILDCARD_PLOTNAME = "*" as const;
 
 interface Props {
   activePlots?: { [key in PlotName | typeof WILDCARD_PLOTNAME]?: boolean };
@@ -34,13 +34,12 @@ export const PIDToolbox = component$((props: Props) => {
 
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
-      .filter(([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME)
+      .filter(
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
+      )
       .map(([plotName]) => plotName as PlotName);
 
-    if (
-      hasAllPlotsActive ||
-      activePlotNames.length === 0
-    ) {
+    if (hasAllPlotsActive || activePlotNames.length === 0) {
       return Object.values(PlotName);
     }
 
