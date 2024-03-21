@@ -32,10 +32,14 @@
   --table-row-uneven-background: var(--base-white);
 }
 
+html {
+  font-size: 110%;
+}
+
 body {
   padding: 0;
   color: var(--text-color);
-  line-height: inherit;
+  line-height: 1.2;
   background: rgb(var(--body-background));
   min-height: 100vh;
   max-width: min(1200px, 85vw);
@@ -112,6 +116,8 @@ a {
   border-bottom: transparent 1px solid;
 
   transition: border-color 0.3s ease;
+
+  word-break: keep-all;
 }
 
 .anchor:hover {
@@ -255,6 +261,8 @@ tr:nth-child(odd) td {
   -webkit-user-select: none;
   touch-action: manipulation;
   transition: transform 0.3s ease;
+
+  cursor: pointer;
 }
 
 .button:before {

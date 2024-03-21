@@ -1,4 +1,4 @@
-import type { NoSerialize } from "@builder.io/qwik";
+import type { NoSerialize, Signal } from "@builder.io/qwik";
 import {
   component$,
   useSignal,
@@ -7,15 +7,23 @@ import {
   noSerialize,
   useOnWindow,
   useContext,
+  useComputed$,
 } from "@builder.io/qwik";
 import type { PIDAnalyzerResult } from "@uav.painkillers/pid-analyzer-wasm";
-import { ResponsePlotter } from "./response.plotter";
+import type { ChartsElementMap } from "./response.plotter";
+import { PlotName, ResponsePlotter } from "./response.plotter";
 import styles from "./plots.module.css";
 import { PlotNavigation } from "./navigation/plot-navigation";
 import { PIDToolBoxContext } from "../context/pid-toolbox.context";
+import { AppContext } from "~/app.ctx";
+import classNames from "classnames";
 
-export const Plots = component$(() => {
+interface Props {
+  plots?: Array<PlotName>;
+}
+export const Plots = component$((props: Props) => {
   const toolboxContext = useContext(PIDToolBoxContext);
+  const appContext = useContext(AppContext);
 
   const responseTraceChartRef = useSignal<HTMLDivElement>();
   const responseThrottleChartRef = useSignal<HTMLDivElement>();
@@ -31,31 +39,35 @@ export const Plots = component$(() => {
 
   const plotStepResponse = $((logs: PIDAnalyzerResult[]) => {
     if (!plotter.value) {
-      plotter.value = noSerialize(
-        new ResponsePlotter(
-          responseTraceChartRef.value!,
-          responseThrottleChartRef.value!,
-          responseStrengthChartRef.value!,
-          noiseGyroChartRef.value!,
-          noiseGyroDebugChartRef.value!,
-          noiseDTermChartRef.value!,
-          noiseFrequenciesGyroChartRef.value!,
-          noiseFrequenciesGyroDebugChartRef.value!,
-          noiseFrequenciesDTermChartRef.value!
-        )
-      );
+      console.warn("Plotter not initialized");
+      return;
     }
-
     plotter.value!.setData(logs);
   });
 
   /**
-   * Plot step response on data change
+   * Load mock data on preview
+   */
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(async ({ track }) => {
+    track(appContext);
+    track(plotter);
+
+    if (!appContext.isPreviewing) {
+      return;
+    }
+
+    const mockData = (await fetch("/mock-data.json.gz").then((res) =>
+      res.json()
+    )) as unknown as PIDAnalyzerResult[];
+    plotStepResponse(mockData);
+  });
+
+  /**
+   * Set chart elements on change
    */
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
-    track(toolboxContext);
-
     track(responseTraceChartRef);
     track(responseThrottleChartRef);
     track(responseStrengthChartRef);
@@ -65,6 +77,42 @@ export const Plots = component$(() => {
     track(noiseFrequenciesGyroChartRef);
     track(noiseFrequenciesGyroDebugChartRef);
     track(noiseFrequenciesDTermChartRef);
+    track(props);
+
+    if (!plotter.value) {
+      plotter.value = noSerialize(new ResponsePlotter());
+    }
+
+    let charts: ChartsElementMap = {
+      [PlotName.RESPONSE_TRACE]: responseTraceChartRef.value!,
+      [PlotName.RESPONSE_STRENGTH]: responseStrengthChartRef.value!,
+      [PlotName.RESPONSE_THROTTLE]: responseThrottleChartRef.value!,
+      [PlotName.NOISE_GYRO]: noiseGyroChartRef.value!,
+      [PlotName.NOISE_GYRO_DEBUG]: noiseGyroDebugChartRef.value!,
+      [PlotName.NOISE_DTERM]: noiseDTermChartRef.value!,
+      [PlotName.NOISE_FREQUENCIES_GYRO]: noiseFrequenciesGyroChartRef.value!,
+      [PlotName.NOISE_FREQUENCIES_GYRO_DEBUG]:
+        noiseFrequenciesGyroDebugChartRef.value!,
+      [PlotName.NOISE_FREQUENCIES_DTERM]: noiseFrequenciesDTermChartRef.value!,
+    };
+
+    if (props.plots) {
+      charts = Object.fromEntries(
+        Object.entries(charts).filter(([key]) =>
+          props.plots!.includes(key as PlotName)
+        )
+      ) as ChartsElementMap;
+    }
+
+    plotter.value!.setChartElements(charts);
+  });
+
+  /**
+   * Plot step response on data change
+   */
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    track(toolboxContext);
 
     const logsToShow =
       toolboxContext.results?.filter((_, i) =>
@@ -110,45 +158,62 @@ export const Plots = component$(() => {
     }
   });
 
+  const plotMap: Record<
+    PlotName,
+    { ref: Signal<HTMLDivElement | undefined>; class?: string }
+  > = {
+    [PlotName.RESPONSE_TRACE]: {
+      ref: responseTraceChartRef,
+    },
+    [PlotName.RESPONSE_STRENGTH]: {
+      ref: responseStrengthChartRef,
+    },
+    [PlotName.RESPONSE_THROTTLE]: {
+      ref: responseThrottleChartRef,
+      class: classNames(styles.plotOverTwoColumns, styles.throttlePlot),
+    },
+    [PlotName.NOISE_GYRO]: { ref: noiseGyroChartRef },
+    [PlotName.NOISE_GYRO_DEBUG]: {
+      ref: noiseGyroDebugChartRef,
+    },
+    [PlotName.NOISE_DTERM]: {
+      ref: noiseDTermChartRef,
+    },
+    [PlotName.NOISE_FREQUENCIES_GYRO]: {
+      ref: noiseFrequenciesGyroChartRef,
+    },
+    [PlotName.NOISE_FREQUENCIES_GYRO_DEBUG]: {
+      ref: noiseFrequenciesGyroDebugChartRef,
+    },
+    [PlotName.NOISE_FREQUENCIES_DTERM]: {
+      ref: noiseFrequenciesDTermChartRef,
+    },
+  };
+
+  const activePlotMap = useComputed$(() => {
+    const map = Object.fromEntries(
+      Object.entries(plotMap).filter(([key]) =>
+        props.plots?.includes(key as PlotName)
+      )
+    );
+
+    return map;
+  });
+
   return (
     <>
       <PlotNavigation />
 
-      <h2 style={{ marginBottom: "1rem" }}>Filter Tuning</h2>
-
-      <div class={styles.noisePlotGrid}>
-        <div class={styles.noiseGyroDebug} ref={noiseGyroDebugChartRef}></div>
-        <div class={styles.noiseGyro} ref={noiseGyroChartRef}></div>
-        <div class={styles.noiseDTerm} ref={noiseDTermChartRef}></div>
-        <div
-          class={styles.noiseFrequenciesGyro}
-          ref={noiseFrequenciesGyroChartRef}
-        ></div>
-        <div
-          class={styles.noiseFrequenciesGyroDebug}
-          ref={noiseFrequenciesGyroDebugChartRef}
-        ></div>
-        <div
-          class={styles.noiseFrequenciesDTerm}
-          ref={noiseFrequenciesDTermChartRef}
-        ></div>
-      </div>
-
-      <hr />
-      <h2 style={{ marginBottom: "1rem" }}>PID Response Tuning</h2>
-
-      <div class={styles.responsePlotGrid}>
-        <div class={styles.responseTrace} ref={responseTraceChartRef}></div>
-
-        <div
-          class={styles.responseStrength}
-          ref={responseStrengthChartRef}
-        ></div>
-
-        <div
-          class={styles.responseThrottle}
-          ref={responseThrottleChartRef}
-        ></div>
+      <div class={styles.plotGrid}>
+        {Object.entries(activePlotMap.value).map(
+          ([plotName, { ref, class: className }]) => (
+            <div
+              class={classNames(styles.plot, className)}
+              ref={ref}
+              key={plotName}
+            ></div>
+          )
+        )}
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { component$, $ } from "@builder.io/qwik";
+import { component$, $, useContext, useComputed$ } from "@builder.io/qwik";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik/types/src/server-index";
 import styles from "./pid-toolbox.module.css";
 import { PIDToolboxStatusDialog } from "./status-dialog/pid-toolbox-status-dialog";
@@ -9,15 +9,42 @@ import { useToolboxContextProvider } from "./context/pid-toolbox.context";
 import { useHideHeader } from "~/hooks/use-hide-header/use-hide-header";
 import { useFileDrop } from "~/hooks/use-file-drop/use-file-drop";
 import { useAnalyzeLog } from "./hooks/use-analyze-log";
+import { PlotName } from "./plots/response.plotter";
+import { AppContext } from "~/app.ctx";
 
-export const PIDToolbox = component$(() => {
+const WILDCARD_PLOTNAME = '*' as const;
+
+interface Props {
+  activePlots?: { [key in PlotName | typeof WILDCARD_PLOTNAME]?: boolean };
+}
+
+export const PIDToolbox = component$((props: Props) => {
   useToolboxContextProvider();
+  const appContext = useContext(AppContext);
 
   useHideHeader();
   const analyzer = useAnalyzeLog();
 
   const isDroppingFile = useFileDrop({
     onFileDrop: analyzer.analyzeFile,
+  });
+
+  const activePlotsArray = useComputed$(() => {
+    const hasAllPlotsActive = props.activePlots?.[WILDCARD_PLOTNAME];
+
+    const activePlots = props.activePlots || {};
+    const activePlotNames = Object.entries(activePlots)
+      .filter(([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME)
+      .map(([plotName]) => plotName as PlotName);
+
+    if (
+      hasAllPlotsActive ||
+      activePlotNames.length === 0
+    ) {
+      return Object.values(PlotName);
+    }
+
+    return activePlotNames;
   });
 
   const openFilePicker = $(() => {
@@ -38,7 +65,7 @@ export const PIDToolbox = component$(() => {
     input.click();
   });
 
-  if (analyzer.state.value === "loading") {
+  if (!appContext.isPreviewing && analyzer.state.value === "loading") {
     return (
       <div>
         <center>
@@ -86,8 +113,15 @@ export const PIDToolbox = component$(() => {
         analyzerProgress={analyzer.progress.value}
       />
 
-      <div style={{ display: (analyzer.state.value === 'done') ? undefined : "none" }}>
-        <Plots />
+      <div
+        style={{
+          display:
+            appContext.isPreviewing || analyzer.state.value === "done"
+              ? undefined
+              : "none",
+        }}
+      >
+        <Plots plots={activePlotsArray.value} />
 
         {/* not beautiful but needed for the sticky navigation to not overlay the last chart */}
         <br />
@@ -108,5 +142,29 @@ export const PIDToolbox = component$(() => {
 export const PIDToolboxRegistryDefinition: RegisteredComponent = {
   component: PIDToolbox,
   name: "PIDToolbox",
-  inputs: [],
+  inputs: [
+    {
+      name: "activePlots",
+      friendlyName: "active Plots",
+      type: "object",
+      required: true,
+      defaultValue: {
+        "*": true,
+      },
+      subFields: [
+        {
+          name: "*",
+          friendlyName: "All",
+          type: "boolean",
+          required: false,
+        },
+        ...Object.values(PlotName).map((plotName) => ({
+          name: plotName,
+          friendlyName: plotName,
+          type: "boolean",
+          required: false,
+        })),
+      ],
+    },
+  ],
 };

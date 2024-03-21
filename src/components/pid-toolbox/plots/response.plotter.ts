@@ -12,12 +12,12 @@ import { UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
 import { HeatmapChart } from "echarts/charts";
 import { BarChart } from "echarts/charts";
-import type { EChartsOption } from "echarts";
 
 import type {
   PIDAnalyzerResult,
   PIDAnalyzerTraceData,
 } from "@uav.painkillers/pid-analyzer-wasm";
+import type { ECBasicOption } from "echarts/types/dist/shared";
 
 echarts.use([
   GridComponent,
@@ -35,31 +35,30 @@ echarts.use([
 
 type Axis = "roll" | "pitch" | "yaw";
 
-type ResponseChartType =
-  | "responseTrace"
-  | "responseThrottle"
-  | "responseStrength";
 type NoiseFields = keyof Pick<
   PIDAnalyzerTraceData,
   "noise_gyro" | "noise_debug" | "noise_d"
 >;
 
-type ChartType =
-  | ResponseChartType
-  | NoiseFields
-  | "frequencies_gyro"
-  | "frequencies_debug"
-  | "frequencies_d";
+export enum PlotName {
+  RESPONSE_TRACE = "responseTrace",
+  RESPONSE_STRENGTH = "responseStrength",
+  RESPONSE_THROTTLE = "responseThrottle",
+  NOISE_GYRO = "noiseGyro",
+  NOISE_GYRO_DEBUG = "noiseGyroDebug",
+  NOISE_DTERM = "noiseDTerm",
+  NOISE_FREQUENCIES_GYRO = "noiseFrequenciesGyro",
+  NOISE_FREQUENCIES_GYRO_DEBUG = "noiseFrequenciesGyroDebug",
+  NOISE_FREQUENCIES_DTERM = "noiseFrequenciesDTerm",
+}
 
-type ChartBoundariesType = ResponseChartType | NoiseFields | "frequencies";
+export type ChartsElementMap = Record<PlotName, HTMLDivElement | undefined>;
 
 export class ResponsePlotter {
   private activeAxis: Axis = "roll";
   private activeMainIndex = 0;
   private logs: PIDAnalyzerResult[] = [];
-  private readonly chartBoundaries: Partial<
-    Record<ChartBoundariesType, { min: number; max: number }>
-  > = {
+  private readonly chartBoundaries = {
     noise_gyro: {
       min: 1,
       max: 10.1,
@@ -77,7 +76,7 @@ export class ResponsePlotter {
       max: 100,
     },
   };
-  private readonly charts: Record<ChartType, echarts.ECharts>;
+  private charts: { [key in PlotName]?: echarts.ECharts } = {};
 
   public static VIRIDIS_COLOR_PALETTE = [
     "#440154",
@@ -91,8 +90,12 @@ export class ResponsePlotter {
     "#b4de2c",
     "#fde725",
   ];
-  public static getBaseOptions(title: string): EChartsOption {
-    return {
+  public static setChartOptions(
+    chart: echarts.ECharts,
+    title: string,
+    optionsToMerge: ECBasicOption
+  ) {
+    const options: ECBasicOption = {
       title: {
         show: true,
         text: title,
@@ -102,31 +105,56 @@ export class ResponsePlotter {
           saveAsImage: {},
         },
       },
+      grid: {
+        show: true,
+      },
     };
+
+    if (
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      ((optionsToMerge.series as unknown as { type: string }[]) ?? []).some(
+        (s) => s.type === "heatmap"
+      )
+    ) {
+      (options.grid as { left: number }).left = 90;
+    }
+
+    if ((optionsToMerge as any).series.length > 1) {
+      options.legend = {
+        top: 30, // the size of title + margin
+        left: "left", //or 0 or '0%'
+      };
+      (options.grid as any).top = 80;
+    }
+
+    // recursively merge optionsToMerge into baseOptions
+    const merge = (base: any, toMerge: any) => {
+      for (const key in toMerge) {
+        if (base[key] && typeof base[key] === "object") {
+          merge(base[key], toMerge[key]);
+        } else {
+          base[key] = toMerge[key];
+        }
+      }
+    };
+    merge(options, optionsToMerge);
+
+    chart.setOption(options);
   }
 
-  constructor(
-    responseTraceContainer: HTMLElement,
-    responseThrottleContainer: HTMLElement,
-    responseStrengthContainer: HTMLElement,
-    noiseGyroElement: HTMLElement,
-    noiseGyroDebugElement: HTMLElement,
-    noiseDTermElement: HTMLElement,
-    frequenciesGyro: HTMLElement,
-    frequenciesDebug: HTMLElement,
-    frequenciesDTerm: HTMLElement
-  ) {
-    this.charts = {
-      responseTrace: echarts.init(responseTraceContainer),
-      responseThrottle: echarts.init(responseThrottleContainer),
-      responseStrength: echarts.init(responseStrengthContainer),
-      noise_gyro: echarts.init(noiseGyroElement),
-      noise_debug: echarts.init(noiseGyroDebugElement),
-      noise_d: echarts.init(noiseDTermElement),
-      frequencies_gyro: echarts.init(frequenciesGyro),
-      frequencies_debug: echarts.init(frequenciesDebug),
-      frequencies_d: echarts.init(frequenciesDTerm),
-    };
+  public setChartElements(charts: ChartsElementMap) {
+    Object.values(this.charts).forEach((chart) => {
+      chart.dispose();
+    });
+
+    this.charts = Object.fromEntries(
+      Object.entries(charts).map(([key, value]) => [
+        key as PlotName,
+        echarts.init(value),
+      ])
+    ) as { [key in PlotName]?: echarts.ECharts };
+
+    this.plotAll();
   }
 
   private mapTimeToSeconds(time?: number[]) {
@@ -142,6 +170,10 @@ export class ResponsePlotter {
   }
 
   private plotResponseTrace() {
+    if (!this.charts.responseTrace) {
+      return;
+    }
+
     const gyros = this.logs.map((log) => log[this.activeAxis].gyro);
     const inputs = this.logs.map((log) => log[this.activeAxis].input);
     const times = this.logs.map((log) => log[this.activeAxis].time);
@@ -161,42 +193,48 @@ export class ResponsePlotter {
       traceLimit = Math.max(traceLimit, traceLimits[i]);
     }
 
-    this.charts.responseTrace.setOption({
-      ...ResponsePlotter.getBaseOptions("PID Response Trace"),
-      legend: {},
-      xAxis: {
-        data: this.mapTimeToSeconds(times[0]),
-        axisTick: {
-          show: false,
+    ResponsePlotter.setChartOptions(
+      this.charts.responseTrace,
+      "PID Response Trace",
+      {
+        xAxis: {
+          data: this.mapTimeToSeconds(times[0]),
+          axisTick: {
+            show: false,
+          },
         },
-      },
-      yAxis: {
-        // min: -traceLimit * 1.1,
-        // max: traceLimit * 1.1,
-        min: -500,
-        max: 500,
-        axisTick: {
-          show: false,
+        yAxis: {
+          // min: -traceLimit * 1.1,
+          // max: traceLimit * 1.1,
+          min: -500,
+          max: 500,
+          axisTick: {
+            show: false,
+          },
         },
-      },
-      series: [
-        ...gyros.map((gyro, index) => ({
-          name: `${this.indexToLogName(index)} gyro`,
-          type: "line",
-          data: gyro,
-          smooth: true,
-        })),
-        ...inputs.map((input, index) => ({
-          name: `${this.indexToLogName(index)} loop input`,
-          type: "line",
-          data: input,
-          smooth: true,
-        })),
-      ],
-    });
+        series: [
+          ...gyros.map((gyro, index) => ({
+            name: `${this.indexToLogName(index)} gyro`,
+            type: "line",
+            data: gyro,
+            smooth: true,
+          })),
+          ...inputs.map((input, index) => ({
+            name: `${this.indexToLogName(index)} loop input`,
+            type: "line",
+            data: input,
+            smooth: true,
+          })),
+        ],
+      }
+    );
   }
 
   private plotResponseThrottle() {
+    if (!this.charts.responseThrottle) {
+      return;
+    }
+
     const firstLog = this.logs[0];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!firstLog) {
@@ -207,8 +245,7 @@ export class ResponsePlotter {
     const tpaPercent = firstLog.headdict.tpa_percent;
     const throttles = this.logs.map((log) => log[this.activeAxis].throttle);
 
-    this.charts.responseThrottle.setOption({
-      ...ResponsePlotter.getBaseOptions("Throttle"),
+    ResponsePlotter.setChartOptions(this.charts.responseThrottle, "Throttle", {
       xAxis: {
         data: this.mapTimeToSeconds(time),
         axisTick: {
@@ -239,16 +276,14 @@ export class ResponsePlotter {
           smooth: true,
         })),
       ],
-      grid: {
-        show: true,
-      },
-      legend: {
-        show: true,
-      },
     });
   }
 
   private plotResponseStrength() {
+    if (!this.charts.responseStrength) {
+      return;
+    }
+
     const firstLog = this.logs[0];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!firstLog) {
@@ -269,33 +304,32 @@ export class ResponsePlotter {
     const resp_highs = this.logs.map((log) => log[this.activeAxis].resp_high);
     const resp_lows = this.logs.map((log) => log[this.activeAxis].resp_low);
 
-    this.charts.responseStrength.setOption({
-      ...ResponsePlotter.getBaseOptions("Step Response"),
-      legend: {},
-      xAxis: {
-        data: time_resp.map((t) => t.toFixed(1)),
-        axisTick: {
-          show: false,
+    ResponsePlotter.setChartOptions(
+      this.charts.responseStrength,
+      "Step Response",
+      {
+        xAxis: {
+          data: time_resp.map((t) => t.toFixed(1)),
+          axisTick: {
+            show: false,
+          },
         },
-      },
-      yAxis: {
-        min: 0,
-        max: 2,
-        axisTick: {
-          show: false,
+        yAxis: {
+          min: 0,
+          max: 2,
+          axisTick: {
+            show: false,
+          },
         },
-      },
-      series: [
-        ...useHighMasks.map((useHighMask, index) => ({
-          name: this.indexToLogName(index),
-          type: "line",
-          data: useHighMask ? resp_highs[index]![0] : resp_lows[index][0],
-        })),
-      ],
-      grid: {
-        show: true,
-      },
-    });
+        series: [
+          ...useHighMasks.map((useHighMask, index) => ({
+            name: this.indexToLogName(index),
+            type: "line",
+            data: useHighMask ? resp_highs[index]![0] : resp_lows[index][0],
+          })),
+        ],
+      }
+    );
   }
 
   private plotNoiseForField(fieldName: NoiseFields, chart: echarts.ECharts) {
@@ -324,13 +358,11 @@ export class ResponsePlotter {
       });
     });
 
-    chart.setOption({
-      ...ResponsePlotter.getBaseOptions(
-        fieldName
-          .split("_")
-          .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-          .join(" ")
-      ),
+    const chartName = fieldName
+      .split("_")
+      .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+      .join(" ");
+    ResponsePlotter.setChartOptions(chart, chartName, {
       tooltip: {},
       xAxis: {
         type: "category",
@@ -369,23 +401,23 @@ export class ResponsePlotter {
           name: "Gaussian",
           type: "heatmap",
           data,
-          emphasis: {
-            itemStyle: {
-              borderColor: "#333",
-              borderWidth: 1,
-            },
-          },
-          progressive: 1000,
-          animation: false,
         },
       ],
     });
   }
 
   private plotNoise() {
-    this.plotNoiseForField("noise_gyro", this.charts.noise_gyro);
-    this.plotNoiseForField("noise_debug", this.charts.noise_debug);
-    this.plotNoiseForField("noise_d", this.charts.noise_d);
+    if (this.charts.noiseGyro) {
+      this.plotNoiseForField("noise_gyro", this.charts.noiseGyro);
+    }
+
+    if (this.charts.noiseGyroDebug) {
+      this.plotNoiseForField("noise_debug", this.charts.noiseGyroDebug);
+    }
+
+    if (this.charts.noiseDTerm) {
+      this.plotNoiseForField("noise_d", this.charts.noiseDTerm);
+    }
   }
 
   private plotFrequenciesForNoiseAxis(
@@ -429,8 +461,7 @@ export class ResponsePlotter {
         break;
     }
 
-    chart.setOption({
-      ...ResponsePlotter.getBaseOptions(`${name}-Noise Frequencies`),
+    ResponsePlotter.setChartOptions(chart, `${name}-Noise Frequencies`, {
       tooltip: {
         trigger: "axis",
         axisPointer: {
@@ -466,15 +497,26 @@ export class ResponsePlotter {
   }
 
   private plotNoiseFrequencies() {
-    this.plotFrequenciesForNoiseAxis(
-      "noise_gyro",
-      this.charts.frequencies_gyro
-    );
-    this.plotFrequenciesForNoiseAxis(
-      "noise_debug",
-      this.charts.frequencies_debug
-    );
-    this.plotFrequenciesForNoiseAxis("noise_d", this.charts.frequencies_d);
+    if (this.charts.noiseFrequenciesGyro) {
+      this.plotFrequenciesForNoiseAxis(
+        "noise_gyro",
+        this.charts.noiseFrequenciesGyro
+      );
+    }
+
+    if (this.charts.noiseFrequenciesGyroDebug) {
+      this.plotFrequenciesForNoiseAxis(
+        "noise_debug",
+        this.charts.noiseFrequenciesGyroDebug
+      );
+    }
+
+    if (this.charts.noiseFrequenciesDTerm) {
+      this.plotFrequenciesForNoiseAxis(
+        "noise_d",
+        this.charts.noiseFrequenciesDTerm
+      );
+    }
   }
 
   private plotAll() {

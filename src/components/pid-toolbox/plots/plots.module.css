@@ -1,67 +1,27 @@
-.responsePlotGrid {
+/*
+i want a grid with 2 columns and a row-gap of 25px
+some elements need to span 2 columns
+the height of each element should be determined by its width and the aspect-ratio
+*/
+
+.plotGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: max-content max-content;
-  grid-template-areas:
-    "trace strength"
-    "throttle throttle";
-  gap: 15px;
-  row-gap: 25px;
-  align-items: start;
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 25px;
+  width: 100%;
 }
 
-.responseTrace {
-  grid-area: trace;
+.plot {
   aspect-ratio: 1;
+  width: 100%;
+  height: 100%;
+  grid-column: span 1;
 }
 
-.responseStrength {
-  grid-area: strength;
-  aspect-ratio: 1;
+.plotOverTwoColumns {
+  grid-column: span 2;
 }
 
-.responseThrottle {
-  grid-area: throttle;
-  aspect-ratio: 4/1;
-}
-
-.noisePlotGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: max-content;
-  grid-template-areas:
-    "noiseGyroDebug noiseGyro"
-    "noiseDTerm noiseFrequenciesGyro"
-    "noiseFrequenciesGyroDebug noiseFrequenciesDTerm";
-  gap: 15px;
-}
-
-.noiseGyro {
-  grid-area: noiseGyro;
-  aspect-ratio: 1;
-}
-
-.noiseGyroDebug {
-  grid-area: noiseGyroDebug;
-  aspect-ratio: 1;
-}
-
-.noiseDTerm {
-  grid-area: noiseDTerm;
-  aspect-ratio: 1;
-}
-
-.noiseFrequenciesGyro {
-  grid-area: noiseFrequenciesGyro;
-  aspect-ratio: 1;
-}
-
-.noiseFrequenciesGyroDebug {
-  grid-area: noiseFrequenciesGyroDebug;
-  aspect-ratio: 1;
-}
-
-.noiseFrequenciesDTerm {
-  grid-area: noiseFrequenciesDTerm;
-  aspect-ratio: 1;
+.throttlePlot {
+  aspect-ratio: 3/1;
 }

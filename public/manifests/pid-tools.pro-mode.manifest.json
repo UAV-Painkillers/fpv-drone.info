@@ -1,12 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "fpv-drone.info",
-  "short_name": "fpv-drone.info",
-  "start_url": ".",
+  "name": "fpv-drone.info - PID Tools (PRO)",
+  "short_name": "PID PRO",
+  "start_url": "../tools/tuning-tools/pro",
   "display": "standalone",
   "background_color": "#fff",
   "theme_color": "#ffffff",
-  "description": "News, Guides, Reviews and more for the FPV Community!",
+  "description": "A set of tools to help tune PID controllers",
   "icons": [
     {
       "src": "/icons/android-chrome-192x192.png?v=7",

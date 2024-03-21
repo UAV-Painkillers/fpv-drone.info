@@ -5,7 +5,7 @@ const outDir = "public/icons";
 const faviconDescriptionPath = "scripts/faviconDescription.json";
 const faviconDataPath = "tmp.favicon/faviconData.json";
 const mockHtmlPath = "tmp.favicon/mock.html";
-const routerHeadPath = "src/components/shared/router-head/router-head.tsx";
+const routerHeadPath = "src/components/router-head/router-head.tsx";
 const generatedWebManifestPath = `${outDir}/site.webmanifest`;
 const alternativeManifestsSourceDir = "scripts/alternativeManifests";
 const alternativeManifestsOutputDir = "public/manifests";
@@ -110,6 +110,11 @@ function generateAlternativeManifests() {
   // read all alternatives from ./alternativeManifests
   // merge them with the final manifest
   // write each of them to /public/manifests/<filename of alternative manifest>
+
+  // clean output dir
+  fs.readdirSync(alternativeManifestsOutputDir).forEach((file) => {
+    fs.unlinkSync(`${alternativeManifestsOutputDir}/${file}`);
+  });
 
   const generatedWebManifest = JSON.parse(
     fs.readFileSync(generatedWebManifestPath, "utf8"),

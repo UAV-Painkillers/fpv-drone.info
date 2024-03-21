@@ -1,8 +1,4 @@
-import {
-  component$,
-  useContextProvider,
-  useStore,
-} from "@builder.io/qwik";
+import { component$, useContextProvider, useStore } from "@builder.io/qwik";
 import {
   QwikCityProvider,
   RouterOutlet,
@@ -11,19 +7,15 @@ import {
 
 import "./normalize.css";
 import "./global.css";
-import { RouterHead } from "./components/shared/router-head/router-head";
+import { RouterHead } from "./components/router-head/router-head";
 import type { AppContextState } from "./app.ctx";
 import { AppContext } from "./app.ctx";
 
 export default component$(() => {
-  /**
-   * The root of a QwikCity site always start with the <QwikCityProvider> component,
-   * immediately followed by the document's <head> and <body>.
-   *
-   * Don't remove the `<head>` and `<body>` elements.
-   */
-
-  const appContextData = useStore<AppContextState>({ showPageHeader: true });
+  const appContextData = useStore<AppContextState>({
+    showPageHeader: true,
+    isPreviewing: false,
+  });
   useContextProvider(AppContext, appContextData);
 
   return (
