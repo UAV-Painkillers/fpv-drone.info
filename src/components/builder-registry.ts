@@ -12,6 +12,8 @@ import { TLDRRegistryDefinition } from "./shared/tldr/tldr";
 import { PIDToolboxRegistryDefinition } from "./pid-toolbox/pid-toolbox";
 import { PWAInstallButtonRegistryDefinition } from "./pwa-install-button/pwa-install-button";
 import { BuyMeACoffeeButtonRegistryDefinition } from "./shared/buy-me-a-coffe/button";
+import { CustomInstructionsRegistryDefinition } from "./shared/instructions/custom-instructions";
+import { InstructionsStepRegistryDefinition } from "./shared/instructions/step/step";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -28,6 +30,8 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   PageGridRegistryDefinition,
   CardRegistryDefinition,
   InstructionsRegistryDefinition,
+  CustomInstructionsRegistryDefinition,
+  InstructionsStepRegistryDefinition,
   LogoRegistryInformation,
   PageHeadlineRegistryDefinition,
   ExpandableImageRegistryDefinition,

@@ -11,11 +11,13 @@ import { useFileDrop } from "~/hooks/use-file-drop/use-file-drop";
 import { useAnalyzeLog } from "./hooks/use-analyze-log";
 import { PlotName } from "./plots/response.plotter";
 import { AppContext } from "~/app.ctx";
+import type { PlotNavigationProps } from "./plots/navigation/plot-navigation";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
 interface Props {
   activePlots?: { [key in PlotName | typeof WILDCARD_PLOTNAME]?: boolean };
+  navigation?: PlotNavigationProps;
 }
 
 export const PIDToolbox = component$((props: Props) => {
@@ -120,19 +122,7 @@ export const PIDToolbox = component$((props: Props) => {
               : "none",
         }}
       >
-        <Plots plots={activePlotsArray.value} />
-
-        {/* not beautiful but needed for the sticky navigation to not overlay the last chart */}
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <Plots plots={activePlotsArray.value} navigation={props.navigation} />
       </div>
     </div>
   );
@@ -163,6 +153,35 @@ export const PIDToolboxRegistryDefinition: RegisteredComponent = {
           type: "boolean",
           required: false,
         })),
+      ],
+    },
+    {
+      name: "navigation",
+      friendlyName: "Navigation",
+      type: "object",
+      required: false,
+      subFields: [
+        {
+          name: "showCombinedLogsSelection",
+          friendlyName: "Show Combined Logs Selection",
+          type: "boolean",
+          required: false,
+          defaultValue: true,
+        },
+        {
+          name: "showActiveAxisSelection",
+          friendlyName: "Show Active Axis Selection",
+          type: "boolean",
+          required: false,
+          defaultValue: true,
+        },
+        {
+          name: "showMainLogSelection",
+          friendlyName: "Show Main Log Selection",
+          type: "boolean",
+          required: false,
+          defaultValue: true,
+        },
       ],
     },
   ],

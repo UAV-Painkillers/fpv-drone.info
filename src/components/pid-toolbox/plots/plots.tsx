@@ -13,6 +13,7 @@ import type { PIDAnalyzerResult } from "@uav.painkillers/pid-analyzer-wasm";
 import type { ChartsElementMap } from "./response.plotter";
 import { PlotName, ResponsePlotter } from "./response.plotter";
 import styles from "./plots.module.css";
+import type { PlotNavigationProps } from "./navigation/plot-navigation";
 import { PlotNavigation } from "./navigation/plot-navigation";
 import { PIDToolBoxContext } from "../context/pid-toolbox.context";
 import { AppContext } from "~/app.ctx";
@@ -20,6 +21,7 @@ import classNames from "classnames";
 
 interface Props {
   plots?: Array<PlotName>;
+  navigation?: PlotNavigationProps;
 }
 export const Plots = component$((props: Props) => {
   const toolboxContext = useContext(PIDToolBoxContext);
@@ -56,6 +58,8 @@ export const Plots = component$((props: Props) => {
     if (!appContext.isPreviewing) {
       return;
     }
+
+    return;
 
     const mockData = (await fetch("/mock-data.json.gz").then((res) =>
       res.json()
@@ -202,9 +206,19 @@ export const Plots = component$((props: Props) => {
 
   return (
     <>
-      <PlotNavigation />
+      {(toolboxContext.results?.length ?? 0) > 0 && (
+        <PlotNavigation {...props.navigation} />
+      )}
 
-      <div class={styles.plotGrid}>
+      <div
+        class={classNames({
+          [styles.plotGrid]: Object.values(activePlotMap.value).length > 1,
+        })}
+        style={{
+          display:
+            (toolboxContext.results?.length ?? 0) === 0 ? "none" : undefined,
+        }}
+      >
         {Object.entries(activePlotMap.value).map(
           ([plotName, { ref, class: className }]) => (
             <div
@@ -215,6 +229,21 @@ export const Plots = component$((props: Props) => {
           )
         )}
       </div>
+      {(toolboxContext.results?.length ?? 0) > 0 && (
+        <>
+          {/* not beautiful but needed for the sticky navigation to not overlay the last chart */}
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+        </>
+      )}
     </>
   );
 });
