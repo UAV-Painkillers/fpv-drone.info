@@ -1,4 +1,4 @@
-import ngrok from "@ngrok/ngrok";
+// import ngrok from "@ngrok/ngrok";
 
 interface Params {
   title: string;
@@ -14,7 +14,8 @@ export async function generateOgImage(params: Params): Promise<Blob> {
     throw new Error("OG_IMAGE_GENERATOR_ENDPOINT is not set");
   }
 
-  let svgTemplateUrl = `${originUrl.origin}/${svgTemplateFileName}`;
+  /* let */ const svgTemplateUrl = `${originUrl.origin}/${svgTemplateFileName}`;
+  /*
   let listener: ngrok.Listener | undefined;
   if (process.env.OG_IMAGE_USE_PROXY) {
     listener = await ngrok.forward({
@@ -24,6 +25,7 @@ export async function generateOgImage(params: Params): Promise<Blob> {
 
     svgTemplateUrl = `${listener.url()}/${svgTemplateFileName}`;
   }
+  */
 
   const ogImageGeneratorImageUrl = new URL(ogImageGeneratorEndpoint);
   ogImageGeneratorImageUrl.searchParams.append("svgUrl", svgTemplateUrl);
@@ -45,13 +47,15 @@ export async function generateOgImage(params: Params): Promise<Blob> {
     },
   });
 
+  /*
   if (listener) {
     await listener.close();
   }
+  */
 
   if (!response.ok) {
     throw new Error(`Failed to generate OG image: ${response.statusText}`);
   }
 
-  return await response.blob()
+  return await response.blob();
 }
