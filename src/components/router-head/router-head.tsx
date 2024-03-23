@@ -45,10 +45,7 @@ export const RouterHead = component$(() => {
         href="/icons/favicon-16x16.png?v=7"
       />
       <link rel="manifest" href="/icons/site.webmanifest?v=7" />
-      <link
-        rel="mask-icon"
-        href="/icons/safari-pinned-tab.svg?v=7"
-      />
+      <link rel="mask-icon" href="/icons/safari-pinned-tab.svg?v=7" />
       <link rel="shortcut icon" href="/icons/favicon.ico?v=7" />
       <meta name="apple-mobile-web-app-title" content="fpv-drone.info" />
       <meta name="application-name" content="fpv-drone.info" />
