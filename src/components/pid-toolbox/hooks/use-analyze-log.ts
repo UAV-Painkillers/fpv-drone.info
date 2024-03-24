@@ -43,6 +43,8 @@ export function useAnalyzeLog() {
     } finally {
       state.value = "idle";
     }
+  }, {
+    strategy: 'intersection-observer'
   });
 
   const onSplitBBLStatusReport = $(
