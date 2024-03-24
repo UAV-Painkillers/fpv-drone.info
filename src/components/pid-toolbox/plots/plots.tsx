@@ -10,7 +10,10 @@ import {
   useComputed$,
 } from "@builder.io/qwik";
 import type { PIDAnalyzerResult } from "@uav.painkillers/pid-analyzer-wasm";
-import type { ChartsElementMap } from "./response.plotter";
+import type {
+  ChartsElementMap,
+  PlotLabelDefinitions,
+} from "./response.plotter";
 import { PlotName, ResponsePlotter } from "./response.plotter";
 import styles from "./plots.module.css";
 import type { PlotNavigationProps } from "./navigation/plot-navigation";
@@ -22,6 +25,7 @@ import classNames from "classnames";
 interface Props {
   plots?: Array<PlotName>;
   navigation?: PlotNavigationProps;
+  plotLabels?: PlotLabelDefinitions;
 }
 export const Plots = component$((props: Props) => {
   const toolboxContext = useContext(PIDToolBoxContext);
@@ -81,7 +85,7 @@ export const Plots = component$((props: Props) => {
     track(noiseFrequenciesGyroChartRef);
     track(noiseFrequenciesGyroDebugChartRef);
     track(noiseFrequenciesDTermChartRef);
-    track(props);
+    track(() => props.plots);
 
     if (!plotter.value) {
       plotter.value = noSerialize(new ResponsePlotter());
@@ -109,6 +113,18 @@ export const Plots = component$((props: Props) => {
     }
 
     plotter.value!.setChartElements(charts);
+  });
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({track}) => {
+    track(() => props.plotLabels);
+    track(plotter);
+    
+    if (!plotter.value) {
+      return;
+    }
+
+    plotter.value!.setLabelDefinitions(props.plotLabels ?? {});
   });
 
   /**

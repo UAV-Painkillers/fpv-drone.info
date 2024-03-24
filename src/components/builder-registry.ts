@@ -14,6 +14,8 @@ import { PWAInstallButtonRegistryDefinition } from "./pwa-install-button/pwa-ins
 import { BuyMeACoffeeButtonRegistryDefinition } from "./shared/buy-me-a-coffe/button";
 import { CustomInstructionsRegistryDefinition } from "./shared/instructions/custom-instructions";
 import { InstructionsStepRegistryDefinition } from "./shared/instructions/step/step";
+import { TipCardRegistryDefinition } from "./shared/tip-card/tip-card";
+import { DynamicIdleCalculatorRegistryDefinition } from "./pid-toolbox/dynamic-idle-calculator/dynamic-idle-calculator";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -45,4 +47,6 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
     "uav.painkillers",
     "Buy me a smokestopper"
   ),
+  TipCardRegistryDefinition,
+  DynamicIdleCalculatorRegistryDefinition,
 ];

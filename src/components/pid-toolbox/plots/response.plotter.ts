@@ -16,7 +16,7 @@ import { BarChart } from "echarts/charts";
 
 import type {
   PIDAnalyzerResult,
-  PIDAnalyzerTraceData,
+  PIDAnalyzerHeaderInformation,
 } from "@uav.painkillers/pid-analyzer-wasm";
 import type { ECBasicOption } from "echarts/types/dist/shared";
 
@@ -37,10 +37,11 @@ echarts.use([
 
 type Axis = "roll" | "pitch" | "yaw";
 
-type NoiseFields = keyof Pick<
-  PIDAnalyzerTraceData,
-  "noise_gyro" | "noise_debug" | "noise_d"
->;
+export enum NoiseFields {
+  NoiseGyro = "noise_gyro",
+  NoiseDebug = "noise_debug",
+  NoiseDTerm = "noise_d",
+}
 
 export enum PlotName {
   RESPONSE_TRACE = "responseTrace",
@@ -54,7 +55,35 @@ export enum PlotName {
   NOISE_FREQUENCIES_DTERM = "noiseFrequenciesDTerm",
 }
 
+export interface SeriesLabelDefinition {
+  headdictField: keyof PIDAnalyzerHeaderInformation;
+  template?: string;
+}
+
 export type ChartsElementMap = Record<PlotName, HTMLDivElement | undefined>;
+export interface PlotLabelDefinitions {
+  responseTrace?: {
+    gyro?: SeriesLabelDefinition;
+    setPoint?: SeriesLabelDefinition;
+    feedForward?: SeriesLabelDefinition;
+  };
+  responseThrottle?: {
+    throttle?: SeriesLabelDefinition;
+  };
+  responseStrength?: {
+    response?: SeriesLabelDefinition;
+  };
+  noiseFrequencies?: {
+    [key in NoiseFields]: SeriesLabelDefinition;
+  };
+}
+
+interface GetLabelOptions {
+  labelDefinition?: SeriesLabelDefinition;
+  headdict: PIDAnalyzerHeaderInformation;
+  fallback: string;
+  logIndex?: number;
+}
 
 export class ResponsePlotter {
   private activeAxis: Axis = "roll";
@@ -80,6 +109,7 @@ export class ResponsePlotter {
   };
   private charts: { [key in PlotName]?: echarts.ECharts } = {};
   private lowPowerMode = false;
+  private labelDefinitions: PlotLabelDefinitions = {};
 
   public static VIRIDIS_COLOR_PALETTE = [
     "#440154",
@@ -172,6 +202,42 @@ export class ResponsePlotter {
     return `Log #${index}`;
   }
 
+  private getLabel(options: GetLabelOptions) {
+    const { labelDefinition, headdict, fallback, logIndex } = options;
+
+    if (!labelDefinition) {
+      return fallback;
+    }
+
+    const headerName = labelDefinition.headdictField;
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!headerName) {
+      return fallback;
+    }
+
+    const headerValue = headdict[headerName];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (headerValue === undefined || headerValue === null) {
+      return fallback;
+    }
+
+    if (!labelDefinition.template) {
+      return `#${logIndex} (${headerValue})`;
+    }
+
+    let templatedValue = labelDefinition.template.replaceAll(
+      "{{headerValue}}",
+      `${headerValue}`
+    );
+
+    if (logIndex !== undefined) {
+      templatedValue = templatedValue.replaceAll("{{logIndex}}", `${logIndex}`);
+    }
+
+    return templatedValue;
+  }
+
   private plotResponseTrace() {
     if (!this.charts.responseTrace) {
       return;
@@ -237,19 +303,34 @@ export class ResponsePlotter {
         },
         series: [
           ...gyros.map((gyro, index) => ({
-            name: `${this.indexToLogName(index)} Gyro`,
+            name: this.getLabel({
+              labelDefinition: this.labelDefinitions.responseTrace?.gyro,
+              headdict: this.logs[index].headdict,
+              fallback: `${this.indexToLogName(index)} Setpoint`,
+              logIndex: index,
+            }),
             type: "line",
             data: gyro,
             smooth: true,
           })),
           ...inputs.map((input, index) => ({
-            name: `${this.indexToLogName(index)} Setpoint`,
+            name: this.getLabel({
+              labelDefinition: this.labelDefinitions.responseTrace?.setPoint,
+              headdict: this.logs[index].headdict,
+              fallback: `${this.indexToLogName(index)} Setpoint`,
+              logIndex: index,
+            }),
             type: "line",
             data: input,
             smooth: true,
           })),
           ...feedforwards.map((feedforward, index) => ({
-            name: `${this.indexToLogName(index)} Feedforward`,
+            name: this.getLabel({
+              labelDefinition: this.labelDefinitions.responseTrace?.feedForward,
+              headdict: this.logs[index].headdict,
+              fallback: `${this.indexToLogName(index)} Feedforward`,
+              logIndex: index,
+            }),
             type: "line",
             data: feedforward,
             smooth: true,
@@ -264,14 +345,14 @@ export class ResponsePlotter {
       return;
     }
 
-    const firstLog = this.logs[0];
+    const activeMainLog = this.logs[this.activeMainIndex];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (!firstLog) {
+    if (!activeMainLog) {
       return;
     }
 
-    const time = firstLog[this.activeAxis].time;
-    const tpaPercent = firstLog.headdict.tpa_percent;
+    const time = activeMainLog[this.activeAxis].time;
+    const tpaPercent = activeMainLog.headdict.tpa_percent;
     const throttles = this.logs.map((log) => log[this.activeAxis].throttle);
 
     ResponsePlotter.setChartOptions(this.charts.responseThrottle, "Throttle", {
@@ -299,7 +380,12 @@ export class ResponsePlotter {
         },
         ...throttles.map((throttle, index) => ({
           type: "line",
-          name: `${this.indexToLogName(index)} throttle %`,
+          name: this.getLabel({
+            labelDefinition: this.labelDefinitions.responseThrottle?.throttle,
+            headdict: activeMainLog.headdict,
+            fallback: `${this.indexToLogName(index)} throttle %`,
+            logIndex: index,
+          }),
           data: throttle,
           areaStyle: {},
           smooth: true,
@@ -313,9 +399,9 @@ export class ResponsePlotter {
       return;
     }
 
-    const firstLog = this.logs[0];
+    const activeMainLog = this.logs[this.activeMainIndex];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (!firstLog) {
+    if (!activeMainLog) {
       return;
     }
 
@@ -329,7 +415,7 @@ export class ResponsePlotter {
     );
     const useHighMasks = highMaskSums.map((sum) => sum > 0);
 
-    const time_resp = firstLog[this.activeAxis].time_resp;
+    const time_resp = activeMainLog[this.activeAxis].time_resp;
     const resp_highs = this.logs.map((log) => log[this.activeAxis].resp_high);
     const resp_lows = this.logs.map((log) => log[this.activeAxis].resp_low);
 
@@ -352,7 +438,12 @@ export class ResponsePlotter {
         },
         series: [
           ...useHighMasks.map((useHighMask, index) => ({
-            name: this.indexToLogName(index),
+            name: this.getLabel({
+              labelDefinition: this.labelDefinitions.responseStrength?.response,
+              headdict: activeMainLog.headdict,
+              fallback: this.indexToLogName(index),
+              logIndex: index,
+            }),
             type: "line",
             data: useHighMask ? resp_highs[index]![0] : resp_lows[index][0],
           })),
@@ -437,15 +528,18 @@ export class ResponsePlotter {
 
   private plotNoise() {
     if (this.charts.noiseGyro) {
-      this.plotNoiseForField("noise_gyro", this.charts.noiseGyro);
+      this.plotNoiseForField(NoiseFields.NoiseGyro, this.charts.noiseGyro);
     }
 
     if (this.charts.noiseGyroDebug) {
-      this.plotNoiseForField("noise_debug", this.charts.noiseGyroDebug);
+      this.plotNoiseForField(
+        NoiseFields.NoiseDebug,
+        this.charts.noiseGyroDebug
+      );
     }
 
     if (this.charts.noiseDTerm) {
-      this.plotNoiseForField("noise_d", this.charts.noiseDTerm);
+      this.plotNoiseForField(NoiseFields.NoiseDTerm, this.charts.noiseDTerm);
     }
   }
 
@@ -478,15 +572,19 @@ export class ResponsePlotter {
     }).map((_, i) => i);
 
     let name: string;
+    let labelDefinition: SeriesLabelDefinition | undefined;
     switch (noiseAxis) {
-      case "noise_gyro":
+      case NoiseFields.NoiseGyro:
         name = "Gyro";
+        labelDefinition = this.labelDefinitions.noiseFrequencies?.noise_gyro;
         break;
-      case "noise_debug":
+      case NoiseFields.NoiseDebug:
         name = "Debug";
+        labelDefinition = this.labelDefinitions.noiseFrequencies?.noise_debug;
         break;
-      case "noise_d":
+      case NoiseFields.NoiseDTerm:
         name = "D Term";
+        labelDefinition = this.labelDefinitions.noiseFrequencies?.noise_d;
         break;
     }
 
@@ -517,7 +615,11 @@ export class ResponsePlotter {
       },
       series: [
         {
-          name: "Gyro",
+          name: this.getLabel({
+            labelDefinition,
+            headdict: activeLog.headdict,
+            fallback: "Gyro",
+          }),
           type: "bar",
           data: data,
         },
@@ -528,21 +630,21 @@ export class ResponsePlotter {
   private plotNoiseFrequencies() {
     if (this.charts.noiseFrequenciesGyro) {
       this.plotFrequenciesForNoiseAxis(
-        "noise_gyro",
+        NoiseFields.NoiseGyro,
         this.charts.noiseFrequenciesGyro
       );
     }
 
     if (this.charts.noiseFrequenciesGyroDebug) {
       this.plotFrequenciesForNoiseAxis(
-        "noise_debug",
+        NoiseFields.NoiseDebug,
         this.charts.noiseFrequenciesGyroDebug
       );
     }
 
     if (this.charts.noiseFrequenciesDTerm) {
       this.plotFrequenciesForNoiseAxis(
-        "noise_d",
+        NoiseFields.NoiseDTerm,
         this.charts.noiseFrequenciesDTerm
       );
     }
@@ -598,5 +700,10 @@ export class ResponsePlotter {
     Object.values(this.charts).forEach((chart) => {
       chart.resize();
     });
+  }
+
+  public setLabelDefinitions(options: PlotLabelDefinitions) {
+    this.labelDefinitions = options;
+    this.plotAll();
   }
 }

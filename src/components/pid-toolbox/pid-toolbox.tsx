@@ -9,7 +9,8 @@ import { useToolboxContextProvider } from "./context/pid-toolbox.context";
 import { useHideHeader } from "~/hooks/use-hide-header/use-hide-header";
 import { useFileDrop } from "~/hooks/use-file-drop/use-file-drop";
 import { useAnalyzeLog } from "./hooks/use-analyze-log";
-import { PlotName } from "./plots/response.plotter";
+import type { PlotLabelDefinitions } from "./plots/response.plotter";
+import { NoiseFields, PlotName } from "./plots/response.plotter";
 import { AppContext } from "~/app.ctx";
 import type { PlotNavigationProps } from "./plots/navigation/plot-navigation";
 
@@ -18,6 +19,7 @@ const WILDCARD_PLOTNAME = "*" as const;
 interface Props {
   activePlots?: { [key in PlotName | typeof WILDCARD_PLOTNAME]?: boolean };
   navigation?: PlotNavigationProps;
+  plotLabels?: PlotLabelDefinitions;
 }
 
 export const PIDToolbox = component$((props: Props) => {
@@ -122,11 +124,61 @@ export const PIDToolbox = component$((props: Props) => {
               : "none",
         }}
       >
-        <Plots plots={activePlotsArray.value} navigation={props.navigation} />
+        <Plots
+          plots={activePlotsArray.value}
+          navigation={props.navigation}
+          plotLabels={props.plotLabels}
+        />
       </div>
     </div>
   );
 });
+
+enum PIDAnalyzerHeaderInformationKeys {
+  fwType,
+  rollPID,
+  pitchPID,
+  yawPID,
+  maxThrottle,
+  tpa_breakpoint,
+  tpa_percent,
+  simplified_d_gain,
+  simplified_dmax_gain,
+  simplified_dterm_filter,
+  simplified_dterm_filter_multiplier,
+  simplified_feedforward_gain,
+  simplified_gyro_filter,
+  simplified_gyro_filter_multiplier,
+  simplified_i_gain,
+  simplified_master_multiplier,
+  simplified_pi_gain,
+  simplified_pitch_d_gain,
+  simplified_pitch_pi_gain,
+}
+
+function makeSeriesLabelDefinitionInput(name: string, friendlyName?: string) {
+  return {
+    name,
+    friendlyName,
+    type: "object",
+    required: false,
+    subFields: [
+      {
+        name: "headdictField",
+        friendlyName: "Header Name",
+        type: "string",
+        required: true,
+        enum: Object.values(PIDAnalyzerHeaderInformationKeys) as string[],
+      },
+      {
+        name: "template",
+        friendlyName: "Template",
+        type: "string",
+        required: false,
+      },
+    ],
+  };
+}
 
 export const PIDToolboxRegistryDefinition: RegisteredComponent = {
   component: PIDToolbox,
@@ -181,6 +233,49 @@ export const PIDToolboxRegistryDefinition: RegisteredComponent = {
           type: "boolean",
           required: false,
           defaultValue: true,
+        },
+      ],
+    },
+    {
+      name: "plotLabels",
+      friendlyName: "Plot Labels",
+      type: "object",
+      required: false,
+      defaultValue: {},
+      subFields: [
+        {
+          name: "responseTrace",
+          friendlyName: "Response Trace",
+          type: "object",
+          required: false,
+          subFields: [
+            makeSeriesLabelDefinitionInput("gyro", "Gyro"),
+            makeSeriesLabelDefinitionInput("setPoint", "Setpoint"),
+            makeSeriesLabelDefinitionInput("feedForward", "Feedforward"),
+          ],
+        },
+        {
+          name: "responseThrottle",
+          friendlyName: "Response Throttle",
+          type: "object",
+          required: false,
+          subFields: [makeSeriesLabelDefinitionInput("throttle", "Throttle")],
+        },
+        {
+          name: "responseStrength",
+          friendlyName: "Response Strength",
+          type: "object",
+          required: false,
+          subFields: [makeSeriesLabelDefinitionInput("response", "Response")],
+        },
+        {
+          name: "responseStrength",
+          friendlyName: "Response Strength",
+          type: "object",
+          required: false,
+          subFields: Object.values(NoiseFields).map((noiseField) =>
+            makeSeriesLabelDefinitionInput(noiseField)
+          ),
         },
       ],
     },
