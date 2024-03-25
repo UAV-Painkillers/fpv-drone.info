@@ -14,7 +14,7 @@ import { PWAInstallButtonRegistryDefinition } from "./pwa-install-button/pwa-ins
 import { BuyMeACoffeeButtonRegistryDefinition } from "./shared/buy-me-a-coffe/button";
 import { CustomInstructionsRegistryDefinition } from "./shared/instructions/custom-instructions";
 import { InstructionsStepRegistryDefinition } from "./shared/instructions/step/step";
-import { HighlightCardRegistryDefinition } from "./shared/tip-card/tip-card";
+import { HighlightCardRegistryDefinition } from "./shared/highlight-card/highlight-card";
 import { DynamicIdleCalculatorRegistryDefinition } from "./pid-toolbox/dynamic-idle-calculator/dynamic-idle-calculator";
 
 /**
