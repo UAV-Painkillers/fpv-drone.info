@@ -17,7 +17,27 @@ addEventListener("install", () => self.skipWaiting());
 
 addEventListener("activate", () => self.clients.claim());
 
-registerRoute(({ url }) => url.hostname !== "cdn.builder.io", new StaleWhileRevalidate());
-registerRoute(({ url }) => url.hostname === "cdn.builder.io", new NetworkFirst());
+registerRoute(
+  ({ url }) => url.hostname !== "cdn.builder.io",
+  new StaleWhileRevalidate({
+    plugins: [
+      {
+        cacheWillUpdate: async (params: any) => {
+          console.log("cacheWillUpdate", params);
+        },
+        cacheDidUpdate: async (params: any) => {
+          console.log("cacheDidUpdate", params);
+        },
+        fetchDidFail: async (params: any) => {
+          console.log("fetchDidFail", params);
+        },
+      },
+    ],
+  })
+);
+registerRoute(
+  ({ url }) => url.hostname === "cdn.builder.io",
+  new NetworkFirst()
+);
 
 declare const self: ServiceWorkerGlobalScope;
