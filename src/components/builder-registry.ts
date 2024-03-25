@@ -16,6 +16,7 @@ import { CustomInstructionsRegistryDefinition } from "./shared/instructions/cust
 import { InstructionsStepRegistryDefinition } from "./shared/instructions/step/step";
 import { HighlightCardRegistryDefinition } from "./shared/highlight-card/highlight-card";
 import { DynamicIdleCalculatorRegistryDefinition } from "./pid-toolbox/dynamic-idle-calculator/dynamic-idle-calculator";
+import { SWClearCacheButtonRegistryDefinition } from "./sw-clear-cache-button/sw-clear-cache-button";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -49,4 +50,5 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   ),
   HighlightCardRegistryDefinition,
   DynamicIdleCalculatorRegistryDefinition,
+  SWClearCacheButtonRegistryDefinition,
 ];

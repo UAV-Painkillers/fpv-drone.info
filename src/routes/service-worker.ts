@@ -19,25 +19,32 @@ addEventListener("activate", () => self.clients.claim());
 
 registerRoute(
   ({ url }) => url.hostname !== "cdn.builder.io",
-  new StaleWhileRevalidate({
-    plugins: [
-      {
-        cacheWillUpdate: async (params: any) => {
-          console.log("cacheWillUpdate", params);
-        },
-        cacheDidUpdate: async (params: any) => {
-          console.log("cacheDidUpdate", params);
-        },
-        fetchDidFail: async (params: any) => {
-          console.log("fetchDidFail", params);
-        },
-      },
-    ],
-  })
+  new StaleWhileRevalidate()
 );
 registerRoute(
   ({ url }) => url.hostname === "cdn.builder.io",
   new NetworkFirst()
 );
+
+function clearCaches() {
+  caches.keys().then(function (names) {
+    for (const name of names) caches.delete(name);
+  });
+}
+
+// clear caches on message from window process
+self.addEventListener("message", (event) => {
+  console.log('SW received message', event.data.type);
+  if (event.data.type === "CLEAR_CACHES") {
+    clearCaches();
+  }
+
+  // tell window process that caches are cleared
+  console.log('SW sending message');
+  self.clients.matchAll().then((clients) => {
+    console.log('SW clients', clients);
+    clients.forEach((client) => client.postMessage({ type: "CACHES_CLEARED" }));
+  });
+});
 
 declare const self: ServiceWorkerGlobalScope;
