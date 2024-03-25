@@ -392,7 +392,6 @@ export function useAnalyzeLog() {
       const decoderResults = await analyzer.value!.decodeMainBBL(
         await file.arrayBuffer(),
         (status, payload) => {
-          console.log('received bbl split report', status, payload);
           onSplitBBLStatusReport(status, payload);
         }
       );
@@ -400,19 +399,16 @@ export function useAnalyzeLog() {
       const analyzeResult = await analyzer.value!.analyze(
         decoderResults,
         (status, index, payload) => {
-          console.log('received analyze report', status, index, payload);
           onAnalyzerStatusReport(status, index, payload);
         }
       );
 
-      console.log(analyzeResult);
       toolboxState.results = noSerialize(analyzeResult);
       toolboxState.selectedLogIndexes = analyzeResult.map((_, index) => index);
 
       state.value = AnalyzerState.DONE;
 
       if (analyzeResult.length === 0) {
-        console.log(analyzeResult)
         error.value = "Unable to parse any logs from the file.";
         state.value = AnalyzerState.ERROR;
       }

@@ -434,8 +434,6 @@ export class ResponsePlotter {
       data: resp_low,
     }));
 
-    console.log('responseStrengthSeries', responseStrengthSeries);
-
     ResponsePlotter.setChartOptions(
       this.charts.responseStrength,
       "Step Response",
