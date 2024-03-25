@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "fpv-drone.info",
+  "short_name": "fpv-drone.info",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#ffffff",
+  "description": "News, Guides, Reviews and more for the FPV Community!"
+}

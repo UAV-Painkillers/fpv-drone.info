@@ -8,11 +8,43 @@
  * You can also use this file to add more functionality that runs in the service worker.
  */
 import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
+import { registerRoute } from "workbox-routing";
+import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies";
 
 setupServiceWorker();
 
 addEventListener("install", () => self.skipWaiting());
 
 addEventListener("activate", () => self.clients.claim());
+
+registerRoute(
+  ({ url }) => url.hostname !== "cdn.builder.io",
+  new StaleWhileRevalidate()
+);
+registerRoute(
+  ({ url }) => url.hostname === "cdn.builder.io",
+  new NetworkFirst()
+);
+
+function clearCaches() {
+  caches.keys().then(function (names) {
+    for (const name of names) caches.delete(name);
+  });
+}
+
+// clear caches on message from window process
+self.addEventListener("message", (event) => {
+  console.log('SW received message', event.data.type);
+  if (event.data.type === "CLEAR_CACHES") {
+    clearCaches();
+  }
+
+  // tell window process that caches are cleared
+  console.log('SW sending message');
+  self.clients.matchAll().then((clients) => {
+    console.log('SW clients', clients);
+    clients.forEach((client) => client.postMessage({ type: "CACHES_CLEARED" }));
+  });
+});
 
 declare const self: ServiceWorkerGlobalScope;

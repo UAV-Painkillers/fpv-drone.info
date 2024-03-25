@@ -9,6 +9,14 @@ import { PageGridRegistryDefinition } from "./shared/page-grid/page-grid";
 import { PageHeadlineRegistryDefinition } from "./shared/page-headline/page-headline";
 import { TextRegistryDefinition } from "./shared/text/text";
 import { TLDRRegistryDefinition } from "./shared/tldr/tldr";
+import { PIDToolboxRegistryDefinition } from "./pid-toolbox/pid-toolbox";
+import { PWAInstallButtonRegistryDefinition } from "./pwa-install-button/pwa-install-button";
+import { BuyMeACoffeeButtonRegistryDefinition } from "./shared/buy-me-a-coffe/button";
+import { CustomInstructionsRegistryDefinition } from "./shared/instructions/custom-instructions";
+import { InstructionsStepRegistryDefinition } from "./shared/instructions/step/step";
+import { HighlightCardRegistryDefinition } from "./shared/highlight-card/highlight-card";
+import { DynamicIdleCalculatorRegistryDefinition } from "./pid-toolbox/dynamic-idle-calculator/dynamic-idle-calculator";
+import { SWClearCacheButtonRegistryDefinition } from "./sw-clear-cache-button/sw-clear-cache-button";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -25,6 +33,8 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   PageGridRegistryDefinition,
   CardRegistryDefinition,
   InstructionsRegistryDefinition,
+  CustomInstructionsRegistryDefinition,
+  InstructionsStepRegistryDefinition,
   LogoRegistryInformation,
   PageHeadlineRegistryDefinition,
   ExpandableImageRegistryDefinition,
@@ -32,4 +42,13 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   TLDRRegistryDefinition,
   NewsRegistryDefinition,
   ProductRegistryDefinition,
+  PIDToolboxRegistryDefinition,
+  PWAInstallButtonRegistryDefinition,
+  BuyMeACoffeeButtonRegistryDefinition(
+    "uav.painkillers",
+    "Buy me a smokestopper"
+  ),
+  HighlightCardRegistryDefinition,
+  DynamicIdleCalculatorRegistryDefinition,
+  SWClearCacheButtonRegistryDefinition,
 ];
