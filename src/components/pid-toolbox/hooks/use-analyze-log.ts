@@ -26,9 +26,7 @@ export function useAnalyzeLog() {
   const toolboxState = useToolboxContextProvider();
   const location = useLocation();
 
-  const state = useSignal<AnalyzerState>(
-    AnalyzerState.LOADING
-  );
+  const state = useSignal<AnalyzerState>(AnalyzerState.LOADING);
   const progress = useSignal<AnalyzerProgress>(makeEmptyProgress());
   const error = useSignal<string | null>(null);
   const analyzer = useSignal<NoSerialize<PIDAnalyzer>>();
@@ -37,23 +35,26 @@ export function useAnalyzeLog() {
    * Initialize the analyzer on component mount
    */
   // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(async () => {
-    try {
-      state.value = AnalyzerState.LOADING;
-      analyzer.value = noSerialize(
-        new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`)
-      );
-      await analyzer.value!.init();
-    } catch (e) {
-      state.value = AnalyzerState.ERROR;
-      error.value = (e as Error).message;
-      console.error(e);
-    } finally {
-      state.value = AnalyzerState.IDLE;
+  useVisibleTask$(
+    async () => {
+      try {
+        state.value = AnalyzerState.LOADING;
+        analyzer.value = noSerialize(
+          new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`)
+        );
+        await analyzer.value!.init();
+      } catch (e) {
+        state.value = AnalyzerState.ERROR;
+        error.value = (e as Error).message;
+        console.error(e);
+      } finally {
+        state.value = AnalyzerState.IDLE;
+      }
+    },
+    {
+      strategy: "intersection-observer",
     }
-  }, {
-    strategy: 'intersection-observer'
-  });
+  );
 
   const onSplitBBLStatusReport = $(
     <TKey extends SplitBBLStep>(
@@ -129,12 +130,12 @@ export function useAnalyzeLog() {
 
         case SplitBBLStep.READING_HEADERS_FROM_SUB_BBL_COMPLETE: {
           const subFileIndex = payload as number;
-          const newReadingHeaders =
-            progress.value.subLogs.readingHeaders.map((item) =>
+          const newReadingHeaders = progress.value.subLogs.readingHeaders.map(
+            (item) =>
               item.index === subFileIndex
                 ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
                 : item
-            );
+          );
           progress.value = {
             ...progress.value,
             subLogs: {
@@ -333,11 +334,10 @@ export function useAnalyzeLog() {
             ...progress.value,
             subLogs: {
               ...progress.value.subLogs,
-              analyzingPID: progress.value.subLogs.analyzingPID.map(
-                (item) =>
-                  item.index === flightLogIndex
-                    ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                    : item
+              analyzingPID: progress.value.subLogs.analyzingPID.map((item) =>
+                item.index === flightLogIndex
+                  ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
+                  : item
               ),
             },
           };
@@ -365,7 +365,11 @@ export function useAnalyzeLog() {
               ...progress.value.subLogs,
               state: progress.value.subLogs.state.map((item) =>
                 item.index === flightLogIndex
-                  ? { index: item.index, state: AnalyzerStepStatus.ERROR }
+                  ? {
+                      index: item.index,
+                      state: AnalyzerStepStatus.ERROR,
+                      error: payload as string,
+                    }
                   : item
               ),
             },

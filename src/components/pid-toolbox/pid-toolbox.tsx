@@ -14,6 +14,7 @@ import { NoiseFields, PlotName } from "./plots/response.plotter";
 import { AppContext } from "~/app.ctx";
 import type { PlotNavigationProps } from "./plots/navigation/plot-navigation";
 import { RacoonLoader } from "./racoon-loader/racoon-loader";
+import { AnalyzerStepStatus } from "./hooks/types";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -81,6 +82,12 @@ export const PIDToolbox = component$((props: Props) => {
     return <RacoonLoader label="Loading analyzer..." />;
   }
 
+  const subLogsWithErrors = useComputed$(() => {
+    return analyzerProgress.value.subLogs.state.filter(
+      (s) => s.state === AnalyzerStepStatus.ERROR
+    );
+  });
+
   return (
     <div
       class={classNames(styles.wrapper, {
@@ -104,7 +111,18 @@ export const PIDToolbox = component$((props: Props) => {
       />
 
       {analyzerState.value === AnalyzerState.ERROR && (
-        <pre>ERROR: {analyzerError.value}</pre>
+        <div>ERROR: {analyzerError.value}</div>
+      )}
+
+      {subLogsWithErrors.value.length > 0 && (
+        <>
+          <div>ERRORS:</div>
+          {subLogsWithErrors.value.map(({ index, error }) => (
+            <div
+              key={"sublog-error-" + index}
+            >{`Sublog ${index}: ${error}`}</div>
+          ))}
+        </>
       )}
 
       <div

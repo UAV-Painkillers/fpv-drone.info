@@ -152,7 +152,7 @@ export class ResponsePlotter {
       (options.grid as { left: number }).left = 90;
     }
 
-    if ((optionsToMerge as any).series.length > 1) {
+    if ((optionsToMerge as any).legend) {
       options.legend = {
         top: 30, // the size of title + margin
         left: "left", //or 0 or '0%'
@@ -199,7 +199,7 @@ export class ResponsePlotter {
   }
 
   private indexToLogName(index: number) {
-    return `Log #${index}`;
+    return `Log #${index + 1}`;
   }
 
   private getLabel(options: GetLabelOptions) {
@@ -275,6 +275,7 @@ export class ResponsePlotter {
       this.charts.responseTrace,
       "PID Response Trace",
       {
+        legend: {},
         toolbox: {
           feature: {
             dataZoom: {},
@@ -306,7 +307,7 @@ export class ResponsePlotter {
             name: this.getLabel({
               labelDefinition: this.labelDefinitions.responseTrace?.gyro,
               headdict: this.logs[index].headdict,
-              fallback: `${this.indexToLogName(index)} Setpoint`,
+              fallback: `${this.indexToLogName(index)} Gyro`,
               logIndex: index,
             }),
             type: "line",
@@ -438,6 +439,7 @@ export class ResponsePlotter {
       this.charts.responseStrength,
       "Step Response",
       {
+        legend: {},
         xAxis: {
           data: time_resp.map((t) => t.toFixed(1)),
           axisTick: {
@@ -451,9 +453,7 @@ export class ResponsePlotter {
             show: false,
           },
         },
-        series: [
-          ...responseStrengthSeries,
-        ],
+        series: [...responseStrengthSeries],
       }
     );
   }
@@ -595,6 +595,7 @@ export class ResponsePlotter {
     }
 
     ResponsePlotter.setChartOptions(chart, `${name}-Noise Frequencies`, {
+      legend: {},
       tooltip: {
         trigger: "axis",
         axisPointer: {

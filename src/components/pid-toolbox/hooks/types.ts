@@ -9,6 +9,7 @@ export enum AnalyzerStepStatus {
 export type AnalyzerStepStatusIndexArray = {
   index: number;
   state: AnalyzerStepStatus;
+  error?: string;
 }[];
 
 export interface AnalyzerProgress {
