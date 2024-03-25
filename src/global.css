@@ -352,3 +352,10 @@ tr:nth-child(odd) td {
     background: linear-gradient(360deg, var(--base-green), var(--base-blue));
   }
 }
+
+input {
+  padding: 0.5em;
+  border-radius: 10px;
+  border: 1px solid var(--base-black);
+  outline: none;
+}

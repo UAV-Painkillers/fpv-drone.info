@@ -1,5 +1,4 @@
 // import ngrok from "@ngrok/ngrok";
-
 interface Params {
   title: string;
   subtitle: string;

@@ -8,11 +8,12 @@ import { Plots } from "./plots/plots";
 import { useToolboxContextProvider } from "./context/pid-toolbox.context";
 import { useHideHeader } from "~/hooks/use-hide-header/use-hide-header";
 import { useFileDrop } from "~/hooks/use-file-drop/use-file-drop";
-import { useAnalyzeLog } from "./hooks/use-analyze-log";
+import { AnalyzerState, useAnalyzeLog } from "./hooks/use-analyze-log";
 import type { PlotLabelDefinitions } from "./plots/response.plotter";
 import { NoiseFields, PlotName } from "./plots/response.plotter";
 import { AppContext } from "~/app.ctx";
 import type { PlotNavigationProps } from "./plots/navigation/plot-navigation";
+import { RacoonLoader } from "./racoon-loader/racoon-loader";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -27,10 +28,15 @@ export const PIDToolbox = component$((props: Props) => {
   const appContext = useContext(AppContext);
 
   useHideHeader();
-  const analyzer = useAnalyzeLog();
+  const {
+    state: analyzerState,
+    analyzeFile,
+    progress: analyzerProgress,
+    error: analyzerError,
+  } = useAnalyzeLog();
 
   const isDroppingFile = useFileDrop({
-    onFileDrop: analyzer.analyzeFile,
+    onFileDrop: analyzeFile,
   });
 
   const activePlotsArray = useComputed$(() => {
@@ -62,36 +68,17 @@ export const PIDToolbox = component$((props: Props) => {
         return;
       }
 
-      analyzer.analyzeFile(file);
+      analyzeFile(file);
     };
 
     input.click();
   });
 
-  if (!appContext.isPreviewing && analyzer.state.value === "loading") {
-    return (
-      <div>
-        <center>
-          <img
-            height="300"
-            width="300"
-            style={{
-              height: "30vh !important",
-              width: "auto",
-              display: "block",
-              transition: "height .4s ease",
-            }}
-            // eslint-disable-next-line qwik/jsx-img
-            src="/original_images/racoon_processing-cropped.gif"
-          />
-
-          <br />
-          <label for="pid-analyzer-loading-indicator">
-            Loading analyzer...
-          </label>
-        </center>
-      </div>
-    );
+  if (
+    !appContext.isPreviewing &&
+    analyzerState.value === AnalyzerState.LOADING
+  ) {
+    return <RacoonLoader label="Loading analyzer..." />;
   }
 
   return (
@@ -107,19 +94,24 @@ export const PIDToolbox = component$((props: Props) => {
           [styles.uploadButtonDropover]: isDroppingFile.value,
         })}
       >
-        {analyzer.state.value === "running" && <InlineSpinner />}
+        {analyzerState.value === AnalyzerState.RUNNING && <InlineSpinner />}
         Click to open a Blackbox File (.bbl) or drag and drop it here
       </button>
 
       <PIDToolboxStatusDialog
-        isOpen={analyzer.state.value === "running"}
-        analyzerProgress={analyzer.progress.value}
+        isOpen={analyzerState.value === AnalyzerState.RUNNING}
+        analyzerProgress={analyzerProgress.value}
       />
+
+      {analyzerState.value === AnalyzerState.ERROR && (
+        <pre>ERROR: {analyzerError.value}</pre>
+      )}
 
       <div
         style={{
           display:
-            appContext.isPreviewing || analyzer.state.value === "done"
+            appContext.isPreviewing ||
+            analyzerState.value === AnalyzerState.DONE
               ? undefined
               : "none",
         }}

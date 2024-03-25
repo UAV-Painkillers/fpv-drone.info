@@ -14,12 +14,20 @@ import { useLocation } from "@builder.io/qwik-city";
 import type { AnalyzerProgress } from "./types";
 import { AnalyzerStepStatus, makeEmptyProgress } from "./types";
 
+export enum AnalyzerState {
+  LOADING = "loading",
+  IDLE = "idle",
+  RUNNING = "running",
+  ERROR = "error",
+  DONE = "done",
+}
+
 export function useAnalyzeLog() {
   const toolboxState = useToolboxContextProvider();
   const location = useLocation();
 
-  const state = useSignal<"loading" | "idle" | "running" | "error" | "done">(
-    "loading"
+  const state = useSignal<AnalyzerState>(
+    AnalyzerState.LOADING
   );
   const progress = useSignal<AnalyzerProgress>(makeEmptyProgress());
   const error = useSignal<string | null>(null);
@@ -31,17 +39,17 @@ export function useAnalyzeLog() {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
     try {
-      state.value = "loading";
+      state.value = AnalyzerState.LOADING;
       analyzer.value = noSerialize(
         new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`)
       );
       await analyzer.value!.init();
     } catch (e) {
-      state.value = "error";
+      state.value = AnalyzerState.ERROR;
       error.value = (e as Error).message;
       console.error(e);
     } finally {
-      state.value = "idle";
+      state.value = AnalyzerState.IDLE;
     }
   }, {
     strategy: 'intersection-observer'
@@ -378,12 +386,13 @@ export function useAnalyzeLog() {
     }
 
     try {
-      state.value = "running";
+      state.value = AnalyzerState.RUNNING;
       progress.value = makeEmptyProgress();
 
       const decoderResults = await analyzer.value!.decodeMainBBL(
         await file.arrayBuffer(),
         (status, payload) => {
+          console.log('received bbl split report', status, payload);
           onSplitBBLStatusReport(status, payload);
         }
       );
@@ -391,17 +400,24 @@ export function useAnalyzeLog() {
       const analyzeResult = await analyzer.value!.analyze(
         decoderResults,
         (status, index, payload) => {
+          console.log('received analyze report', status, index, payload);
           onAnalyzerStatusReport(status, index, payload);
         }
       );
 
+      console.log(analyzeResult);
       toolboxState.results = noSerialize(analyzeResult);
       toolboxState.selectedLogIndexes = analyzeResult.map((_, index) => index);
 
-      state.value = "done";
+      state.value = AnalyzerState.DONE;
+
+      if (analyzeResult.length === 0) {
+        console.log(analyzeResult)
+        error.value = "Unable to parse any logs from the file.";
+        state.value = AnalyzerState.ERROR;
+      }
     } catch (e) {
-      state.value = "error";
-      console.error(e);
+      state.value = AnalyzerState.ERROR;
       error.value = (e as Error).message;
     }
   });

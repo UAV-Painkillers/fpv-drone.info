@@ -1,15 +1,13 @@
-import {
-  component$,
-  useComputed$,
-} from "@builder.io/qwik";
+import { component$, useComputed$ } from "@builder.io/qwik";
 import { Dialog } from "../../shared/dialog/dialog";
 import type {
   AnalyzerProgress,
   AnalyzerStepStatusIndexArray,
 } from "../hooks/types";
 import { AnalyzerStepStatus } from "../hooks/types";
-import type { StepProps} from "./step/step";
+import type { StepProps } from "./step/step";
 import { Step } from "./step/step";
+import { RacoonLoader } from "../racoon-loader/racoon-loader";
 
 interface Props {
   isOpen: boolean;
@@ -61,11 +59,11 @@ export const PIDToolboxStatusDialog = component$((props: Props) => {
                 label: "decoding",
               },
               {
+                label: "reading decoded log",
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.readingCSV,
                   flightIndex
                 ),
-                label: "reading decoded log",
               },
               {
                 state: getStateOfItemInIndexArray(
@@ -75,11 +73,11 @@ export const PIDToolboxStatusDialog = component$((props: Props) => {
                 label: "exporting headers",
               },
               {
+                label: "running analysis",
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.analyzingPID,
                   flightIndex
                 ),
-                label: "running analysis",
                 subSteps: ["roll", "pitch", "yaw"].map((axis) => ({
                   state: getStateOfItemInIndexArray(
                     props.analyzerProgress.subLogs.analyzingPIDTrace[
@@ -100,10 +98,16 @@ export const PIDToolboxStatusDialog = component$((props: Props) => {
 
   return (
     <Dialog isOpen={props.isOpen}>
-      <div>
-        {steps.value.map((step, index) => (
-          <Step {...step} key={`${index}_${step.label}`} />
-        ))}
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <div style={{maxHeight: 'calc(100vh - 5rem)', overflowY: 'auto'}}>
+          {steps.value.map((step, index) => (
+            <Step {...step} key={`${index}_${step.label}`} />
+          ))}
+        </div>
+
+        <div>
+          <RacoonLoader />
+        </div>
       </div>
     </Dialog>
   );

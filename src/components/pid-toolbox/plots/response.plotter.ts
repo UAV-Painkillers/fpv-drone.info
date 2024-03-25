@@ -405,6 +405,7 @@ export class ResponsePlotter {
       return;
     }
 
+    /*
     const high_masks: Array<number[] | undefined> = this.logs.map(
       (log) => log[this.activeAxis].high_mask
     );
@@ -414,10 +415,26 @@ export class ResponsePlotter {
       (mask ?? [0]).reduce((a, b) => a + b, 0)
     );
     const useHighMasks = highMaskSums.map((sum) => sum > 0);
+    */
 
     const time_resp = activeMainLog[this.activeAxis].time_resp;
-    const resp_highs = this.logs.map((log) => log[this.activeAxis].resp_high);
+    // const resp_highs = this.logs.map((log) => log[this.activeAxis].resp_high);
     const resp_lows = this.logs.map((log) => log[this.activeAxis].resp_low);
+
+    // const responseStrengthSeries = useHighMasks.map((useHighMask, index) => ({
+    const responseStrengthSeries = resp_lows.map((resp_low, index) => ({
+      name: this.getLabel({
+        labelDefinition: this.labelDefinitions.responseStrength?.response,
+        headdict: activeMainLog.headdict,
+        fallback: this.indexToLogName(index),
+        logIndex: index,
+      }),
+      type: "line",
+      // data: useHighMask ? resp_highs[index]![0] : resp_lows[index][0],
+      data: resp_low,
+    }));
+
+    console.log('responseStrengthSeries', responseStrengthSeries);
 
     ResponsePlotter.setChartOptions(
       this.charts.responseStrength,
@@ -437,16 +454,7 @@ export class ResponsePlotter {
           },
         },
         series: [
-          ...useHighMasks.map((useHighMask, index) => ({
-            name: this.getLabel({
-              labelDefinition: this.labelDefinitions.responseStrength?.response,
-              headdict: activeMainLog.headdict,
-              fallback: this.indexToLogName(index),
-              logIndex: index,
-            }),
-            type: "line",
-            data: useHighMask ? resp_highs[index]![0] : resp_lows[index][0],
-          })),
+          ...responseStrengthSeries,
         ],
       }
     );
