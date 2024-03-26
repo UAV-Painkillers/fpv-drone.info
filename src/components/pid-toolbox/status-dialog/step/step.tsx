@@ -20,7 +20,7 @@ export const Step = component$((props: StepProps) => {
     }
 
     if (props.subStepsAllwaysVisible) {
-        return true;
+      return true;
     }
 
     if (props.state !== AnalyzerStepStatus.RUNNING) {

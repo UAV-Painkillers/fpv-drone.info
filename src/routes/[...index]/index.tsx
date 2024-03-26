@@ -59,7 +59,7 @@ export default component$(() => {
   );
 });
 
-export const head: DocumentHead = ({ resolveValue,  }) => {
+export const head: DocumentHead = ({ resolveValue }) => {
   const builderContent = resolveValue(usePage);
   const location = resolveValue(useRouteURL);
 

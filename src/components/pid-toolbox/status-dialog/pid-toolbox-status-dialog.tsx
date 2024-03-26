@@ -18,7 +18,7 @@ export const PIDToolboxStatusDialog = component$((props: Props) => {
   const steps = useComputed$(() => {
     const getStateOfItemInIndexArray = (
       indexArray: AnalyzerStepStatusIndexArray,
-      index: number
+      index: number,
     ): AnalyzerStepStatus => {
       const item = indexArray.find((i) => i.index === index);
       return item ? item.state : AnalyzerStepStatus.PENDING;
@@ -40,21 +40,21 @@ export const PIDToolboxStatusDialog = component$((props: Props) => {
           ({
             state: getStateOfItemInIndexArray(
               props.analyzerProgress.subLogs.state,
-              flightIndex
+              flightIndex,
             ),
             label: `Analyzing Sub Log #${flightIndex + 1}`,
             subSteps: [
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.readingHeaders,
-                  flightIndex
+                  flightIndex,
                 ),
                 label: "reading headers",
               },
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.decoding,
-                  flightIndex
+                  flightIndex,
                 ),
                 label: "decoding",
               },
@@ -62,13 +62,13 @@ export const PIDToolboxStatusDialog = component$((props: Props) => {
                 label: "reading decoded log",
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.readingCSV,
-                  flightIndex
+                  flightIndex,
                 ),
               },
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.writingHeadDictToJson,
-                  flightIndex
+                  flightIndex,
                 ),
                 label: "exporting headers",
               },
@@ -76,20 +76,20 @@ export const PIDToolboxStatusDialog = component$((props: Props) => {
                 label: "running analysis",
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.analyzingPID,
-                  flightIndex
+                  flightIndex,
                 ),
                 subSteps: ["roll", "pitch", "yaw"].map((axis) => ({
                   state: getStateOfItemInIndexArray(
                     props.analyzerProgress.subLogs.analyzingPIDTrace[
                       axis as "roll" | "pitch" | "yaw"
                     ],
-                    flightIndex
+                    flightIndex,
                   ),
                   label: `analysing ${axis}`,
                 })),
               },
             ],
-          }) as StepProps
+          }) as StepProps,
       ),
     });
 
@@ -98,8 +98,10 @@ export const PIDToolboxStatusDialog = component$((props: Props) => {
 
   return (
     <Dialog isOpen={props.isOpen}>
-      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-        <div style={{maxHeight: 'calc(100vh - 5rem)', overflowY: 'auto'}}>
+      <div
+        style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+      >
+        <div style={{ maxHeight: "calc(100vh - 5rem)", overflowY: "auto" }}>
           {steps.value.map((step, index) => (
             <Step {...step} key={`${index}_${step.label}`} />
           ))}

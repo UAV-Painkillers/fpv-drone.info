@@ -1,4 +1,12 @@
-import { component$, $, useContext, useComputed$ } from "@builder.io/qwik";
+import type { NoSerialize } from "@builder.io/qwik";
+import {
+  component$,
+  $,
+  useContext,
+  useComputed$,
+  useSignal,
+  noSerialize,
+} from "@builder.io/qwik";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik/types/src/server-index";
 import styles from "./pid-toolbox.module.css";
 import { PIDToolboxStatusDialog } from "./status-dialog/pid-toolbox-status-dialog";
@@ -15,6 +23,7 @@ import { AppContext } from "~/app.ctx";
 import type { PlotNavigationProps } from "./plots/navigation/plot-navigation";
 import { RacoonLoader } from "./racoon-loader/racoon-loader";
 import { AnalyzerStepStatus } from "./hooks/types";
+import { Dialog } from "../shared/dialog/dialog";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -34,10 +43,24 @@ export const PIDToolbox = component$((props: Props) => {
     analyzeFile,
     progress: analyzerProgress,
     error: analyzerError,
+    hasAnalysisInMemory,
   } = useAnalyzeLog();
+  const temporaryFileStorage =
+    useSignal<NoSerialize<File | undefined>>(undefined);
+  const showSelectAnalysisOverwriteMethodDialog = useSignal(false);
+
+  const onUserUploadedFile = $((file?: File) => {
+    if (!hasAnalysisInMemory.value) {
+      analyzeFile(file, true);
+      return;
+    }
+
+    temporaryFileStorage.value = noSerialize(file);
+    showSelectAnalysisOverwriteMethodDialog.value = true;
+  });
 
   const isDroppingFile = useFileDrop({
-    onFileDrop: analyzeFile,
+    onFileDrop: onUserUploadedFile,
   });
 
   const activePlotsArray = useComputed$(() => {
@@ -46,7 +69,7 @@ export const PIDToolbox = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -69,7 +92,7 @@ export const PIDToolbox = component$((props: Props) => {
         return;
       }
 
-      analyzeFile(file);
+      onUserUploadedFile(file);
     };
 
     input.click();
@@ -84,8 +107,26 @@ export const PIDToolbox = component$((props: Props) => {
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR
+      (s) => s.state === AnalyzerStepStatus.ERROR,
     );
+  });
+
+  const addFileToCurrentAnalysis = $(() => {
+    if (!temporaryFileStorage.value) {
+      return;
+    }
+
+    showSelectAnalysisOverwriteMethodDialog.value = false;
+    analyzeFile(temporaryFileStorage.value, false);
+  });
+
+  const overwriteCurrentAnalysisWithFile = $(() => {
+    if (!temporaryFileStorage.value) {
+      return;
+    }
+
+    showSelectAnalysisOverwriteMethodDialog.value = false;
+    analyzeFile(temporaryFileStorage.value, true);
   });
 
   return (
@@ -104,6 +145,27 @@ export const PIDToolbox = component$((props: Props) => {
         {analyzerState.value === AnalyzerState.RUNNING && <InlineSpinner />}
         Click to open a Blackbox File (.bbl) or drag and drop it here
       </button>
+
+      <Dialog isOpen={showSelectAnalysisOverwriteMethodDialog.value}>
+        <div style={{ marginBottom: "1rem" }}>
+          <button
+            class="button"
+            style={{ width: "100%" }}
+            onClick$={addFileToCurrentAnalysis}
+          >
+            Add to current Analysis
+          </button>
+        </div>
+        <div>
+          <button
+            class="button"
+            style={{ width: "100%" }}
+            onClick$={overwriteCurrentAnalysisWithFile}
+          >
+            Replace current Analysis
+          </button>
+        </div>
+      </Dialog>
 
       <PIDToolboxStatusDialog
         isOpen={analyzerState.value === AnalyzerState.RUNNING}
@@ -284,7 +346,7 @@ export const PIDToolboxRegistryDefinition: RegisteredComponent = {
           type: "object",
           required: false,
           subFields: Object.values(NoiseFields).map((noiseField) =>
-            makeSeriesLabelDefinitionInput(noiseField)
+            makeSeriesLabelDefinitionInput(noiseField),
           ),
         },
       ],

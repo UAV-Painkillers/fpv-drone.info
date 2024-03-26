@@ -23,9 +23,7 @@ export const RacoonLoader = component$((props: Props) => {
         {props.label && (
           <>
             <br />
-            <label>
-              {props.label}
-            </label>
+            <label>{props.label}</label>
           </>
         )}
       </center>

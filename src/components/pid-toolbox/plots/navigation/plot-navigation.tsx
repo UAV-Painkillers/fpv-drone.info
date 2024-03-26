@@ -23,7 +23,7 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
     let resultingSelectedLogIndexes: number[];
     if (wasSelected) {
       resultingSelectedLogIndexes = toolboxContext.selectedLogIndexes.filter(
-        (i) => i !== index
+        (i) => i !== index,
       );
     } else {
       resultingSelectedLogIndexes = [

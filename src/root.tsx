@@ -1,8 +1,4 @@
-import {
-  component$,
-  useContextProvider,
-  useStore,
-} from "@builder.io/qwik";
+import { component$, useContextProvider, useStore } from "@builder.io/qwik";
 import {
   QwikCityProvider,
   RouterOutlet,

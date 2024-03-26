@@ -19,11 +19,11 @@ addEventListener("activate", () => self.clients.claim());
 
 registerRoute(
   ({ url }) => url.hostname !== "cdn.builder.io",
-  new StaleWhileRevalidate()
+  new StaleWhileRevalidate(),
 );
 registerRoute(
   ({ url }) => url.hostname === "cdn.builder.io",
-  new NetworkFirst()
+  new NetworkFirst(),
 );
 
 function clearCaches() {
@@ -34,15 +34,15 @@ function clearCaches() {
 
 // clear caches on message from window process
 self.addEventListener("message", (event) => {
-  console.log('SW received message', event.data.type);
+  console.log("SW received message", event.data.type);
   if (event.data.type === "CLEAR_CACHES") {
     clearCaches();
   }
 
   // tell window process that caches are cleared
-  console.log('SW sending message');
+  console.log("SW sending message");
   self.clients.matchAll().then((clients) => {
-    console.log('SW clients', clients);
+    console.log("SW clients", clients);
     clients.forEach((client) => client.postMessage({ type: "CACHES_CLEARED" }));
   });
 });

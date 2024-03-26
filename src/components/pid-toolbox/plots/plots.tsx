@@ -66,7 +66,7 @@ export const Plots = component$((props: Props) => {
     return;
 
     const mockData = (await fetch("/mock-data.json.gz").then((res) =>
-      res.json()
+      res.json(),
     )) as unknown as PIDAnalyzerResult[];
     toolboxContext.results = noSerialize(mockData);
   });
@@ -107,8 +107,8 @@ export const Plots = component$((props: Props) => {
     if (props.plots) {
       charts = Object.fromEntries(
         Object.entries(charts).filter(([key]) =>
-          props.plots!.includes(key as PlotName)
-        )
+          props.plots!.includes(key as PlotName),
+        ),
       ) as ChartsElementMap;
     }
 
@@ -116,10 +116,10 @@ export const Plots = component$((props: Props) => {
   });
 
   // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({track}) => {
+  useVisibleTask$(({ track }) => {
     track(() => props.plotLabels);
     track(plotter);
-    
+
     if (!plotter.value) {
       return;
     }
@@ -136,7 +136,7 @@ export const Plots = component$((props: Props) => {
 
     const logsToShow =
       toolboxContext.results?.filter((_, i) =>
-        toolboxContext.selectedLogIndexes.includes(i)
+        toolboxContext.selectedLogIndexes.includes(i),
       ) ?? [];
 
     plotStepResponse(logsToShow);
@@ -164,7 +164,7 @@ export const Plots = component$((props: Props) => {
       if (plotter.value) {
         plotter.value.resize();
       }
-    })
+    }),
   );
 
   /**
@@ -213,8 +213,8 @@ export const Plots = component$((props: Props) => {
   const activePlotMap = useComputed$(() => {
     const map = Object.fromEntries(
       Object.entries(plotMap).filter(([key]) =>
-        props.plots?.includes(key as PlotName)
-      )
+        props.plots?.includes(key as PlotName),
+      ),
     );
 
     return map;
@@ -242,7 +242,7 @@ export const Plots = component$((props: Props) => {
               ref={ref}
               key={plotName}
             ></div>
-          )
+          ),
         )}
       </div>
       {(toolboxContext.results?.length ?? 0) > 0 && (

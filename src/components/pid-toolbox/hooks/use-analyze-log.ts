@@ -4,6 +4,7 @@ import { useToolboxContextProvider } from "../context/pid-toolbox.context";
 import type {
   SplitBBLStepToPayloadMap,
   AnalyzeOneFlightStepToPayloadMap,
+  PIDAnalyzerResult,
 } from "@uav.painkillers/pid-analyzer-wasm";
 import {
   PIDAnalyzer,
@@ -30,6 +31,7 @@ export function useAnalyzeLog() {
   const progress = useSignal<AnalyzerProgress>(makeEmptyProgress());
   const error = useSignal<string | null>(null);
   const analyzer = useSignal<NoSerialize<PIDAnalyzer>>();
+  const hasAnalysisInMemory = useSignal(false);
 
   /**
    * Initialize the analyzer on component mount
@@ -40,7 +42,7 @@ export function useAnalyzeLog() {
       try {
         state.value = AnalyzerState.LOADING;
         analyzer.value = noSerialize(
-          new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`)
+          new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`),
         );
         await analyzer.value!.init();
       } catch (e) {
@@ -53,13 +55,13 @@ export function useAnalyzeLog() {
     },
     {
       strategy: "intersection-observer",
-    }
+    },
   );
 
   const onSplitBBLStatusReport = $(
     <TKey extends SplitBBLStep>(
       step: TKey,
-      payload: SplitBBLStepToPayloadMap[TKey]
+      payload: SplitBBLStepToPayloadMap[TKey],
     ) => {
       switch (step) {
         case SplitBBLStep.RUNNING: {
@@ -134,7 +136,7 @@ export function useAnalyzeLog() {
             (item) =>
               item.index === subFileIndex
                 ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                : item
+                : item,
           );
           progress.value = {
             ...progress.value,
@@ -177,7 +179,7 @@ export function useAnalyzeLog() {
           const newDecoding = progress.value.subLogs.decoding.map((item) =>
             item.index === subFileIndex
               ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-              : item
+              : item,
           );
           progress.value = {
             ...progress.value,
@@ -200,14 +202,14 @@ export function useAnalyzeLog() {
           break;
         }
       }
-    }
+    },
   );
 
   const onAnalyzerStatusReport = $(
     <TKey extends AnalyzeOneFlightStep>(
       step: TKey,
       flightLogIndex: number,
-      payload: AnalyzeOneFlightStepToPayloadMap[TKey]
+      payload: AnalyzeOneFlightStepToPayloadMap[TKey],
     ) => {
       switch (step) {
         case AnalyzeOneFlightStep.START: {
@@ -237,7 +239,7 @@ export function useAnalyzeLog() {
               readingCSV: progress.value.subLogs.readingCSV.map((item) =>
                 item.index === flightLogIndex
                   ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                  : item
+                  : item,
               ),
             },
           };
@@ -267,7 +269,7 @@ export function useAnalyzeLog() {
                 progress.value.subLogs.writingHeadDictToJson.map((item) =>
                   item.index === flightLogIndex
                     ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                    : item
+                    : item,
                 ),
             },
           };
@@ -321,7 +323,7 @@ export function useAnalyzeLog() {
                 ].map((item) =>
                   item.index === flightLogIndex
                     ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                    : item
+                    : item,
                 ),
               },
             },
@@ -337,7 +339,7 @@ export function useAnalyzeLog() {
               analyzingPID: progress.value.subLogs.analyzingPID.map((item) =>
                 item.index === flightLogIndex
                   ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                  : item
+                  : item,
               ),
             },
           };
@@ -352,7 +354,7 @@ export function useAnalyzeLog() {
               state: progress.value.subLogs.state.map((item) =>
                 item.index === flightLogIndex
                   ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                  : item
+                  : item,
               ),
             },
           };
@@ -370,7 +372,7 @@ export function useAnalyzeLog() {
                       state: AnalyzerStepStatus.ERROR,
                       error: payload as string,
                     }
-                  : item
+                  : item,
               ),
             },
           };
@@ -380,10 +382,10 @@ export function useAnalyzeLog() {
         default:
           console.warn("Unknown step", step, payload);
       }
-    }
+    },
   );
 
-  const analyzeFile = $(async (file?: File) => {
+  const analyzeFile = $(async (file?: File, replaceCurrentAnalysis = true) => {
     if (!file) {
       console.warn("No file provided");
       return;
@@ -397,22 +399,40 @@ export function useAnalyzeLog() {
         await file.arrayBuffer(),
         (status, payload) => {
           onSplitBBLStatusReport(status, payload);
-        }
+        },
       );
 
-      const analyzeResult = await analyzer.value!.analyze(
+      const analyzerResult = await analyzer.value!.analyze(
         decoderResults,
         (status, index, payload) => {
           onAnalyzerStatusReport(status, index, payload);
-        }
+        },
       );
 
-      toolboxState.results = noSerialize(analyzeResult);
-      toolboxState.selectedLogIndexes = analyzeResult.map((_, index) => index);
+      let newResults: PIDAnalyzerResult[];
+      let newSelectedLogIndexes: number[];
+
+      if (replaceCurrentAnalysis) {
+        newResults = analyzerResult;
+        newSelectedLogIndexes = analyzerResult.map((_, index) => index);
+      } else {
+        newResults = (
+          (toolboxState.results ?? []) as PIDAnalyzerResult[]
+        ).concat(analyzerResult as PIDAnalyzerResult[]);
+        newSelectedLogIndexes = toolboxState.selectedLogIndexes.concat(
+          analyzerResult.map(
+            (_, index) => index + (toolboxState.results?.length ?? 0),
+          ),
+        );
+      }
+
+      toolboxState.results = noSerialize(newResults);
+      toolboxState.selectedLogIndexes = newSelectedLogIndexes;
+      hasAnalysisInMemory.value = true;
 
       state.value = AnalyzerState.DONE;
 
-      if (analyzeResult.length === 0) {
+      if (analyzerResult.length === 0) {
         error.value = "Unable to parse any logs from the file.";
         state.value = AnalyzerState.ERROR;
       }
@@ -427,5 +447,6 @@ export function useAnalyzeLog() {
     progress,
     state,
     error,
+    hasAnalysisInMemory,
   };
 }

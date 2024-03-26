@@ -46,7 +46,7 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   PWAInstallButtonRegistryDefinition,
   BuyMeACoffeeButtonRegistryDefinition(
     "uav.painkillers",
-    "Buy me a smokestopper"
+    "Buy me a smokestopper",
   ),
   HighlightCardRegistryDefinition,
   DynamicIdleCalculatorRegistryDefinition,

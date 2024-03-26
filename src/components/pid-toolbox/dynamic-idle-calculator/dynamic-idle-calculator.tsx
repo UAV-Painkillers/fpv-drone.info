@@ -14,14 +14,24 @@ export const DynamicIdleCalculator = component$(() => {
 
   return (
     <div>
-      <label style={{display: 'block', marginBottom: '1rem'}}>
+      <label style={{ display: "block", marginBottom: "1rem" }}>
         Prop Diameter (inches)
-        <input style={{display: 'block'}} type="number" min={0} onInput$={onPropDiaChange} />
+        <input
+          style={{ display: "block" }}
+          type="number"
+          min={0}
+          onInput$={onPropDiaChange}
+        />
       </label>
 
-      <label style={{display: 'block'}}>
+      <label style={{ display: "block" }}>
         Resulting Dynamic Idle
-        <input style={{display: 'block'}} type="number" readOnly value={dynamicIdle.value} />
+        <input
+          style={{ display: "block" }}
+          type="number"
+          readOnly
+          value={dynamicIdle.value}
+        />
       </label>
     </div>
   );
