@@ -17,14 +17,15 @@ addEventListener("install", () => self.skipWaiting());
 
 addEventListener("activate", () => self.clients.claim());
 
-registerRoute(
-  ({ url }) => url.hostname !== "cdn.builder.io",
-  new StaleWhileRevalidate(),
-);
-registerRoute(
-  ({ url }) => url.hostname === "cdn.builder.io",
-  new NetworkFirst(),
-);
+function matchBuilderApi(url: URL) {
+  const isMatchthing =
+    url.hostname.endsWith(".builder.io") || url.hostname === "builder.io";
+  console.log("isMatchthing", isMatchthing, url.toString());
+  return isMatchthing;
+}
+
+registerRoute(({ url }) => !matchBuilderApi(url), new StaleWhileRevalidate());
+registerRoute(({ url }) => matchBuilderApi(url), new NetworkFirst());
 
 function clearCaches() {
   caches.keys().then(function (names) {
