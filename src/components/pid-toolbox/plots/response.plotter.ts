@@ -76,12 +76,15 @@ export interface PlotLabelDefinitions {
   noiseFrequencies?: {
     [key in NoiseFields]: SeriesLabelDefinition;
   };
+  noise?: {
+    [key in NoiseFields]: SeriesLabelDefinition;
+  };
 }
 
 interface GetLabelOptions {
   labelDefinition?: SeriesLabelDefinition;
   headdict: PIDAnalyzerHeaderInformation;
-  fallback: string;
+  fallback?: SeriesLabelDefinition;
   logIndex?: number;
 }
 
@@ -202,24 +205,60 @@ export class ResponsePlotter {
     return `Log #${index + 1}`;
   }
 
-  private getLabel(options: GetLabelOptions) {
-    const { labelDefinition, headdict, fallback, logIndex } = options;
+  private getLabel(options: GetLabelOptions): string {
+    const {
+      labelDefinition,
+      headdict,
+      fallback: fallbackIncoming,
+      logIndex,
+    } = options;
+
+    let fallback = fallbackIncoming;
+    if (!fallback) {
+      let pidField: keyof Pick<
+        PIDAnalyzerHeaderInformation,
+        "rollPID" | "pitchPID" | "yawPID"
+      >;
+      switch (this.activeAxis) {
+        case "roll":
+          pidField = "rollPID";
+          break;
+        case "pitch":
+          pidField = "pitchPID";
+          break;
+        case "yaw":
+          pidField = "yawPID";
+          break;
+      }
+      fallback = {
+        template: `#{{logIndex}} (PID: {{headerValue}})`,
+        headdictField: pidField,
+      };
+    }
+
+    const returnFallback = (): string => {
+      return this.getLabel({
+        labelDefinition: fallback,
+        headdict,
+        logIndex,
+      });
+    };
 
     if (!labelDefinition) {
-      return fallback;
+      return returnFallback();
     }
 
     const headerName = labelDefinition.headdictField;
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!headerName) {
-      return fallback;
+      return returnFallback();
     }
 
     const headerValue = headdict[headerName];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (headerValue === undefined || headerValue === null) {
-      return fallback;
+      return returnFallback();
     }
 
     if (!labelDefinition.template) {
@@ -307,7 +346,6 @@ export class ResponsePlotter {
             name: this.getLabel({
               labelDefinition: this.labelDefinitions.responseTrace?.gyro,
               headdict: this.logs[index].headdict,
-              fallback: `${this.indexToLogName(index)} Gyro`,
               logIndex: index,
             }),
             type: "line",
@@ -318,7 +356,6 @@ export class ResponsePlotter {
             name: this.getLabel({
               labelDefinition: this.labelDefinitions.responseTrace?.setPoint,
               headdict: this.logs[index].headdict,
-              fallback: `${this.indexToLogName(index)} Setpoint`,
               logIndex: index,
             }),
             type: "line",
@@ -329,7 +366,6 @@ export class ResponsePlotter {
             name: this.getLabel({
               labelDefinition: this.labelDefinitions.responseTrace?.feedForward,
               headdict: this.logs[index].headdict,
-              fallback: `${this.indexToLogName(index)} Feedforward`,
               logIndex: index,
             }),
             type: "line",
@@ -384,7 +420,6 @@ export class ResponsePlotter {
           name: this.getLabel({
             labelDefinition: this.labelDefinitions.responseThrottle?.throttle,
             headdict: activeMainLog.headdict,
-            fallback: `${this.indexToLogName(index)} throttle %`,
             logIndex: index,
           }),
           data: throttle,
@@ -427,7 +462,6 @@ export class ResponsePlotter {
       name: this.getLabel({
         labelDefinition: this.labelDefinitions.responseStrength?.response,
         headdict: activeMainLog.headdict,
-        fallback: this.indexToLogName(index),
         logIndex: index,
       }),
       type: "line",
@@ -490,6 +524,7 @@ export class ResponsePlotter {
       .join(" ");
     ResponsePlotter.setChartOptions(chart, chartName, {
       tooltip: {},
+      legend: {},
       xAxis: {
         type: "category",
         name: "Frequency",
@@ -524,7 +559,11 @@ export class ResponsePlotter {
       },
       series: [
         {
-          name: "Gaussian",
+          name: this.getLabel({
+            labelDefinition: this.labelDefinitions.noise?.[fieldName],
+            headdict: activeLog.headdict,
+            logIndex: this.activeMainIndex + 1,
+          }),
           type: "heatmap",
           data,
         },
@@ -625,7 +664,7 @@ export class ResponsePlotter {
           name: this.getLabel({
             labelDefinition,
             headdict: activeLog.headdict,
-            fallback: "Gyro",
+            logIndex: this.activeMainIndex + 1,
           }),
           type: "bar",
           data: data,
