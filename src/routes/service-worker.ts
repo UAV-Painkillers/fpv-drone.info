@@ -18,10 +18,7 @@ addEventListener("install", () => self.skipWaiting());
 addEventListener("activate", () => self.clients.claim());
 
 function matchBuilderApi(url: URL) {
-  const isMatchthing =
-    url.hostname.endsWith(".builder.io") || url.hostname === "builder.io";
-  console.log("isMatchthing", isMatchthing, url.toString());
-  return isMatchthing;
+  return url.hostname.endsWith(".builder.io") || url.hostname === "builder.io";
 }
 
 registerRoute(({ url }) => !matchBuilderApi(url), new StaleWhileRevalidate());
