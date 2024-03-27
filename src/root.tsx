@@ -1,4 +1,9 @@
-import { component$, useContextProvider, useStore } from "@builder.io/qwik";
+import {
+  component$,
+  useContextProvider,
+  useStore,
+  useVisibleTask$,
+} from "@builder.io/qwik";
 import {
   QwikCityProvider,
   RouterOutlet,
@@ -10,6 +15,7 @@ import "./global.css";
 import { RouterHead } from "./components/router-head/router-head";
 import type { AppContextState } from "./app.ctx";
 import { AppContext } from "./app.ctx";
+import { injectSpeedInsights } from "@vercel/speed-insights";
 
 export default component$(() => {
   const appContextData = useStore<AppContextState>({
@@ -17,6 +23,11 @@ export default component$(() => {
     isPreviewing: false,
   });
   useContextProvider(AppContext, appContextData);
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(() => {
+    injectSpeedInsights();
+  });
 
   return (
     <QwikCityProvider>
