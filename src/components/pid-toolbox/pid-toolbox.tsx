@@ -69,7 +69,7 @@ export const PIDToolbox = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -107,7 +107,7 @@ export const PIDToolbox = component$((props: Props) => {
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR
+      (s) => s.state === AnalyzerStepStatus.ERROR,
     );
   });
 
@@ -146,7 +146,7 @@ export const PIDToolbox = component$((props: Props) => {
         Click to open a Blackbox File (.bbl) or drag and drop it here
       </button>
 
-      <Dialog isOpen={true || showSelectAnalysisOverwriteMethodDialog.value}>
+      <Dialog isOpen={showSelectAnalysisOverwriteMethodDialog.value}>
         <div
           style={{
             display: "flex",
@@ -354,7 +354,7 @@ export const PIDToolboxRegistryDefinition: RegisteredComponent = {
           type: "object",
           required: false,
           subFields: Object.values(NoiseFields).map((noiseField) =>
-            makeSeriesLabelDefinitionInput(noiseField)
+            makeSeriesLabelDefinitionInput(noiseField),
           ),
         },
       ],
