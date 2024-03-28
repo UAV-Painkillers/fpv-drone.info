@@ -14,6 +14,7 @@ import { Logo } from "~/components/logo/logo";
 import { Link, useLocation } from "@builder.io/qwik-city";
 import { Navigation } from "~/components/shared/navigation/navigation";
 import { AppContext } from "~/app.ctx";
+import { SearchButton } from "~/components/shared/search/search-button";
 
 export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -39,7 +40,7 @@ export default component$(() => {
               <Logo />
             </Link>
             <Navigation class={styles.navigation} />
-            {/*<Search class={styles.search} />*/}
+            <SearchButton class={styles.search} />
           </>
         )}
         <main class={styles.main}>

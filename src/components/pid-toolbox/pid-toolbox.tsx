@@ -69,7 +69,7 @@ export const PIDToolbox = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -107,7 +107,7 @@ export const PIDToolbox = component$((props: Props) => {
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR,
+      (s) => s.state === AnalyzerStepStatus.ERROR
     );
   });
 
@@ -146,8 +146,18 @@ export const PIDToolbox = component$((props: Props) => {
         Click to open a Blackbox File (.bbl) or drag and drop it here
       </button>
 
-      <Dialog isOpen={showSelectAnalysisOverwriteMethodDialog.value}>
-        <div style={{ marginBottom: "1rem" }}>
+      <Dialog isOpen={true || showSelectAnalysisOverwriteMethodDialog.value}>
+        <div
+          style={{
+            display: "flex",
+            gap: "25px",
+            height: "calc(100vh - 4rem)",
+            justifyContent: "space-evenly",
+            maxWidth: "700px",
+            margin: "0 auto",
+            alignItems: "center",
+          }}
+        >
           <button
             class="button"
             style={{ width: "100%" }}
@@ -155,8 +165,6 @@ export const PIDToolbox = component$((props: Props) => {
           >
             Add to current Analysis
           </button>
-        </div>
-        <div>
           <button
             class="button"
             style={{ width: "100%" }}
@@ -346,7 +354,7 @@ export const PIDToolboxRegistryDefinition: RegisteredComponent = {
           type: "object",
           required: false,
           subFields: Object.values(NoiseFields).map((noiseField) =>
-            makeSeriesLabelDefinitionInput(noiseField),
+            makeSeriesLabelDefinitionInput(noiseField)
           ),
         },
       ],

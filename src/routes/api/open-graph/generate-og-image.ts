@@ -8,9 +8,9 @@ interface Params {
 export async function generateOgImage(params: Params): Promise<Blob> {
   const { title, subtitle, originUrl, svgTemplateFileName } = params;
 
-  const ogImageGeneratorEndpoint = process.env.OG_IMAGE_GENERATOR_ENDPOINT;
+  const ogImageGeneratorEndpoint = process.env.VITE_OG_IMAGE_GENERATOR_ENDPOINT;
   if (!ogImageGeneratorEndpoint) {
-    throw new Error("OG_IMAGE_GENERATOR_ENDPOINT is not set");
+    throw new Error("VITE_OG_IMAGE_GENERATOR_ENDPOINT is not set");
   }
 
   let svgTemplateUrl = `${originUrl.origin}/${svgTemplateFileName}`;
@@ -26,8 +26,8 @@ export async function generateOgImage(params: Params): Promise<Blob> {
   }
   */
 
-  if (process.env.OG_IMAGE_PROXY_URL) {
-    svgTemplateUrl = `${process.env.OG_IMAGE_PROXY_URL}/${svgTemplateFileName}`;
+  if (process.env.VITE_OG_IMAGE_PROXY_URL) {
+    svgTemplateUrl = `${process.env.VITE_OG_IMAGE_PROXY_URL}/${svgTemplateFileName}`;
   }
 
   const ogImageGeneratorImageUrl = new URL(ogImageGeneratorEndpoint);
@@ -35,8 +35,8 @@ export async function generateOgImage(params: Params): Promise<Blob> {
   ogImageGeneratorImageUrl.searchParams.append("title", title);
   ogImageGeneratorImageUrl.searchParams.append("subtitle", subtitle);
 
-  const authUser = process.env.OG_IMAGE_GENERATOR_USER;
-  const authPassword = process.env.OG_IMAGE_GENERATOR_PASSWORD;
+  const authUser = process.env.VITE_OG_IMAGE_GENERATOR_USER;
+  const authPassword = process.env.VITE_OG_IMAGE_GENERATOR_PASSWORD;
 
   const basicAuthHeader = authUser
     ? `Basic ${Buffer.from(`${authUser}:${authPassword}`).toString("base64")}`
