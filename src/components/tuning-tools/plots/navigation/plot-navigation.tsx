@@ -1,6 +1,6 @@
 import { component$, $, useSignal, useContext } from "@builder.io/qwik";
 import { Dialog } from "~/components/shared/dialog/dialog";
-import { PIDToolBoxContext } from "../../context/pid-toolbox.context";
+import { BlackboxAnalyzerContext } from "../../context/blackbox-analyzer.context";
 import styles from "./plot-navigation.module.css";
 
 export interface PlotNavigationProps {
@@ -9,7 +9,7 @@ export interface PlotNavigationProps {
   showMainLogSelection?: boolean;
 }
 export const PlotNavigation = component$((props: PlotNavigationProps) => {
-  const toolboxContext = useContext(PIDToolBoxContext);
+  const analyzerContext = useContext(BlackboxAnalyzerContext);
 
   const showLogSelection = useSignal(false);
 
@@ -18,21 +18,21 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
   });
 
   const onLogSelectionChange = $((index: number) => {
-    const wasSelected = toolboxContext.selectedLogIndexes.includes(index);
+    const wasSelected = analyzerContext.selectedLogIndexes.includes(index);
 
     let resultingSelectedLogIndexes: number[];
     if (wasSelected) {
-      resultingSelectedLogIndexes = toolboxContext.selectedLogIndexes.filter(
+      resultingSelectedLogIndexes = analyzerContext.selectedLogIndexes.filter(
         (i) => i !== index,
       );
     } else {
       resultingSelectedLogIndexes = [
-        ...toolboxContext.selectedLogIndexes,
+        ...analyzerContext.selectedLogIndexes,
         index,
       ];
     }
 
-    toolboxContext.selectedLogIndexes = resultingSelectedLogIndexes;
+    analyzerContext.selectedLogIndexes = resultingSelectedLogIndexes;
   });
 
   if (
@@ -47,11 +47,11 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
     <>
       <Dialog isOpen={showLogSelection.value} onClose={onLogSelectionClose}>
         <>
-          {toolboxContext.results?.map((_, i) => (
+          {analyzerContext.results?.map((_, i) => (
             <label key={i} style={{ display: "block", marginBlock: "15px" }}>
               <input
                 type="checkbox"
-                checked={toolboxContext.selectedLogIndexes.includes(i)}
+                checked={analyzerContext.selectedLogIndexes.includes(i)}
                 onChange$={() => {
                   onLogSelectionChange(i);
                 }}
@@ -67,8 +67,8 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
             class="button"
             onClick$={() => (showLogSelection.value = !showLogSelection.value)}
           >
-            Combined Logs ({toolboxContext.selectedLogIndexes.length} /{" "}
-            {toolboxContext.results?.length})
+            Combined Logs ({analyzerContext.selectedLogIndexes.length} /{" "}
+            {analyzerContext.results?.length})
           </button>
         )}
 
@@ -77,13 +77,13 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
             class="button"
             onChange$={(e) => {
               const selectedIndex = parseInt((e as any).target.value);
-              toolboxContext.activeMainLogIndex = selectedIndex;
+              analyzerContext.activeMainLogIndex = selectedIndex;
             }}
           >
-            {toolboxContext.results?.map((_, i) => (
+            {analyzerContext.results?.map((_, i) => (
               <option
                 key={i}
-                selected={toolboxContext.activeMainLogIndex === i}
+                selected={analyzerContext.activeMainLogIndex === i}
                 value={i}
               >{`Active Flightlog #${i + 1}`}</option>
             ))}
@@ -93,9 +93,9 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
         {props.showActiveAxisSelection && (
           <select
             class="button"
-            value={toolboxContext.analyzerActiveAxis}
+            value={analyzerContext.analyzerActiveAxis}
             onChange$={(e) => {
-              toolboxContext.analyzerActiveAxis = (e as any).target.value as
+              analyzerContext.analyzerActiveAxis = (e as any).target.value as
                 | "roll"
                 | "pitch"
                 | "yaw";
@@ -103,19 +103,19 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
           >
             <option
               value="roll"
-              selected={toolboxContext.analyzerActiveAxis === "roll"}
+              selected={analyzerContext.analyzerActiveAxis === "roll"}
             >
               Axis: Roll
             </option>
             <option
               value="pitch"
-              selected={toolboxContext.analyzerActiveAxis === "pitch"}
+              selected={analyzerContext.analyzerActiveAxis === "pitch"}
             >
               Axis: Pitch
             </option>
             <option
               value="yaw"
-              selected={toolboxContext.analyzerActiveAxis === "yaw"}
+              selected={analyzerContext.analyzerActiveAxis === "yaw"}
             >
               Axis: Yaw
             </option>

@@ -18,7 +18,7 @@ import { PlotName, ResponsePlotter } from "./response.plotter";
 import styles from "./plots.module.css";
 import type { PlotNavigationProps } from "./navigation/plot-navigation";
 import { PlotNavigation } from "./navigation/plot-navigation";
-import { PIDToolBoxContext } from "../context/pid-toolbox.context";
+import { BlackboxAnalyzerContext } from "../context/blackbox-analyzer.context";
 import { AppContext } from "~/app.ctx";
 import classNames from "classnames";
 
@@ -28,7 +28,7 @@ interface Props {
   plotLabels?: PlotLabelDefinitions;
 }
 export const Plots = component$((props: Props) => {
-  const toolboxContext = useContext(PIDToolBoxContext);
+  const analyzerContext = useContext(BlackboxAnalyzerContext);
   const appContext = useContext(AppContext);
 
   const responseTraceChartRef = useSignal<HTMLDivElement>();
@@ -68,7 +68,7 @@ export const Plots = component$((props: Props) => {
     const mockData = (await fetch("/mock-data.json.gz").then((res) =>
       res.json(),
     )) as unknown as PIDAnalyzerResult[];
-    toolboxContext.results = noSerialize(mockData);
+    analyzerContext.results = noSerialize(mockData);
   });
 
   /**
@@ -132,11 +132,11 @@ export const Plots = component$((props: Props) => {
    */
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
-    track(toolboxContext);
+    track(analyzerContext);
 
     const logsToShow =
-      toolboxContext.results?.filter((_, i) =>
-        toolboxContext.selectedLogIndexes.includes(i),
+      analyzerContext.results?.filter((_, i) =>
+        analyzerContext.selectedLogIndexes.includes(i),
       ) ?? [];
 
     plotStepResponse(logsToShow);
@@ -147,12 +147,12 @@ export const Plots = component$((props: Props) => {
    */
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
-    track(toolboxContext);
+    track(analyzerContext);
     if (!plotter.value) {
       return;
     }
 
-    plotter.value.setActiveAxis(toolboxContext.analyzerActiveAxis);
+    plotter.value.setActiveAxis(analyzerContext.analyzerActiveAxis);
   });
 
   /**
@@ -172,9 +172,9 @@ export const Plots = component$((props: Props) => {
    */
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
-    track(toolboxContext);
+    track(analyzerContext);
     if (plotter.value) {
-      plotter.value.setActiveMainLog(toolboxContext.activeMainLogIndex);
+      plotter.value.setActiveMainLog(analyzerContext.activeMainLogIndex);
     }
   });
 
@@ -222,7 +222,7 @@ export const Plots = component$((props: Props) => {
 
   return (
     <>
-      {(toolboxContext.results?.length ?? 0) > 0 && (
+      {(analyzerContext.results?.length ?? 0) > 0 && (
         <PlotNavigation {...props.navigation} />
       )}
 
@@ -232,7 +232,7 @@ export const Plots = component$((props: Props) => {
         })}
         style={{
           display:
-            (toolboxContext.results?.length ?? 0) === 0 ? "none" : undefined,
+            (analyzerContext.results?.length ?? 0) === 0 ? "none" : undefined,
         }}
       >
         {Object.entries(activePlotMap.value).map(
@@ -245,7 +245,7 @@ export const Plots = component$((props: Props) => {
           ),
         )}
       </div>
-      {(toolboxContext.results?.length ?? 0) > 0 && (
+      {(analyzerContext.results?.length ?? 0) > 0 && (
         <>
           {/* not beautiful but needed for the sticky navigation to not overlay the last chart */}
           <br />

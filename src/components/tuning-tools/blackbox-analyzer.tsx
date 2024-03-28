@@ -8,12 +8,12 @@ import {
   noSerialize,
 } from "@builder.io/qwik";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik/types/src/server-index";
-import styles from "./pid-toolbox.module.css";
-import { PIDToolboxStatusDialog } from "./status-dialog/pid-toolbox-status-dialog";
+import styles from "./blackbox-analyzer.module.css";
+import { BlackboxAnalyzerStatusDialog } from "./status-dialog/status-dialog";
 import { InlineSpinner } from "../inline-spinner/inline-spinner";
 import classNames from "classnames";
 import { Plots } from "./plots/plots";
-import { useToolboxContextProvider } from "./context/pid-toolbox.context";
+import { useBlackboxAnalyzerContextProvider } from "./context/blackbox-analyzer.context";
 import { useHideHeader } from "~/hooks/use-hide-header/use-hide-header";
 import { useFileDrop } from "~/hooks/use-file-drop/use-file-drop";
 import { AnalyzerState, useAnalyzeLog } from "./hooks/use-analyze-log";
@@ -33,8 +33,8 @@ interface Props {
   plotLabels?: PlotLabelDefinitions;
 }
 
-export const PIDToolbox = component$((props: Props) => {
-  useToolboxContextProvider();
+export const BlackboxAnalyzer = component$((props: Props) => {
+  useBlackboxAnalyzerContextProvider();
   const appContext = useContext(AppContext);
 
   useHideHeader();
@@ -175,7 +175,7 @@ export const PIDToolbox = component$((props: Props) => {
         </div>
       </Dialog>
 
-      <PIDToolboxStatusDialog
+      <BlackboxAnalyzerStatusDialog
         isOpen={analyzerState.value === AnalyzerState.RUNNING}
         analyzerProgress={analyzerProgress.value}
       />
@@ -260,9 +260,10 @@ function makeSeriesLabelDefinitionInput(name: string, friendlyName?: string) {
   };
 }
 
-export const PIDToolboxRegistryDefinition: RegisteredComponent = {
-  component: PIDToolbox,
-  name: "PIDToolbox",
+export const BlackboxAnalyzerRegistryDefinition: RegisteredComponent = {
+  component: BlackboxAnalyzer,
+  name: "BlackboxAnalyzer",
+  friendlyName: "Blackbox Analyzer",
   inputs: [
     {
       name: "activePlots",

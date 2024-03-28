@@ -14,7 +14,7 @@ interface Props {
   analyzerProgress: AnalyzerProgress;
 }
 
-export const PIDToolboxStatusDialog = component$((props: Props) => {
+export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
   const steps = useComputed$(() => {
     const getStateOfItemInIndexArray = (
       indexArray: AnalyzerStepStatusIndexArray,

@@ -1,6 +1,6 @@
 import type { NoSerialize } from "@builder.io/qwik";
 import { $, noSerialize, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { useToolboxContextProvider } from "../context/pid-toolbox.context";
+import { useBlackboxAnalyzerContextProvider } from "../context/blackbox-analyzer.context";
 import type {
   SplitBBLStepToPayloadMap,
   AnalyzeOneFlightStepToPayloadMap,
@@ -24,7 +24,7 @@ export enum AnalyzerState {
 }
 
 export function useAnalyzeLog() {
-  const toolboxState = useToolboxContextProvider();
+  const analyzerState = useBlackboxAnalyzerContextProvider();
   const location = useLocation();
 
   const state = useSignal<AnalyzerState>(AnalyzerState.LOADING);
@@ -417,17 +417,17 @@ export function useAnalyzeLog() {
         newSelectedLogIndexes = analyzerResult.map((_, index) => index);
       } else {
         newResults = (
-          (toolboxState.results ?? []) as PIDAnalyzerResult[]
+          (analyzerState.results ?? []) as PIDAnalyzerResult[]
         ).concat(analyzerResult as PIDAnalyzerResult[]);
-        newSelectedLogIndexes = toolboxState.selectedLogIndexes.concat(
+        newSelectedLogIndexes = analyzerState.selectedLogIndexes.concat(
           analyzerResult.map(
-            (_, index) => index + (toolboxState.results?.length ?? 0),
+            (_, index) => index + (analyzerState.results?.length ?? 0),
           ),
         );
       }
 
-      toolboxState.results = noSerialize(newResults);
-      toolboxState.selectedLogIndexes = newSelectedLogIndexes;
+      analyzerState.results = noSerialize(newResults);
+      analyzerState.selectedLogIndexes = newSelectedLogIndexes;
       hasAnalysisInMemory.value = true;
 
       state.value = AnalyzerState.DONE;

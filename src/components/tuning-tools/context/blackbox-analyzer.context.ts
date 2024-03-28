@@ -7,24 +7,24 @@ import {
 } from "@builder.io/qwik";
 import type { PIDAnalyzerResult } from "@uav.painkillers/pid-analyzer-wasm";
 
-export interface PIDToolBoxState {
+export interface BlackboxAnalyzerState {
   results: NoSerialize<PIDAnalyzerResult[]>;
   selectedLogIndexes: number[];
   activeMainLogIndex: number;
   analyzerActiveAxis: "roll" | "pitch" | "yaw";
 }
 
-export const PIDToolBoxContext =
-  createContextId<PIDToolBoxState>("pid-toolbox");
+export const BlackboxAnalyzerContext =
+  createContextId<BlackboxAnalyzerState>("blackbox-analyzer");
 
-export function useToolboxContextProvider() {
-  const toolboxState = useStore<PIDToolBoxState>({
+export function useBlackboxAnalyzerContextProvider() {
+  const blackboxAnalyzerState = useStore<BlackboxAnalyzerState>({
     results: noSerialize([]),
     selectedLogIndexes: [],
     activeMainLogIndex: 0,
     analyzerActiveAxis: "roll",
   });
-  useContextProvider(PIDToolBoxContext, toolboxState);
+  useContextProvider(BlackboxAnalyzerContext, blackboxAnalyzerState);
 
-  return toolboxState;
+  return blackboxAnalyzerState;
 }
