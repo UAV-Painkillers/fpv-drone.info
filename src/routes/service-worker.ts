@@ -9,7 +9,7 @@
  */
 import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
 import { registerRoute } from "workbox-routing";
-import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies";
+import { StaleWhileRevalidate } from "workbox-strategies";
 
 setupServiceWorker();
 
@@ -21,8 +21,11 @@ function matchBuilderApi(url: URL) {
   return url.hostname.endsWith(".builder.io") || url.hostname === "builder.io";
 }
 
+// static content
 registerRoute(({ url }) => !matchBuilderApi(url), new StaleWhileRevalidate());
-registerRoute(({ url }) => matchBuilderApi(url), new NetworkFirst());
+
+// cdn (builder.io) content
+registerRoute(({ url }) => matchBuilderApi(url), new StaleWhileRevalidate());
 
 function clearCaches() {
   caches.keys().then(function (names) {
