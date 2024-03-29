@@ -201,10 +201,6 @@ export class ResponsePlotter {
     return time.map((t) => Math.round(t));
   }
 
-  private indexToLogName(index: number) {
-    return `Log #${index + 1}`;
-  }
-
   private getLabel(options: GetLabelOptions): string {
     const {
       labelDefinition,
@@ -418,12 +414,12 @@ export class ResponsePlotter {
             color: "red",
           },
         },
-        ...throttles.map((throttle, index) => ({
+        ...throttles.map((throttle, flightIndex) => ({
           type: "line",
           name: this.getLabel({
             labelDefinition: this.labelDefinitions.responseThrottle?.throttle,
-            headdict: activeMainLog.headdict,
-            logIndex: index,
+            headdict: this.logs[flightIndex].headdict,
+            logIndex: flightIndex,
           }),
           data: throttle,
           areaStyle: {},
@@ -507,7 +503,7 @@ export class ResponsePlotter {
         _flightIndex: flightIndex,
         name: this.getLabel({
           labelDefinition: this.labelDefinitions.responseStrength?.response,
-          headdict: activeMainLog.headdict,
+          headdict: this.logs[flightIndex].headdict,
           logIndex: flightIndex,
         }),
         type: "line",
@@ -793,6 +789,7 @@ export class ResponsePlotter {
 
   public setData(logs: PIDAnalyzerResult[]) {
     this.logs = logs;
+    console.log("plot logs", logs);
     this.plotAll();
   }
 

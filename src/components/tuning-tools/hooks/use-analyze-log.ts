@@ -409,6 +409,8 @@ export function useAnalyzeLog() {
         },
       );
 
+      console.log("analyzer results", analyzerResult);
+
       let newResults: PIDAnalyzerResult[];
       let newSelectedLogIndexes: number[];
 
