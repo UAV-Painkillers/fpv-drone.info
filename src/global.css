@@ -360,3 +360,14 @@ input {
   border: 1px solid var(--base-black);
   outline: none;
 }
+
+code {
+  background: var(--base-black);
+  color: var(--base-white);
+  padding: 0.5rem 0.75rem;
+  display: block;
+  border-left: 8px solid var(--base-green);
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  line-height: 1.5;
+}
