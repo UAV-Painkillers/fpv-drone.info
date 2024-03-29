@@ -129,7 +129,7 @@ export class ResponsePlotter {
   public static setChartOptions(
     chart: echarts.ECharts,
     title: string,
-    optionsToMerge: ECBasicOption,
+    optionsToMerge: ECBasicOption
   ) {
     const options: ECBasicOption = {
       title: {
@@ -149,7 +149,7 @@ export class ResponsePlotter {
     if (
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       ((optionsToMerge.series as unknown as { type: string }[]) ?? []).some(
-        (s) => s.type === "heatmap",
+        (s) => s.type === "heatmap"
       )
     ) {
       (options.grid as { left: number }).left = 90;
@@ -187,7 +187,7 @@ export class ResponsePlotter {
       Object.entries(charts).map(([key, value]) => [
         key as PlotName,
         echarts.init(value),
-      ]),
+      ])
     ) as { [key in PlotName]?: echarts.ECharts };
 
     this.plotAll();
@@ -262,16 +262,16 @@ export class ResponsePlotter {
     }
 
     if (!labelDefinition.template) {
-      return `#${logIndex} (${headerValue})`;
+      labelDefinition.template = '#{{logIndex}} ({{headerValue}})';
     }
 
     let templatedValue = labelDefinition.template.replaceAll(
       "{{headerValue}}",
-      `${headerValue}`,
+      `${headerValue}`
     );
 
     if (logIndex !== undefined) {
-      templatedValue = templatedValue.replaceAll("{{logIndex}}", `${logIndex}`);
+      templatedValue = templatedValue.replaceAll("{{logIndex}}", `${logIndex + 1}`);
     }
 
     return templatedValue;
@@ -285,7 +285,7 @@ export class ResponsePlotter {
     const gyros = this.logs.map((log) => log[this.activeAxis].gyro);
     const inputs = this.logs.map((log) => log[this.activeAxis].input);
     const feedforwards = this.logs.map(
-      (log) => log[this.activeAxis].feedforward,
+      (log) => log[this.activeAxis].feedforward
     );
     const times = this.logs.map((log) => log[this.activeAxis].time);
 
@@ -300,7 +300,7 @@ export class ResponsePlotter {
           traceLimits[i],
           absGyro,
           absInput,
-          absFeedforward,
+          absFeedforward
         );
       }
     }
@@ -373,7 +373,7 @@ export class ResponsePlotter {
             smooth: true,
           })),
         ],
-      },
+      }
     );
   }
 
@@ -457,21 +457,46 @@ export class ResponsePlotter {
     // const resp_highs = this.logs.map((log) => log[this.activeAxis].resp_high);
     const resp_lows = this.logs.map((log) => log[this.activeAxis].resp_low);
 
+    const scores: Array<{ highestOvershoot: number; wobbleArea: number, index: number }> = [];
+
     // const responseStrengthSeries = useHighMasks.map((useHighMask, index) => ({
-    const responseStrengthSeries = resp_lows.map((resp_low, index) => ({
-      name: this.getLabel({
-        labelDefinition: this.labelDefinitions.responseStrength?.response,
-        headdict: activeMainLog.headdict,
-        logIndex: index,
-      }),
-      type: "line",
-      // data: useHighMask ? resp_highs[index]![0] : resp_lows[index][0],
-      data: resp_low,
-    }));
+    const responseStrengthSeries = resp_lows.map((resp_low, index) => {
+      let highestOvershoot = 0;
+
+      let wobbleArea = 0;
+      for (const resp_low_value of resp_low) {
+        const current_overshoot_amount = resp_low_value - 1;
+        if (current_overshoot_amount > highestOvershoot) {
+          highestOvershoot = current_overshoot_amount;
+        }
+
+        wobbleArea += Math.abs(resp_low_value - 1);
+      }
+
+      scores.push({
+        index,
+        highestOvershoot,
+        wobbleArea,
+      });
+
+      return {
+        name: this.getLabel({
+          labelDefinition: this.labelDefinitions.responseStrength?.response,
+          headdict: activeMainLog.headdict,
+          logIndex: index,
+        }),
+        type: "line",
+        // data: useHighMask ? resp_highs[index]![0] : resp_lows[index][0],
+        data: resp_low,
+      };
+    });
+
+    scores.sort((a,b) => a.highestOvershoot * a.wobbleArea > b.highestOvershoot * b.wobbleArea ? 1 : -1);
+    const bestFlightIndex = scores[0].index;
 
     ResponsePlotter.setChartOptions(
       this.charts.responseStrength,
-      "Step Response",
+      `Step Response (Best: #${bestFlightIndex + 1})`,
       {
         legend: {},
         xAxis: {
@@ -488,7 +513,7 @@ export class ResponsePlotter {
           },
         },
         series: [...responseStrengthSeries],
-      },
+      }
     );
   }
 
@@ -579,7 +604,7 @@ export class ResponsePlotter {
     if (this.charts.noiseGyroDebug) {
       this.plotNoiseForField(
         NoiseFields.NoiseDebug,
-        this.charts.noiseGyroDebug,
+        this.charts.noiseGyroDebug
       );
     }
 
@@ -590,7 +615,7 @@ export class ResponsePlotter {
 
   private plotFrequenciesForNoiseAxis(
     noiseAxis: NoiseFields,
-    chart: echarts.ECharts,
+    chart: echarts.ECharts
   ) {
     const activeLog = this.logs[this.activeMainIndex];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -604,7 +629,7 @@ export class ResponsePlotter {
     const data = noise.hist2d_sm.map((frequencyAxis) => {
       const sumOfAllThrottlePositions = frequencyAxis.reduce(
         (a, b) => a + b,
-        0,
+        0
       );
 
       const meanOverAllThrottlePositions =
@@ -677,21 +702,21 @@ export class ResponsePlotter {
     if (this.charts.noiseFrequenciesGyro) {
       this.plotFrequenciesForNoiseAxis(
         NoiseFields.NoiseGyro,
-        this.charts.noiseFrequenciesGyro,
+        this.charts.noiseFrequenciesGyro
       );
     }
 
     if (this.charts.noiseFrequenciesGyroDebug) {
       this.plotFrequenciesForNoiseAxis(
         NoiseFields.NoiseDebug,
-        this.charts.noiseFrequenciesGyroDebug,
+        this.charts.noiseFrequenciesGyroDebug
       );
     }
 
     if (this.charts.noiseFrequenciesDTerm) {
       this.plotFrequenciesForNoiseAxis(
         NoiseFields.NoiseDTerm,
-        this.charts.noiseFrequenciesDTerm,
+        this.charts.noiseFrequenciesDTerm
       );
     }
   }
