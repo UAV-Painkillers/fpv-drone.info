@@ -186,7 +186,9 @@ export const BlackboxAnalyzer = component$((props: Props) => {
 
       {subLogsWithErrors.value.length > 0 && (
         <code>
-          <b style={{color: 'var(--alarm-color)', display: 'block'}}>ERRORS:</b>
+          <b style={{ color: "var(--alarm-color)", display: "block" }}>
+            ERRORS:
+          </b>
           {subLogsWithErrors.value.map(({ index, error }) => (
             <div
               key={"sublog-error-" + index}
