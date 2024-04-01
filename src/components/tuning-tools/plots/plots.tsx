@@ -34,6 +34,8 @@ export const Plots = component$((props: Props) => {
   const responseTraceChartRef = useSignal<HTMLDivElement>();
   const responseThrottleChartRef = useSignal<HTMLDivElement>();
   const responseStrengthChartRef = useSignal<HTMLDivElement>();
+  const responseDelayChartRef = useSignal<HTMLDivElement>();
+  const responseStrengthPeakChartRef = useSignal<HTMLDivElement>();
   const noiseGyroChartRef = useSignal<HTMLDivElement>();
   const noiseGyroDebugChartRef = useSignal<HTMLDivElement>();
   const noiseDTermChartRef = useSignal<HTMLDivElement>();
@@ -79,6 +81,7 @@ export const Plots = component$((props: Props) => {
     track(responseTraceChartRef);
     track(responseThrottleChartRef);
     track(responseStrengthChartRef);
+    track(responseDelayChartRef);
     track(noiseGyroChartRef);
     track(noiseGyroDebugChartRef);
     track(noiseDTermChartRef);
@@ -94,6 +97,8 @@ export const Plots = component$((props: Props) => {
     let charts: ChartsElementMap = {
       [PlotName.RESPONSE_TRACE]: responseTraceChartRef.value!,
       [PlotName.RESPONSE_STRENGTH]: responseStrengthChartRef.value!,
+      [PlotName.RESPONSE_DELAY]: responseDelayChartRef.value!,
+      [PlotName.RESPONSE_STRENGTH_PEAK]: responseStrengthPeakChartRef.value!,
       [PlotName.RESPONSE_THROTTLE]: responseThrottleChartRef.value!,
       [PlotName.NOISE_GYRO]: noiseGyroChartRef.value!,
       [PlotName.NOISE_GYRO_DEBUG]: noiseGyroDebugChartRef.value!,
@@ -188,6 +193,12 @@ export const Plots = component$((props: Props) => {
     [PlotName.RESPONSE_STRENGTH]: {
       ref: responseStrengthChartRef,
     },
+    [PlotName.RESPONSE_DELAY]: {
+      ref: responseDelayChartRef,
+    },
+    [PlotName.RESPONSE_STRENGTH_PEAK]: {
+      ref: responseStrengthPeakChartRef,
+    },
     [PlotName.RESPONSE_THROTTLE]: {
       ref: responseThrottleChartRef,
       class: classNames(styles.plotOverTwoColumns, styles.throttlePlot),
@@ -241,7 +252,9 @@ export const Plots = component$((props: Props) => {
               class={classNames(styles.plot, className)}
               ref={ref}
               key={plotName}
-            ></div>
+            >
+              {plotName}
+            </div>
           ),
         )}
       </div>

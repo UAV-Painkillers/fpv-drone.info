@@ -46,6 +46,8 @@ export enum NoiseFields {
 export enum PlotName {
   RESPONSE_TRACE = "responseTrace",
   RESPONSE_STRENGTH = "responseStrength",
+  RESPONSE_DELAY = "responseDelay",
+  RESPONSE_STRENGTH_PEAK = "responseStrengthPeak",
   RESPONSE_THROTTLE = "responseThrottle",
   NOISE_GYRO = "noiseGyro",
   NOISE_GYRO_DEBUG = "noiseGyroDebug",
@@ -72,6 +74,12 @@ export interface PlotLabelDefinitions {
   };
   responseStrength?: {
     response?: SeriesLabelDefinition;
+  };
+  responseDelay?: {
+    delay?: SeriesLabelDefinition;
+  };
+  responseStrengthPeak?: {
+    peak?: SeriesLabelDefinition;
   };
   noiseFrequencies?: {
     [key in NoiseFields]: SeriesLabelDefinition;
@@ -147,6 +155,7 @@ export class ResponsePlotter {
     };
 
     if (
+      Array.isArray(optionsToMerge.series) &&
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       ((optionsToMerge.series as unknown as { type: string }[]) ?? []).some(
         (s) => s.type === "heatmap",
@@ -327,18 +336,12 @@ export class ResponsePlotter {
         ],
         xAxis: {
           data: this.mapTimeToSeconds(times[0]),
-          axisTick: {
-            show: false,
-          },
         },
         yAxis: {
           // min: -traceLimit * 1.1,
           // max: traceLimit * 1.1,
           min: -500,
           max: 500,
-          axisTick: {
-            show: false,
-          },
         },
         series: [
           ...gyros.map((gyro, index) => ({
@@ -392,18 +395,14 @@ export class ResponsePlotter {
     const throttles = this.logs.map((log) => log[this.activeAxis].throttle);
 
     ResponsePlotter.setChartOptions(this.charts.responseThrottle, "Throttle", {
+      legend: {},
+      tooltp: {},
       xAxis: {
         data: this.mapTimeToSeconds(time),
-        axisTick: {
-          show: false,
-        },
       },
       yAxis: {
         min: 0,
         max: 100,
-        axisTick: {
-          show: false,
-        },
       },
       series: [
         {
@@ -537,18 +536,82 @@ export class ResponsePlotter {
         legend: {},
         xAxis: {
           data: time_resp.map((t) => t.toFixed(1)),
-          axisTick: {
-            show: false,
-          },
         },
         yAxis: {
           min: 0,
           max: 2,
-          axisTick: {
-            show: false,
-          },
         },
         series: [...responseStrengthSeries],
+      },
+    );
+  }
+
+  private plotResponseStrengthPeak() {
+    if (!this.charts.responseStrengthPeak) {
+      return;
+    }
+
+    const peaks = this.logs.map(
+      (log) => log[this.activeAxis].delay.peak_response,
+    );
+
+    ResponsePlotter.setChartOptions(
+      this.charts.responseStrengthPeak,
+      "Response Peak",
+      {
+        tooltip: {},
+        xAxis: {
+          data: peaks.map((_, flightIndex) =>
+            this.getLabel({
+              labelDefinition: this.labelDefinitions.responseStrengthPeak?.peak,
+              headdict: this.logs[flightIndex].headdict,
+              logIndex: flightIndex,
+            }),
+          ),
+        },
+        yAxis: {
+          min: 0,
+          max: Math.floor(Math.max(2, ...peaks.map((p) => p + 1))),
+        },
+        series: {
+          type: "bar",
+          data: peaks,
+        },
+      },
+    );
+  }
+
+  private plotResponseDelay() {
+    if (!this.charts.responseDelay) {
+      return;
+    }
+
+    const delays = this.logs.map(
+      (log) => log[this.activeAxis].delay.half_height_index,
+    );
+
+    ResponsePlotter.setChartOptions(
+      this.charts.responseDelay,
+      "Response Delay",
+      {
+        tooltip: {},
+        xAxis: {
+          data: delays.map((_, flightIndex) =>
+            this.getLabel({
+              labelDefinition: this.labelDefinitions.responseDelay?.delay,
+              headdict: this.logs[flightIndex].headdict,
+              logIndex: flightIndex,
+            }),
+          ),
+        },
+        yAxis: {
+          min: 0,
+          max: Math.floor(Math.max(20, ...delays.map((d) => d + 1))),
+        },
+        series: {
+          type: "bar",
+          data: delays,
+        },
       },
     );
   }
@@ -766,6 +829,8 @@ export class ResponsePlotter {
       this.plotResponseTrace.bind(this),
       this.plotResponseThrottle.bind(this),
       this.plotResponseStrength.bind(this),
+      this.plotResponseDelay.bind(this),
+      this.plotResponseStrengthPeak.bind(this),
       this.plotNoise.bind(this),
       this.plotNoiseFrequencies.bind(this),
     ];
@@ -789,7 +854,6 @@ export class ResponsePlotter {
 
   public setData(logs: PIDAnalyzerResult[]) {
     this.logs = logs;
-    console.log("plot logs", logs);
     this.plotAll();
   }
 
