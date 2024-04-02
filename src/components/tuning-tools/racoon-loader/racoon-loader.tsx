@@ -17,7 +17,7 @@ export const RacoonLoader = component$((props: Props) => {
             transition: "height .4s ease",
           }}
           // eslint-disable-next-line qwik/jsx-img
-          src="/original_images/racoon_processing-cropped.gif"
+          src="/images/racoon_processing-cropped.gif"
         />
 
         {props.label && (
