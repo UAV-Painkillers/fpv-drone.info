@@ -7,8 +7,6 @@ const faviconDataPath = "tmp.favicon/faviconData.json";
 const mockHtmlPath = "tmp.favicon/mock.html";
 const routerHeadPath = "src/components/router-head/router-head.tsx";
 const generatedWebManifestPath = `${outDir}/site.webmanifest`;
-const alternativeManifestsSourceDir = "scripts/alternativeManifests";
-const alternativeManifestsOutputDir = "public/manifests";
 
 function createTempDir() {
   if (!fs.existsSync("tmp.favicon")) {
@@ -100,48 +98,10 @@ function cleanup() {
   fs.rmdirSync("tmp.favicon");
 }
 
-function createAlternativeManifestsOutputDir() {
-  if (!fs.existsSync(alternativeManifestsOutputDir)) {
-    fs.mkdirSync(alternativeManifestsOutputDir);
-  }
-}
-
-function generateAlternativeManifests() {
-  // read all alternatives from ./alternativeManifests
-  // merge them with the final manifest
-  // write each of them to /public/manifests/<filename of alternative manifest>
-
-  // clean output dir
-  fs.readdirSync(alternativeManifestsOutputDir).forEach((file) => {
-    fs.unlinkSync(`${alternativeManifestsOutputDir}/${file}`);
-  });
-
-  const generatedWebManifest = JSON.parse(
-    fs.readFileSync(generatedWebManifestPath, "utf8"),
-  );
-  const alternativeManifests = fs.readdirSync(alternativeManifestsSourceDir);
-
-  alternativeManifests.forEach((fileNameOfAlternativeManifest) => {
-    const alternativeManifest = JSON.parse(
-      fs.readFileSync(
-        `${alternativeManifestsSourceDir}/${fileNameOfAlternativeManifest}`,
-        "utf8",
-      ),
-    );
-    const newManifest = { ...generatedWebManifest, ...alternativeManifest };
-    const outputPath = `${alternativeManifestsOutputDir}/${fileNameOfAlternativeManifest}`;
-    fs.writeFileSync(outputPath, JSON.stringify(newManifest, null, 2));
-
-    console.log(`Generated alternative manifest: ${outputPath}`);
-  });
-}
-
 createTempDir();
 increaseFaviconVersion();
 generateNewFavicons();
 createTemporaryHtmlFile();
 replaceFaviconsInRouterHead();
 mergeWebManifests();
-createAlternativeManifestsOutputDir();
-generateAlternativeManifests();
 cleanup();

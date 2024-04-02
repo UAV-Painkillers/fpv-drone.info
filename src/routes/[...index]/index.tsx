@@ -71,13 +71,6 @@ export const head: DocumentHead = ({ resolveValue }) => {
 
   const links: DocumentLink[] = [];
 
-  if (builderContent.data?.pwaAlternativeManifestName) {
-    links.push({
-      rel: "manifest",
-      href: `/manifests/${builderContent.data.pwaAlternativeManifestName}.manifest.json`,
-    });
-  }
-
   const meta = [
     {
       property: "og:image",

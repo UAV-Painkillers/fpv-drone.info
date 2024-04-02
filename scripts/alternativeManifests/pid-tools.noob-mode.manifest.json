@@ -1,6 +1,0 @@
-{
-  "start_url": "../tools/tuning-tools/noob",
-  "name": "fpv-drone.info - PID Tools (Noob)",
-  "short_name": "PID Noob",
-  "description": "A set of tools to help tune PID controllers"
-}
