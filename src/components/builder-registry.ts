@@ -10,7 +10,6 @@ import { PageHeadlineRegistryDefinition } from "./shared/page-headline/page-head
 import { TextRegistryDefinition } from "./shared/text/text";
 import { TLDRRegistryDefinition } from "./shared/tldr/tldr";
 import { BlackboxAnalyzerRegistryDefinition } from "./tuning-tools/blackbox-analyzer";
-import { PWAInstallButtonRegistryDefinition } from "./pwa-install-button/pwa-install-button";
 import { BuyMeACoffeeButtonRegistryDefinition } from "./shared/buy-me-a-coffe/button";
 import { CustomInstructionsRegistryDefinition } from "./shared/instructions/custom-instructions";
 import { InstructionsStepRegistryDefinition } from "./shared/instructions/step/step";
@@ -44,7 +43,6 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   NewsRegistryDefinition,
   ProductRegistryDefinition,
   BlackboxAnalyzerRegistryDefinition,
-  PWAInstallButtonRegistryDefinition,
   BuyMeACoffeeButtonRegistryDefinition(
     "uav.painkillers",
     "Buy me a smokestopper",

@@ -16,6 +16,7 @@ import { RouterHead } from "./components/router-head/router-head";
 import type { AppContextState } from "./app.ctx";
 import { AppContext } from "./app.ctx";
 import { injectSpeedInsights } from "@vercel/speed-insights";
+import { PWAInstallButton } from "./components/pwa-install-button/pwa-install-button";
 
 export default component$(() => {
   const appContextData = useStore<AppContextState>({
@@ -36,6 +37,7 @@ export default component$(() => {
         <ServiceWorkerRegister />
       </head>
       <body lang="en">
+        <PWAInstallButton />
         <RouterOutlet />
       </body>
     </QwikCityProvider>

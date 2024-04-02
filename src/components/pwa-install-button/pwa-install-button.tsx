@@ -6,7 +6,6 @@ import {
   useSignal,
   $,
 } from "@builder.io/qwik";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 
 export const PWAInstallButton = component$(() => {
   const installPromptEvent =
@@ -41,9 +40,3 @@ export const PWAInstallButton = component$(() => {
     </button>
   );
 });
-
-export const PWAInstallButtonRegistryDefinition: RegisteredComponent = {
-  component: PWAInstallButton,
-  name: "PWAInstallButton",
-  inputs: [],
-};
