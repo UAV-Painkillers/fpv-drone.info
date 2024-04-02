@@ -1,7 +1,7 @@
 import fs from "fs";
 import { execSync } from "child_process";
 
-const outDir = "public/icons";
+const outDir = "public/pwa";
 const faviconDescriptionPath = "scripts/faviconDescription.json";
 const faviconDataPath = "tmp.favicon/faviconData.json";
 const mockHtmlPath = "tmp.favicon/mock.html";

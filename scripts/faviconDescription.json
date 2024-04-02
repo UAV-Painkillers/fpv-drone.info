@@ -1,6 +1,6 @@
 {
   "masterPicture": "./public/original_images/logo.png",
-  "iconsPath": "/icons",
+  "iconsPath": "/pwa",
   "design": {
     "ios": {
       "masterPicture": {
