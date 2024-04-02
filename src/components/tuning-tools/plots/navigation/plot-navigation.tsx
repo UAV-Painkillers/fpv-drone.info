@@ -66,6 +66,7 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
           <button
             class="button"
             onClick$={() => (showLogSelection.value = !showLogSelection.value)}
+            aria-label="combined logs selection"
           >
             Combined Logs ({analyzerContext.selectedLogIndexes.length} /{" "}
             {analyzerContext.results?.length})

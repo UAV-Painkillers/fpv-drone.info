@@ -3,9 +3,7 @@ import { component$, $ } from "@builder.io/qwik";
 import RacoonCointImage from "./racoon_coin_cropped.png?jsx";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import type { JSX } from "@builder.io/qwik/jsx-runtime";
-import {
-  BuyMeACoffeButtonContentRenderer,
-} from "../shared/buy-me-a-coffe/button";
+import { BuyMeACoffeButtonContentRenderer } from "../shared/buy-me-a-coffe/button";
 
 interface Props {
   slug: string;
@@ -29,7 +27,7 @@ export const BuyMeARacoonButton = component$((props: Props) => {
 
 export const BuyMeARacoonButtonRegistryDefinition = (
   defaultSlug: string,
-  defaultText: string
+  defaultText: string,
 ): RegisteredComponent => ({
   component: BuyMeARacoonButton,
   name: "BuyMeACoffe (Racoon) Button",

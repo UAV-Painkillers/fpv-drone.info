@@ -141,6 +141,7 @@ export const BlackboxAnalyzer = component$((props: Props) => {
         class={classNames("button", styles.uploadButton, {
           [styles.uploadButtonDropover]: isDroppingFile.value,
         })}
+        aria-label="Button to open a blackbox file for analysis"
       >
         {analyzerState.value === AnalyzerState.RUNNING && <InlineSpinner />}
         Click to open a Blackbox File (.bbl) or drag and drop it here
@@ -162,6 +163,7 @@ export const BlackboxAnalyzer = component$((props: Props) => {
             class="button"
             style={{ width: "100%" }}
             onClick$={addFileToCurrentAnalysis}
+            aria-label="add to current analysis"
           >
             Add to current Analysis
           </button>
@@ -169,6 +171,7 @@ export const BlackboxAnalyzer = component$((props: Props) => {
             class="button"
             style={{ width: "100%" }}
             onClick$={overwriteCurrentAnalysisWithFile}
+            aria-label="replace current analysis"
           >
             Replace current Analysis
           </button>

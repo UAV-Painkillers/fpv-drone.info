@@ -17,7 +17,11 @@ export const SWClearCacheButton = component$(() => {
   });
 
   return (
-    <button class="button" onClick$={clearCache}>
+    <button
+      class="button"
+      onClick$={clearCache}
+      aria-label="Clear Cache and Reload Button"
+    >
       Clear Cache and Reload
     </button>
   );

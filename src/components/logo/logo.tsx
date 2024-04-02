@@ -10,6 +10,7 @@ export const Logo = component$<QwikIntrinsicElements["img"]>((props) => {
     <LogoImage
       width="200px"
       height="auto"
+      alt="Logo"
       {...props}
       class={classNames(styles.logo, props.class)}
     />

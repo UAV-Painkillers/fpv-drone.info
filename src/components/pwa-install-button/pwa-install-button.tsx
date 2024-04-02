@@ -35,6 +35,7 @@ export const PWAInstallButton = component$(() => {
       class="button floating"
       hidden={!installPromptEvent.value}
       onClick$={onInstallButtonClick}
+      aria-label="Install Website as PWA Button"
     >
       Install APP
     </button>

@@ -18,6 +18,7 @@ export const RacoonLoader = component$((props: Props) => {
           }}
           // eslint-disable-next-line qwik/jsx-img
           src="/images/racoon_processing-cropped.gif"
+          alt="Racoon Loader"
         />
 
         {props.label && (
