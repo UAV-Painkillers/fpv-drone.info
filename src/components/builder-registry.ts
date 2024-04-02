@@ -17,6 +17,7 @@ import { HighlightCardRegistryDefinition } from "./shared/highlight-card/highlig
 import { DynamicIdleCalculatorRegistryDefinition } from "./tuning-tools/dynamic-idle-calculator/dynamic-idle-calculator";
 import { SWClearCacheButtonRegistryDefinition } from "./sw-clear-cache-button/sw-clear-cache-button";
 import { SponsorsListRegistryDefinition } from "./sponsors-list/sponsors-list";
+import { BuyMeARacoonButtonRegistryDefinition } from "./buy-me-a-racoon/buy-me-a-racoon";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -45,7 +46,11 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   BlackboxAnalyzerRegistryDefinition,
   BuyMeACoffeeButtonRegistryDefinition(
     "uav.painkillers",
-    "Buy me a smokestopper",
+    "Buy me a smokestopper"
+  ),
+  BuyMeARacoonButtonRegistryDefinition(
+    "uav.painkillers",
+    "Buy me a smokestopper"
   ),
   HighlightCardRegistryDefinition,
   DynamicIdleCalculatorRegistryDefinition,

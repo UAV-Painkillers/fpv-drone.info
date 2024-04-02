@@ -15,6 +15,7 @@ import { Link, useLocation } from "@builder.io/qwik-city";
 import { Navigation } from "~/components/shared/navigation/navigation";
 import { AppContext } from "~/app.ctx";
 import { SearchButton } from "~/components/shared/search/search-button";
+import { BuyMeARacoonButton } from "~/components/buy-me-a-racoon/buy-me-a-racoon";
 
 export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
