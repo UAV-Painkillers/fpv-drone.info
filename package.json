@@ -10,9 +10,11 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "qwik build",
+    "build": "qwik build && npm run build.sw:vercel",
+    "build.sw:vercel": "npx workbox-cli injectManifest ./workbox-config.cjs",
+    "build.sw:preview": "npx workbox-cli injectManifest ./workbox-config.preview.cjs",
     "build.client": "vite build",
-    "build.preview": "vite build --ssr src/entry.preview.tsx",
+    "build.preview": "vite build --ssr src/entry.preview.tsx && npm run build.sw:preview",
     "build.server": "vite build -c adapters/vercel-edge/vite.config.ts",
     "build.types": "tsc --incremental --noEmit",
     "deploy": "vercel deploy",

@@ -1,11 +1,11 @@
 {
-  "masterPicture": "./public/images/logo.png",
+  "masterPicture": "./assets/original_images/logo.png",
   "iconsPath": "/pwa",
   "design": {
     "ios": {
       "masterPicture": {
         "type": "path",
-        "path": "./public/images/app icon.png"
+        "path": "./assets/original_images/app icon.png"
       },
       "pictureAspect": "noChange",
       "assets": {
