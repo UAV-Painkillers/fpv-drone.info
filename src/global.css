@@ -5,7 +5,7 @@
   --base-white: #ffffff;
 
   --success-color: #16c969;
-  --warning-color: #c9b716;
+  --warning-color: #c98716;
   --alarm-color: #c91652;
 
   --text-color: var(--base-black);
@@ -342,6 +342,30 @@ tr:nth-child(odd) td {
     translateX(
       calc(var(--button-floating-translateX) * (2 - var(--button-hover-scale)))
     );
+}
+
+.button.danger {
+  --button-background: linear-gradient(
+    45deg,
+    var(--alarm-color),
+    var(--base-black)
+  );
+}
+
+.button.warning {
+  --button-background: linear-gradient(
+    45deg,
+    var(--warning-color),
+    var(--base-black)
+  );
+}
+
+.button.success {
+  --button-background: linear-gradient(
+    45deg,
+    var(--success-color),
+    var(--base-black)
+  );
 }
 
 @keyframes glowingShadowAnimation {
