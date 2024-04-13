@@ -210,6 +210,26 @@ export class ResponsePlotter {
     return time.map((t) => Math.round(t));
   }
 
+  private getPIDHeaddictFieldForActiveAxis() {
+    let pidField: keyof Pick<
+      PIDAnalyzerHeaderInformation,
+      "rollPID" | "pitchPID" | "yawPID"
+    >;
+    switch (this.activeAxis) {
+      case "roll":
+        pidField = "rollPID";
+        break;
+      case "pitch":
+        pidField = "pitchPID";
+        break;
+      case "yaw":
+        pidField = "yawPID";
+        break;
+    }
+
+    return pidField;
+  }
+
   private getLabel(options: GetLabelOptions): string {
     const {
       labelDefinition,
@@ -220,21 +240,7 @@ export class ResponsePlotter {
 
     let fallback = fallbackIncoming;
     if (!fallback) {
-      let pidField: keyof Pick<
-        PIDAnalyzerHeaderInformation,
-        "rollPID" | "pitchPID" | "yawPID"
-      >;
-      switch (this.activeAxis) {
-        case "roll":
-          pidField = "rollPID";
-          break;
-        case "pitch":
-          pidField = "pitchPID";
-          break;
-        case "yaw":
-          pidField = "yawPID";
-          break;
-      }
+      const pidField = this.getPIDHeaddictFieldForActiveAxis();
       fallback = {
         template: `#{{logIndex}} (PID: {{headerValue}})`,
         headdictField: pidField,
@@ -318,6 +324,8 @@ export class ResponsePlotter {
       traceLimit = Math.max(traceLimit, traceLimits[i]);
     }
 
+    const pidField = this.getPIDHeaddictFieldForActiveAxis();
+
     ResponsePlotter.setChartOptions(
       this.charts.responseTrace,
       "PID Response Trace",
@@ -344,36 +352,60 @@ export class ResponsePlotter {
           max: 500,
         },
         series: [
-          ...gyros.map((gyro, index) => ({
-            name: this.getLabel({
+          ...gyros.map((gyro, index) => {
+            const label = this.getLabel({
               labelDefinition: this.labelDefinitions.responseTrace?.gyro,
               headdict: this.logs[index].headdict,
               logIndex: index,
-            }),
-            type: "line",
-            data: gyro,
-            smooth: true,
-          })),
-          ...inputs.map((input, index) => ({
-            name: this.getLabel({
+              fallback: {
+                template: `#{{logIndex}} Gyro (PID: {{headerValue}})`,
+                headdictField: pidField,
+              },
+            });
+
+            return {
+              name: label,
+              type: "line",
+              data: gyro,
+              smooth: true,
+            };
+          }),
+          ...inputs.map((input, index) => {
+            const label = this.getLabel({
               labelDefinition: this.labelDefinitions.responseTrace?.setPoint,
               headdict: this.logs[index].headdict,
               logIndex: index,
-            }),
-            type: "line",
-            data: input,
-            smooth: true,
-          })),
-          ...feedforwards.map((feedforward, index) => ({
-            name: this.getLabel({
+              fallback: {
+                template: `#{{logIndex}} Setpoint (PID: {{headerValue}})`,
+                headdictField: pidField,
+              },
+            });
+
+            return {
+              name: label,
+              type: "line",
+              data: input,
+              smooth: true,
+            };
+          }),
+          ...feedforwards.map((feedforward, index) => {
+            const label = this.getLabel({
               labelDefinition: this.labelDefinitions.responseTrace?.feedForward,
               headdict: this.logs[index].headdict,
               logIndex: index,
-            }),
-            type: "line",
-            data: feedforward,
-            smooth: true,
-          })),
+              fallback: {
+                template: `#{{logIndex}} Feedforward (PID: {{headerValue}})`,
+                headdictField: pidField,
+              },
+            });
+
+            return {
+              name: label,
+              type: "line",
+              data: feedforward,
+              smooth: true,
+            };
+          }),
         ],
       },
     );
