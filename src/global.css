@@ -1,0 +1,405 @@
+:root {
+  --base-green: #16c99e;
+  --base-blue: #1653c9;
+  --base-black: #3e3e3e;
+  --base-white: #ffffff;
+
+  --success-color: #16c969;
+  --warning-color: #c98716;
+  --alarm-color: #c91652;
+
+  --text-color: var(--base-black);
+  --body-background: 255, 255, 255;
+
+  --anchor-gradient-start: var(--base-green);
+  --anchor-gradient-end: var(--base-blue);
+
+  --anchor-color: linear-gradient(
+    var(--anchor-gradient-start),
+    var(--anchor-gradient-end)
+  );
+  --anchor-border-color: var(--anchor-gradient-end);
+  --anchor-active-border-color: var(--anchor-gradient-start);
+
+  --border-rounding: 15px;
+
+  /** just for reference :/ doesnt yet work in css ... */
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet: 1024px;
+  --breakpoint-desktop: 1200px;
+
+  --table-row-even-background: hsl(220, 80%, 95%);
+  --table-row-uneven-background: var(--base-white);
+}
+
+html {
+  font-size: 110%;
+}
+
+body {
+  padding: 0;
+  color: var(--text-color);
+  line-height: 1.2;
+  background: rgb(var(--body-background));
+  min-height: 100vh;
+  max-width: min(1200px, 85vw);
+  overflow-x: hidden;
+  padding-inline: 50px;
+  width: 85vw;
+  margin: 0 auto;
+
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/** is mobile */
+@media screen and (max-width: 768px) {
+  body {
+    padding-inline: 25px;
+  }
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  margin-top: 25px;
+}
+
+h1 {
+  font-size: 52px;
+  text-align: center;
+  font-weight: normal;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 52px;
+  font-weight: lighter;
+}
+
+h3 {
+  font-size: 32px;
+}
+
+/** is mobile */
+@media screen and (orientation: portrait) {
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+.anchor {
+  text-decoration: none;
+
+  color: var(--anchor-gradient-end);
+  background: var(--anchor-color);
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  border-bottom: transparent 1px solid;
+
+  transition: border-color 0.3s ease;
+
+  word-break: keep-all;
+  cursor: pointer;
+}
+
+.anchor:hover {
+  text-decoration: underline;
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  border-bottom-color: var(--anchor-border-color);
+}
+
+.anchor.active {
+  border-bottom-color: var(--anchor-active-border-color);
+}
+
+ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+@property --checkbox-background-color-start {
+  syntax: "<color>";
+  initial-value: white;
+  inherits: false;
+}
+
+@property --checkbox-background-color-end {
+  syntax: "<color>";
+  initial-value: white;
+  inherits: false;
+}
+
+input[type="checkbox"] {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  transform: translate(0, -2px);
+  margin-left: 15px;
+  margin-right: 15px;
+
+  border-radius: var(--border-rounding) !important;
+  border: 1px solid var(--text-color);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+
+  --background-color-start: white;
+  --background-color-end: white;
+
+  transition:
+    --checkbox-background-color-start 0.5s ease-in-out,
+    --checkbox-background-color-end 0.5s ease-in-out;
+
+  background-image: linear-gradient(
+    var(--checkbox-background-color-start),
+    var(--checkbox-background-color-end)
+  );
+}
+
+input[type="checkbox"]:checked {
+  --checkbox-background-color-start: var(--anchor-gradient-start);
+  --checkbox-background-color-end: var(--anchor-gradient-end);
+}
+
+hr {
+  margin-block: 50px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes shrink-x {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  margin: 25px 0;
+  table-layout: fixed;
+}
+
+td,
+th {
+  padding: 15px;
+  word-wrap: break-word;
+}
+
+td,
+th {
+  text-align: left;
+}
+
+tr:nth-child(even) td {
+  background-color: var(--table-row-even-background);
+}
+
+tr:nth-child(odd) td {
+  background-color: var(--table-row-uneven-background);
+}
+
+/* CSS */
+.button {
+  /* from base-green to base-blue */
+  --button-background: linear-gradient(
+    45deg,
+    var(--base-green),
+    var(--base-blue)
+  );
+  --button-hover-scale: 1.05;
+
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: var(--base-white);
+  background: var(--button-background);
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.3s ease;
+
+  cursor: pointer;
+}
+
+.button:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    var(--base-black),
+    var(--base-white),
+    var(--base-black)
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.button:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--button-background);
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+.button:hover {
+  transform: scale(var(--button-hover-scale));
+}
+
+.button.floating {
+  --button-floating-translateX: -50%;
+
+  position: fixed;
+  z-index: 100;
+
+  top: 0;
+  left: 50%;
+  transform: translateX(var(--button-floating-translateX));
+
+  padding-block: 1em;
+}
+
+.button.floating,
+.button.floating:after {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.button.floating:hover {
+  transform: scale(var(--button-hover-scale))
+    translateX(
+      calc(var(--button-floating-translateX) * (2 - var(--button-hover-scale)))
+    );
+}
+
+.button.danger {
+  --button-background: linear-gradient(
+    45deg,
+    var(--alarm-color),
+    var(--base-black)
+  );
+}
+
+.button.warning {
+  --button-background: linear-gradient(
+    45deg,
+    var(--warning-color),
+    var(--base-black)
+  );
+}
+
+.button.success {
+  --button-background: linear-gradient(
+    45deg,
+    var(--success-color),
+    var(--base-black)
+  );
+}
+
+@keyframes glowingShadowAnimation {
+  0% {
+    background: linear-gradient(0deg, var(--base-green), var(--base-blue));
+  }
+
+  100% {
+    background: linear-gradient(360deg, var(--base-green), var(--base-blue));
+  }
+}
+
+input {
+  padding: 0.5em;
+  border-radius: 10px;
+  border: 1px solid var(--base-black);
+  outline: none;
+}
+
+code {
+  background: var(--base-black);
+  color: var(--base-white);
+  padding: 0.5rem 0.75rem;
+  display: block;
+  border-left: 8px solid var(--base-green);
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  line-height: 1.5;
+}
+
+pre {
+  background: var(--base-black);
+  color: var(--base-white);
+  padding: 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+}

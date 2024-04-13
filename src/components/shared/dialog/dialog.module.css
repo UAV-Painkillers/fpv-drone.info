@@ -1,0 +1,51 @@
+.dialog {
+  outline: none;
+  border: none;
+  background: none;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  --dialog-z-index: 10000;
+  z-index: var(--dialog-z-index);
+
+  --footer-height: 4rem;
+}
+
+.dialog[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.backdrop {
+  backdrop-filter: blur(5px);
+  background: rgba(var(--body-background), 0.75);
+  z-index: calc(var(--dialog-z-index) - 1);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.content {
+  margin: 2rem;
+  z-index: var(--dialog-z-index);
+  max-height: calc(100vh - 4rem - var(--footer-height));
+}
+
+.footer {
+  height: var(--footer-height);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 2rem;
+  gap: 15px;
+  z-index: var(--dialog-z-index);
+}

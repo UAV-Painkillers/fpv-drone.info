@@ -1,0 +1,41 @@
+.grid {
+  --grid-gap: 25px;
+
+  display: grid;
+  grid-gap: var(--grid-gap);
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+
+.gridRow {
+  display: grid;
+  grid-gap: var(--grid-gap);
+}
+
+/** small phone */
+.variantOne,
+.variantTwo {
+  grid-template-columns: auto;
+}
+
+/** phone / small tablet */
+@media screen and (min-width: 550px) {
+  .variantOne {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .variantTwo {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+/** anything larger */
+@media screen and (min-width: 800px) {
+  .variantOne {
+    grid-template-columns: 4fr 3fr 3fr;
+  }
+
+  .variantTwo {
+    grid-template-columns: 3fr 3fr 4fr;
+  }
+}

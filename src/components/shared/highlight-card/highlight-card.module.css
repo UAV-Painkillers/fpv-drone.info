@@ -1,0 +1,20 @@
+.tipCard {
+  padding: 1rem;
+  position: relative;
+  background: rgb(var(--body-background));
+}
+
+/* TODO: make the animation work */
+.tipCard::before {
+  content: "";
+  position: absolute;
+  inset: -5px; /* control the spread */
+  z-index: -1; /* place the element behind */
+  background: linear-gradient(
+    45deg,
+    var(--base-green),
+    var(--base-blue)
+  ); /* your gradient here *;
+  filter: blur(10px); /* control the blur */
+  animation: glowingShadowAnimation 4s infinite forwards;
+}

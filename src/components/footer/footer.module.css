@@ -1,0 +1,10 @@
+.container {
+  padding-block: 5rem;
+  text-align: center;
+}
+
+.container ul li {
+  list-style: none;
+  margin: 0 1.5rem;
+  display: inline-block;
+}

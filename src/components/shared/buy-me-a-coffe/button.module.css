@@ -1,0 +1,36 @@
+.wrapper {
+  --bmc-button--BG_COLOR: #168eb4;
+  --bmc-button--FONT_COLOR: #ffffff;
+  display: inline-block;
+  text-align: center;
+}
+
+.bmcButton {
+  height: 3em;
+  display: inline-flex !important;
+  align-items: center;
+}
+
+.bmcButtonIcon {
+  height: 43px !important;
+  width: auto;
+  margin-bottom: 0px !important;
+  box-shadow: none !important;
+  border: none !important;
+  transform: scale(0.9) rotate(0) ease-in-ease-out;
+  transition: transform 0.4s;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.bmcButtonText {
+  margin-left: 8px;
+  display: inline-block;
+  line-height: 0;
+  width: 100%;
+  flex-shrink: 1;
+}
+
+.bmcButton:hover .bmcButtonIcon {
+  transform: scale(1.5) rotate(360deg);
+}
