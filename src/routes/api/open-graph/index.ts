@@ -34,13 +34,35 @@ export const onGet: RequestHandler = async (requestEvent) => {
     subTitle = page?.data?.ogDescription || subTitle;
   }
 
+  const endpoint = requestEvent.env.get("OG_IMAGE_GENERATOR_ENDPOINT");
+  if (!endpoint) {
+    throw new Error("OG_IMAGE_GENERATOR_ENDPOINT env is not set");
+  }
+
+  const username = requestEvent.env.get("OG_IMAGE_GENERATOR_USER");
+  if (!username) {
+    throw new Error("OG_IMAGE_GENERATOR_USER env is not set");
+  }
+
+  const password = requestEvent.env.get("OG_IMAGE_GENERATOR_PASSWORD");
+  if (!password) {
+    throw new Error("OG_IMAGE_GENERATOR_PASSWORD env is not set");
+  }
+
   const svgTemplateFileName = "og_image_template.svg";
-  const ogImageBlob = await generateOgImage({
-    title,
-    subtitle: subTitle,
-    originUrl: requestEvent.url,
-    svgTemplateFileName,
-  });
+  const ogImageBlob = await generateOgImage(
+    {
+      title,
+      subtitle: subTitle,
+      originUrl: requestEvent.url,
+      svgTemplateFileName,
+    },
+    {
+      endpoint,
+      username,
+      password,
+    },
+  );
 
   ogImageBlob.stream().pipeTo(writableStream);
 };
