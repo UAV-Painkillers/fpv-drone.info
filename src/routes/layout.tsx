@@ -15,6 +15,7 @@ import { Link, useLocation } from "@builder.io/qwik-city";
 import { Navigation } from "~/components/shared/navigation/navigation";
 import { AppContext } from "~/app.ctx";
 import { SearchButton } from "~/components/shared/search/search-button";
+import { QwikCityNprogress } from "@quasarwork/qwik-city-nprogress";
 
 export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -33,6 +34,7 @@ export default component$(() => {
 
   return (
     <>
+      <QwikCityNprogress />
       <div class={styles.appContainer}>
         {appContext.showPageHeader && (
           <>

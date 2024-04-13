@@ -1,3 +1,4 @@
+/* eslint-disable qwik/jsx-img */
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead, DocumentLink } from "@builder.io/qwik-city";
 import { routeLoader$ } from "@builder.io/qwik-city";
@@ -40,7 +41,25 @@ export default component$(() => {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!page.value) {
-    return <PageHeadline title="404" subtitle="Page not found" />;
+    return (
+      <>
+        <PageHeadline title="404" subtitle="Page not found" />
+        <img
+          src="/images/racoon_fire_error.gif"
+          alt="Racoon Fire Error"
+          height="878"
+          width="800"
+          style={{
+            maxHeight: "50vh",
+            maxWidth: "70vw",
+            width: "auto",
+            height: "auto",
+            margin: "0 auto",
+            display: 'block'
+          }}
+        />
+      </>
+    );
   }
 
   return (

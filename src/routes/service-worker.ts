@@ -21,9 +21,23 @@ const cleanManifestPaths = STATIC_ASSETS_MANIFESTS.map((manifest) => {
   return "/" + manifest.url;
 });
 
-addEventListener("install", () => self.skipWaiting());
+addEventListener("install", (event) => {
+  (event as any).waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+          console.log("deleting cache", cacheName);
+          return caches.delete(cacheName);
+        })
+      );
+    })
+  );
+  self.skipWaiting();
+});
 
-addEventListener("activate", () => self.clients.claim());
+addEventListener("activate", () => {
+  self.clients.claim();
+});
 
 function matchBuilderApi(url: URL) {
   return url.hostname.endsWith(".builder.io") || url.hostname === "builder.io";
@@ -51,7 +65,7 @@ registerRoute(
   ({ url }) => matchBuilderApi(url),
   new NetworkFirst({
     cacheName: "builder.io",
-  }),
+  })
 );
 
 // html content
@@ -59,7 +73,7 @@ registerRoute(
   (options) => isUncached(options.url),
   new StaleWhileRevalidate({
     cacheName: "dynamic",
-  }),
+  })
 );
 
 // static content
