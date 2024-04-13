@@ -395,3 +395,11 @@ code {
   border-top-right-radius: 8px;
   line-height: 1.5;
 }
+
+pre {
+  background: var(--base-black);
+  color: var(--base-white);
+  padding: 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+}
