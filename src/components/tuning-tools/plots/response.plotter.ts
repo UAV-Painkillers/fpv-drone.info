@@ -103,19 +103,19 @@ export class ResponsePlotter {
   private readonly chartBoundaries = {
     noise_gyro: {
       min: 1,
-      max: 10.1,
+      max: 65,
     },
     noise_debug: {
       min: 1,
-      max: 100,
+      max: 65,
     },
     noise_d: {
       min: 1,
-      max: 100,
+      max: 65,
     },
     frequencies: {
       min: 0,
-      max: 100,
+      max: 65,
     },
   };
   private charts: { [key in PlotName]?: echarts.ECharts } = {};

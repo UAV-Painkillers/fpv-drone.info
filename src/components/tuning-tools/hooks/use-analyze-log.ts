@@ -42,26 +42,26 @@ export function useAnalyzeLog() {
       try {
         state.value = AnalyzerState.LOADING;
         analyzer.value = noSerialize(
-          new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`),
+          new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`)
         );
         await analyzer.value!.init();
+        state.value = AnalyzerState.IDLE;
       } catch (e) {
+        console.log("Error initializing analyzer", e);
         state.value = AnalyzerState.ERROR;
         error.value = (e as Error).message;
         console.error(e);
-      } finally {
-        state.value = AnalyzerState.IDLE;
       }
     },
     {
       strategy: "intersection-observer",
-    },
+    }
   );
 
   const onSplitBBLStatusReport = $(
     <TKey extends SplitBBLStep>(
       step: TKey,
-      payload: SplitBBLStepToPayloadMap[TKey],
+      payload: SplitBBLStepToPayloadMap[TKey]
     ) => {
       switch (step) {
         case SplitBBLStep.RUNNING: {
@@ -136,7 +136,7 @@ export function useAnalyzeLog() {
             (item) =>
               item.index === subFileIndex
                 ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                : item,
+                : item
           );
           progress.value = {
             ...progress.value,
@@ -179,7 +179,7 @@ export function useAnalyzeLog() {
           const newDecoding = progress.value.subLogs.decoding.map((item) =>
             item.index === subFileIndex
               ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-              : item,
+              : item
           );
           progress.value = {
             ...progress.value,
@@ -202,14 +202,14 @@ export function useAnalyzeLog() {
           break;
         }
       }
-    },
+    }
   );
 
   const onAnalyzerStatusReport = $(
     <TKey extends AnalyzeOneFlightStep>(
       step: TKey,
       flightLogIndex: number,
-      payload: AnalyzeOneFlightStepToPayloadMap[TKey],
+      payload: AnalyzeOneFlightStepToPayloadMap[TKey]
     ) => {
       switch (step) {
         case AnalyzeOneFlightStep.START: {
@@ -239,7 +239,7 @@ export function useAnalyzeLog() {
               readingCSV: progress.value.subLogs.readingCSV.map((item) =>
                 item.index === flightLogIndex
                   ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                  : item,
+                  : item
               ),
             },
           };
@@ -269,7 +269,7 @@ export function useAnalyzeLog() {
                 progress.value.subLogs.writingHeadDictToJson.map((item) =>
                   item.index === flightLogIndex
                     ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                    : item,
+                    : item
                 ),
             },
           };
@@ -323,7 +323,7 @@ export function useAnalyzeLog() {
                 ].map((item) =>
                   item.index === flightLogIndex
                     ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                    : item,
+                    : item
                 ),
               },
             },
@@ -339,7 +339,7 @@ export function useAnalyzeLog() {
               analyzingPID: progress.value.subLogs.analyzingPID.map((item) =>
                 item.index === flightLogIndex
                   ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                  : item,
+                  : item
               ),
             },
           };
@@ -354,7 +354,7 @@ export function useAnalyzeLog() {
               state: progress.value.subLogs.state.map((item) =>
                 item.index === flightLogIndex
                   ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                  : item,
+                  : item
               ),
             },
           };
@@ -372,7 +372,7 @@ export function useAnalyzeLog() {
                       state: AnalyzerStepStatus.ERROR,
                       error: payload as string,
                     }
-                  : item,
+                  : item
               ),
             },
           };
@@ -382,7 +382,7 @@ export function useAnalyzeLog() {
         default:
           console.warn("Unknown step", step, payload);
       }
-    },
+    }
   );
 
   const analyzeFile = $(async (file?: File, replaceCurrentAnalysis = true) => {
@@ -399,14 +399,14 @@ export function useAnalyzeLog() {
         await file.arrayBuffer(),
         (status, payload) => {
           onSplitBBLStatusReport(status, payload);
-        },
+        }
       );
 
       const analyzerResult = await analyzer.value!.analyze(
         decoderResults,
         (status, index, payload) => {
           onAnalyzerStatusReport(status, index, payload);
-        },
+        }
       );
 
       let newResults: PIDAnalyzerResult[];
@@ -421,8 +421,8 @@ export function useAnalyzeLog() {
         ).concat(analyzerResult as PIDAnalyzerResult[]);
         newSelectedLogIndexes = analyzerState.selectedLogIndexes.concat(
           analyzerResult.map(
-            (_, index) => index + (analyzerState.results?.length ?? 0),
-          ),
+            (_, index) => index + (analyzerState.results?.length ?? 0)
+          )
         );
       }
 
