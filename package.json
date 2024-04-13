@@ -2,7 +2,7 @@
   "name": "fpv-drone.info",
   "description": "News, Guides, Reviews and more for the FPV Community",
   "engines": {
-    "node": ">=15.0.0"
+    "node": "^20.10.0"
   },
   "private": true,
   "trustedDependencies": [
@@ -10,9 +10,11 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "qwik build",
+    "build": "qwik build && npm run build.sw:vercel",
+    "build.sw:vercel": "npx workbox-cli injectManifest ./workbox-config.cjs",
+    "build.sw:preview": "npx workbox-cli injectManifest ./workbox-config.preview.cjs",
     "build.client": "vite build",
-    "build.preview": "vite build --ssr src/entry.preview.tsx",
+    "build.preview": "vite build --ssr src/entry.preview.tsx && npm run build.sw:preview",
     "build.server": "vite build -c adapters/vercel-edge/vite.config.ts",
     "build.types": "tsc --incremental --noEmit",
     "deploy": "vercel deploy",
@@ -25,7 +27,8 @@
     "start": "vite --open --mode ssr",
     "qwik": "qwik",
     "upgrade-packages": "npx npm-check-updates --interactive",
-    "vercell-install": "git submodule init && git submodule update && npm ci"
+    "vercell-install": "git submodule init && git submodule update && npm ci",
+    "icon_pwa:update": "npx tsx ./scripts/icon_and_pwa.ts"
   },
   "devDependencies": {
     "@builder.io/dev-tools": "^0.2.19",
@@ -34,6 +37,7 @@
     "@builder.io/sdk-qwik": "^0.14.4",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.22",
+    "@types/wawoff2": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
     "eslint": "^8.57.0",
@@ -46,9 +50,22 @@
     "vite-tsconfig-paths": "^4.3.1"
   },
   "dependencies": {
+    "@builder.io/qwik-react": "^0.5.4",
+    "@builder.io/qwik-worker": "^0.0.1",
     "@fontsource-variable/montserrat": "^5.0.17",
     "@fontsource/libre-barcode-128-text": "^5.0.18",
+    "@ngrok/ngrok": "^1.2.0",
+    "@quasarwork/qwik-city-nprogress": "^0.0.3",
+    "@uav.painkillers/pid-analyzer-wasm": "^3.2.1",
     "@vercel/analytics": "^1.2.2",
-    "classnames": "^2.5.1"
+    "@vercel/speed-insights": "^1.0.10",
+    "classnames": "^2.5.1",
+    "echarts": "^5.5.0",
+    "i": "^0.3.7",
+    "npm": "^10.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "workbox-recipes": "^7.0.0",
+    "workbox-strategies": "^7.0.0"
   }
 }

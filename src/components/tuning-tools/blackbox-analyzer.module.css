@@ -1,0 +1,36 @@
+.wrapper {
+  transition: border-color 0.3s ease;
+  border: 2px dashed transparent;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.wrapperDropover {
+  padding: 1rem;
+  border-color: var(--base-black);
+}
+
+.analyzerLoadingSpinner,
+.analyzerLoadingSpinner,
+.analyzerLoadingSpinner:before {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.analyzerLoadingSpinner {
+  margin-bottom: 1rem !important;
+}
+
+.uploadButton {
+  margin-bottom: 2rem;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
+  min-height: 3rem;
+  width: 100%;
+}
+
+.uploadButtonDropover {
+  margin-bottom: 0;
+  height: 15rem;
+}

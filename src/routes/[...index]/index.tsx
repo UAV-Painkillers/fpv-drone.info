@@ -1,5 +1,6 @@
+/* eslint-disable qwik/jsx-img */
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import type { DocumentHead, DocumentLink } from "@builder.io/qwik-city";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import {
   fetchOneEntry,
@@ -31,12 +32,34 @@ export const usePage = routeLoader$(async ({ url }) => {
   return page;
 });
 
+export const useRouteURL = routeLoader$(async ({ url }) => {
+  return url;
+});
+
 export default component$(() => {
   const page = usePage();
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!page.value) {
-    return <PageHeadline title="404" subtitle="Page not found" />;
+    return (
+      <>
+        <PageHeadline title="404" subtitle="Page not found" />
+        <img
+          src="/images/racoon_fire_error.gif"
+          alt="Racoon Fire Error"
+          height="878"
+          width="800"
+          style={{
+            maxHeight: "50vh",
+            maxWidth: "70vw",
+            width: "auto",
+            height: "auto",
+            margin: "0 auto",
+            display: 'block'
+          }}
+        />
+      </>
+    );
   }
 
   return (
@@ -57,6 +80,7 @@ export default component$(() => {
 
 export const head: DocumentHead = ({ resolveValue }) => {
   const builderContent = resolveValue(usePage);
+  const location = resolveValue(useRouteURL);
 
   if (!builderContent) {
     return {
@@ -64,7 +88,30 @@ export const head: DocumentHead = ({ resolveValue }) => {
     };
   }
 
+  const links: DocumentLink[] = [];
+
+  const meta = [
+    {
+      property: "og:image",
+      content: `${location.origin}/api/open-graph?builder-io-id=${builderContent.id}`,
+    },
+    {
+      property: "og:title",
+      content: builderContent.data?.ogTitle,
+    },
+    {
+      property: "og:description",
+      content: builderContent.data?.ogDescription,
+    },
+    {
+      property: "og:url",
+      content: location.href,
+    },
+  ];
+
   return {
     title: builderContent.data?.title,
+    links,
+    meta,
   };
 };

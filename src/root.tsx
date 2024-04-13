@@ -1,4 +1,9 @@
-import { component$ } from "@builder.io/qwik";
+import {
+  component$,
+  useContextProvider,
+  useStore,
+  useVisibleTask$,
+} from "@builder.io/qwik";
 import {
   QwikCityProvider,
   RouterOutlet,
@@ -7,25 +12,32 @@ import {
 
 import "./normalize.css";
 import "./global.css";
-import { RouterHead } from "./components/shared/router-head/router-head";
+import { RouterHead } from "./components/router-head/router-head";
+import type { AppContextState } from "./app.ctx";
+import { AppContext } from "./app.ctx";
+import { injectSpeedInsights } from "@vercel/speed-insights";
+import { PWAInstallButton } from "./components/pwa-install-button/pwa-install-button";
 
 export default component$(() => {
-  /**
-   * The root of a QwikCity site always start with the <QwikCityProvider> component,
-   * immediately followed by the document's <head> and <body>.
-   *
-   * Don't remove the `<head>` and `<body>` elements.
-   */
+  const appContextData = useStore<AppContextState>({
+    showPageHeader: true,
+    isPreviewing: false,
+  });
+  useContextProvider(AppContext, appContextData);
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(() => {
+    injectSpeedInsights();
+  });
 
   return (
     <QwikCityProvider>
       <head>
-        <meta charSet="utf-8" />
-        <link rel="manifest" href="/manifest.json" />
         <RouterHead />
         <ServiceWorkerRegister />
       </head>
       <body lang="en">
+        <PWAInstallButton />
         <RouterOutlet />
       </body>
     </QwikCityProvider>
