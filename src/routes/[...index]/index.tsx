@@ -55,7 +55,7 @@ export default component$(() => {
             width: "auto",
             height: "auto",
             margin: "0 auto",
-            display: 'block'
+            display: "block",
           }}
         />
       </>

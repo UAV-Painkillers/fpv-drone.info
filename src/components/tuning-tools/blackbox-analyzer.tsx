@@ -69,7 +69,7 @@ export const BlackboxAnalyzer = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -111,7 +111,7 @@ export const BlackboxAnalyzer = component$((props: Props) => {
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR
+      (s) => s.state === AnalyzerStepStatus.ERROR,
     );
   });
 
@@ -364,7 +364,7 @@ export const BlackboxAnalyzerRegistryDefinition: RegisteredComponent = {
           type: "object",
           required: false,
           subFields: Object.values(NoiseFields).map((noiseField) =>
-            makeSeriesLabelDefinitionInput(noiseField)
+            makeSeriesLabelDefinitionInput(noiseField),
           ),
         },
       ],

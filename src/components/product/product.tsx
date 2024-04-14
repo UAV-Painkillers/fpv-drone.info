@@ -35,7 +35,7 @@ enum ProductFlightControllerGyro {
 
 enum ProductFlightControllerProcessor {
   STM32F405 = "STM32F405",
-  STM32F722 = "STM32F722"
+  STM32F722 = "STM32F722",
 }
 
 enum ProductFlightControllerBlackboxType {
@@ -131,7 +131,7 @@ export interface ProductProps {
     esc?: TechnicalSpecsESC;
   };
   manuals?: Array<{ label: string; pdf?: string; image?: string }>;
-  attachments?: Array<{label: string, file?: string}>;
+  attachments?: Array<{ label: string; file?: string }>;
 }
 
 type SpecPropTypes = keyof Required<ProductProps>["technicalSpecs"];
