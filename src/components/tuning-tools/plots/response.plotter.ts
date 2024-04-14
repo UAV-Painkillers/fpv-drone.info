@@ -678,8 +678,14 @@ export class ResponsePlotter {
       .split("_")
       .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
       .join(" ");
+
     ResponsePlotter.setChartOptions(chart, chartName, {
-      tooltip: {},
+      tooltip: {
+        formatter: (args: { data: [number, number, number] }) => {
+          const [x] = args.data;
+          return `${Math.round(fieldValues.freq_axis[x])}Hz`;
+        },
+      },
       legend: {},
       xAxis: {
         type: "category",

@@ -28,9 +28,9 @@ addEventListener("install", (event) => {
         cacheNames.map(function (cacheName) {
           console.log("deleting cache", cacheName);
           return caches.delete(cacheName);
-        })
+        }),
       );
-    })
+    }),
   );
   self.skipWaiting();
 });
@@ -65,7 +65,7 @@ registerRoute(
   ({ url }) => matchBuilderApi(url),
   new NetworkFirst({
     cacheName: "builder.io",
-  })
+  }),
 );
 
 // html content
@@ -73,7 +73,7 @@ registerRoute(
   (options) => isUncached(options.url),
   new StaleWhileRevalidate({
     cacheName: "dynamic",
-  })
+  }),
 );
 
 // static content
