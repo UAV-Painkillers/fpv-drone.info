@@ -591,7 +591,12 @@ export class ResponsePlotter {
       this.charts.responseStrengthPeak,
       "Response Peak",
       {
-        tooltip: {},
+        tooltip: {
+          formatter: (params: any) => {
+            const delay = params.data as number;
+            return `${delay}ms`;
+          },
+        },
         xAxis: {
           data: peaks.map((_, flightIndex) =>
             this.getLabel({
@@ -604,6 +609,9 @@ export class ResponsePlotter {
         yAxis: {
           min: 0,
           max: Math.floor(Math.max(2, ...peaks.map((p) => p + 1))),
+          axisLabel: {
+            formatter: (value: number) => `${value}ms`,
+          },
         },
         series: {
           type: "bar",
@@ -626,7 +634,12 @@ export class ResponsePlotter {
       this.charts.responseDelay,
       "Response Delay",
       {
-        tooltip: {},
+        tooltip: {
+          formatter: (params: any) => {
+            const delay = params.data as number;
+            return `${delay}ms`;
+          },
+        },
         xAxis: {
           data: delays.map((_, flightIndex) =>
             this.getLabel({
@@ -639,6 +652,9 @@ export class ResponsePlotter {
         yAxis: {
           min: 0,
           max: Math.floor(Math.max(20, ...delays.map((d) => d + 1))),
+          axisLabel: {
+            formatter: (value: number) => `${value}ms`,
+          },
         },
         series: {
           type: "bar",
@@ -801,6 +817,10 @@ export class ResponsePlotter {
         trigger: "axis",
         axisPointer: {
           type: "cross",
+        },
+        formatter: (args: Array<{ dataIndex: number }>) => {
+          const valueIndex = args[0].dataIndex;
+          return `${Math.round(noise.freq_axis[valueIndex])}Hz`;
         },
       },
       xAxis: {
