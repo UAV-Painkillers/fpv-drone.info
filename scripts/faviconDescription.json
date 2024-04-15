@@ -3,11 +3,8 @@
   "iconsPath": "/pwa",
   "design": {
     "ios": {
-      "masterPicture": {
-        "type": "path",
-        "path": "./src/assets/original_images/app icon.png"
-      },
-      "pictureAspect": "noChange",
+      "masterPicture": "./src/assets/original_images/app icon.png",
+      "pictureAspect": "background_and_margin",
       "assets": {
         "ios6AndPriorIcons": false,
         "ios7AndLaterIcons": false,
@@ -64,6 +61,6 @@
   },
   "versioning": {
     "paramName": "v",
-    "paramValue": 7
+    "paramValue": 13
   }
 }
