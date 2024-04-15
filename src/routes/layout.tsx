@@ -16,6 +16,8 @@ import { Navigation } from "~/components/shared/navigation/navigation";
 import { AppContext } from "~/app.ctx";
 import { SearchButton } from "~/components/shared/search/search-button";
 import { QwikCityNprogress } from "@quasarwork/qwik-city-nprogress";
+import { PWAInstallButton } from "~/components/pwa-install-button/pwa-install-button";
+import { ServiceWorkerManager } from "~/components/service-worker-manager/service-worker-manager";
 
 export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -47,6 +49,8 @@ export default component$(() => {
           </>
         )}
         <main class={styles.main}>
+          <ServiceWorkerManager />
+          <PWAInstallButton />
           <Slot />
         </main>
       </div>

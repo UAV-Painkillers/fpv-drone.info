@@ -250,6 +250,7 @@ tr:nth-child(odd) td {
     var(--base-blue)
   );
   --button-hover-scale: 1.05;
+  --button-border-radius: 10px;
 
   padding: 0.6em 2em;
   border: none;
@@ -259,7 +260,7 @@ tr:nth-child(odd) td {
   cursor: pointer;
   position: relative;
   z-index: 0;
-  border-radius: 10px;
+  border-radius: var(--button-border-radius);
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -287,7 +288,7 @@ tr:nth-child(odd) td {
   height: calc(100% + 4px);
   animation: glowing-button 20s linear infinite;
   transition: opacity 0.3s ease-in-out;
-  border-radius: 10px;
+  border-radius: var(--button-border-radius);
 }
 
 @keyframes glowing-button {
@@ -311,7 +312,7 @@ tr:nth-child(odd) td {
   background: var(--button-background);
   left: 0;
   top: 0;
-  border-radius: 10px;
+  border-radius: var(--button-border-radius);
 }
 
 .button:hover {
@@ -331,10 +332,23 @@ tr:nth-child(odd) td {
   padding-block: 1em;
 }
 
+.button.floating.bottom {
+  top: inherit;
+  bottom: 0;
+}
+
 .button.floating,
 .button.floating:after {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.button.floating.bottom,
+.button.floating.bottom:after {
+  border-top-left-radius: var(--button-border-radius);
+  border-top-right-radius: var(--button-border-radius);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .button.floating:hover {
