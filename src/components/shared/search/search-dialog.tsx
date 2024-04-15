@@ -60,7 +60,6 @@ const DialogContent = component$((props: DialogContentProps) => {
           }) as StoredAlgoliaResult,
       )
       .filter((h) => h.published);
-    console.log(algoliaResult);
   });
 
   const onSearchInput = $((e: Event) => {

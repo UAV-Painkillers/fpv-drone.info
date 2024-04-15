@@ -17,6 +17,7 @@ export default component$(() => {
   const appContextData = useStore<AppContextState>({
     showPageHeader: true,
     isPreviewing: false,
+    serviceWorker: undefined,
   });
   useContextProvider(AppContext, appContextData);
 

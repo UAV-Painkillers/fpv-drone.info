@@ -441,3 +441,10 @@ pre {
   border-radius: 10px;
   overflow-x: auto;
 }
+
+.alert {
+  border: 5px solid var(--warning-color);
+  border-style: dashed;
+  border-radius: 10px;
+  padding: 1rem;
+}

@@ -10,16 +10,31 @@
 import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
 import { registerRoute } from "workbox-routing";
 import { precacheAndRoute, addPlugins } from "workbox-precaching";
-import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies";
+import {
+  NetworkFirst,
+  StaleWhileRevalidate,
+  CacheFirst,
+} from "workbox-strategies";
 
-const STATIC_ASSETS_MANIFESTS = self.__WB_MANIFEST;
-const cleanManifestPaths = STATIC_ASSETS_MANIFESTS.map((manifest) => {
-  if (typeof manifest === "string") {
-    return "/" + manifest;
+const STATIC_ASSETS_MANIFESTS: typeof self.__WB_MANIFEST = [];
+const PID_ANALYZER_DEPENDENCIES_MANIFESTS: typeof self.__WB_MANIFEST = [];
+const cleanManifestPaths: string[] = [];
+
+const PID_ANALYZER_DEPENDENCY_URL_PREFIX = "pid-analyer-dependencies/";
+
+self.__WB_MANIFEST.forEach((manifest) => {
+  const manifestUrl = typeof manifest === "string" ? manifest : manifest.url;
+
+  cleanManifestPaths.push(manifestUrl);
+
+  if (manifestUrl.startsWith(PID_ANALYZER_DEPENDENCY_URL_PREFIX)) {
+    PID_ANALYZER_DEPENDENCIES_MANIFESTS.push(manifest);
+    return;
   }
 
-  return "/" + manifest.url;
+  STATIC_ASSETS_MANIFESTS.push(manifest);
 });
+
 const PRECACHING_LISTENER_CLIENTS: Client[] = [];
 
 addEventListener("install", (event) => {
@@ -54,7 +69,12 @@ function isUncached(url: URL) {
     return false;
   }
 
-  if (cleanManifestPaths.includes(url.pathname)) {
+  let pathNameWithoutSlash = url.pathname;
+  if (pathNameWithoutSlash.startsWith("/")) {
+    pathNameWithoutSlash = pathNameWithoutSlash.slice(1);
+  }
+
+  if (cleanManifestPaths.includes(pathNameWithoutSlash)) {
     return false;
   }
 
@@ -66,6 +86,23 @@ registerRoute(
   ({ url }) => matchBuilderApi(url),
   new NetworkFirst({
     cacheName: "builder.io",
+  }),
+);
+
+// pid analyzer dependencies
+registerRoute(
+  ({ url }) => {
+    return PID_ANALYZER_DEPENDENCIES_MANIFESTS.some((manifest) => {
+      let manifestUrl = typeof manifest === "string" ? manifest : manifest.url;
+      if (!manifestUrl.startsWith("/")) {
+        manifestUrl = "/" + manifestUrl;
+      }
+
+      return url.pathname === manifestUrl;
+    });
+  },
+  new CacheFirst({
+    cacheName: "pid-analyzer-dependencies",
   }),
 );
 
@@ -100,8 +137,6 @@ async function sendToClients(
     eventType = eventTypeOrClients as string;
     payload = payloadOrEventType as any;
   }
-
-  console.log("sending to clients", eventType, payload);
 
   clients.forEach((client) => {
     client.postMessage({ type: eventType, payload });
@@ -157,7 +192,7 @@ function clearCaches() {
 }
 
 // clear caches on message from window process
-self.addEventListener("message", (event) => {
+self.addEventListener("message", async (event) => {
   if (event.data.type === "CLEAR_CACHES") {
     clearCaches();
   }
@@ -166,8 +201,39 @@ self.addEventListener("message", (event) => {
     PRECACHING_LISTENER_CLIENTS.push(event.source as Client);
   }
 
-  // tell window process that caches are cleared
-  // sendToClients("CACHES_CLEARED");
+  if (event.data.type === "PRECACHE_PID_ANALYZER_CHECK") {
+    const didCache = await checkDidCachePIDAnalyzerDependencies();
+    sendToClients("PRECACHE_PID_ANALYZER_CHECK_RESULT", didCache);
+  }
 });
+
+async function checkForPIDResourceInSingleCache(
+  cacheName: string,
+): Promise<boolean> {
+  const cache = await self.caches.open(cacheName);
+  const keys = await cache.keys();
+
+  for (const key of keys) {
+    const url = new URL(key.url);
+    if (url.pathname.startsWith("/" + PID_ANALYZER_DEPENDENCY_URL_PREFIX)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+async function checkDidCachePIDAnalyzerDependencies() {
+  const cacheNames = await self.caches.keys();
+
+  for (const cacheName of cacheNames) {
+    const didCache = await checkForPIDResourceInSingleCache(cacheName);
+    if (didCache) {
+      return true;
+    }
+  }
+
+  return false;
+}
 
 declare const self: ServiceWorkerGlobalScope;

@@ -4,9 +4,14 @@ import {
   $,
   useStore,
   useComputed$,
+  useSignal,
+  noSerialize,
+  useContext,
 } from "@builder.io/qwik";
+import type { NoSerialize } from "@builder.io/qwik";
 import classNames from "classnames";
 import { useCSSTransition } from "qwik-transition";
+import { AppContext } from "~/app.ctx";
 
 enum CACHING_EVENT {
   PRECACHING_STARTED = "PRECACHING_STARTED",
@@ -33,6 +38,11 @@ export const ServiceWorkerManager = component$(() => {
     cachingIsStarted: false,
     cachingIsDone: false,
   });
+  const serviceWorker = useSignal<NoSerialize<ServiceWorker | undefined>>(
+    noSerialize(undefined),
+  );
+  const appContext = useContext(AppContext);
+
   const showBanner = useComputed$(
     () => cachingStats.cachingIsStarted && !cachingStats.cachingIsDone,
   );
@@ -45,18 +55,24 @@ export const ServiceWorkerManager = component$(() => {
     ) => {
       switch (eventType) {
         case CACHING_EVENT.PRECACHING_STARTED:
-        case CACHING_EVENT.PRECACHING_PROGRESS:
+        case CACHING_EVENT.PRECACHING_PROGRESS: {
+          const p =
+            payload as CACHING_EVENT_PAYLOAD_MAP[CACHING_EVENT.PRECACHING_STARTED];
           cachingStats.cachingIsStarted = true;
-          cachingStats.total = payload!.total;
-          cachingStats.cached = payload!.cached;
+          cachingStats.total = p.total;
+          cachingStats.cached = p.cached;
           break;
+        }
 
         case CACHING_EVENT.PRECACHING_COMPLETE:
           cachingStats.cachingIsDone = true;
+          serviceWorker.value?.postMessage({
+            type: "PRECACHE_PID_ANALYZER_CHECK",
+          });
           break;
 
         default:
-          console.error("Unknown event type:", eventType);
+          console.error("Unknown event type:", eventType, payload);
       }
     },
   );
@@ -74,15 +90,22 @@ export const ServiceWorkerManager = component$(() => {
 
     const registration =
       await navigator.serviceWorker.register("/service-worker.js");
-    console.log("Service worker registered:", registration);
 
-    const serviceWorker =
-      registration.installing || registration.waiting || registration.active;
-    if (!serviceWorker) {
+    serviceWorker.value = noSerialize(
+      registration.installing ||
+        registration.waiting ||
+        registration.active ||
+        undefined,
+    );
+
+    appContext.serviceWorker = noSerialize(serviceWorker.value);
+
+    if (!serviceWorker.value) {
       console.error("No service worker found");
       return;
     }
-    serviceWorker.postMessage({ type: "ATTACH_LISTENER_PRECACHING" });
+
+    serviceWorker.value.postMessage({ type: "ATTACH_LISTENER_PRECACHING" });
 
     navigator.serviceWorker.addEventListener("message", (event: any): void => {
       try {
