@@ -24,6 +24,7 @@ import type { PlotNavigationProps } from "./plots/navigation/plot-navigation";
 import { RacoonLoader } from "./racoon-loader/racoon-loader";
 import { AnalyzerStepStatus } from "./hooks/types";
 import { Dialog } from "../shared/dialog/dialog";
+import { SWCachingBlocker } from "../sw-caching-blocker/sw-caching-blocker";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -33,7 +34,7 @@ interface Props {
   plotLabels?: PlotLabelDefinitions;
 }
 
-export const BlackboxAnalyzer = component$((props: Props) => {
+const BlackboxAnalyzerContent = component$((props: Props) => {
   useBlackboxAnalyzerContextProvider();
   const appContext = useContext(AppContext);
 
@@ -220,6 +221,16 @@ export const BlackboxAnalyzer = component$((props: Props) => {
         />
       </div>
     </div>
+  );
+});
+
+export const BlackboxAnalyzer = component$((props: Props) => {
+  return (
+    <SWCachingBlocker
+      render={$(() => (
+        <BlackboxAnalyzerContent {...props} />
+      ))}
+    />
   );
 });
 

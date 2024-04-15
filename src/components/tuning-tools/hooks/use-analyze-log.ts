@@ -47,7 +47,7 @@ export function useAnalyzeLog() {
         await analyzer.value!.init();
         state.value = AnalyzerState.IDLE;
       } catch (e) {
-        console.log("Error initializing analyzer", e);
+        console.error("Error initializing analyzer", e);
         state.value = AnalyzerState.ERROR;
         error.value = (e as Error).message;
         console.error(e);
