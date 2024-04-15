@@ -9,7 +9,7 @@
  */
 import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
 import { registerRoute } from "workbox-routing";
-import { precacheAndRoute } from "workbox-precaching";
+import { precacheAndRoute, addPlugins } from "workbox-precaching";
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies";
 
 const STATIC_ASSETS_MANIFESTS = self.__WB_MANIFEST;
@@ -20,6 +20,7 @@ const cleanManifestPaths = STATIC_ASSETS_MANIFESTS.map((manifest) => {
 
   return "/" + manifest.url;
 });
+const PRECACHING_LISTENER_CLIENTS: Client[] = [];
 
 addEventListener("install", (event) => {
   (event as any).waitUntil(
@@ -76,6 +77,75 @@ registerRoute(
   }),
 );
 
+async function sendToClients(eventType: string, payload?: any): Promise<void>;
+async function sendToClients(
+  clients: Array<Client>,
+  eventType: string,
+  payload?: any,
+): Promise<void>;
+async function sendToClients(
+  eventTypeOrClients: string | Array<Client>,
+  payloadOrEventType?: any,
+  payloadOrNone?: any,
+) {
+  let clients: Array<Client> | undefined;
+  let eventType: string = "";
+  let payload: any | undefined = undefined;
+  if (Array.isArray(eventTypeOrClients)) {
+    clients = eventTypeOrClients;
+    eventType = payloadOrEventType as string;
+    payload = payloadOrNone;
+  } else {
+    clients = (await self.clients.matchAll()) as Client[];
+    eventType = eventTypeOrClients as string;
+    payload = payloadOrEventType as any;
+  }
+
+  console.log("sending to clients", eventType, payload);
+
+  clients.forEach((client) => {
+    client.postMessage({ type: eventType, payload });
+  });
+}
+
+const manifestSize = STATIC_ASSETS_MANIFESTS.length;
+let precacheCount = 0;
+let didSendInitialEvent = false;
+addPlugins([
+  {
+    handlerDidComplete: async ({ error, event }) => {
+      if (event.type !== "install") {
+        return;
+      }
+
+      if (!didSendInitialEvent) {
+        sendToClients(PRECACHING_LISTENER_CLIENTS, "PRECACHING_STARTED", {
+          total: manifestSize,
+          cached: 0,
+        });
+        didSendInitialEvent = true;
+      }
+
+      if (error) {
+        sendToClients(PRECACHING_LISTENER_CLIENTS, "PRECACHING_ERROR", {
+          error: error,
+        });
+        return;
+      }
+
+      precacheCount++;
+      sendToClients(PRECACHING_LISTENER_CLIENTS, "PRECACHING_PROGRESS", {
+        total: manifestSize,
+        cached: precacheCount,
+      });
+
+      if (precacheCount >= manifestSize) {
+        sendToClients(PRECACHING_LISTENER_CLIENTS, "PRECACHING_COMPLETE");
+      }
+    },
+  },
+]);
+
 // static content
 precacheAndRoute(STATIC_ASSETS_MANIFESTS);
 setupServiceWorker();
@@ -92,10 +162,12 @@ self.addEventListener("message", (event) => {
     clearCaches();
   }
 
+  if (event.data.type === "ATTACH_LISTENER_PRECACHING") {
+    PRECACHING_LISTENER_CLIENTS.push(event.source as Client);
+  }
+
   // tell window process that caches are cleared
-  self.clients.matchAll().then((clients) => {
-    clients.forEach((client) => client.postMessage({ type: "CACHES_CLEARED" }));
-  });
+  // sendToClients("CACHES_CLEARED");
 });
 
 declare const self: ServiceWorkerGlobalScope;
