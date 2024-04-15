@@ -2,19 +2,19 @@
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
   "name": "fpv-drone.info",
   "short_name": "fpv-drone.info",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#fff",
   "theme_color": "#ffffff",
   "description": "News, Guides, Reviews and more for the FPV Community!",
   "icons": [
     {
-      "src": "/pwa/android-chrome-192x192.png?v=7",
+      "src": "/pwa/android-chrome-192x192.png?v=13",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/pwa/android-chrome-512x512.png?v=7",
+      "src": "/pwa/android-chrome-512x512.png?v=13",
       "sizes": "512x512",
       "type": "image/png"
     }
