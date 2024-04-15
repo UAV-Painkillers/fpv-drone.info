@@ -330,6 +330,8 @@ tr:nth-child(odd) td {
   transform: translateX(var(--button-floating-translateX));
 
   padding-block: 1em;
+
+  transition: 0.6s;
 }
 
 .button.floating.bottom {
@@ -349,6 +351,27 @@ tr:nth-child(odd) td {
   border-top-right-radius: var(--button-border-radius);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+.button.floating.closed {
+  top: -100%;
+}
+.button.floating.bottom.closed {
+  bottom: -100%;
+}
+
+/** is mobile */
+@media screen and (max-width: 700px) {
+  .button.floating.bottom {
+    left: 1rem;
+    right: 1rem;
+    transform: unset;
+  }
+}
+@media screen and (max-width: 768px) {
+  .button.floating.bottom {
+    bottom: 3rem;
+  }
 }
 
 .button.floating:hover {

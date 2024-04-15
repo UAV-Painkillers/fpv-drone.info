@@ -5,6 +5,7 @@ import {
   useStore,
   useComputed$,
 } from "@builder.io/qwik";
+import classNames from "classnames";
 import { useCSSTransition } from "qwik-transition";
 
 enum CACHING_EVENT {
@@ -27,8 +28,8 @@ type CACHING_EVENT_PAYLOAD_MAP = {
 
 export const ServiceWorkerManager = component$(() => {
   const cachingStats = useStore({
-    total: 55,
-    cached: 23,
+    total: 0,
+    cached: 0,
     cachingIsStarted: false,
     cachingIsDone: false,
   });
@@ -104,11 +105,9 @@ export const ServiceWorkerManager = component$(() => {
       <div></div>
       {shouldMount.value && (
         <div
-          class="button floating bottom"
-          style={{
-            transition: ".6s",
-            bottom: stage.value === "enterTo" ? 0 : "-100%",
-          }}
+          class={classNames("button floating bottom", {
+            closed: stage.value !== "enterTo",
+          })}
         >
           <p>
             <b>Updating App-Cache for offline usage.</b>
