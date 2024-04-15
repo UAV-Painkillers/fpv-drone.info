@@ -357,6 +357,7 @@ tr:nth-child(odd) td {
   top: -100%;
 }
 .button.floating.bottom.closed {
+  top: unset;
   bottom: -100%;
 }
 
