@@ -7,7 +7,7 @@ import {
 } from "@builder.io/qwik";
 import type { QRL } from "@builder.io/qwik";
 import type { JSX } from "@builder.io/qwik/jsx-runtime";
-import { AppContext } from "~/app.ctx";
+import { AppContext, BlockableCaches } from "~/app.ctx";
 
 interface Props {
   render: QRL<() => JSX.Element>;
@@ -17,7 +17,10 @@ export const SWCachingBlocker = component$((props: Props) => {
   const appContext = useContext(AppContext);
   const serviceWorkerAvailable = useSignal<boolean | null>(null);
   const serviceWorkerDidCache = useSignal<boolean | null>(null);
-  const show = useSignal<boolean>(false);
+
+  const show = useComputed$(() =>
+    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER),
+  );
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
@@ -70,7 +73,12 @@ export const SWCachingBlocker = component$((props: Props) => {
           size, if you are currently on a limited data plan, please be aware of
           this.
         </p>
-        <button class="button" onClick$={() => (show.value = true)}>
+        <button
+          class="button"
+          onClick$={() =>
+            appContext.unblockedCaches.push(BlockableCaches.PID_ANALYZER)
+          }
+        >
           I understand, please download {downloadSizeMb}MB
         </button>
       </div>

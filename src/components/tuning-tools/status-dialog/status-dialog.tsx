@@ -7,7 +7,7 @@ import type {
 import { AnalyzerStepStatus } from "../hooks/types";
 import type { StepProps } from "./step/step";
 import { Step } from "./step/step";
-import { RacoonLoader } from "../racoon-loader/racoon-loader";
+import { RacoonLoader } from "../racoon-animations/racoon-animation";
 
 interface Props {
   isOpen: boolean;
