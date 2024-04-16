@@ -1,15 +1,8 @@
-import {
-  component$,
-  Slot,
-  useContext,
-  useTask$,
-  useVisibleTask$,
-} from "@builder.io/qwik";
+import { component$, Slot, useContext, useTask$ } from "@builder.io/qwik";
 import "@fontsource/libre-barcode-128-text/400.css";
 import "@fontsource-variable/montserrat/wght.css";
 import styles from "./layout.module.css";
 import { Footer } from "~/components/footer/footer";
-import { inject as injectVercelAnalytics } from "@vercel/analytics";
 import { Logo } from "~/components/logo/logo";
 import { Link, useLocation } from "@builder.io/qwik-city";
 import { Navigation } from "~/components/shared/navigation/navigation";
@@ -20,13 +13,6 @@ import { PWAInstallButton } from "~/components/pwa-install-button/pwa-install-bu
 import { ServiceWorkerManager } from "~/components/service-worker-manager/service-worker-manager";
 
 export default component$(() => {
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(() => {
-    // eslint-disable-next-line
-    console.log("injecting vercel analytics", injectVercelAnalytics);
-    injectVercelAnalytics();
-  });
-
   const appContext = useContext(AppContext);
   const location = useLocation();
 
