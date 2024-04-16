@@ -5,9 +5,7 @@
     "node": "^20.10.0"
   },
   "private": true,
-  "trustedDependencies": [
-    "sharp"
-  ],
+  "trustedDependencies": ["sharp"],
   "type": "module",
   "scripts": {
     "build": "qwik build && npm run build.sw:vercel",
@@ -28,7 +26,8 @@
     "qwik": "qwik",
     "upgrade-packages": "npx npm-check-updates --interactive",
     "vercell-install": "git submodule init && git submodule update && npm ci",
-    "icon_pwa:update": "npx tsx ./scripts/icon_and_pwa.ts"
+    "icon_pwa:update": "npx tsx ./scripts/icon_and_pwa.ts",
+    "git.clean": "git branch --merged | grep -Ev \"(^\\*|master|main|dev)\" | xargs git branch -d"
   },
   "devDependencies": {
     "@builder.io/dev-tools": "^0.2.19",
