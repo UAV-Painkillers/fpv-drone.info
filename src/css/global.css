@@ -1,37 +1,3 @@
-:root {
-  --base-green: #16c99e;
-  --base-blue: #1653c9;
-  --base-black: #3e3e3e;
-  --base-white: #ffffff;
-
-  --success-color: #16c969;
-  --warning-color: #c98716;
-  --alarm-color: #c91652;
-
-  --text-color: var(--base-black);
-  --body-background: 255, 255, 255;
-
-  --anchor-gradient-start: var(--base-green);
-  --anchor-gradient-end: var(--base-blue);
-
-  --anchor-color: linear-gradient(
-    var(--anchor-gradient-start),
-    var(--anchor-gradient-end)
-  );
-  --anchor-border-color: var(--anchor-gradient-end);
-  --anchor-active-border-color: var(--anchor-gradient-start);
-
-  --border-rounding: 15px;
-
-  /** just for reference :/ doesnt yet work in css ... */
-  --breakpoint-mobile: 768px;
-  --breakpoint-tablet: 1024px;
-  --breakpoint-desktop: 1200px;
-
-  --table-row-even-background: hsl(220, 80%, 95%);
-  --table-row-uneven-background: var(--base-white);
-}
-
 html {
   font-size: 110%;
 }
@@ -143,18 +109,6 @@ ul {
   padding-left: 20px;
 }
 
-@property --checkbox-background-color-start {
-  syntax: "<color>";
-  initial-value: white;
-  inherits: false;
-}
-
-@property --checkbox-background-color-end {
-  syntax: "<color>";
-  initial-value: white;
-  inherits: false;
-}
-
 input[type="checkbox"] {
   width: 30px;
   height: 30px;
@@ -168,9 +122,6 @@ input[type="checkbox"] {
   outline: none;
   cursor: pointer;
   appearance: none;
-
-  --background-color-start: white;
-  --background-color-end: white;
 
   transition:
     --checkbox-background-color-start 0.5s ease-in-out,
@@ -243,15 +194,6 @@ tr:nth-child(odd) td {
 
 /* CSS */
 .button {
-  /* from base-green to base-blue */
-  --button-background: linear-gradient(
-    45deg,
-    var(--base-green),
-    var(--base-blue)
-  );
-  --button-hover-scale: 1.05;
-  --button-border-radius: 10px;
-
   padding: 0.6em 2em;
   border: none;
   outline: none;
@@ -271,12 +213,7 @@ tr:nth-child(odd) td {
 
 .button:before {
   content: "";
-  background: linear-gradient(
-    45deg,
-    var(--base-black),
-    var(--base-white),
-    var(--base-black)
-  );
+  background: var(--button-glow-background)
   position: absolute;
   top: -2px;
   left: -2px;
@@ -320,8 +257,6 @@ tr:nth-child(odd) td {
 }
 
 .button.floating {
-  --button-floating-translateX: -50%;
-
   position: fixed;
   z-index: 100;
 
@@ -383,67 +318,55 @@ tr:nth-child(odd) td {
 }
 
 .button.danger {
-  --button-background: linear-gradient(
-    45deg,
-    var(--alarm-color),
-    var(--base-black)
-  );
+  background: var(--button-danger-background);
 }
 
 .button.warning {
-  --button-background: linear-gradient(
-    45deg,
-    var(--warning-color),
-    var(--base-black)
-  );
+  background: var(--button-warning-background);
 }
 
 .button.success {
-  --button-background: linear-gradient(
-    45deg,
-    var(--success-color),
-    var(--base-black)
-  );
+  background: var(--button-success-background);
 }
 
 @keyframes glowingShadowAnimation {
   0% {
-    background: linear-gradient(0deg, var(--base-green), var(--base-blue));
+    background: var(--glowing-shadow-animation-background-start);
   }
 
   100% {
-    background: linear-gradient(360deg, var(--base-green), var(--base-blue));
+    background: var(--glowing-shadow-animation-background-end);
   }
 }
 
 input {
   padding: 0.5em;
   border-radius: 10px;
-  border: 1px solid var(--base-black);
+  border: 1px solid var(--input-border-color);
   outline: none;
 }
 
 code {
-  background: var(--base-black);
-  color: var(--base-white);
+  background: var(--code-background);
+  color: var(--code-color);
   padding: 0.5rem 0.75rem;
   display: block;
-  border-left: 8px solid var(--base-green);
+  border-left: 8px solid var(--code-border-left-color);
   border-bottom-right-radius: 8px;
   border-top-right-radius: 8px;
   line-height: 1.5;
 }
 
 pre {
-  background: var(--base-black);
-  color: var(--base-white);
+  background: var(--pre-background);
+  color: var(--pre-color);
   padding: 1rem;
   border-radius: 10px;
   overflow-x: auto;
 }
 
 .alert {
-  border: 5px solid var(--warning-color);
+  border: 5px solid var(--alert-border-color);
   border-style: dashed;
   border-radius: 10px;
   padding: 1rem;
