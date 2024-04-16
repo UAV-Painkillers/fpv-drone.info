@@ -22,6 +22,8 @@ import { ServiceWorkerManager } from "~/components/service-worker-manager/servic
 export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
+    // eslint-disable-next-line
+    console.log("injecting vercel analytics");
     injectVercelAnalytics();
   });
 
