@@ -14,6 +14,7 @@ import {
 import { useLocation } from "@builder.io/qwik-city";
 import type { AnalyzerProgress } from "./types";
 import { AnalyzerStepStatus, makeEmptyProgress } from "./types";
+import { track } from "@vercel/analytics";
 
 export enum AnalyzerState {
   LOADING = "loading",
@@ -391,6 +392,8 @@ export function useAnalyzeLog() {
       return;
     }
 
+    track("PID_ANALYZER__ANALYZE_FILE__START");
+
     try {
       state.value = AnalyzerState.RUNNING;
       progress.value = makeEmptyProgress();
@@ -436,7 +439,15 @@ export function useAnalyzeLog() {
         error.value = "Unable to parse any logs from the file.";
         state.value = AnalyzerState.ERROR;
       }
+
+      track("PID_ANALYZER__ANALYZE_FILE__COMPLETE", {
+        numLogs: analyzerResult.length,
+      });
     } catch (e) {
+      track("PID_ANALYZER__ANALYZE_FILE__ERROR", {
+        error: (e as Error).message,
+        stack: (e as Error).stack ?? "",
+      });
       state.value = AnalyzerState.ERROR;
       error.value = (e as Error).message;
     }
