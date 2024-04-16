@@ -1,4 +1,4 @@
-import type { NoSerialize } from "@builder.io/qwik";
+import type { NoSerialize, Signal } from "@builder.io/qwik";
 import {
   component$,
   $,
@@ -6,6 +6,7 @@ import {
   useComputed$,
   useSignal,
   noSerialize,
+  useVisibleTask$,
 } from "@builder.io/qwik";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik/types/src/server-index";
 import styles from "./blackbox-analyzer.module.css";
@@ -15,16 +16,20 @@ import classNames from "classnames";
 import { Plots } from "./plots/plots";
 import { useBlackboxAnalyzerContextProvider } from "./context/blackbox-analyzer.context";
 import { useHideHeader } from "~/hooks/use-hide-header/use-hide-header";
-import { useFileDrop } from "~/hooks/use-file-drop/use-file-drop";
 import { AnalyzerState, useAnalyzeLog } from "./hooks/use-analyze-log";
 import type { PlotLabelDefinitions } from "./plots/response.plotter";
 import { NoiseFields, PlotName } from "./plots/response.plotter";
 import { AppContext } from "~/app.ctx";
 import type { PlotNavigationProps } from "./plots/navigation/plot-navigation";
-import { RacoonLoader } from "./racoon-loader/racoon-loader";
+import {
+  RacoonError,
+  RacoonLoader,
+} from "./racoon-animations/racoon-animation";
 import { AnalyzerStepStatus } from "./hooks/types";
 import { Dialog } from "../shared/dialog/dialog";
 import { SWCachingBlocker } from "../sw-caching-blocker/sw-caching-blocker";
+// @ts-ignore
+import dragDrop from "drag-drop";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -37,6 +42,8 @@ interface Props {
 const BlackboxAnalyzerContent = component$((props: Props) => {
   useBlackboxAnalyzerContextProvider();
   const appContext = useContext(AppContext);
+  const dropzoneRef = useSignal<HTMLElement>();
+  const isDroppingFile = useSignal(false);
 
   useHideHeader();
   const {
@@ -50,6 +57,12 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     useSignal<NoSerialize<File | undefined>>(undefined);
   const showSelectAnalysisOverwriteMethodDialog = useSignal(false);
 
+  const showLoadingError: Signal<boolean> = useComputed$(() => {
+    return (
+      !appContext.isPreviewing && analyzerState.value === AnalyzerState.ERROR
+    );
+  });
+
   const onUserUploadedFile = $((file?: File) => {
     if (!hasAnalysisInMemory.value) {
       analyzeFile(file, true);
@@ -60,8 +73,40 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     showSelectAnalysisOverwriteMethodDialog.value = true;
   });
 
-  const isDroppingFile = useFileDrop({
-    onFileDrop: onUserUploadedFile,
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track, cleanup }) => {
+    track(dropzoneRef);
+
+    if (!dropzoneRef.value) {
+      return;
+    }
+
+    const onDragOver = () => {
+      isDroppingFile.value = true;
+    };
+
+    window.addEventListener("dragover", onDragOver);
+    window.addEventListener("dragleave", onDragOver);
+
+    const cleanDragDrop = dragDrop(dropzoneRef.value, {
+      onDrop: (files: File[]) => {
+        isDroppingFile.value = false;
+
+        const file = files[0];
+
+        if (!file) {
+          return;
+        }
+
+        onUserUploadedFile(file);
+      },
+    });
+
+    cleanup(() => {
+      cleanDragDrop();
+      window.removeEventListener("dragover", onDragOver);
+      window.removeEventListener("dragleave", onDragOver);
+    });
   });
 
   const activePlotsArray = useComputed$(() => {
@@ -70,7 +115,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -106,13 +151,13 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     return <RacoonLoader label="Loading analyzer..." />;
   }
 
-  if (!appContext.isPreviewing && analyzerState.value === AnalyzerState.ERROR) {
-    return <div>Error: {analyzerError.value}</div>;
+  if (showLoadingError.value) {
+    return;
   }
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR,
+      (s) => s.state === AnalyzerStepStatus.ERROR
     );
   });
 
@@ -135,92 +180,100 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   });
 
   return (
-    <div
-      class={classNames(styles.wrapper, {
-        [styles.wrapperDropover]: isDroppingFile.value,
-      })}
-    >
-      <button
-        type="button"
-        onClick$={openFilePicker}
-        class={classNames("button", styles.uploadButton, {
-          [styles.uploadButtonDropover]: isDroppingFile.value,
+    <>
+      {showLoadingError.value && <div>Error: {analyzerError.value}</div>}
+      <div
+        class={classNames(styles.wrapper, {
+          [styles.wrapperDropover]: isDroppingFile.value,
         })}
-        aria-label="Button to open a blackbox file for analysis"
+        ref={dropzoneRef}
+        style={{ display: showLoadingError.value ? "none" : undefined }}
       >
-        {analyzerState.value === AnalyzerState.RUNNING && <InlineSpinner />}
-        Click to open a Blackbox File (.bbl) or drag and drop it here
-      </button>
+        <button
+          type="button"
+          onClick$={openFilePicker}
+          class={classNames("button", styles.uploadButton, {
+            [styles.uploadButtonDropover]: isDroppingFile.value,
+          })}
+          aria-label="Button to open a blackbox file for analysis"
+        >
+          {analyzerState.value === AnalyzerState.RUNNING && <InlineSpinner />}
+          Click to open a Blackbox File (.bbl) or drag and drop it here
+        </button>
 
-      <Dialog isOpen={showSelectAnalysisOverwriteMethodDialog.value}>
+        <Dialog isOpen={showSelectAnalysisOverwriteMethodDialog.value}>
+          <div
+            style={{
+              display: "flex",
+              gap: "25px",
+              height: "calc(100vh - 4rem)",
+              justifyContent: "space-evenly",
+              maxWidth: "700px",
+              margin: "0 auto",
+              alignItems: "center",
+            }}
+          >
+            <button
+              class="button"
+              style={{ width: "100%" }}
+              onClick$={addFileToCurrentAnalysis}
+              aria-label="add to current analysis"
+            >
+              Add to current Analysis
+            </button>
+            <button
+              class="button"
+              style={{ width: "100%" }}
+              onClick$={overwriteCurrentAnalysisWithFile}
+              aria-label="replace current analysis"
+            >
+              Replace current Analysis
+            </button>
+          </div>
+        </Dialog>
+
+        <BlackboxAnalyzerStatusDialog
+          isOpen={analyzerState.value === AnalyzerState.RUNNING}
+          analyzerProgress={analyzerProgress.value}
+        />
+
+        {analyzerState.value === AnalyzerState.ERROR && (
+          <div>ERROR: {analyzerError.value}</div>
+        )}
+
+        {subLogsWithErrors.value.length > 0 && (
+          <code>
+            <RacoonError style={{ float: "right" }} />
+            <b style={{ color: "var(--alarm-color)", display: "block" }}>
+              ERRORS:
+            </b>
+            {subLogsWithErrors.value.map(({ index, error }) => (
+              <div
+                key={"sublog-error-" + index}
+              >{`> Sublog ${index}: ${error}`}</div>
+            ))}
+
+            <div style={{ clear: "both" }} />
+          </code>
+        )}
+
         <div
           style={{
-            display: "flex",
-            gap: "25px",
-            height: "calc(100vh - 4rem)",
-            justifyContent: "space-evenly",
-            maxWidth: "700px",
-            margin: "0 auto",
-            alignItems: "center",
+            display:
+              appContext.isPreviewing ||
+              analyzerState.value === AnalyzerState.DONE
+                ? undefined
+                : "none",
           }}
         >
-          <button
-            class="button"
-            style={{ width: "100%" }}
-            onClick$={addFileToCurrentAnalysis}
-            aria-label="add to current analysis"
-          >
-            Add to current Analysis
-          </button>
-          <button
-            class="button"
-            style={{ width: "100%" }}
-            onClick$={overwriteCurrentAnalysisWithFile}
-            aria-label="replace current analysis"
-          >
-            Replace current Analysis
-          </button>
+          <Plots
+            plots={activePlotsArray.value}
+            navigation={props.navigation}
+            plotLabels={props.plotLabels}
+          />
         </div>
-      </Dialog>
-
-      <BlackboxAnalyzerStatusDialog
-        isOpen={analyzerState.value === AnalyzerState.RUNNING}
-        analyzerProgress={analyzerProgress.value}
-      />
-
-      {analyzerState.value === AnalyzerState.ERROR && (
-        <div>ERROR: {analyzerError.value}</div>
-      )}
-
-      {subLogsWithErrors.value.length > 0 && (
-        <code>
-          <b style={{ color: "var(--alarm-color)", display: "block" }}>
-            ERRORS:
-          </b>
-          {subLogsWithErrors.value.map(({ index, error }) => (
-            <div
-              key={"sublog-error-" + index}
-            >{`> Sublog ${index}: ${error}`}</div>
-          ))}
-        </code>
-      )}
-
-      <div
-        style={{
-          display:
-            appContext.isPreviewing ||
-            analyzerState.value === AnalyzerState.DONE
-              ? undefined
-              : "none",
-        }}
-      >
-        <Plots
-          plots={activePlotsArray.value}
-          navigation={props.navigation}
-          plotLabels={props.plotLabels}
-        />
       </div>
-    </div>
+    </>
   );
 });
 
@@ -375,7 +428,7 @@ export const BlackboxAnalyzerRegistryDefinition: RegisteredComponent = {
           type: "object",
           required: false,
           subFields: Object.values(NoiseFields).map((noiseField) =>
-            makeSeriesLabelDefinitionInput(noiseField),
+            makeSeriesLabelDefinitionInput(noiseField)
           ),
         },
       ],

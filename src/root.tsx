@@ -18,6 +18,7 @@ export default component$(() => {
     showPageHeader: true,
     isPreviewing: false,
     serviceWorker: undefined,
+    unblockedCaches: [],
   });
   useContextProvider(AppContext, appContextData);
 
