@@ -16,6 +16,12 @@ import {
   CacheFirst,
 } from "workbox-strategies";
 
+enum CACHE_NAMES {
+  PID_ANALYZER = "pid-analyzer-dependencies",
+  BUILDER_IO = "builder.io",
+  DYNAMIC = "dynamic",
+}
+
 const STATIC_ASSETS_MANIFESTS: typeof self.__WB_MANIFEST = [];
 const PID_ANALYZER_DEPENDENCIES_MANIFESTS: typeof self.__WB_MANIFEST = [];
 const cleanManifestPaths: string[] = [];
@@ -42,6 +48,11 @@ addEventListener("install", (event) => {
     caches.keys().then(function (cacheNames) {
       return Promise.all(
         cacheNames.map(function (cacheName) {
+          // TODO: add a logic to update PID analyzer caches at some point
+          if (cacheName === CACHE_NAMES.PID_ANALYZER) {
+            return;
+          }
+
           console.log("deleting cache", cacheName);
           return caches.delete(cacheName);
         }),
@@ -59,8 +70,34 @@ function matchBuilderApi(url: URL) {
   return url.hostname.endsWith(".builder.io") || url.hostname === "builder.io";
 }
 
-function isUncached(url: URL) {
+const VERCEL_ANALYTICS_PATH = "/_vercel/insights/";
+function matchVercelAnalytics(url: URL) {
+  return url.pathname.startsWith(VERCEL_ANALYTICS_PATH);
+}
+
+function matchWellKnown(url: URL) {
+  return url.pathname.startsWith("/.well-known/");
+}
+
+const VERCEL_DOMAIN = "vercel.com";
+function matchVercelDomain(url: URL) {
+  return url.hostname === VERCEL_DOMAIN;
+}
+
+function isDynmicRouteThatShouldBeCached(url: URL) {
   if (matchBuilderApi(url)) {
+    return false;
+  }
+
+  if (matchVercelAnalytics(url)) {
+    return false;
+  }
+
+  if (matchWellKnown(url)) {
+    return false;
+  }
+
+  if (matchVercelDomain(url)) {
     return false;
   }
 
@@ -85,7 +122,7 @@ function isUncached(url: URL) {
 registerRoute(
   ({ url }) => matchBuilderApi(url),
   new NetworkFirst({
-    cacheName: "builder.io",
+    cacheName: CACHE_NAMES.BUILDER_IO,
   }),
 );
 
@@ -102,15 +139,15 @@ registerRoute(
     });
   },
   new CacheFirst({
-    cacheName: "pid-analyzer-dependencies",
+    cacheName: CACHE_NAMES.PID_ANALYZER,
   }),
 );
 
 // html content
 registerRoute(
-  (options) => isUncached(options.url),
+  (options) => isDynmicRouteThatShouldBeCached(options.url),
   new StaleWhileRevalidate({
-    cacheName: "dynamic",
+    cacheName: CACHE_NAMES.DYNAMIC,
   }),
 );
 

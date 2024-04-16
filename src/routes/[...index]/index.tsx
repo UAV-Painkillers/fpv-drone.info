@@ -1,6 +1,10 @@
 /* eslint-disable qwik/jsx-img */
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead, DocumentLink } from "@builder.io/qwik-city";
+import type {
+  DocumentHead,
+  DocumentLink,
+  RequestHandler,
+} from "@builder.io/qwik-city";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import {
   fetchOneEntry,
@@ -114,4 +118,42 @@ export const head: DocumentHead = ({ resolveValue }) => {
     links,
     meta,
   };
+};
+
+const VERCEL_ANALYTICS_PATH = "/_vercel/insights/";
+export const onRequest: RequestHandler = async ({
+  next,
+  url,
+  getWritableStream,
+}) => {
+  const isAnalyticsRequest = url.pathname.startsWith(VERCEL_ANALYTICS_PATH);
+
+  if (!isAnalyticsRequest) {
+    return next();
+  }
+
+  // forward it to the Vercel analytics endpoint
+  const response = await fetch(url);
+
+  const writableStream = getWritableStream();
+  const reader = response.body?.getReader();
+
+  if (!reader) {
+    return;
+  }
+
+  const writer = writableStream.getWriter();
+
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) {
+        break;
+      }
+      await writer.write(value);
+    }
+  } finally {
+    writer.close();
+    reader.releaseLock();
+  }
 };
