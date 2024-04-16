@@ -3,12 +3,9 @@ import type { IntrinsicElements } from "@builder.io/qwik";
 
 type Props = IntrinsicElements["div"] & {
   label?: string;
-}
+};
 
-const baseComponent = (
-  src: string,
-  props: Props
-) => {
+const baseComponent = (src: string, props: Props) => {
   const { label, ...divProps } = props;
   return (
     <div {...divProps}>
@@ -39,9 +36,9 @@ const baseComponent = (
 };
 
 export const RacoonLoader = component$((props: Props) =>
-  baseComponent("/images/racoon_processing-cropped.gif", props)
+  baseComponent("/images/racoon_processing-cropped.gif", props),
 );
 
 export const RacoonError = component$((props: Props) =>
-  baseComponent("/images/racoon_fire_error.gif", props)
+  baseComponent("/images/racoon_fire_error.gif", props),
 );

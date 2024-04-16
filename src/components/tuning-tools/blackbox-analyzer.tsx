@@ -43,7 +43,6 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   useBlackboxAnalyzerContextProvider();
   const appContext = useContext(AppContext);
   const dropzoneRef = useSignal<HTMLElement>();
-  const isDroppingFile = useSignal(false);
 
   useHideHeader();
   const {
@@ -56,6 +55,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   const temporaryFileStorage =
     useSignal<NoSerialize<File | undefined>>(undefined);
   const showSelectAnalysisOverwriteMethodDialog = useSignal(false);
+  const isDroppingOver = useSignal(false);
 
   const showLoadingError: Signal<boolean> = useComputed$(() => {
     return (
@@ -81,31 +81,30 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
       return;
     }
 
-    const onDragOver = () => {
-      isDroppingFile.value = true;
-    };
-
-    window.addEventListener("dragover", onDragOver);
-    window.addEventListener("dragleave", onDragOver);
-
     const cleanDragDrop = dragDrop(dropzoneRef.value, {
       onDrop: (files: File[]) => {
-        isDroppingFile.value = false;
-
         const file = files[0];
 
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!file) {
           return;
         }
 
         onUserUploadedFile(file);
       },
+      onDragEnter: () => {
+        isDroppingOver.value = true;
+      },
+      onDragOver: () => {
+        isDroppingOver.value = true;
+      },
+      onDragLeave: () => {
+        isDroppingOver.value = false;
+      },
     });
 
     cleanup(() => {
       cleanDragDrop();
-      window.removeEventListener("dragover", onDragOver);
-      window.removeEventListener("dragleave", onDragOver);
     });
   });
 
@@ -115,7 +114,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -157,7 +156,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR
+      (s) => s.state === AnalyzerStepStatus.ERROR,
     );
   });
 
@@ -181,10 +180,11 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 
   return (
     <>
+      {/* eslint-disable @typescript-eslint/no-unnecessary-condition */}
       {showLoadingError.value && <div>Error: {analyzerError.value}</div>}
       <div
         class={classNames(styles.wrapper, {
-          [styles.wrapperDropover]: isDroppingFile.value,
+          [styles.wrapperDropover]: isDroppingOver.value,
         })}
         ref={dropzoneRef}
         style={{ display: showLoadingError.value ? "none" : undefined }}
@@ -193,7 +193,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
           type="button"
           onClick$={openFilePicker}
           class={classNames("button", styles.uploadButton, {
-            [styles.uploadButtonDropover]: isDroppingFile.value,
+            [styles.uploadButtonDropover]: isDroppingOver.value,
           })}
           aria-label="Button to open a blackbox file for analysis"
         >
@@ -428,7 +428,7 @@ export const BlackboxAnalyzerRegistryDefinition: RegisteredComponent = {
           type: "object",
           required: false,
           subFields: Object.values(NoiseFields).map((noiseField) =>
-            makeSeriesLabelDefinitionInput(noiseField)
+            makeSeriesLabelDefinitionInput(noiseField),
           ),
         },
       ],

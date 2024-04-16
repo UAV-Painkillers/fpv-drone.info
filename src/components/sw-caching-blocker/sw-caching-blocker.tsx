@@ -19,7 +19,7 @@ export const SWCachingBlocker = component$((props: Props) => {
   const serviceWorkerDidCache = useSignal<boolean | null>(null);
 
   const show = useComputed$(() =>
-    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER)
+    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER),
   );
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -73,7 +73,12 @@ export const SWCachingBlocker = component$((props: Props) => {
           size, if you are currently on a limited data plan, please be aware of
           this.
         </p>
-        <button class="button" onClick$={() => (appContext.unblockedCaches.push(BlockableCaches.PID_ANALYZER))}>
+        <button
+          class="button"
+          onClick$={() =>
+            appContext.unblockedCaches.push(BlockableCaches.PID_ANALYZER)
+          }
+        >
           I understand, please download {downloadSizeMb}MB
         </button>
       </div>
