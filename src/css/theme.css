@@ -98,7 +98,9 @@ body {
   --checkbox-background-color-start: var(--base-white);
   --checkbox-background-color-end: var(--base-white);
 
-  --checkbox-checked-background-color-start-initial: var(--anchor-gradient-start);
+  --checkbox-checked-background-color-start-initial: var(
+    --anchor-gradient-start
+  );
   --checkbox-checked-background-color-end-initial: var(--anchor-gradient-end);
 }
 
