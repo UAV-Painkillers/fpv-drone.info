@@ -14,6 +14,7 @@ import {
 import { useLocation } from "@builder.io/qwik-city";
 import type { AnalyzerProgress } from "./types";
 import { AnalyzerStepStatus, makeEmptyProgress } from "./types";
+import { track } from "@vercel/analytics";
 
 export enum AnalyzerState {
   LOADING = "loading",
