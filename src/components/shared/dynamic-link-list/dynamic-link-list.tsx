@@ -8,6 +8,7 @@ const Item = component$((props: { link: BuilderContent }) => {
   return (
     <li
       key={`link-${link.data?.href.Default ?? link.data?.href}-${link.data?.label.Default ?? link.data?.label}`}
+      style={{ wordBreak: "keep-all", whiteSpace: "nowrap" }}
     >
       <NavLink
         href={link.data?.href.Default ?? link.data?.href}
