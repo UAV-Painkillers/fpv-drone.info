@@ -30,6 +30,7 @@ import { Dialog } from "../shared/dialog/dialog";
 import { SWCachingBlocker } from "../sw-caching-blocker/sw-caching-blocker";
 // @ts-ignore
 import dragDrop from "drag-drop";
+import { ErrorBox } from "../error-box/error-box";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -57,9 +58,15 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   const showSelectAnalysisOverwriteMethodDialog = useSignal(false);
   const isDroppingOver = useSignal(false);
 
-  const showLoadingError: Signal<boolean> = useComputed$(() => {
+  const showAnalyzerError: Signal<boolean> = useComputed$(() => {
     return (
       !appContext.isPreviewing && analyzerState.value === AnalyzerState.ERROR
+    );
+  });
+
+  const showLoader: Signal<boolean> = useComputed$(() => {
+    return (
+      !appContext.isPreviewing && analyzerState.value === AnalyzerState.LOADING
     );
   });
 
@@ -114,7 +121,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -143,20 +150,9 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     input.click();
   });
 
-  if (
-    !appContext.isPreviewing &&
-    analyzerState.value === AnalyzerState.LOADING
-  ) {
-    return <RacoonLoader label="Loading analyzer..." />;
-  }
-
-  if (showLoadingError.value) {
-    return;
-  }
-
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR,
+      (s) => s.state === AnalyzerStepStatus.ERROR
     );
   });
 
@@ -180,14 +176,14 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 
   return (
     <>
-      {/* eslint-disable @typescript-eslint/no-unnecessary-condition */}
-      {showLoadingError.value && <div>Error: {analyzerError.value}</div>}
+      {showLoader.value && <RacoonLoader label="Loading analyzer..." />}
+
       <div
         class={classNames(styles.wrapper, {
           [styles.wrapperDropover]: isDroppingOver.value,
         })}
         ref={dropzoneRef}
-        style={{ display: showLoadingError.value ? "none" : undefined }}
+        style={{ display: showLoader.value ? "none" : undefined }}
       >
         <button
           type="button"
@@ -200,6 +196,12 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
           {analyzerState.value === AnalyzerState.RUNNING && <InlineSpinner />}
           Click to open a Blackbox File (.bbl) or drag and drop it here
         </button>
+
+        {showAnalyzerError.value && (
+          <ErrorBox
+            errorLines={analyzerError.value ?? "Could not analyze log-file..."}
+          />
+        )}
 
         <Dialog isOpen={showSelectAnalysisOverwriteMethodDialog.value}>
           <div
@@ -236,10 +238,6 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
           isOpen={analyzerState.value === AnalyzerState.RUNNING}
           analyzerProgress={analyzerProgress.value}
         />
-
-        {analyzerState.value === AnalyzerState.ERROR && (
-          <div>ERROR: {analyzerError.value}</div>
-        )}
 
         {subLogsWithErrors.value.length > 0 && (
           <code>
@@ -428,7 +426,7 @@ export const BlackboxAnalyzerRegistryDefinition: RegisteredComponent = {
           type: "object",
           required: false,
           subFields: Object.values(NoiseFields).map((noiseField) =>
-            makeSeriesLabelDefinitionInput(noiseField),
+            makeSeriesLabelDefinitionInput(noiseField)
           ),
         },
       ],
