@@ -226,6 +226,7 @@ function clearCaches() {
   caches.keys().then(function (names) {
     for (const name of names) caches.delete(name);
   });
+  sendToClients("CACHES_CLEARED");
 }
 
 // clear caches on message from window process

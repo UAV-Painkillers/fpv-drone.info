@@ -9,7 +9,10 @@ export const SWClearCacheButton = component$(() => {
       if (event.data.type === "CACHES_CLEARED") {
         const registration = await sw.getRegistration();
         await registration?.unregister();
-        location.reload();
+
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
       }
     });
 
