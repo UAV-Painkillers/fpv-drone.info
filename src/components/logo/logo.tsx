@@ -1,5 +1,5 @@
 import type { QwikIntrinsicElements } from "@builder.io/qwik";
-import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import LogoImage from "./logo.webp?jsx";
 import LogoDarkImage from "./logo_dark.webp?jsx";
 import styles from "./logo.module.css";

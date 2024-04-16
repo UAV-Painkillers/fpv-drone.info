@@ -213,7 +213,7 @@ tr:nth-child(odd) td {
 
 .button:before {
   content: "";
-  background: var(--button-glow-background)
+  background: var(--button-glow-background);
   position: absolute;
   top: -2px;
   left: -2px;
