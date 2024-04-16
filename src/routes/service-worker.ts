@@ -68,6 +68,11 @@ function matchWellKnown(url: URL) {
   return url.pathname.startsWith("/.well-known/");
 }
 
+const VERCEL_DOMAIN = "vercel.com";
+function matchVercelDomain(url: URL) {
+  return url.hostname === VERCEL_DOMAIN;
+}
+
 function isDynmicRouteThatShouldBeCached(url: URL) {
   if (matchBuilderApi(url)) {
     return false;
@@ -78,6 +83,10 @@ function isDynmicRouteThatShouldBeCached(url: URL) {
   }
 
   if (matchWellKnown(url)) {
+    return false;
+  }
+
+  if (matchVercelDomain(url)) {
     return false;
   }
 
