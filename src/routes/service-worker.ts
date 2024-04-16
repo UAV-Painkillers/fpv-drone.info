@@ -64,12 +64,20 @@ function matchVercelAnalytics(url: URL) {
   return url.pathname.startsWith(VERCEL_ANALYTICS_PATH);
 }
 
+function matchWellKnown(url: URL) {
+  return url.pathname.startsWith("/.well-known/");
+}
+
 function isDynmicRouteThatShouldBeCached(url: URL) {
   if (matchBuilderApi(url)) {
     return false;
   }
 
   if (matchVercelAnalytics(url)) {
+    return false;
+  }
+
+  if (matchWellKnown(url)) {
     return false;
   }
 
