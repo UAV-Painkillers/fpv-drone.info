@@ -14,7 +14,7 @@ import {
 import { useLocation } from "@builder.io/qwik-city";
 import type { AnalyzerProgress } from "./types";
 import { AnalyzerStepStatus, makeEmptyProgress } from "./types";
-import { track } from "@vercel/analytics";
+import { track, inject } from "@vercel/analytics";
 
 export enum AnalyzerState {
   LOADING = "loading",
@@ -385,6 +385,10 @@ export function useAnalyzeLog() {
       }
     },
   );
+
+  useVisibleTask$(() => {
+    console.log("track", track, inject);
+  });
 
   const analyzeFile = $(async (file?: File, replaceCurrentAnalysis = true) => {
     if (!file) {

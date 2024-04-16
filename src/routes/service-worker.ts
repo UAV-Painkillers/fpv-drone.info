@@ -59,8 +59,17 @@ function matchBuilderApi(url: URL) {
   return url.hostname.endsWith(".builder.io") || url.hostname === "builder.io";
 }
 
-function isUncached(url: URL) {
+const VERCEL_ANALYTICS_PATH = "/_vercel/insights/";
+function matchVercelAnalytics(url: URL) {
+  return url.pathname.startsWith(VERCEL_ANALYTICS_PATH);
+}
+
+function isDynmicRouteThatShouldBeCached(url: URL) {
   if (matchBuilderApi(url)) {
+    return false;
+  }
+
+  if (matchVercelAnalytics(url)) {
     return false;
   }
 
@@ -108,7 +117,7 @@ registerRoute(
 
 // html content
 registerRoute(
-  (options) => isUncached(options.url),
+  (options) => isDynmicRouteThatShouldBeCached(options.url),
   new StaleWhileRevalidate({
     cacheName: "dynamic",
   }),
