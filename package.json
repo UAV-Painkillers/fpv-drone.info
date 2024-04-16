@@ -5,9 +5,7 @@
     "node": "^20.10.0"
   },
   "private": true,
-  "trustedDependencies": [
-    "sharp"
-  ],
+  "trustedDependencies": ["sharp"],
   "type": "module",
   "scripts": {
     "build": "qwik build && npm run build.sw:vercel",
@@ -58,7 +56,6 @@
     "@quasarwork/qwik-city-nprogress": "^0.0.3",
     "@uav.painkillers/pid-analyzer-wasm": "^3.2.2",
     "@vercel/analytics": "^1.2.2",
-    "@vercel/speed-insights": "^1.0.10",
     "classnames": "^2.5.1",
     "echarts": "^5.5.0",
     "i": "^0.3.7",
