@@ -16,6 +16,12 @@ import {
   CacheFirst,
 } from "workbox-strategies";
 
+enum CACHE_NAMES {
+  PID_ANALYZER = "pid-analyzer-dependencies",
+  BUILDER_IO = "builder.io",
+  DYNAMIC = "dynamic",
+}
+
 const STATIC_ASSETS_MANIFESTS: typeof self.__WB_MANIFEST = [];
 const PID_ANALYZER_DEPENDENCIES_MANIFESTS: typeof self.__WB_MANIFEST = [];
 const cleanManifestPaths: string[] = [];
@@ -42,6 +48,11 @@ addEventListener("install", (event) => {
     caches.keys().then(function (cacheNames) {
       return Promise.all(
         cacheNames.map(function (cacheName) {
+          // TODO: add a logic to update PID analyzer caches at some point
+          if (cacheName === CACHE_NAMES.PID_ANALYZER) {
+            return;
+          }
+
           console.log("deleting cache", cacheName);
           return caches.delete(cacheName);
         }),
@@ -111,7 +122,7 @@ function isDynmicRouteThatShouldBeCached(url: URL) {
 registerRoute(
   ({ url }) => matchBuilderApi(url),
   new NetworkFirst({
-    cacheName: "builder.io",
+    cacheName: CACHE_NAMES.BUILDER_IO,
   }),
 );
 
@@ -128,7 +139,7 @@ registerRoute(
     });
   },
   new CacheFirst({
-    cacheName: "pid-analyzer-dependencies",
+    cacheName: CACHE_NAMES.PID_ANALYZER,
   }),
 );
 
@@ -136,7 +147,7 @@ registerRoute(
 registerRoute(
   (options) => isDynmicRouteThatShouldBeCached(options.url),
   new StaleWhileRevalidate({
-    cacheName: "dynamic",
+    cacheName: CACHE_NAMES.DYNAMIC,
   }),
 );
 
