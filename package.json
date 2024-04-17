@@ -57,6 +57,7 @@
     "@fontsource/libre-barcode-128-text": "^5.0.18",
     "@ngrok/ngrok": "^1.2.0",
     "@quasarwork/qwik-city-nprogress": "^0.0.3",
+    "@qwikest/icons": "^0.0.13",
     "@uav.painkillers/pid-analyzer-wasm": "^3.2.2",
     "@vercel/analytics": "^1.2.2",
     "classnames": "^2.5.1",
