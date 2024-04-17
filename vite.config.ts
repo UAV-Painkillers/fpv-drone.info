@@ -4,6 +4,7 @@ import { qwikCity } from "@builder.io/qwik-city/vite";
 import { builderDevTools } from "@builder.io/dev-tools/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { qwikReact } from "@builder.io/qwik-react/vite";
+import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig(() => {
   return {
@@ -13,6 +14,7 @@ export default defineConfig(() => {
       qwikVite(),
       tsconfigPaths(),
       qwikReact(),
+      mkcert(),
     ],
     optimizeDeps: {
       exclude: ["@uav.painkillers/pid-analyzer-wasm"],

@@ -1,5 +1,4 @@
 import { component$, Slot, useContext, useTask$ } from "@builder.io/qwik";
-import "@fontsource/libre-barcode-128-text/400.css";
 import "@fontsource-variable/montserrat/wght.css";
 import styles from "./layout.module.css";
 import { Footer } from "~/components/footer/footer";

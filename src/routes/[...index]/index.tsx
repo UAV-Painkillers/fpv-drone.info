@@ -6,45 +6,43 @@ import type {
   RequestHandler,
 } from "@builder.io/qwik-city";
 import { routeLoader$ } from "@builder.io/qwik-city";
-import {
-  fetchOneEntry,
-  Content,
-  getBuilderSearchParams,
-} from "@builder.io/sdk-qwik";
-import { CUSTOM_COMPONENTS } from "../../components/builder-registry";
 import { PageHeadline } from "~/components/shared/page-headline/page-headline";
-
-function fetchPageOfModel(model: string, url: URL) {
-  return fetchOneEntry({
-    model,
-    apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
-    options: getBuilderSearchParams(url.searchParams),
-    userAttributes: {
-      urlPath: url.pathname,
-    },
-  });
-}
-
-export const usePage = routeLoader$(async ({ url }) => {
-  const isPreviewing = url.searchParams.has("builder.preview");
-  const page = await fetchPageOfModel("page", url);
-
-  if (!page && !isPreviewing) {
-    return null;
-  }
-
-  return page;
-});
+import type { ISbStoryData } from "@storyblok/js";
+import { storyblokApi } from "~/routes/plugin@storyblok";
+import { StoryBlokComponentArray } from "~/components/storyblok/component-array";
 
 export const useRouteURL = routeLoader$(async ({ url }) => {
   return url;
 });
 
+export const useStory = routeLoader$(async ({ url }) => {
+  if (!storyblokApi)
+    throw new Error("Not Storyblok plugin found to make the API calls");
+
+  let slug = url.pathname;
+  if (slug === "/") {
+    slug = "home";
+  }
+
+  const { data } = await storyblokApi
+    .getStory(slug, {
+      version: "published",
+      // TODO: figure out how to get the language from the request
+      language: "en",
+    })
+    .catch((e) => {
+      console.error("Error fetching story", e);
+      return { data: { story: null } };
+    });
+
+  return data.story as ISbStoryData;
+});
+
 export default component$(() => {
-  const page = usePage();
+  const story = useStory();
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!page.value) {
+  if (!story.value) {
     return (
       <>
         <PageHeadline title="404" subtitle="Page not found" />
@@ -69,24 +67,26 @@ export default component$(() => {
   return (
     <>
       <PageHeadline
-        title={page.value.data?.content?.title ?? ""}
-        subtitle={page.value.data?.content?.description}
+        title={story.value.content.title ?? ""}
+        subtitle={story.value.content.description}
       />
-      <Content
-        model="page"
-        content={page.value}
-        apiKey={import.meta.env.PUBLIC_BUILDER_API_KEY}
-        customComponents={CUSTOM_COMPONENTS}
-      />
+
+      {story.value.content.bloks && (
+        <StoryBlokComponentArray
+          key={story.value.id}
+          bloks={story.value.content.bloks}
+        />
+      )}
     </>
   );
 });
 
 export const head: DocumentHead = ({ resolveValue }) => {
-  const builderContent = resolveValue(usePage);
+  const story = resolveValue(useStory);
   const location = resolveValue(useRouteURL);
 
-  if (!builderContent) {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!story) {
     return {
       title: "404 - Page not found",
     };
@@ -97,15 +97,15 @@ export const head: DocumentHead = ({ resolveValue }) => {
   const meta = [
     {
       property: "og:image",
-      content: `${location.origin}/api/open-graph?builder-io-id=${builderContent.id}`,
+      content: `${location.origin}/api/open-graph?builder-io-id=${story.id}`,
     },
     {
       property: "og:title",
-      content: builderContent.data?.ogTitle,
+      content: story.content.ogTitle,
     },
     {
       property: "og:description",
-      content: builderContent.data?.ogDescription,
+      content: story.content.ogDescription,
     },
     {
       property: "og:url",
@@ -114,7 +114,7 @@ export const head: DocumentHead = ({ resolveValue }) => {
   ];
 
   return {
-    title: builderContent.data?.title,
+    title: story.content.title,
     links,
     meta,
   };
