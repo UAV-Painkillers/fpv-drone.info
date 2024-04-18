@@ -1,5 +1,6 @@
 import { component$, $ } from "@builder.io/qwik";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
+import { storyblokEditable } from "@storyblok/js";
 
 export const SWClearCacheButton = component$(() => {
   const clearCache = $(() => {
@@ -31,8 +32,8 @@ export const SWClearCacheButton = component$(() => {
 });
 
 export const SWClearCacheButtonRegistryDefinition: CMSRegisteredComponent = {
-  component: SWClearCacheButton,
+  component: component$((storyData) => {
+    return <SWClearCacheButton {...storyblokEditable(storyData)} />;
+  }),
   name: "SWClearCacheButton",
-  friendlyName: "Service Worker Clear Cache Button",
-  description: "Button to clear service worker cache and reload the page",
 };

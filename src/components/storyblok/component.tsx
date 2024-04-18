@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import type { FunctionComponent } from "@builder.io/qwik";
-import type { StoryblokComponentType } from "@storyblok/js";
+import { SbBlokData, storyblokEditable, type StoryblokComponentType } from "@storyblok/js";
 import { CMSComponents } from "../cms-components";
 import kebabCase from "lodash-es/kebabCase";
 
@@ -19,5 +19,5 @@ const Components: Record<TagName, ComponentConstructor> = Object.fromEntries(
 
 export const StoryBlokComponent = component$<Props>((props) => {
   const Component = Components[props.blok.component as string];
-  return <Component {...props.blok} />;
+  return <Component {...storyblokEditable(props.blok as SbBlokData)} {...props.blok} />;
 });

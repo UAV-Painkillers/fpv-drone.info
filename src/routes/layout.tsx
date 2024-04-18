@@ -61,7 +61,7 @@ export default component$(() => {
 
   return (
     <>
-      <iframe src={location.url.href} style="display: none" />
+      <iframe src={"#" || location.url.href} style="display: none" />
       <QwikCityNprogress />
       <div class={styles.appContainer}>
         {appContext.showPageHeader && (

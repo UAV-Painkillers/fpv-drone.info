@@ -2,8 +2,11 @@ import { UserConfig, defineConfig } from "vite";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { qwikReact } from "@builder.io/qwik-react/vite";
+// import { qwikReact } from "@builder.io/qwik-react/vite";
 import mkcert from "vite-plugin-mkcert";
+
+process.env.HTTPS="true";
+process.env.NODE_EXTRA_CA_CERTS="$(mkcert -CAROOT)/rootCA.pem"
 
 export default defineConfig(() => {
   return {
@@ -12,7 +15,7 @@ export default defineConfig(() => {
       qwikVite(),
       tsconfigPaths(),
       // qwikReact(),
-      // mkcert(),
+      mkcert(),
     ],
     optimizeDeps: {
       exclude: ["@uav.painkillers/pid-analyzer-wasm"],

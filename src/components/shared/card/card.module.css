@@ -17,7 +17,7 @@
 
 .withLink {
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color .6s;
 }
 
 .withLink:hover {
@@ -28,6 +28,12 @@
   border-radius: var(--card--rounding);
   width: 100%;
   height: 140px;
+  transform: scale(1);
+  transition: transform .6s;
+}
+
+.card.withLink:hover .headerImage {
+  transform: scale(1.05);
 }
 
 .title {

@@ -12,7 +12,7 @@ import { CardGrid, CardGridRow, CardGridRowVariant } from "../card/card-grid";
 import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 import { getStoryBlokApi } from "~/routes/plugin@storyblok";
 import { StoryblokContext } from "~/routes/[...index]/storyblok.ctx";
-import { ISbStoryData } from "@storyblok/js";
+import type { ISbStoryData } from "@storyblok/js";
 
 enum PageType {
   Page = "page",

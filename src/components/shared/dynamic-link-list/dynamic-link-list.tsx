@@ -3,6 +3,7 @@ import { NavLink } from "../nav-link/nav-link";
 import type { SbBlokData } from "@storyblok/js";
 import { storyblokEditable, type ISbStoryData } from "@storyblok/js";
 import { CMSItemsList } from "../cms-items-list/cms-items-list";
+import { useStoryblokURL } from "../utils/url";
 
 interface LinkItem {
   href: {
@@ -18,22 +19,15 @@ interface ItemProps {
 const Item = component$((props: ItemProps) => {
   const { link } = props;
 
-  const url = useComputed$(() => {
-    let actualUrl = link.href.url || link.href.cached_url;
-    if (!actualUrl.startsWith('/')) {
-      actualUrl = '/' + actualUrl;
-    }
-
-    return actualUrl;
-  });
+  const actualURL = useStoryblokURL(link.href);
 
   return (
     <li
-      key={`link-${url.value}-${link.label}`}
+      key={`link-${actualURL.value}-${link.label}`}
       style={{ wordBreak: "keep-all", whiteSpace: "nowrap" }}
       {...storyblokEditable(link as any)}
     >
-      <NavLink href={url.value} activeClass="active">
+      <NavLink href={actualURL.value} activeClass="active">
         {link.label}
       </NavLink>
     </li>

@@ -18,6 +18,9 @@ import { SWClearCacheButtonRegistryDefinition } from "./sw-clear-cache-button/sw
 import { SponsorsListRegistryDefinition } from "./sponsors-list/sponsors-list";
 import { BuyMeARacoonButtonRegistryDefinition } from "./buy-me-a-racoon/buy-me-a-racoon";
 import type { CMSRegisteredComponent } from "./cms-registered-component";
+import { ColumnsRegistryDefinition } from "./columns/columns";
+import { CenteredRegistryDefinition } from "./centered/centered";
+import { CSSBoxRegistryDefinition } from "./css-box/css-box";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -44,16 +47,13 @@ export const CMSComponents: CMSRegisteredComponent[] = [
   NewsRegistryDefinition,
   ProductRegistryDefinition,
   BlackboxAnalyzerRegistryDefinition,
-  BuyMeACoffeeButtonRegistryDefinition(
-    "uav.painkillers",
-    "Buy me a smokestopper",
-  ),
-  BuyMeARacoonButtonRegistryDefinition(
-    "uav.painkillers",
-    "Buy me a smokestopper",
-  ),
+  BuyMeACoffeeButtonRegistryDefinition,
+  BuyMeARacoonButtonRegistryDefinition,
   HighlightCardRegistryDefinition,
   DynamicIdleCalculatorRegistryDefinition,
   SWClearCacheButtonRegistryDefinition,
   SponsorsListRegistryDefinition,
+  ColumnsRegistryDefinition,
+  CenteredRegistryDefinition,
+  CSSBoxRegistryDefinition,
 ];

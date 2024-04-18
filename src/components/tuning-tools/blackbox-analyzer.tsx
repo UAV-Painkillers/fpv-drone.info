@@ -1,4 +1,4 @@
-import type { NoSerialize, Signal } from "@builder.io/qwik";
+import type { IntrinsicElements, NoSerialize, Signal } from "@builder.io/qwik";
 import {
   component$,
   $,
@@ -17,7 +17,7 @@ import { useBlackboxAnalyzerContextProvider } from "./context/blackbox-analyzer.
 import { useHideHeader } from "~/hooks/use-hide-header/use-hide-header";
 import { AnalyzerState, useAnalyzeLog } from "./hooks/use-analyze-log";
 import type { PlotLabelDefinitions } from "./plots/response.plotter";
-import { NoiseFields, PlotName } from "./plots/response.plotter";
+import { PlotName } from "./plots/response.plotter";
 import { AppContext } from "~/app.ctx";
 import type { PlotNavigationProps } from "./plots/navigation/plot-navigation";
 import {
@@ -31,6 +31,7 @@ import { SWCachingBlocker } from "../sw-caching-blocker/sw-caching-blocker";
 import dragDrop from "drag-drop";
 import { ErrorBox } from "../error-box/error-box";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
+import { storyblokEditable } from "@storyblok/js";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -285,151 +286,102 @@ export const BlackboxAnalyzer = component$((props: Props) => {
   );
 });
 
-enum PIDAnalyzerHeaderInformationKeys {
-  fwType,
-  rollPID,
-  pitchPID,
-  yawPID,
-  maxThrottle,
-  tpa_breakpoint,
-  tpa_percent,
-  simplified_d_gain,
-  simplified_dmax_gain,
-  simplified_dterm_filter,
-  simplified_dterm_filter_multiplier,
-  simplified_feedforward_gain,
-  simplified_gyro_filter,
-  simplified_gyro_filter_multiplier,
-  simplified_i_gain,
-  simplified_master_multiplier,
-  simplified_pi_gain,
-  simplified_pitch_d_gain,
-  simplified_pitch_pi_gain,
-}
-
-function makeSeriesLabelDefinitionInput(name: string, friendlyName?: string) {
-  return {
-    name,
-    friendlyName,
-    type: "object",
-    required: false,
-    subFields: [
-      {
-        name: "headdictField",
-        friendlyName: "Header Name",
-        type: "string",
-        required: true,
-        enum: Object.values(PIDAnalyzerHeaderInformationKeys) as string[],
-      },
-      {
-        name: "template",
-        friendlyName: "Template",
-        type: "string",
-        required: false,
-      },
-    ],
-  };
-}
-
 export const BlackboxAnalyzerRegistryDefinition: CMSRegisteredComponent = {
-  component: BlackboxAnalyzer,
-  name: "BlackboxAnalyzer",
-  friendlyName: "Blackbox Analyzer",
-  inputs: [
-    {
-      name: "activePlots",
-      friendlyName: "active Plots",
-      type: "object",
-      required: true,
-      defaultValue: {
-        "*": true,
+  component: component$((storyData: any) => {
+    const {
+      activePlots: activePlotsStoryData,
+      navigation: navigationStoryData,
+      ...plotLabelsStoryData
+    } = storyData;
+
+    const plotLabels = useComputed$(() => ({
+      responseTrace: {
+        gyro: {
+          headdictField: plotLabelsStoryData.labelTraceGyroHeaderField,
+          template: plotLabelsStoryData.labelTraceGyroTemplate,
+        },
+        setPoint: {
+          headdictField: plotLabelsStoryData.labelTraceSetpointHeaderField,
+          template: plotLabelsStoryData.labelTraceSetpointTemplate,
+        },
+        feedForward: {
+          headdictField: plotLabelsStoryData.labelTraceFeedforwardHeaderField,
+          template: plotLabelsStoryData.labelTraceFeedforwardTemplate,
+        },
       },
-      subFields: [
-        {
-          name: "*",
-          friendlyName: "All",
-          type: "boolean",
-          required: false,
+      responseThrottle: {
+        throttle: {
+          headdictField: plotLabelsStoryData.labelThrottleHeaderField,
+          template: plotLabelsStoryData.labelThrottleTemplate,
+        }
+      },
+      responseStrength: {
+        response: {
+          headdictField: plotLabelsStoryData.labelStrengthHeaderField,
+          template: plotLabelsStoryData.labelStrengthTemplate,
+        }
+      },
+      responseDelay: {
+        delay: {
+          headdictField: plotLabelsStoryData.labelDelayHeaderField,
+          template: plotLabelsStoryData.labelDelayTemplate,
+        }
+      },
+      responseStrengthPeak: {
+        peak: {
+          headdictField: plotLabelsStoryData.labelStrengthPeakHeaderField,
+          template: plotLabelsStoryData.labelStrengthPeakTemplate,
+        }
+      },
+      noiseFrequencies: {
+        noise_gyro: {
+          headdictField: plotLabelsStoryData.labelNoiseFrequenciesGyroHeaderField,
+          template: plotLabelsStoryData.labelNoiseFrequenciesGyroTemplate,
         },
-        ...Object.values(PlotName).map((plotName) => ({
-          name: plotName,
-          friendlyName: plotName,
-          type: "boolean",
-          required: false,
-        })),
-      ],
-    },
-    {
-      name: "navigation",
-      friendlyName: "Navigation",
-      type: "object",
-      required: false,
-      subFields: [
-        {
-          name: "showCombinedLogsSelection",
-          friendlyName: "Show Combined Logs Selection",
-          type: "boolean",
-          required: false,
-          defaultValue: true,
+        noise_debug: {
+          headdictField: plotLabelsStoryData.labelNoiseFrequenciesDebugHeaderField,
+          template: plotLabelsStoryData.labelNoiseFrequenciesDebugTemplate,
         },
-        {
-          name: "showActiveAxisSelection",
-          friendlyName: "Show Active Axis Selection",
-          type: "boolean",
-          required: false,
-          defaultValue: true,
+        noise_d: {
+          headdictField: plotLabelsStoryData.labelNoiseFrequenciesDTermHeaderField,
+          template: plotLabelsStoryData.labelNoiseFrequenciesDTermTemplate,
+        }
+      },
+      noise: {
+        noise_gyro: {
+          headdictField: plotLabelsStoryData.labelNoiseGyroHeaderField,
+          template: plotLabelsStoryData.labelNoiseGyroTemplate,
         },
-        {
-          name: "showMainLogSelection",
-          friendlyName: "Show Main Log Selection",
-          type: "boolean",
-          required: false,
-          defaultValue: true,
+        noise_debug: {
+          headdictField: plotLabelsStoryData.labelNoiseDebugHeaderField,
+          template: plotLabelsStoryData.labelNoiseDebugTemplate,
         },
-      ],
-    },
-    {
-      name: "plotLabels",
-      friendlyName: "Plot Labels",
-      type: "object",
-      required: false,
-      defaultValue: {},
-      subFields: [
-        {
-          name: "responseTrace",
-          friendlyName: "Response Trace",
-          type: "object",
-          required: false,
-          subFields: [
-            makeSeriesLabelDefinitionInput("gyro", "Gyro"),
-            makeSeriesLabelDefinitionInput("setPoint", "Setpoint"),
-            makeSeriesLabelDefinitionInput("feedForward", "Feedforward"),
-          ],
-        },
-        {
-          name: "responseThrottle",
-          friendlyName: "Response Throttle",
-          type: "object",
-          required: false,
-          subFields: [makeSeriesLabelDefinitionInput("throttle", "Throttle")],
-        },
-        {
-          name: "responseStrength",
-          friendlyName: "Response Strength",
-          type: "object",
-          required: false,
-          subFields: [makeSeriesLabelDefinitionInput("response", "Response")],
-        },
-        {
-          name: "responseStrength",
-          friendlyName: "Response Strength",
-          type: "object",
-          required: false,
-          subFields: Object.values(NoiseFields).map((noiseField) =>
-            makeSeriesLabelDefinitionInput(noiseField)
-          ),
-        },
-      ],
-    },
-  ],
+        noise_d: {
+          headdictField: plotLabelsStoryData.labelNoiseDTermHeaderField,
+          template: plotLabelsStoryData.labelNoiseDTermTemplate,
+        }
+      },
+    } as PlotLabelDefinitions));
+    const activePlots = useComputed$(() =>
+      Object.fromEntries(
+        activePlotsStoryData.map((plotName: string) => [plotName, true])
+      )
+    );
+    const navigation = useComputed$(() =>
+      Object.fromEntries(
+        navigationStoryData.map((navTypeName: string) => [navTypeName, true])
+      )
+    );
+
+    return (
+      <div {...storyblokEditable(storyData)}>
+        <BlackboxAnalyzer
+          activePlots={activePlots.value}
+          navigation={navigation.value}
+          plotLabels={plotLabels.value}
+        />
+      </div>
+    );
+  }),
+  name: "BlackboxAnalyzer",
 };
