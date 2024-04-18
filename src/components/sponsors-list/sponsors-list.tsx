@@ -1,14 +1,15 @@
 import { component$, $ } from "@builder.io/qwik";
-import { BuilderDataList } from "../shared/builder-data-list/builder-data-list";
-import type { BuilderContent, RegisteredComponent } from "@builder.io/sdk-qwik";
+import type { ISbStoryData } from "@storyblok/js";
+import type { CMSRegisteredComponent } from "../cms-registered-component";
+import { CMSItemsList } from "../shared/cms-items-list/cms-items-list";
 
 interface Props {
-  sponsorModelName: string;
+  sponsorsListStorySlug: string;
 }
 export const SponsorsList = component$((props: Props) => {
-  const renderSponsor = $((sponsor: BuilderContent) => (
+  const renderSponsor = $((sponsor: ISbStoryData) => (
     <a
-      href={sponsor.data?.href}
+      href={sponsor.content.href}
       target="_blank"
       rel="noreferrer"
       class="clickable"
@@ -19,8 +20,8 @@ export const SponsorsList = component$((props: Props) => {
     >
       {/* eslint-disable-next-line qwik/jsx-img */}
       <img
-        src={sponsor.data?.logo}
-        alt={sponsor.data?.name}
+        src={sponsor.content.logo}
+        alt={sponsor.content.name}
         height="100"
         width="200"
         loading="lazy"
@@ -33,7 +34,7 @@ export const SponsorsList = component$((props: Props) => {
         }}
       />
       <label class="anchor" style={{ display: "block", textAlign: "center" }}>
-        {sponsor.data?.name}
+        {sponsor.content.name}
       </label>
     </a>
   ));
@@ -47,15 +48,15 @@ export const SponsorsList = component$((props: Props) => {
         gap: "25px 0",
       }}
     >
-      <BuilderDataList
-        dataModelName={props.sponsorModelName}
-        item={renderSponsor}
+      <CMSItemsList
+        itemsListStorySlug={props.sponsorsListStorySlug}
+        renderItem={renderSponsor}
       />
     </div>
   );
 });
 
-export const SponsorsListRegistryDefinition: RegisteredComponent = {
+export const SponsorsListRegistryDefinition: CMSRegisteredComponent = {
   component: SponsorsList,
   name: "SponsorsList",
   friendlyName: "Sponsors List",

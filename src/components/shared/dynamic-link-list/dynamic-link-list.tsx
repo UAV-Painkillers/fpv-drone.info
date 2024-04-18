@@ -1,35 +1,69 @@
-import { component$, $ } from "@builder.io/qwik";
+import { component$, $, useComputed$ } from "@builder.io/qwik";
 import { NavLink } from "../nav-link/nav-link";
-import { BuilderDataList } from "../builder-data-list/builder-data-list";
-import type { BuilderContent } from "@builder.io/sdk-qwik";
+import type { SbBlokData } from "@storyblok/js";
+import { storyblokEditable, type ISbStoryData } from "@storyblok/js";
+import { CMSItemsList } from "../cms-items-list/cms-items-list";
 
-const Item = component$((props: { link: BuilderContent }) => {
+interface LinkItem {
+  href: {
+    url: string;
+    cached_url: string;
+  };
+  label: string;
+}
+
+interface ItemProps {
+  link: LinkItem;
+}
+const Item = component$((props: ItemProps) => {
   const { link } = props;
+
+  const url = useComputed$(() => {
+    let actualUrl = link.href.url || link.href.cached_url;
+    if (!actualUrl.startsWith('/')) {
+      actualUrl = '/' + actualUrl;
+    }
+
+    return actualUrl;
+  });
+
   return (
     <li
-      key={`link-${link.data?.href.Default ?? link.data?.href}-${link.data?.label.Default ?? link.data?.label}`}
+      key={`link-${url.value}-${link.label}`}
       style={{ wordBreak: "keep-all", whiteSpace: "nowrap" }}
+      {...storyblokEditable(link as any)}
     >
-      <NavLink
-        href={link.data?.href.Default ?? link.data?.href}
-        activeClass="active"
-      >
-        {link.data?.label.Default ?? link.data?.label}
+      <NavLink href={url.value} activeClass="active">
+        {link.label}
       </NavLink>
     </li>
   );
 });
 
 interface Props {
-  linkModel: string;
+  navigationStorySlug: string;
 }
 export const DynamicLinkList = component$((props: Props) => {
-  const renderItem = $((item: BuilderContent) => {
+  const renderItem = $((item: LinkItem) => {
     return <Item link={item} />;
   });
+
+  const render = $((itemsList: ISbStoryData) => {
+    return (
+      <ul {...storyblokEditable(itemsList as unknown as SbBlokData)}>
+        {itemsList.content.items.map((item: LinkItem) => (
+          <>{renderItem(item)}</>
+        ))}
+      </ul>
+    );
+  });
+
   return (
     <ul>
-      <BuilderDataList dataModelName={props.linkModel} item={renderItem} />
+      <CMSItemsList
+        itemsListStorySlug={props.navigationStorySlug}
+        render={render}
+      />
     </ul>
   );
 });

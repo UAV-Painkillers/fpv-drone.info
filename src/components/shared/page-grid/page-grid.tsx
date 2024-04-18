@@ -1,15 +1,18 @@
 import {
   Resource,
   component$,
+  useContext,
   useResource$,
   useSignal,
 } from "@builder.io/qwik";
 import type { CardProps } from "../card/card";
 import { Card, CardVariant } from "../card/card";
-import type { BuilderContent, RegisteredComponent } from "@builder.io/sdk-qwik";
-import { fetchEntries } from "@builder.io/sdk-qwik";
 import { Link } from "@builder.io/qwik-city";
 import { CardGrid, CardGridRow, CardGridRowVariant } from "../card/card-grid";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
+import { getStoryBlokApi } from "~/routes/plugin@storyblok";
+import { StoryblokContext } from "~/routes/[...index]/storyblok.ctx";
+import { ISbStoryData } from "@storyblok/js";
 
 enum PageType {
   Page = "page",
@@ -36,35 +39,42 @@ const LoadingState = component$(() => {
 });
 
 export const PageGrid = component$((props: PageGridProps) => {
+  const storyblokContext = useContext(StoryblokContext);
   const showTitle = useSignal(!!props.title);
   const hideTitleIfEmpty = props.hideTitleIfEmpty ?? false;
 
-  const matches = useResource$(() =>
-    fetchEntries({
-      model: "page",
-      apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
-      query: {
-        data: {
-          type: props.pageType,
+  const matches = useResource$(async () => {
+    const { data } = await getStoryBlokApi()
+      .getStories({
+        version: storyblokContext.versionToLoad,
+        language: storyblokContext.language,
+        content_type: "page",
+        filter_query: {
+          type: { in: props.pageType },
         },
-      },
-    }).then((pages) => {
-      if (pages?.length === 0 && hideTitleIfEmpty) {
-        showTitle.value = false;
-      }
-
-      const rows: Array<BuilderContent[]> = [];
-
-      pages?.forEach((page, index) => {
-        if (index % 3 === 0) {
-          rows.push([]);
-        }
-        rows[rows.length - 1].push(page);
+      })
+      .catch((e) => {
+        console.error("Error fetching stories", e);
+        throw e;
       });
 
-      return rows;
-    }),
-  );
+    const pages = data.stories as ISbStoryData[];
+
+    if (pages.length === 0 && hideTitleIfEmpty) {
+      showTitle.value = false;
+    }
+
+    const rows: Array<ISbStoryData[]> = [];
+
+    pages.forEach((page, index) => {
+      if (index % 3 === 0) {
+        rows.push([]);
+      }
+      rows[rows.length - 1].push(page);
+    });
+
+    return rows;
+  });
 
   const TitleSlot =
     showTitle.value &&
@@ -87,13 +97,13 @@ export const PageGrid = component$((props: PageGridProps) => {
             row.map(
               (page) =>
                 ({
-                  title: page.data?.title ?? "",
-                  headerImageSrc: page.data?.previewImage,
-                  description: page.data?.description,
-                  href: page.data?.url,
-                  headerImageObjectFit: page.data?.previewImageObjectFit,
-                }) as CardProps,
-            ),
+                  title: page.content.title ?? "",
+                  headerImageSrc: page.content.previewImage,
+                  description: page.content.description,
+                  href: page.content.url,
+                  headerImageObjectFit: page.content.previewImageObjectFit,
+                }) as CardProps
+            )
           )}
         >
           <div q:slot="title">{TitleSlot}</div>
@@ -103,7 +113,7 @@ export const PageGrid = component$((props: PageGridProps) => {
   );
 });
 
-export const PageGridRegistryDefinition: RegisteredComponent = {
+export const PageGridRegistryDefinition: CMSRegisteredComponent = {
   component: PageGrid,
   name: "PageGrid",
   inputs: [

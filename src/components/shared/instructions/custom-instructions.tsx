@@ -3,7 +3,7 @@ import {
   Prerequesites,
   type PrerequesitesProps,
 } from "./prerequesites/prerequesites";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 interface Props {
   prerequesites?: PrerequesitesProps;
@@ -22,7 +22,7 @@ export const CustomInstructions = component$((props: Props) => {
   );
 });
 
-export const CustomInstructionsRegistryDefinition: RegisteredComponent = {
+export const CustomInstructionsRegistryDefinition: CMSRegisteredComponent = {
   component: CustomInstructions,
   name: "CustomizableInstructions",
   friendlyName: "Customizable Instructions",

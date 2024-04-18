@@ -76,7 +76,7 @@ export const SWCachingBlocker = component$((props: Props) => {
         <button
           class="button"
           onClick$={() =>
-            appContext.unblockedCaches.push(BlockableCaches.PID_ANALYZER)
+            appContext.unblockedCaches = [...(appContext.unblockedCaches ?? []), BlockableCaches.PID_ANALYZER]
           }
         >
           I understand, please download {downloadSizeMb}MB

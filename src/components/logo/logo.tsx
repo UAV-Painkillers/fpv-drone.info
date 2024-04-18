@@ -3,7 +3,7 @@ import { component$ } from "@builder.io/qwik";
 import LogoImage from "./logo.webp?jsx";
 import styles from "./logo.module.css";
 import classNames from "classnames";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import type { CMSRegisteredComponent } from "../cms-registered-component";
 
 export const Logo = component$<QwikIntrinsicElements["img"]>((props) => {
   return (
@@ -17,7 +17,7 @@ export const Logo = component$<QwikIntrinsicElements["img"]>((props) => {
   );
 });
 
-export const LogoRegistryInformation: RegisteredComponent = {
+export const LogoRegistryInformation: CMSRegisteredComponent = {
   component: Logo,
   name: "Logo",
   inputs: [],

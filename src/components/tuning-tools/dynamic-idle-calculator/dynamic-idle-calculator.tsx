@@ -1,5 +1,5 @@
 import { component$, useSignal, $ } from "@builder.io/qwik";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 export const DynamicIdleCalculator = component$(() => {
   const dynamicIdle = useSignal(0);
@@ -37,7 +37,7 @@ export const DynamicIdleCalculator = component$(() => {
   );
 });
 
-export const DynamicIdleCalculatorRegistryDefinition: RegisteredComponent = {
+export const DynamicIdleCalculatorRegistryDefinition: CMSRegisteredComponent = {
   component: DynamicIdleCalculator,
   name: "DynamicIdleCalculator",
   friendlyName: "Dynamic Idle Calculator",

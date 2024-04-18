@@ -4,8 +4,8 @@ import { Slot, component$ } from "@builder.io/qwik";
 import styles from "./card.module.css";
 import { Link } from "@builder.io/qwik-city";
 import classNames from "classnames";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { srcToSrcSet } from "../../../utils/srcToSrcSet";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 export enum CardVariant {
   small = "small",
@@ -91,7 +91,7 @@ export const Card = component$((props: CardProps) => {
   );
 });
 
-export const CardRegistryDefinition: RegisteredComponent = {
+export const CardRegistryDefinition: CMSRegisteredComponent = {
   component: Card,
   name: "Card",
   inputs: [

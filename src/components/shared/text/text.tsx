@@ -1,7 +1,7 @@
 import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$ } from "@builder.io/qwik";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { formatHtmlText } from "../../../utils/formatHtmlText";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 export interface TextProps {
   text: string;
@@ -15,7 +15,7 @@ export const Text = component$<ComponentProps>((props) => {
   return <div {...props} dangerouslySetInnerHTML={html} />;
 });
 
-export const TextRegistryDefinition: RegisteredComponent = {
+export const TextRegistryDefinition: CMSRegisteredComponent = {
   component: Text,
   name: "Text",
   inputs: [

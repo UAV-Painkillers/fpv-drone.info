@@ -3,8 +3,8 @@ import { TLDR, TLDRRegistryDefinition, type TLDRProps } from "../tldr/tldr";
 import type { TextProps } from "../text/text";
 import { Link } from "@builder.io/qwik-city";
 import { Text, TextRegistryDefinition } from "../text/text";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import styles from "./news.module.css";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 interface NewsProps {
   tldr: TLDRProps;
@@ -33,7 +33,7 @@ export const News = component$<NewsProps>((props) => {
   );
 });
 
-export const NewsRegistryDefinition: RegisteredComponent = {
+export const NewsRegistryDefinition: CMSRegisteredComponent = {
   component: News,
   name: "News",
   inputs: [

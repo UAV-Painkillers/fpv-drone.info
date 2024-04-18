@@ -1,45 +1,80 @@
 /* eslint-disable qwik/jsx-img */
-import { component$ } from "@builder.io/qwik";
+import {
+  $,
+  component$,
+  useOnWindow,
+  useSignal,
+  useTask$,
+} from "@builder.io/qwik";
 import type {
   DocumentHead,
+  DocumentHeadValue,
   DocumentLink,
   RequestHandler,
 } from "@builder.io/qwik-city";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import { PageHeadline } from "~/components/shared/page-headline/page-headline";
-import type { ISbStoryData } from "@storyblok/js";
-import { storyblokApi } from "~/routes/plugin@storyblok";
+import { loadStoryblokBridge, type ISbStoryData } from "@storyblok/js";
+import { getStoryBlokApi } from "~/routes/plugin@storyblok";
 import { StoryBlokComponentArray } from "~/components/storyblok/component-array";
+import { useStoryBlokPreviewInformation } from "../layout";
 
 export const useRouteURL = routeLoader$(async ({ url }) => {
   return url;
 });
 
-export const useStory = routeLoader$(async ({ url }) => {
-  if (!storyblokApi)
-    throw new Error("Not Storyblok plugin found to make the API calls");
+export const useStory = routeLoader$(async ({ url, resolveValue }) => {
+  const { versionToLoad, language } = await resolveValue(
+    useStoryBlokPreviewInformation
+  );
 
   let slug = url.pathname;
   if (slug === "/") {
     slug = "home";
   }
 
-  const { data } = await storyblokApi
+  if (slug.endsWith("/")) {
+    slug = slug.slice(0, -1);
+  }
+
+  const { data } = await getStoryBlokApi()
     .getStory(slug, {
-      version: "published",
-      // TODO: figure out how to get the language from the request
-      language: "en",
+      version: versionToLoad,
+      language,
+      resolve_relations: ["*"],
     })
     .catch((e) => {
       console.error("Error fetching story", e);
       return { data: { story: null } };
     });
 
-  return data.story as ISbStoryData;
+  return data.story as ISbStoryData | null;
 });
 
 export default component$(() => {
-  const story = useStory();
+  const loadedStory = useStory();
+  const story = useSignal(loadedStory.value);
+
+  useTask$(({ track }) => {
+    track(loadedStory);
+
+    story.value = loadedStory.value;
+  });
+
+  useOnWindow(
+    "load",
+    $(async () => {
+      await loadStoryblokBridge();
+      const { StoryblokBridge, location } = window;
+      const storyblokInstance = new StoryblokBridge();
+      storyblokInstance.on(["published", "change"], () => {
+        location.reload();
+      });
+      storyblokInstance.on("input", (event) => {
+        story.value = event?.story as ISbStoryData;
+      });
+    })
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!story.value) {
@@ -68,7 +103,7 @@ export default component$(() => {
     <>
       <PageHeadline
         title={story.value.content.title ?? ""}
-        subtitle={story.value.content.description}
+        subtitle={story.value.content.subtitle}
       />
 
       {story.value.content.bloks && (
@@ -111,13 +146,17 @@ export const head: DocumentHead = ({ resolveValue }) => {
       property: "og:url",
       content: location.href,
     },
+    {
+      property: "description",
+      content: story.content.description,
+    },
   ];
 
   return {
     title: story.content.title,
     links,
     meta,
-  };
+  } as DocumentHeadValue;
 };
 
 const VERCEL_ANALYTICS_PATH = "/_vercel/insights/";

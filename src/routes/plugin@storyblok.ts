@@ -1,6 +1,6 @@
 import { storyblokInit, apiPlugin } from "@storyblok/js";
 
-export const { storyblokApi } = storyblokInit({
+const { storyblokApi } = storyblokInit({
   accessToken: import.meta.env.PUBLIC_STORYBLOK_TOKEN,
   use: [apiPlugin],
   bridge: true,
@@ -8,3 +8,11 @@ export const { storyblokApi } = storyblokInit({
     region: "eu",
   },
 });
+
+export function getStoryBlokApi() {
+  if (!storyblokApi) {
+    throw new Error("Not Storyblok plugin found to make the API calls");
+  }
+
+  return storyblokApi;
+}

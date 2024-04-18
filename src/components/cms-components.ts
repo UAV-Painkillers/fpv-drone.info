@@ -1,4 +1,3 @@
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { ProductRegistryDefinition } from "./product/product";
 import { LogoRegistryInformation } from "./logo/logo";
 import { CardRegistryDefinition } from "./shared/card/card";
@@ -18,6 +17,7 @@ import { DynamicIdleCalculatorRegistryDefinition } from "./tuning-tools/dynamic-
 import { SWClearCacheButtonRegistryDefinition } from "./sw-clear-cache-button/sw-clear-cache-button";
 import { SponsorsListRegistryDefinition } from "./sponsors-list/sponsors-list";
 import { BuyMeARacoonButtonRegistryDefinition } from "./buy-me-a-racoon/buy-me-a-racoon";
+import type { CMSRegisteredComponent } from "./cms-registered-component";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -30,7 +30,7 @@ import { BuyMeARacoonButtonRegistryDefinition } from "./buy-me-a-racoon/buy-me-a
  * https://www.builder.io/c/docs/guides/components-only-mode
  */
 
-export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
+export const CMSComponents: CMSRegisteredComponent[] = [
   PageGridRegistryDefinition,
   CardRegistryDefinition,
   InstructionsRegistryDefinition,

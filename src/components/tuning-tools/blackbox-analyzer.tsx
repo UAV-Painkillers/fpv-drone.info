@@ -8,7 +8,6 @@ import {
   noSerialize,
   useVisibleTask$,
 } from "@builder.io/qwik";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik/types/src/server-index";
 import styles from "./blackbox-analyzer.module.css";
 import { BlackboxAnalyzerStatusDialog } from "./status-dialog/status-dialog";
 import { InlineSpinner } from "../inline-spinner/inline-spinner";
@@ -31,6 +30,7 @@ import { SWCachingBlocker } from "../sw-caching-blocker/sw-caching-blocker";
 // @ts-ignore
 import dragDrop from "drag-drop";
 import { ErrorBox } from "../error-box/error-box";
+import type { CMSRegisteredComponent } from "../cms-registered-component";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -331,7 +331,7 @@ function makeSeriesLabelDefinitionInput(name: string, friendlyName?: string) {
   };
 }
 
-export const BlackboxAnalyzerRegistryDefinition: RegisteredComponent = {
+export const BlackboxAnalyzerRegistryDefinition: CMSRegisteredComponent = {
   component: BlackboxAnalyzer,
   name: "BlackboxAnalyzer",
   friendlyName: "Blackbox Analyzer",

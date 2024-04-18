@@ -8,7 +8,7 @@ import { NavLink } from "../shared/nav-link/nav-link";
 export const Footer = component$<IntrinsicElements["footer"]>((props) => {
   return (
     <footer {...props} class={classNames(styles.container, props.class)}>
-      <DynamicLinkList linkModel="footer-link" />
+      <DynamicLinkList navigationStorySlug="navigations/navigation-footer" />
       <p>
         fpv-drone.info is a{" "}
         <NavLink href="https://uav-painkillers.de" target="_blank">

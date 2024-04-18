@@ -1,6 +1,6 @@
 import { type RequestHandler } from "@builder.io/qwik-city";
-import { fetchOneEntry } from "@builder.io/sdk-qwik";
 import { generateOgImage } from "./generate-og-image";
+import { getStoryBlokApi } from "~/routes/plugin@storyblok";
 
 export const onGet: RequestHandler = async (requestEvent) => {
   requestEvent.headers.set("Content-Type", "image/jpeg");
@@ -21,17 +21,16 @@ export const onGet: RequestHandler = async (requestEvent) => {
   const builderIoID = requestEvent.url.searchParams.get("builder-io-id");
 
   if (builderIoID) {
-    const page = await fetchOneEntry({
-      model: "page",
-      apiKey: import.meta.env.PUBLIC_BUILDER_API_KEY,
-      query: {
-        id: builderIoID,
-      },
-      fields: "data.ogTitle,data.ogDescription",
+    const {data} = await getStoryBlokApi().getStory(builderIoID, {
+      version: "published",
+      // TODO: determine language to use
+      language: "en",
     });
 
-    title = page?.data?.ogTitle || title;
-    subTitle = page?.data?.ogDescription || subTitle;
+    const page = data.story;
+
+    title = page.content.ogTitle || title;
+    subTitle = page.content.ogDescription || subTitle;
   }
 
   const endpoint = requestEvent.env.get("OG_IMAGE_GENERATOR_ENDPOINT");

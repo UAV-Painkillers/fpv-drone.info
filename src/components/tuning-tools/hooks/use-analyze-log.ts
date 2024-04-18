@@ -43,7 +43,7 @@ export function useAnalyzeLog() {
       try {
         state.value = AnalyzerState.LOADING;
         analyzer.value = noSerialize(
-          new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`)
+          new PIDAnalyzer('/pid-analyer-dependencies')
         );
         await analyzer.value!.init();
         state.value = AnalyzerState.IDLE;

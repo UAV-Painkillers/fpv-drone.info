@@ -1,8 +1,8 @@
 import { component$ } from "@builder.io/qwik";
 import { InstructionsStep, type StepProps } from "./step/step";
 import type { PrerequesitesProps } from "./prerequesites/prerequesites";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { CustomInstructions } from "./custom-instructions";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 interface Props {
   prerequesites?: PrerequesitesProps;
@@ -21,7 +21,7 @@ export const Instructions = component$<Props>((props) => {
   );
 });
 
-export const InstructionsRegistryDefinition: RegisteredComponent = {
+export const InstructionsRegistryDefinition: CMSRegisteredComponent = {
   component: Instructions,
   name: "Instructions",
   inputs: [

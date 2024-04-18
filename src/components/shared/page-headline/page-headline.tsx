@@ -1,30 +1,30 @@
 import { component$ } from "@builder.io/qwik";
 import styles from "./page-headline.module.css";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { Link } from "@builder.io/qwik-city";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 interface Props {
   title: string;
   subtitle?: string;
-  backUrl?: {
-    href?: string;
-    label?: string;
+  backButtonHref?: {
+    url: string;
   };
+  backButtonLabel?: string;
 }
 
 export const PageHeadline = component$((props: Props) => {
   return (
     <>
-      {props.backUrl && (
+      {(props.backButtonLabel || props.backButtonHref?.url) && (
         <div style={{ marginTop: "-3rem", marginBottom: "3rem" }}>
           <Link
-            href={props.backUrl.href}
+            href={props.backButtonHref?.url}
             class="anchor"
             style={{ display: "inline-block" }}
           >
             &#10094;&nbsp;
-            {!props.backUrl.href && "NO HREF SPECIFIED FOR BACK URL"}
-            {props.backUrl.label || "NO LABEL SPECIFIED FOR BACK URL"}
+            {!props.backButtonHref && "NO HREF SPECIFIED FOR BACK URL"}
+            {props.backButtonLabel || "NO LABEL SPECIFIED FOR BACK URL"}
           </Link>
         </div>
       )}
@@ -36,7 +36,7 @@ export const PageHeadline = component$((props: Props) => {
   );
 });
 
-export const PageHeadlineRegistryDefinition: RegisteredComponent = {
+export const PageHeadlineRegistryDefinition: CMSRegisteredComponent = {
   component: PageHeadline,
   name: "PageHeadline",
   inputs: [

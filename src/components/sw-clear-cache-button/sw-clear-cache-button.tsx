@@ -1,5 +1,5 @@
 import { component$, $ } from "@builder.io/qwik";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import type { CMSRegisteredComponent } from "../cms-registered-component";
 
 export const SWClearCacheButton = component$(() => {
   const clearCache = $(() => {
@@ -30,7 +30,7 @@ export const SWClearCacheButton = component$(() => {
   );
 });
 
-export const SWClearCacheButtonRegistryDefinition: RegisteredComponent = {
+export const SWClearCacheButtonRegistryDefinition: CMSRegisteredComponent = {
   component: SWClearCacheButton,
   name: "SWClearCacheButton",
   friendlyName: "Service Worker Clear Cache Button",

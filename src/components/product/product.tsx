@@ -1,12 +1,12 @@
 import { Link } from "@builder.io/qwik-city";
 import { component$ } from "@builder.io/qwik";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import styles from "./product.module.css";
 import { formatHtmlText } from "~/utils/formatHtmlText";
 import { ExpandableImage } from "../shared/expandable-image/expandable-image";
 import { PageHeadline } from "../shared/page-headline/page-headline";
 import type { TableData, TableColumns } from "../shared/table/table";
 import { Table } from "../shared/table/table";
+import type { CMSRegisteredComponent } from "../cms-registered-component";
 
 enum ProductCategory {
   FlightController = "Flight Controller",
@@ -165,11 +165,11 @@ export const Product = component$((props: ProductProps) => {
   ): string {
     const mainInputs = ProductRegistryDefinition.inputs!.find(
       (input) => input.name === "technicalSpecs",
-    )!.subFields!.find((subField) => subField.name === specType)!.subFields!;
+    )!.subFields!.find((subField: any) => subField.name === specType)!.subFields!;
 
     const keyParts = key.split(".");
     const firstKeyPart = keyParts.shift()!;
-    let parentInput = mainInputs.find((input) => input.name === firstKeyPart);
+    let parentInput = mainInputs.find((input: any) => input.name === firstKeyPart);
     if (!parentInput) {
       return key;
     }
@@ -177,7 +177,7 @@ export const Product = component$((props: ProductProps) => {
     while (keyParts.length > 0) {
       const nextKeyPart = keyParts.shift()!;
       parentInput = parentInput.subFields!.find(
-        (input) => input.name === nextKeyPart,
+        (input: any) => input.name === nextKeyPart,
       );
       if (!parentInput) {
         return key;
@@ -451,7 +451,7 @@ const mountingPatternInput = {
   ],
 };
 
-export const ProductRegistryDefinition: RegisteredComponent = {
+export const ProductRegistryDefinition: CMSRegisteredComponent & {inputs: Array<any>} = {
   component: Product,
   name: "Product",
   inputs: [
