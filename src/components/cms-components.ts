@@ -21,6 +21,7 @@ import type { CMSRegisteredComponent } from "./cms-registered-component";
 import { ColumnsRegistryDefinition } from "./columns/columns";
 import { CenteredRegistryDefinition } from "./centered/centered";
 import { CSSBoxRegistryDefinition } from "./css-box/css-box";
+import { CMSSnippetRegistryDefinition } from "./cms-snippet/cms-snippet";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -56,4 +57,5 @@ export const CMSComponents: CMSRegisteredComponent[] = [
   ColumnsRegistryDefinition,
   CenteredRegistryDefinition,
   CSSBoxRegistryDefinition,
+  CMSSnippetRegistryDefinition,
 ];

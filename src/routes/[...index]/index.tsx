@@ -41,7 +41,7 @@ export const useStory = routeLoader$(async ({ url, resolveValue }) => {
     .getStory(slug, {
       version: versionToLoad,
       language,
-      resolve_relations: ["*"],
+      resolve_relations: ["*", "cms-snippet.reference"],
     })
     .catch((e) => {
       console.error("Error fetching story", e);
