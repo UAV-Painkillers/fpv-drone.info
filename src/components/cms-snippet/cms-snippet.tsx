@@ -1,7 +1,8 @@
 import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$, useComputed$ } from "@builder.io/qwik";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
-import { SbBlokData, storyblokEditable } from "@storyblok/js";
+import type { SbBlokData} from "@storyblok/js";
+import { storyblokEditable } from "@storyblok/js";
 import { StoryBlokComponentArray } from "../storyblok/component-array";
 
 interface Props {
@@ -11,7 +12,11 @@ export const CMSSnippet = component$(
   (props: Props & IntrinsicElements["div"]) => {
     const { reference, ...divProps } = props;
 
-    const bloks = useComputed$(() => reference.map((r) => r.content as {items: SbBlokData[]}));
+    const bloks = useComputed$(() =>
+      reference
+        .map((r) => r.content as { items: SbBlokData[] })
+        .filter((b) => !!b)
+    );
 
     return (
       <div {...divProps}>

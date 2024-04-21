@@ -1,4 +1,4 @@
-import { component$, $, useComputed$ } from "@builder.io/qwik";
+import { component$, $ } from "@builder.io/qwik";
 import { NavLink } from "../nav-link/nav-link";
 import type { SbBlokData } from "@storyblok/js";
 import { storyblokEditable, type ISbStoryData } from "@storyblok/js";

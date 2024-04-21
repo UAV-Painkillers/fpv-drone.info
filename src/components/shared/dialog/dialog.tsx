@@ -2,6 +2,7 @@ import type { QRL } from "@builder.io/qwik";
 import { Slot, component$, useSignal, $ } from "@builder.io/qwik";
 import classNames from "classnames";
 import styles from "./dialog.module.css";
+import { useTranslation } from "~/translations.ctx";
 
 interface Props {
   onClose?: QRL<() => any>;
@@ -16,6 +17,8 @@ export const Dialog = component$<Props>((props) => {
   } else {
     dialogRef.value?.close();
   }
+
+  const closeLabel = useTranslation("dialog.close") as string;
 
   return (
     <dialog
@@ -52,7 +55,7 @@ export const Dialog = component$<Props>((props) => {
             onClick$={props.onClose}
             class={classNames("button", "warning", styles.closeButton)}
           >
-            Close
+            {closeLabel}
           </button>
         )}
       </div>

@@ -265,6 +265,7 @@ tr:nth-child(odd) td {
   -webkit-user-select: none;
   touch-action: manipulation;
   transition: transform 0.3s ease;
+  display: inline-block;
 
   cursor: pointer;
 }

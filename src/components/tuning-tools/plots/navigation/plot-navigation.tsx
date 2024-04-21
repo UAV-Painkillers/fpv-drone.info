@@ -2,6 +2,7 @@ import { component$, $, useSignal, useContext } from "@builder.io/qwik";
 import { Dialog } from "~/components/shared/dialog/dialog";
 import { BlackboxAnalyzerContext } from "../../context/blackbox-analyzer.context";
 import styles from "./plot-navigation.module.css";
+import { TranslationsContext, useTranslation } from "~/translations.ctx";
 
 export interface PlotNavigationProps {
   showCombinedLogsSelection?: boolean;
@@ -10,6 +11,8 @@ export interface PlotNavigationProps {
 }
 export const PlotNavigation = component$((props: PlotNavigationProps) => {
   const analyzerContext = useContext(BlackboxAnalyzerContext);
+  const translationContext = useContext(TranslationsContext);
+  console.log(JSON.stringify(translationContext.translations, null, 4));
 
   const showLogSelection = useSignal(false);
 
@@ -23,7 +26,7 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
     let resultingSelectedLogIndexes: number[];
     if (wasSelected) {
       resultingSelectedLogIndexes = analyzerContext.selectedLogIndexes.filter(
-        (i) => i !== index,
+        (i) => i !== index
       );
     } else {
       resultingSelectedLogIndexes = [
@@ -42,6 +45,31 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
   ) {
     return null;
   }
+
+  const combinedLogSelectionLabel = useTranslation(
+    "blackboxAnalyzer.plotNavigation.combinedLogsSelection.label",
+    {
+      count: analyzerContext.selectedLogIndexes.length,
+      total: analyzerContext.results?.length,
+    }
+  ) as string;
+  const combinedLogSelectionAriaLabel = useTranslation(
+    "blackboxAnalyzer.plotNavigation.combinedLogsSelection.ariaLabel"
+  ) as string;
+
+  const activeFlightLogLabel = useTranslation(
+    "blackboxAnalyzer.plotNavigation.activeFlightLog.label"
+  ) as string;
+
+  const axisSelectionRollLabel = useTranslation(
+    "blackboxAnalyzer.plotNavigation.axisSelection.roll.label"
+  ) as string;
+  const axisSelectionPitchLabel = useTranslation(
+    "blackboxAnalyzer.plotNavigation.axisSelection.pitch.label"
+  ) as string;
+  const axisSelectionYawLabel = useTranslation(
+    "blackboxAnalyzer.plotNavigation.axisSelection.yaw.label"
+  ) as string;
 
   return (
     <>
@@ -66,10 +94,9 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
           <button
             class="button"
             onClick$={() => (showLogSelection.value = !showLogSelection.value)}
-            aria-label="combined logs selection"
+            aria-label={combinedLogSelectionAriaLabel}
           >
-            Combined Logs ({analyzerContext.selectedLogIndexes.length} /{" "}
-            {analyzerContext.results?.length})
+            {combinedLogSelectionLabel}
           </button>
         )}
 
@@ -86,7 +113,9 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
                 key={i}
                 selected={analyzerContext.activeMainLogIndex === i}
                 value={i}
-              >{`Active Flightlog #${i + 1}`}</option>
+              >
+                {activeFlightLogLabel.replace("{index}", (i + 1).toString())}
+              </option>
             ))}
           </select>
         )}
@@ -106,19 +135,19 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
               value="roll"
               selected={analyzerContext.analyzerActiveAxis === "roll"}
             >
-              Axis: Roll
+              {axisSelectionRollLabel}
             </option>
             <option
               value="pitch"
               selected={analyzerContext.analyzerActiveAxis === "pitch"}
             >
-              Axis: Pitch
+              {axisSelectionPitchLabel}
             </option>
             <option
               value="yaw"
               selected={analyzerContext.analyzerActiveAxis === "yaw"}
             >
-              Axis: Yaw
+              {axisSelectionYawLabel}
             </option>
           </select>
         )}

@@ -32,6 +32,11 @@ import dragDrop from "drag-drop";
 import { ErrorBox } from "../error-box/error-box";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { storyblokEditable } from "@storyblok/js";
+import {
+  TranslationsContext,
+  useTranslation,
+  useTranslationFunction,
+} from "~/translations.ctx";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -47,6 +52,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   const dropzoneRef = useSignal<HTMLElement>();
 
   useHideHeader();
+
   const {
     state: analyzerState,
     analyzeFile,
@@ -54,6 +60,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     error: analyzerError,
     hasAnalysisInMemory,
   } = useAnalyzeLog();
+
   const temporaryFileStorage =
     useSignal<NoSerialize<File | undefined>>(undefined);
   const showSelectAnalysisOverwriteMethodDialog = useSignal(false);
@@ -175,9 +182,47 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     analyzeFile(temporaryFileStorage.value, true);
   });
 
+  const loadingMessage = useTranslation(
+    "blackboxAnalyzer.loadingIndicator.label"
+  ) as string;
+
+  const logAnalyzationError = useTranslation(
+    "blackboxAnalyzer.error.logAnalyzation"
+  ) as string;
+
+  const openFileButtonLabel = useTranslation(
+    "blackboxAnalyzer.openFileButton.label"
+  ) as string;
+
+  const openFileButtonAriaLabel = useTranslation(
+    "blackboxAnalyzer.openFileButton.ariaLabel"
+  ) as string;
+
+  const addFileToCurrentAnalysisButtonLabel = useTranslation(
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.label"
+  ) as string;
+
+  const addFileToCurrentAnalysisButtonAriaLabel = useTranslation(
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.ariaLabel"
+  ) as string;
+
+  const replaceCurrentAnalysisButtonLabel = useTranslation(
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.label"
+  ) as string;
+
+  const replaceCurrentAnalysisButtonAriaLabel = useTranslation(
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.ariaLabel"
+  ) as string;
+
+  const translationContext = useContext(TranslationsContext);
+  const translate = useTranslationFunction(translationContext.translations);
+
+  const subLogError = (logIndex: number, error: string) =>
+    translate("blackboxAnalyzer.subLogError", { logIndex, error }) as string;
+
   return (
     <>
-      {showLoader.value && <RacoonLoader label="Loading analyzer..." />}
+      {showLoader.value && <RacoonLoader label={loadingMessage} />}
 
       <div
         class={classNames(styles.wrapper, {
@@ -192,16 +237,14 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
           class={classNames("button", styles.uploadButton, {
             [styles.uploadButtonDropover]: isDroppingOver.value,
           })}
-          aria-label="Button to open a blackbox file for analysis"
+          aria-label={openFileButtonAriaLabel}
         >
           {analyzerState.value === AnalyzerState.RUNNING && <InlineSpinner />}
-          Click to open a Blackbox File (.bbl) or drag and drop it here
+          {openFileButtonLabel}
         </button>
 
         {showAnalyzerError.value && (
-          <ErrorBox
-            errorLines={analyzerError.value ?? "Could not analyze log-file..."}
-          />
+          <ErrorBox errorLines={analyzerError.value ?? logAnalyzationError} />
         )}
 
         <Dialog isOpen={showSelectAnalysisOverwriteMethodDialog.value}>
@@ -220,17 +263,17 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
               class="button"
               style={{ width: "100%" }}
               onClick$={addFileToCurrentAnalysis}
-              aria-label="add to current analysis"
+              aria-label={addFileToCurrentAnalysisButtonAriaLabel}
             >
-              Add to current Analysis
+              {addFileToCurrentAnalysisButtonLabel}
             </button>
             <button
               class="button"
               style={{ width: "100%" }}
               onClick$={overwriteCurrentAnalysisWithFile}
-              aria-label="replace current analysis"
+              aria-label={replaceCurrentAnalysisButtonAriaLabel}
             >
-              Replace current Analysis
+              {replaceCurrentAnalysisButtonLabel}
             </button>
           </div>
         </Dialog>
@@ -247,9 +290,9 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
               ERRORS:
             </b>
             {subLogsWithErrors.value.map(({ index, error }) => (
-              <div
-                key={"sublog-error-" + index}
-              >{`> Sublog ${index}: ${error}`}</div>
+              <div key={"sublog-error-" + index}>
+                {subLogError(index, error!)}
+              </div>
             ))}
 
             <div style={{ clear: "both" }} />
@@ -277,8 +320,14 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 });
 
 export const BlackboxAnalyzer = component$((props: Props) => {
+  const downloadSizeMB = 150;
+  const blockMessage = useTranslation("blackboxAnalyzer.cacheBlockMessage", {
+    downloadSizeMB,
+  }) as string;
   return (
     <SWCachingBlocker
+      blockMessage={blockMessage}
+      downloadSizeMB={downloadSizeMB}
       render={$(() => (
         <BlackboxAnalyzerContent {...props} />
       ))}
@@ -294,74 +343,81 @@ export const BlackboxAnalyzerRegistryDefinition: CMSRegisteredComponent = {
       ...plotLabelsStoryData
     } = storyData;
 
-    const plotLabels = useComputed$(() => ({
-      responseTrace: {
-        gyro: {
-          headdictField: plotLabelsStoryData.labelTraceGyroHeaderField,
-          template: plotLabelsStoryData.labelTraceGyroTemplate,
-        },
-        setPoint: {
-          headdictField: plotLabelsStoryData.labelTraceSetpointHeaderField,
-          template: plotLabelsStoryData.labelTraceSetpointTemplate,
-        },
-        feedForward: {
-          headdictField: plotLabelsStoryData.labelTraceFeedforwardHeaderField,
-          template: plotLabelsStoryData.labelTraceFeedforwardTemplate,
-        },
-      },
-      responseThrottle: {
-        throttle: {
-          headdictField: plotLabelsStoryData.labelThrottleHeaderField,
-          template: plotLabelsStoryData.labelThrottleTemplate,
-        }
-      },
-      responseStrength: {
-        response: {
-          headdictField: plotLabelsStoryData.labelStrengthHeaderField,
-          template: plotLabelsStoryData.labelStrengthTemplate,
-        }
-      },
-      responseDelay: {
-        delay: {
-          headdictField: plotLabelsStoryData.labelDelayHeaderField,
-          template: plotLabelsStoryData.labelDelayTemplate,
-        }
-      },
-      responseStrengthPeak: {
-        peak: {
-          headdictField: plotLabelsStoryData.labelStrengthPeakHeaderField,
-          template: plotLabelsStoryData.labelStrengthPeakTemplate,
-        }
-      },
-      noiseFrequencies: {
-        noise_gyro: {
-          headdictField: plotLabelsStoryData.labelNoiseFrequenciesGyroHeaderField,
-          template: plotLabelsStoryData.labelNoiseFrequenciesGyroTemplate,
-        },
-        noise_debug: {
-          headdictField: plotLabelsStoryData.labelNoiseFrequenciesDebugHeaderField,
-          template: plotLabelsStoryData.labelNoiseFrequenciesDebugTemplate,
-        },
-        noise_d: {
-          headdictField: plotLabelsStoryData.labelNoiseFrequenciesDTermHeaderField,
-          template: plotLabelsStoryData.labelNoiseFrequenciesDTermTemplate,
-        }
-      },
-      noise: {
-        noise_gyro: {
-          headdictField: plotLabelsStoryData.labelNoiseGyroHeaderField,
-          template: plotLabelsStoryData.labelNoiseGyroTemplate,
-        },
-        noise_debug: {
-          headdictField: plotLabelsStoryData.labelNoiseDebugHeaderField,
-          template: plotLabelsStoryData.labelNoiseDebugTemplate,
-        },
-        noise_d: {
-          headdictField: plotLabelsStoryData.labelNoiseDTermHeaderField,
-          template: plotLabelsStoryData.labelNoiseDTermTemplate,
-        }
-      },
-    } as PlotLabelDefinitions));
+    const plotLabels = useComputed$(
+      () =>
+        ({
+          responseTrace: {
+            gyro: {
+              headdictField: plotLabelsStoryData.labelTraceGyroHeaderField,
+              template: plotLabelsStoryData.labelTraceGyroTemplate,
+            },
+            setPoint: {
+              headdictField: plotLabelsStoryData.labelTraceSetpointHeaderField,
+              template: plotLabelsStoryData.labelTraceSetpointTemplate,
+            },
+            feedForward: {
+              headdictField:
+                plotLabelsStoryData.labelTraceFeedforwardHeaderField,
+              template: plotLabelsStoryData.labelTraceFeedforwardTemplate,
+            },
+          },
+          responseThrottle: {
+            throttle: {
+              headdictField: plotLabelsStoryData.labelThrottleHeaderField,
+              template: plotLabelsStoryData.labelThrottleTemplate,
+            },
+          },
+          responseStrength: {
+            response: {
+              headdictField: plotLabelsStoryData.labelStrengthHeaderField,
+              template: plotLabelsStoryData.labelStrengthTemplate,
+            },
+          },
+          responseDelay: {
+            delay: {
+              headdictField: plotLabelsStoryData.labelDelayHeaderField,
+              template: plotLabelsStoryData.labelDelayTemplate,
+            },
+          },
+          responseStrengthPeak: {
+            peak: {
+              headdictField: plotLabelsStoryData.labelStrengthPeakHeaderField,
+              template: plotLabelsStoryData.labelStrengthPeakTemplate,
+            },
+          },
+          noiseFrequencies: {
+            noise_gyro: {
+              headdictField:
+                plotLabelsStoryData.labelNoiseFrequenciesGyroHeaderField,
+              template: plotLabelsStoryData.labelNoiseFrequenciesGyroTemplate,
+            },
+            noise_debug: {
+              headdictField:
+                plotLabelsStoryData.labelNoiseFrequenciesDebugHeaderField,
+              template: plotLabelsStoryData.labelNoiseFrequenciesDebugTemplate,
+            },
+            noise_d: {
+              headdictField:
+                plotLabelsStoryData.labelNoiseFrequenciesDTermHeaderField,
+              template: plotLabelsStoryData.labelNoiseFrequenciesDTermTemplate,
+            },
+          },
+          noise: {
+            noise_gyro: {
+              headdictField: plotLabelsStoryData.labelNoiseGyroHeaderField,
+              template: plotLabelsStoryData.labelNoiseGyroTemplate,
+            },
+            noise_debug: {
+              headdictField: plotLabelsStoryData.labelNoiseDebugHeaderField,
+              template: plotLabelsStoryData.labelNoiseDebugTemplate,
+            },
+            noise_d: {
+              headdictField: plotLabelsStoryData.labelNoiseDTermHeaderField,
+              template: plotLabelsStoryData.labelNoiseDTermTemplate,
+            },
+          },
+        }) as PlotLabelDefinitions
+    );
     const activePlots = useComputed$(() =>
       Object.fromEntries(
         activePlotsStoryData.map((plotName: string) => [plotName, true])

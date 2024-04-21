@@ -23,19 +23,10 @@ export const useRouteURL = routeLoader$(async ({ url }) => {
   return url;
 });
 
-export const useStory = routeLoader$(async ({ url, resolveValue }) => {
-  const { versionToLoad, language } = await resolveValue(
+export const useStory = routeLoader$(async ({ resolveValue }) => {
+  const { versionToLoad, language, slug } = await resolveValue(
     useStoryBlokPreviewInformation
   );
-
-  let slug = url.pathname;
-  if (slug === "/") {
-    slug = "home";
-  }
-
-  if (slug.endsWith("/")) {
-    slug = slug.slice(0, -1);
-  }
 
   const { data } = await getStoryBlokApi()
     .getStory(slug, {

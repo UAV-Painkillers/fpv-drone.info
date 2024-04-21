@@ -6,16 +6,18 @@ import {
   useSignal,
   $,
 } from "@builder.io/qwik";
+import { useTranslation } from "~/translations.ctx";
 
 export const PWAInstallButton = component$(() => {
   const installPromptEvent =
     useSignal<NoSerialize<{ prompt: () => Promise<any> } | null>>();
+
   useOnWindow(
     "beforeinstallprompt",
     $((event) => {
       event.preventDefault();
       installPromptEvent.value = noSerialize(event as any);
-    }),
+    })
   );
 
   const onInstallButtonClick = $(async () => {
@@ -29,15 +31,18 @@ export const PWAInstallButton = component$(() => {
     installPromptEvent.value = noSerialize(undefined);
   });
 
+  const ariaLabel = useTranslation('pwa.installButton.ariaLabel') as string;
+  const label = useTranslation('pwa.installButton.label') as string;
+
   return (
     <button
       id="install"
       class="button floating"
       hidden={!installPromptEvent.value}
       onClick$={onInstallButtonClick}
-      aria-label="Install Website as PWA Button"
+      aria-label={ariaLabel}
     >
-      Install APP
+      {label}
     </button>
   );
 });

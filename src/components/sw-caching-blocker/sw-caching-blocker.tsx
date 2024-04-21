@@ -8,18 +8,22 @@ import {
 import type { QRL } from "@builder.io/qwik";
 import type { JSX } from "@builder.io/qwik/jsx-runtime";
 import { AppContext, BlockableCaches } from "~/app.ctx";
+import { useTranslation } from "~/translations.ctx";
 
 interface Props {
   render: QRL<() => JSX.Element>;
+  blockMessage: string;
+  downloadSizeMB: number;
 }
 
 export const SWCachingBlocker = component$((props: Props) => {
   const appContext = useContext(AppContext);
+
   const serviceWorkerAvailable = useSignal<boolean | null>(null);
   const serviceWorkerDidCache = useSignal<boolean | null>(null);
 
   const show = useComputed$(() =>
-    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER),
+    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER)
   );
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -62,24 +66,24 @@ export const SWCachingBlocker = component$((props: Props) => {
     return true;
   });
 
-  const downloadSizeMb = 150;
+  const acceptButtonLabel = useTranslation("cachingBlocker.acceptButton.label", {
+    downloadSizeMB: props.downloadSizeMB,
+  });
 
   if (showBlocker.value) {
     return (
       <div class="alert">
-        <p>
-          In order to use the Tuning Tools Analyzer, you need to download and
-          cache the actual analyzer. The files are about {downloadSizeMb}MB in
-          size, if you are currently on a limited data plan, please be aware of
-          this.
-        </p>
+        <p>{props.blockMessage}</p>
         <button
           class="button"
           onClick$={() =>
-            appContext.unblockedCaches = [...(appContext.unblockedCaches ?? []), BlockableCaches.PID_ANALYZER]
+            (appContext.unblockedCaches = [
+              ...(appContext.unblockedCaches ?? []),
+              BlockableCaches.PID_ANALYZER,
+            ])
           }
         >
-          I understand, please download {downloadSizeMb}MB
+          {acceptButtonLabel}
         </button>
       </div>
     );

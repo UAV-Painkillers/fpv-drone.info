@@ -12,7 +12,10 @@ import { RouterHead } from "./components/router-head/router-head";
 import type { AppContextState } from "./app.ctx";
 import { AppContext } from "./app.ctx";
 import { inject as injectVercelAnalytics } from "@vercel/analytics";
-import { StoryblokContext, StoryblokContextState } from "./routes/[...index]/storyblok.ctx";
+import type { StoryblokContextState } from "./routes/[...index]/storyblok.ctx";
+import { StoryblokContext } from "./routes/[...index]/storyblok.ctx";
+import type { TranslationsContextState } from "./translations.ctx";
+import { TranslationsContext } from "./translations.ctx";
 
 export default component$(() => {
   const appContextData = useStore<AppContextState>({
@@ -20,12 +23,15 @@ export default component$(() => {
     isPreviewing: false,
     serviceWorker: undefined,
     unblockedCaches: [],
-    storyblok: {
-      versionToLoad: 'published',
-      language: 'en',
-    },
+    translations: {},
   });
   useContextProvider(AppContext, appContextData);
+
+  const translationsContextData = useStore<TranslationsContextState>({
+    activeLanguage: "en",
+    translations: {},
+  });
+  useContextProvider(TranslationsContext, translationsContextData);
 
   const storyblokContextData = useStore<StoryblokContextState>({
     versionToLoad: "published",

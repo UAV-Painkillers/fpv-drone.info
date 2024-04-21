@@ -22,6 +22,10 @@ export const transformStoryblokHref = (href: StoryblokHref) => {
     return urlFromHref;
   }
 
+  if (urlFromHref.startsWith("/")) {
+    return urlFromHref;
+  }
+
   return `/${urlFromHref}`;
 };
 
