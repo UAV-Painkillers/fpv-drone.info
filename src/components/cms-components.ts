@@ -10,8 +10,6 @@ import { TextRegistryDefinition } from "./shared/text/text";
 import { TLDRRegistryDefinition } from "./shared/tldr/tldr";
 import { BlackboxAnalyzerRegistryDefinition } from "./tuning-tools/blackbox-analyzer";
 import { BuyMeACoffeeButtonRegistryDefinition } from "./shared/buy-me-a-coffe/button";
-import { CustomInstructionsRegistryDefinition } from "./shared/instructions/custom-instructions";
-import { InstructionsStepRegistryDefinition } from "./shared/instructions/step/step";
 import { HighlightCardRegistryDefinition } from "./shared/highlight-card/highlight-card";
 import { DynamicIdleCalculatorRegistryDefinition } from "./tuning-tools/dynamic-idle-calculator/dynamic-idle-calculator";
 import { SWClearCacheButtonRegistryDefinition } from "./sw-clear-cache-button/sw-clear-cache-button";
@@ -38,8 +36,6 @@ export const CMSComponents: CMSRegisteredComponent[] = [
   PageGridRegistryDefinition,
   CardRegistryDefinition,
   InstructionsRegistryDefinition,
-  CustomInstructionsRegistryDefinition,
-  InstructionsStepRegistryDefinition,
   LogoRegistryInformation,
   PageHeadlineRegistryDefinition,
   ExpandableImageRegistryDefinition,

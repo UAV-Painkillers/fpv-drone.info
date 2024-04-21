@@ -7,11 +7,14 @@ import {
 import { QwikCityProvider, RouterOutlet } from "@builder.io/qwik-city";
 
 import "./normalize.css";
-import "./global.css";
+import "./css/theme.css";
+import "./css/global.css";
 import { RouterHead } from "./components/router-head/router-head";
 import type { AppContextState } from "./app.ctx";
 import { AppContext } from "./app.ctx";
 import { inject as injectVercelAnalytics } from "@vercel/analytics";
+import { useDarkmode } from "./hooks/use-darkmode";
+import classNames from "classnames";
 import type { StoryblokContextState } from "./routes/[...index]/storyblok.ctx";
 import { StoryblokContext } from "./routes/[...index]/storyblok.ctx";
 import type { TranslationsContextState } from "./translations.ctx";
@@ -44,12 +47,14 @@ export default component$(() => {
     injectVercelAnalytics();
   });
 
+  const isDarkmode = useDarkmode();
+
   return (
     <QwikCityProvider>
       <head>
         <RouterHead />
       </head>
-      <body lang="en">
+      <body lang="en" class={classNames({ dark: isDarkmode.value })}>
         <RouterOutlet />
       </body>
     </QwikCityProvider>

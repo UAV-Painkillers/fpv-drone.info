@@ -1,0 +1,129 @@
+body {
+  --base-green: #16c99e;
+  --base-blue: #1653c9;
+  --base-black: #3e3e3e;
+  --base-white: #ffffff;
+
+  --success-color: #16c969;
+  --warning-color: #c98716;
+  --alarm-color: #c91652;
+
+  --text-color: var(--base-black);
+  --body-background: 255, 255, 255;
+
+  --anchor-gradient-start: var(--base-green);
+  --anchor-gradient-end: var(--base-blue);
+
+  --anchor-color: linear-gradient(
+    var(--anchor-gradient-start),
+    var(--anchor-gradient-end)
+  );
+  --anchor-border-color: var(--anchor-gradient-end);
+  --anchor-active-border-color: var(--anchor-gradient-start);
+
+  --border-rounding: 15px;
+
+  /** just for reference :/ doesnt yet work in css ... */
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet: 1024px;
+  --breakpoint-desktop: 1200px;
+
+  --table-row-even-background: hsl(220, 80%, 95%);
+  --table-row-uneven-background: var(--base-white);
+
+  /* from base-green to base-blue */
+  --button-background: linear-gradient(
+    45deg,
+    var(--base-green),
+    var(--base-blue)
+  );
+  --button-hover-scale: 1.05;
+  --button-border-radius: 10px;
+  --button-floating-translateX: -50%;
+  --button-glow-background: linear-gradient(
+    45deg,
+    var(--base-black),
+    var(--base-white),
+    var(--base-black)
+  );
+
+  --button-danger-background: linear-gradient(
+    45deg,
+    var(--alarm-color),
+    var(--base-black)
+  );
+
+  --button-warning-background: linear-gradient(
+    45deg,
+    var(--warning-color),
+    var(--base-black)
+  );
+
+  --button-success-background: linear-gradient(
+    45deg,
+    var(--success-color),
+    var(--base-black)
+  );
+
+  --glowing-shadow-animation-background-start: linear-gradient(
+    0deg,
+    var(--base-green),
+    var(--base-blue)
+  );
+
+  --glowing-shadow-animation-background-end: linear-gradient(
+    360deg,
+    var(--base-green),
+    var(--base-blue)
+  );
+
+  --input-border-color: var(--base-black);
+
+  --code-background: var(--base-black);
+  --code-color: var(--base-white);
+  --code-border-left-color: var(--base-green);
+
+  --pre-background: var(--base-black);
+  --pre-color: var(--base-white);
+
+  --alert-border-color: var(--waning-color);
+
+  --card--background: #f5f5f7;
+  --card--shadow-color: #e5e5e5;
+  --card--shadow-x: 3px;
+  --card--shadow-y: 3px;
+  --card--shadow-blur: 7px;
+  --card--rounding: var(--border-rounding);
+
+  --checkbox-background-color-start: var(--base-white);
+  --checkbox-background-color-end: var(--base-white);
+
+  --checkbox-checked-background-color-start-initial: var(
+    --anchor-gradient-start
+  );
+  --checkbox-checked-background-color-end-initial: var(--anchor-gradient-end);
+}
+
+body.dark {
+  --base-white: rgb(220, 220, 220);
+  --base-black: #000000;
+
+  --base-green: #186f5b;
+  --base-blue: #1653c9;
+
+  --text-color: var(--base-white);
+  --body-background: 25, 25, 25;
+
+  --button-glow-background: linear-gradient(
+    45deg,
+    var(--base-black),
+    var(--base-white),
+    var(--base-black)
+  );
+
+  --card--background: rgb(30, 30, 30);
+  --card--shadow-color: var(--base-black);
+
+  --checkbox-background-color-start: var(--base-black);
+  --checkbox-background-color-end: var(--base-black);
+}
