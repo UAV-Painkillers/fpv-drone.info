@@ -11,12 +11,17 @@ const STATIC_ASSETS_MANIFESTS: typeof self.__WB_MANIFEST = [];
 const PID_ANALYZER_DEPENDENCIES_MANIFESTS: typeof self.__WB_MANIFEST = [];
 
 const PID_ANALYZER_DEPENDENCY_URL_PREFIX = "pid-analyer-dependencies/";
+const API_URL_PREFIX = "api/";
 
 self.__WB_MANIFEST.forEach((manifest) => {
   const manifestUrl = typeof manifest === "string" ? manifest : manifest.url;
 
   if (manifestUrl.startsWith(PID_ANALYZER_DEPENDENCY_URL_PREFIX)) {
     PID_ANALYZER_DEPENDENCIES_MANIFESTS.push(manifest);
+    return;
+  }
+
+  if (manifestUrl.startsWith(API_URL_PREFIX)) {
     return;
   }
 

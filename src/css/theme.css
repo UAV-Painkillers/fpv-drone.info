@@ -5,6 +5,7 @@ body {
   --base-white: #ffffff;
 
   --success-color: #16c969;
+  --success-background-color: hsl(148, 40%, 44%);
   --warning-color: #c98716;
   --alarm-color: #c91652;
 
@@ -86,7 +87,7 @@ body {
   --pre-background: var(--base-black);
   --pre-color: var(--base-white);
 
-  --alert-border-color: var(--waning-color);
+  --alert-border-color: var(--warning-color);
 
   --card--background: #f5f5f7;
   --card--shadow-color: #e5e5e5;

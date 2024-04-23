@@ -1,5 +1,6 @@
 import type { IntrinsicElements } from "@builder.io/qwik";
 import {
+  $,
   Slot,
   component$,
   useComputed$,
@@ -47,13 +48,21 @@ export const InstructionsRegistryDefinition: CMSRegisteredComponent = {
       return storyData.steps?.map((step: any) => {
         const [sourceStep] = step.sourceStep ?? [];
         const [sourceStepContent] = sourceStep?.content?.items ?? [];
+
+        if (!sourceStepContent) {
+          return {
+            ...step,
+            image: step.image.filename,
+          };
+        }
+
         return {
           ...step,
-          title: step.title || sourceStepContent?.title,
-          description: step.description || sourceStepContent?.description,
-          image: step.image?.filename || sourceStepContent?.image,
-          customBloks: step.customBloks || sourceStepContent?.customBloks,
-        };
+          title: sourceStepContent.title,
+          description: sourceStepContent.description,
+          image: sourceStepContent.image.filename,
+          customBloks: sourceStepContent.bloks,
+        }
       });
     });
 
@@ -65,13 +74,13 @@ export const InstructionsRegistryDefinition: CMSRegisteredComponent = {
         {steps.value?.map((step: any, stepIndex: number) => (
           <InstructionsStep
             {...storyblokEditable(step)}
-            index={stepIndex + 1}
+            index={step.index}
             key={stepIndex}
             title={step.title}
             description={
               step.description ? renderRichText(step.description) : ""
             }
-            image={step.image?.filename}
+            image={step.image}
           >
             {step.customBloks && (
               <StoryBlokComponentArray bloks={step.customBloks} />

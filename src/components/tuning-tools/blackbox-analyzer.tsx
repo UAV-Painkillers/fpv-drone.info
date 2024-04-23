@@ -325,13 +325,15 @@ export const BlackboxAnalyzer = component$((props: Props) => {
     downloadSizeMB,
   }) as string;
   return (
-    <SWCachingBlocker
-      blockMessage={blockMessage}
-      downloadSizeMB={downloadSizeMB}
-      render={$(() => (
-        <BlackboxAnalyzerContent {...props} />
-      ))}
-    />
+    <div style={{ marginBlock: "1rem" }}>
+      <SWCachingBlocker
+        blockMessage={blockMessage}
+        downloadSizeMB={downloadSizeMB}
+        render={$(() => (
+          <BlackboxAnalyzerContent {...props} />
+        ))}
+      />
+    </div>
   );
 });
 

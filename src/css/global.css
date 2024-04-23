@@ -8,11 +8,7 @@ body {
   line-height: 1.2;
   background: rgb(var(--body-background));
   min-height: 100vh;
-  max-width: min(1200px, 85vw);
   overflow-x: hidden;
-  padding-inline: 50px;
-  width: 85vw;
-  margin: 0 auto;
 
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -371,4 +367,8 @@ pre {
   border-style: dashed;
   border-radius: 10px;
   padding: 1rem;
+}
+
+dialog {
+  color: currentColor;
 }

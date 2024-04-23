@@ -1,0 +1,15 @@
+.banner {
+    --banner-height: 3.5rem;
+    padding-inline: 1rem;
+    background: var(--success-background-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0;
+    transition: margin-top .5s;
+    height: var(--banner-height);
+}
+
+.hidden {
+    margin-top: calc(-1 * var(--banner-height));
+}

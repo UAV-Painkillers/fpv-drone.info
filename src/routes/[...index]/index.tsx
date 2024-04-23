@@ -21,6 +21,7 @@ import { getStoryBlokApi } from "~/routes/plugin@storyblok";
 import { StoryBlokComponentArray } from "~/components/storyblok/component-array";
 import { useStoryBlokPreviewInformation } from "../layout";
 import { getAllPageStories } from "~/utils/storyblok";
+import { useStoryblokURL } from "~/components/shared/utils/url";
 
 export const useRouteURL = routeLoader$(async ({ url }) => {
   return url;
@@ -39,6 +40,7 @@ export const useStory = routeLoader$(async ({ resolveValue }) => {
         "*",
         "cms-snippet.reference",
         "instruction-step-item.sourceStep",
+        "instruction-step-item.*",
       ],
     })
     .catch((e) => {
@@ -74,6 +76,8 @@ export default component$(() => {
     })
   );
 
+  const backButtonHref = useStoryblokURL(story.value?.content.backButtonHref);
+
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!story.value) {
     return (
@@ -102,6 +106,8 @@ export default component$(() => {
       <PageHeadline
         title={story.value.content.title ?? ""}
         subtitle={story.value.content.subtitle}
+        backButtonHref={backButtonHref.value}
+        backButtonLabel={story.value.content.backButtonLabel}
       />
 
       {story.value.content.bloks && (

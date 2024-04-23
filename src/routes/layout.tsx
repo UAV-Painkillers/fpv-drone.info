@@ -8,7 +8,7 @@ import { Navigation } from "~/components/shared/navigation/navigation";
 import { AppContext } from "~/app.ctx";
 import { SearchButton } from "~/components/shared/search/search-button";
 import { QwikCityNprogress } from "@quasarwork/qwik-city-nprogress";
-import { PWAInstallButton } from "~/components/pwa-install-button/pwa-install-button";
+import { PWAInstallBanner } from "~/components/pwa-install-banner/pwa-install-banner";
 import { ServiceWorkerManager } from "~/components/service-worker-manager/service-worker-manager";
 import { StoryblokContext } from "./[...index]/storyblok.ctx";
 import { getStoryBlokApi } from "./plugin@storyblok";
@@ -30,7 +30,7 @@ export const useStoryBlokPreviewInformation = routeLoader$(
       : "published";
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const indexParam = params.index ?? '';
+    const indexParam = params.index ?? "";
     const [languagePart, ...remainingPath] = indexParam.split("/");
 
     let languageSlug: LANGUAGE = DEFAULT_LANGUAGE;
@@ -131,10 +131,8 @@ export default component$(() => {
 
   return (
     <>
-      {/* TODO: Add iframe src */}
-      {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
-      <iframe src={"#" || location.url.href} style="display: none" />
       <QwikCityNprogress />
+      <PWAInstallBanner />
       <div class={styles.appContainer}>
         {appContext.showPageHeader && (
           <>
@@ -147,7 +145,6 @@ export default component$(() => {
         )}
         <main class={styles.main}>
           <ServiceWorkerManager />
-          <PWAInstallButton />
           <Slot />
         </main>
       </div>

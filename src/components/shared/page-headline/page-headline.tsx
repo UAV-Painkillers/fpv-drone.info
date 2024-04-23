@@ -6,19 +6,17 @@ import type { CMSRegisteredComponent } from "~/components/cms-registered-compone
 interface Props {
   title: string;
   subtitle?: string;
-  backButtonHref?: {
-    url: string;
-  };
+  backButtonHref?: string;
   backButtonLabel?: string;
 }
 
 export const PageHeadline = component$((props: Props) => {
   return (
     <>
-      {(props.backButtonLabel || props.backButtonHref?.url) && (
+      {(props.backButtonLabel || props.backButtonHref) && (
         <div style={{ marginTop: "-3rem", marginBottom: "3rem" }}>
           <Link
-            href={props.backButtonHref?.url}
+            href={props.backButtonHref}
             class="anchor"
             style={{ display: "inline-block" }}
           >

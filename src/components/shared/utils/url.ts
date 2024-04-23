@@ -5,11 +5,15 @@ interface StoryblokHref {
   cached_url?: string;
 }
 
-export const transformStoryblokHref = (href: StoryblokHref) => {
+export const transformStoryblokHref = (href?: StoryblokHref): string | undefined => {
+  if (!href) {
+    return undefined;
+  }
+
   const urlFromHref: string = href.url || href.cached_url!;
 
   if (urlFromHref.trim() === '') {
-    return null;
+    return undefined;
   }
 
   if (
