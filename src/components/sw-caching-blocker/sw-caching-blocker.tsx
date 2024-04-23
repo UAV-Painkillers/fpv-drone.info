@@ -78,6 +78,7 @@ export const SWCachingBlocker = component$((props: Props) => {
           class="button"
           onClick$={() =>
             (appContext.unblockedCaches = [
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
               ...(appContext.unblockedCaches ?? []),
               BlockableCaches.PID_ANALYZER,
             ])

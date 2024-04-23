@@ -68,19 +68,4 @@ export const ExpandableImage = component$<
 export const ExpandableImageRegistryDefinition: CMSRegisteredComponent = {
   component: ExpandableImage,
   name: "ExpandableImage",
-  inputs: [
-    {
-      name: "src",
-      friendlyName: "Image",
-      type: "file",
-      required: true,
-      allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
-    },
-    {
-      name: "alt",
-      friendlyName: "Alt Text",
-      type: "string",
-      required: true,
-    },
-  ],
 };

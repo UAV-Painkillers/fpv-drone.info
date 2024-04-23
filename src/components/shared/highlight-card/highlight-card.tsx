@@ -21,19 +21,4 @@ export const HighlightCard = component$((props: Props) => {
 export const HighlightCardRegistryDefinition: CMSRegisteredComponent = {
   component: HighlightCard,
   name: "HightlightCard",
-  friendlyName: "Higlight Card",
-  inputs: [
-    {
-      name: "title",
-      friendlyName: "Title",
-      type: "string",
-      required: true,
-    },
-    {
-      name: "content",
-      friendlyName: "Content",
-      type: "richText",
-      required: true,
-    },
-  ],
 };

@@ -3,7 +3,6 @@ import {
   Slot,
   component$,
   useComputed$,
-  useVisibleTask$,
 } from "@builder.io/qwik";
 import {
   Prerequesites,
@@ -13,7 +12,6 @@ import type { CMSRegisteredComponent } from "~/components/cms-registered-compone
 import { InstructionsStep } from "./step/step";
 import { StoryBlokComponentArray } from "~/components/storyblok/component-array";
 import { renderRichText, storyblokEditable } from "@storyblok/js";
-import { getStoryBlokApi } from "~/routes/plugin@storyblok";
 
 interface Props {
   prerequesites?: PrerequesitesProps;

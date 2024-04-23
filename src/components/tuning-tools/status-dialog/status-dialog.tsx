@@ -1,4 +1,4 @@
-import { component$, useComputed$, useContext, useSignal, useTask$ } from "@builder.io/qwik";
+import { component$, useComputed$, useContext, useSignal } from "@builder.io/qwik";
 import { Dialog } from "../../shared/dialog/dialog";
 import type {
   AnalyzerProgress,

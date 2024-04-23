@@ -11,7 +11,6 @@ import {
   AnalyzeOneFlightStep,
   SplitBBLStep,
 } from "@uav.painkillers/pid-analyzer-wasm";
-import { useLocation } from "@builder.io/qwik-city";
 import type { AnalyzerProgress } from "./types";
 import { AnalyzerStepStatus, makeEmptyProgress } from "./types";
 import { track } from "@vercel/analytics";
@@ -26,7 +25,6 @@ export enum AnalyzerState {
 
 export function useAnalyzeLog() {
   const analyzerState = useBlackboxAnalyzerContextProvider();
-  const location = useLocation();
 
   const state = useSignal<AnalyzerState>(AnalyzerState.LOADING);
   const progress = useSignal<AnalyzerProgress>(makeEmptyProgress());

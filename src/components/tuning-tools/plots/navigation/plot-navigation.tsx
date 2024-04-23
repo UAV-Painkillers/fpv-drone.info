@@ -2,7 +2,7 @@ import { component$, $, useSignal, useContext } from "@builder.io/qwik";
 import { Dialog } from "~/components/shared/dialog/dialog";
 import { BlackboxAnalyzerContext } from "../../context/blackbox-analyzer.context";
 import styles from "./plot-navigation.module.css";
-import { TranslationsContext, useTranslation } from "~/translations.ctx";
+import { useTranslation } from "~/translations.ctx";
 
 export interface PlotNavigationProps {
   showCombinedLogsSelection?: boolean;
@@ -11,8 +11,6 @@ export interface PlotNavigationProps {
 }
 export const PlotNavigation = component$((props: PlotNavigationProps) => {
   const analyzerContext = useContext(BlackboxAnalyzerContext);
-  const translationContext = useContext(TranslationsContext);
-  console.log(JSON.stringify(translationContext.translations, null, 4));
 
   const showLogSelection = useSignal(false);
 

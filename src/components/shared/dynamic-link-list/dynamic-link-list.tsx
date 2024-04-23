@@ -27,7 +27,7 @@ const Item = component$((props: ItemProps) => {
       style={{ wordBreak: "keep-all", whiteSpace: "nowrap" }}
       {...storyblokEditable(link as any)}
     >
-      <NavLink href={actualURL.value} activeClass="active">
+      <NavLink href={actualURL.value!} activeClass="active">
         {link.label}
       </NavLink>
     </li>

@@ -1,4 +1,4 @@
-import type { IntrinsicElements, NoSerialize, Signal } from "@builder.io/qwik";
+import type { NoSerialize, Signal } from "@builder.io/qwik";
 import {
   component$,
   $,

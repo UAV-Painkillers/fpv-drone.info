@@ -1,10 +1,9 @@
 module.exports = {
   globDirectory: "dist",
   globPatterns: [
-    // "**/*.{gif,gz,svg,js,json,whl,zip,wasm,mjs,png,xml,ico,html,webmanifest,txt,wasm,whl,zip,woff,woff2,jpg,jpeg,webp,css}",
-    "**/*",
+    "**/*.{gif,gz,svg,js,json,whl,zip,wasm,mjs,png,xml,ico,html,webmanifest,txt,wasm,whl,zip,woff,woff2,jpg,jpeg,webp,css}",
   ],
-  // globIgnores: ["build/**/*"],
+  globIgnores: ["build/**/*"],
   // swSrc: ".vercel/output/static/service-worker.js",
   swSrc: "dist/service-worker.js",
   // swDest: ".vercel/output/static/service-worker.js",

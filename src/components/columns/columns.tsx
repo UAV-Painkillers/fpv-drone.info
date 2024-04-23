@@ -1,4 +1,5 @@
-import { IntrinsicElements, component$, useComputed$ } from "@builder.io/qwik";
+import type { IntrinsicElements} from "@builder.io/qwik";
+import { component$, useComputed$ } from "@builder.io/qwik";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { StoryBlokComponent } from "../storyblok/component";
 import styles from "./columns.module.css";

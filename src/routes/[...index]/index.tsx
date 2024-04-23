@@ -10,7 +10,9 @@ import type {
   DocumentHead,
   DocumentHeadValue,
   DocumentLink,
+  PathParams,
   RequestHandler,
+  StaticGenerateHandler,
 } from "@builder.io/qwik-city";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import { PageHeadline } from "~/components/shared/page-headline/page-headline";
@@ -18,6 +20,7 @@ import { loadStoryblokBridge, type ISbStoryData } from "@storyblok/js";
 import { getStoryBlokApi } from "~/routes/plugin@storyblok";
 import { StoryBlokComponentArray } from "~/components/storyblok/component-array";
 import { useStoryBlokPreviewInformation } from "../layout";
+import { getAllPageStories } from "~/utils/storyblok";
 
 export const useRouteURL = routeLoader$(async ({ url }) => {
   return url;
@@ -32,10 +35,14 @@ export const useStory = routeLoader$(async ({ resolveValue }) => {
     .getStory(slug, {
       version: versionToLoad,
       language,
-      resolve_relations: ["*", "cms-snippet.reference", "instruction-step-item.sourceStep"],
+      resolve_relations: [
+        "*",
+        "cms-snippet.reference",
+        "instruction-step-item.sourceStep",
+      ],
     })
     .catch((e) => {
-      console.error("Error fetching story", e);
+      console.error("Error fetching story for page", slug, e);
       return { data: { story: null } };
     });
 
@@ -186,4 +193,20 @@ export const onRequest: RequestHandler = async ({
     writer.close();
     reader.releaseLock();
   }
+};
+
+export const onStaticGenerate: StaticGenerateHandler = async () => {
+  const allStories = await getAllPageStories();
+
+  return {
+    params: allStories.map((story) => {
+      let index = story.full_slug;
+
+      if (index === 'home') {
+        index = '';
+      }
+
+      return { index } as PathParams;
+    }),
+  };
 };

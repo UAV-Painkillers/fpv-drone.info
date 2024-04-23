@@ -14,44 +14,51 @@ import { StoryblokContext } from "./[...index]/storyblok.ctx";
 import { getStoryBlokApi } from "./plugin@storyblok";
 import { TranslationsContext } from "~/translations.ctx";
 
-const languages = ["de", "en"];
+enum LANGUAGE {
+  DE = "de",
+  EN = "en",
+}
+const DEFAULT_LANGUAGE = LANGUAGE.EN;
 
-export const useStoryBlokPreviewInformation = routeLoader$(({ url }) => {
-  const isVisualEditor = url.searchParams.has("_storyblok");
-  const previewLanguage = url.searchParams.get("_storyblok_lang");
+export const useStoryBlokPreviewInformation = routeLoader$(
+  ({ params, query }) => {
+    const isVisualEditor = query.has("_storyblok");
+    const previewLanguage = query.get("_storyblok_lang");
 
-  const versionToLoad: "published" | "draft" = isVisualEditor
-    ? "draft"
-    : "published";
+    const versionToLoad: "published" | "draft" = isVisualEditor
+      ? "draft"
+      : "published";
 
-  const [, languagePart, ...remainingPath] = url.pathname.split("/");
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const indexParam = params.index ?? '';
+    const [languagePart, ...remainingPath] = indexParam.split("/");
 
-  let languageSlug = null;
-  if (languages.includes(languagePart)) {
-    languageSlug = languagePart;
+    let languageSlug: LANGUAGE = DEFAULT_LANGUAGE;
+    if (Object.values(LANGUAGE).includes(languagePart as LANGUAGE)) {
+      languageSlug = languagePart as LANGUAGE;
+    } else {
+      remainingPath.unshift(languagePart);
+    }
+
+    const language: string = previewLanguage ?? languageSlug;
+
+    let slug = remainingPath.join("/");
+
+    if (slug === "/" || slug === "") {
+      slug = "home";
+    }
+
+    if (slug.endsWith("/")) {
+      slug = slug.slice(0, -1);
+    }
+
+    return {
+      versionToLoad,
+      language,
+      slug,
+    };
   }
-
-  const language: string = previewLanguage ?? languageSlug ?? "en";
-
-  let slug = remainingPath.join("/");
-  if (languageSlug === null) {
-    slug = `${languagePart}/${slug}`;
-  }
-
-  if (slug === "/" || slug === "") {
-    slug = "home";
-  }
-
-  if (slug.endsWith("/")) {
-    slug = slug.slice(0, -1);
-  }
-
-  return {
-    versionToLoad,
-    language,
-    slug,
-  };
-});
+);
 
 export const useTranslationsFromStoryblok = routeLoader$(
   async ({ resolveValue }) => {
@@ -60,12 +67,15 @@ export const useTranslationsFromStoryblok = routeLoader$(
     const allDataSourceEntries = [];
     let nextPage = 1;
     for (;;) {
-      const { data, total } = await getStoryBlokApi().get("cdn/datasource_entries", {
-        datasource: "translations",
-        dimension: language,
-        page: nextPage,
-        per_page: 100,
-      });
+      const { data, total } = await getStoryBlokApi().get(
+        "cdn/datasource_entries",
+        {
+          datasource: "translations",
+          dimension: language,
+          page: nextPage,
+          per_page: 100,
+        }
+      );
 
       allDataSourceEntries.push(...data.datasource_entries);
 
@@ -122,6 +132,7 @@ export default component$(() => {
   return (
     <>
       {/* TODO: Add iframe src */}
+      {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
       <iframe src={"#" || location.url.href} style="display: none" />
       <QwikCityNprogress />
       <div class={styles.appContainer}>

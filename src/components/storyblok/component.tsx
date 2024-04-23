@@ -1,6 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import type { FunctionComponent } from "@builder.io/qwik";
-import { SbBlokData, storyblokEditable, type StoryblokComponentType } from "@storyblok/js";
+import type { SbBlokData} from "@storyblok/js";
+import { storyblokEditable, type StoryblokComponentType } from "@storyblok/js";
 import { CMSComponents } from "../cms-components";
 import kebabCase from "lodash-es/kebabCase";
 

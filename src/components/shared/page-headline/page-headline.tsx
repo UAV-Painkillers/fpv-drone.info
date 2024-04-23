@@ -39,38 +39,4 @@ export const PageHeadline = component$((props: Props) => {
 export const PageHeadlineRegistryDefinition: CMSRegisteredComponent = {
   component: PageHeadline,
   name: "PageHeadline",
-  inputs: [
-    {
-      name: "title",
-      friendlyName: "Title",
-      type: "string",
-      required: true,
-    },
-    {
-      name: "subtitle",
-      friendlyName: "Subtitle",
-      type: "string",
-      required: false,
-    },
-    {
-      name: "backUrl",
-      friendlyName: "Back URL",
-      type: "object",
-      required: false,
-      subFields: [
-        {
-          name: "href",
-          friendlyName: "URL",
-          type: "string",
-          required: true,
-        },
-        {
-          name: "label",
-          friendlyName: "Label",
-          type: "string",
-          required: true,
-        },
-      ],
-    },
-  ],
 };

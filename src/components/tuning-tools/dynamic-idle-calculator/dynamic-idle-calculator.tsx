@@ -40,5 +40,4 @@ export const DynamicIdleCalculator = component$(() => {
 export const DynamicIdleCalculatorRegistryDefinition: CMSRegisteredComponent = {
   component: DynamicIdleCalculator,
   name: "DynamicIdleCalculator",
-  friendlyName: "Dynamic Idle Calculator",
 };

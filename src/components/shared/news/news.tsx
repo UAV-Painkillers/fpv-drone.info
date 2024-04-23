@@ -1,8 +1,8 @@
 import { component$ } from "@builder.io/qwik";
-import { TLDR, TLDRRegistryDefinition, type TLDRProps } from "../tldr/tldr";
+import { TLDR, type TLDRProps } from "../tldr/tldr";
 import type { TextProps } from "../text/text";
 import { Link } from "@builder.io/qwik-city";
-import { Text, TextRegistryDefinition } from "../text/text";
+import { Text } from "../text/text";
 import styles from "./news.module.css";
 import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
@@ -36,38 +36,4 @@ export const News = component$<NewsProps>((props) => {
 export const NewsRegistryDefinition: CMSRegisteredComponent = {
   component: News,
   name: "News",
-  inputs: [
-    {
-      name: "originalSource",
-      friendlyName: "Original Source",
-      type: "object",
-      required: false,
-      subFields: [
-        {
-          name: "url",
-          type: "url",
-          required: true,
-        },
-        {
-          name: "label",
-          type: "text",
-          required: false,
-        },
-      ],
-    },
-    {
-      name: "tldr",
-      friendlyName: "TL;DR;",
-      type: "object",
-      required: true,
-      subFields: TLDRRegistryDefinition.inputs,
-    },
-    {
-      name: "content",
-      friendlyName: "Content",
-      type: "object",
-      required: true,
-      subFields: TextRegistryDefinition.inputs,
-    },
-  ],
 };

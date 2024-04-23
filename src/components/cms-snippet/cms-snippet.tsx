@@ -15,6 +15,7 @@ export const CMSSnippet = component$(
     const bloks = useComputed$(() =>
       reference
         .map((r) => r.content as { items: SbBlokData[] })
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         .filter((b) => !!b)
     );
 

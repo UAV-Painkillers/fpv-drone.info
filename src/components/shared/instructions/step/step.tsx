@@ -1,8 +1,8 @@
-import { IntrinsicElements, Slot, component$, useComputed$ } from "@builder.io/qwik";
+import type { IntrinsicElements} from "@builder.io/qwik";
+import { Slot, component$, useComputed$ } from "@builder.io/qwik";
 import styles from "./step.module.css";
 import { formatHtmlText } from "../../../../utils/formatHtmlText";
 import { ExpandableImage } from "../../expandable-image/expandable-image";
-import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 export interface StepProps {
   index: number;

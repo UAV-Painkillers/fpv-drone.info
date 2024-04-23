@@ -61,7 +61,15 @@ export const onGet: RequestHandler = async (requestEvent) => {
       username,
       password,
     },
-  );
+  ).catch((error) => {
+    console.error("Failed to generate OG image", error);
+    return null;
+  });
+
+  if (!ogImageBlob) {
+    requestEvent.error(500, "Failed to generate OG image");
+    return;
+  }
 
   ogImageBlob.stream().pipeTo(writableStream);
 };

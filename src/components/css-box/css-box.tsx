@@ -1,5 +1,5 @@
 import type { IntrinsicElements } from "@builder.io/qwik";
-import { Slot, component$, useComputed$ } from "@builder.io/qwik";
+import { Slot, component$ } from "@builder.io/qwik";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { StoryBlokComponentArray } from "../storyblok/component-array";
 import { storyblokEditable } from "@storyblok/js";

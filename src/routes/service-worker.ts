@@ -1,41 +1,46 @@
-/*
- * WHAT IS THIS FILE?
- *
- * The service-worker.ts file is used to have state of the art prefetching.
- * https://qwik.builder.io/qwikcity/prefetching/overview/
- *
- * Qwik uses a service worker to speed up your site and reduce latency, ie, not used in the traditional way of offline.
- * You can also use this file to add more functionality that runs in the service worker.
- */
-import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
-import { registerRoute } from "workbox-routing";
 import { precacheAndRoute, addPlugins } from "workbox-precaching";
-import {
-  NetworkFirst,
-  StaleWhileRevalidate,
-  CacheFirst,
-} from "workbox-strategies";
+import { setDefaultHandler } from "workbox-routing";
+import { NetworkFirst } from "workbox-strategies";
 
 enum CACHE_NAMES {
   PID_ANALYZER = "pid-analyzer-dependencies",
-  BUILDER_IO = "builder.io",
   DYNAMIC = "dynamic",
 }
 
 const STATIC_ASSETS_MANIFESTS: typeof self.__WB_MANIFEST = [];
 const PID_ANALYZER_DEPENDENCIES_MANIFESTS: typeof self.__WB_MANIFEST = [];
-const cleanManifestPaths: string[] = [];
 
 const PID_ANALYZER_DEPENDENCY_URL_PREFIX = "pid-analyer-dependencies/";
 
 self.__WB_MANIFEST.forEach((manifest) => {
   const manifestUrl = typeof manifest === "string" ? manifest : manifest.url;
 
-  cleanManifestPaths.push(manifestUrl);
-
   if (manifestUrl.startsWith(PID_ANALYZER_DEPENDENCY_URL_PREFIX)) {
     PID_ANALYZER_DEPENDENCIES_MANIFESTS.push(manifest);
     return;
+  }
+
+  if (manifestUrl === "index.html") {
+    STATIC_ASSETS_MANIFESTS.push(
+      typeof manifest === "string"
+        ? "/"
+        : {
+            revision: manifest.revision,
+            url: "/",
+          }
+    );
+  }
+
+  if (manifestUrl.endsWith("/index.html")) {
+    const urlWithoutIndex = manifestUrl.replace("/index.html", "");
+    STATIC_ASSETS_MANIFESTS.push(
+      typeof manifest === "string"
+        ? urlWithoutIndex
+        : {
+            revision: manifest.revision,
+            url: urlWithoutIndex,
+          }
+    );
   }
 
   STATIC_ASSETS_MANIFESTS.push(manifest);
@@ -44,123 +49,20 @@ self.__WB_MANIFEST.forEach((manifest) => {
 const PRECACHING_LISTENER_CLIENTS: Client[] = [];
 
 addEventListener("install", (event) => {
-  (event as any).waitUntil(
-    caches.keys().then(function (cacheNames) {
-      return Promise.all(
-        cacheNames.map(function (cacheName) {
-          // TODO: add a logic to update PID analyzer caches at some point
-          if (cacheName === CACHE_NAMES.PID_ANALYZER) {
-            return;
-          }
-
-          console.log("deleting cache", cacheName);
-          return caches.delete(cacheName);
-        }),
-      );
-    }),
-  );
+  (event as any).waitUntil(clearCaches(CACHE_NAMES.PID_ANALYZER));
   self.skipWaiting();
 });
-
-addEventListener("activate", () => {
-  self.clients.claim();
-});
-
-function matchBuilderApi(url: URL) {
-  return url.hostname.endsWith(".builder.io") || url.hostname === "builder.io";
-}
-
-const VERCEL_ANALYTICS_PATH = "/_vercel/insights/";
-function matchVercelAnalytics(url: URL) {
-  return url.pathname.startsWith(VERCEL_ANALYTICS_PATH);
-}
-
-function matchWellKnown(url: URL) {
-  return url.pathname.startsWith("/.well-known/");
-}
-
-const VERCEL_DOMAIN = "vercel.com";
-function matchVercelDomain(url: URL) {
-  return url.hostname === VERCEL_DOMAIN;
-}
-
-function isDynmicRouteThatShouldBeCached(url: URL) {
-  if (matchBuilderApi(url)) {
-    return false;
-  }
-
-  if (matchVercelAnalytics(url)) {
-    return false;
-  }
-
-  if (matchWellKnown(url)) {
-    return false;
-  }
-
-  if (matchVercelDomain(url)) {
-    return false;
-  }
-
-  // qwik build files are handled by setupServiceWorker()
-  if (url.pathname.startsWith("/build/")) {
-    return false;
-  }
-
-  let pathNameWithoutSlash = url.pathname;
-  if (pathNameWithoutSlash.startsWith("/")) {
-    pathNameWithoutSlash = pathNameWithoutSlash.slice(1);
-  }
-
-  if (cleanManifestPaths.includes(pathNameWithoutSlash)) {
-    return false;
-  }
-
-  return true;
-}
-
-// cdn (builder.io) content
-registerRoute(
-  ({ url }) => matchBuilderApi(url),
-  new NetworkFirst({
-    cacheName: CACHE_NAMES.BUILDER_IO,
-  }),
-);
-
-// pid analyzer dependencies
-registerRoute(
-  ({ url }) => {
-    return PID_ANALYZER_DEPENDENCIES_MANIFESTS.some((manifest) => {
-      let manifestUrl = typeof manifest === "string" ? manifest : manifest.url;
-      if (!manifestUrl.startsWith("/")) {
-        manifestUrl = "/" + manifestUrl;
-      }
-
-      return url.pathname === manifestUrl;
-    });
-  },
-  new CacheFirst({
-    cacheName: CACHE_NAMES.PID_ANALYZER,
-  }),
-);
-
-// html content
-registerRoute(
-  (options) => isDynmicRouteThatShouldBeCached(options.url),
-  new StaleWhileRevalidate({
-    cacheName: CACHE_NAMES.DYNAMIC,
-  }),
-);
 
 async function sendToClients(eventType: string, payload?: any): Promise<void>;
 async function sendToClients(
   clients: Array<Client>,
   eventType: string,
-  payload?: any,
+  payload?: any
 ): Promise<void>;
 async function sendToClients(
   eventTypeOrClients: string | Array<Client>,
   payloadOrEventType?: any,
-  payloadOrNone?: any,
+  payloadOrNone?: any
 ) {
   let clients: Array<Client> | undefined;
   let eventType: string = "";
@@ -218,14 +120,16 @@ addPlugins([
   },
 ]);
 
-// static content
-precacheAndRoute(STATIC_ASSETS_MANIFESTS);
-setupServiceWorker();
+async function clearCaches(...cachesToKeep: string[]) {
+  const cacheNames = await caches.keys();
+  for (const name of cacheNames) {
+    if (cachesToKeep.includes(name)) {
+      continue;
+    }
 
-function clearCaches() {
-  caches.keys().then(function (names) {
-    for (const name of names) caches.delete(name);
-  });
+    console.log("deleting cache", name);
+    caches.delete(name);
+  }
   sendToClients("CACHES_CLEARED");
 }
 
@@ -246,7 +150,7 @@ self.addEventListener("message", async (event) => {
 });
 
 async function checkForPIDResourceInSingleCache(
-  cacheName: string,
+  cacheName: string
 ): Promise<boolean> {
   const cache = await self.caches.open(cacheName);
   const keys = await cache.keys();
@@ -273,5 +177,11 @@ async function checkDidCachePIDAnalyzerDependencies() {
 
   return false;
 }
+
+precacheAndRoute(STATIC_ASSETS_MANIFESTS);
+setDefaultHandler(new NetworkFirst({
+  cacheName: CACHE_NAMES.DYNAMIC,
+}))
+// registerRoute(new NavigationRoute(createHandlerBoundToURL("/")));
 
 declare const self: ServiceWorkerGlobalScope;

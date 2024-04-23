@@ -54,7 +54,7 @@ export const PageGrid = component$((props: PageGridProps) => {
         },
       })
       .catch((e) => {
-        console.error("Error fetching stories", e);
+        console.error("Error fetching stories for page grid", props.pageType, e);
         throw e;
       });
 
@@ -116,31 +116,4 @@ export const PageGrid = component$((props: PageGridProps) => {
 export const PageGridRegistryDefinition: CMSRegisteredComponent = {
   component: PageGrid,
   name: "PageGrid",
-  inputs: [
-    {
-      name: "pageType",
-      friendlyName: "Type",
-      type: "string",
-      enum: Object.values(PageType),
-      required: true,
-    },
-    {
-      name: "title",
-      friendlyName: "Title",
-      type: "string",
-      required: false,
-    },
-    {
-      name: "hideTitleIfEmpty",
-      friendlyName: "Hide if title is empty?",
-      type: "boolean",
-      required: false,
-    },
-    {
-      name: "href",
-      friendlyName: "href",
-      type: "string",
-      required: false,
-    },
-  ],
 };

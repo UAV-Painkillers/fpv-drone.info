@@ -1,4 +1,4 @@
-import { $, createContextId, useContext } from "@builder.io/qwik";
+import { createContextId, useContext } from "@builder.io/qwik";
 import type { JSX } from "@builder.io/qwik/jsx-runtime";
 
 export interface TranslationsContextState {
@@ -16,6 +16,10 @@ export const useTranslationFunction = (
     const translation = translations[key] ?? key;
     if (!replacements) {
       return translation;
+    }
+
+    if (!translation) {
+      return key;
     }
 
     // we need to return a valid JSX.Element here, so we need to split the translation
