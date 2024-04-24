@@ -25,7 +25,7 @@
 .inlineSpinner {
   top: 3px;
   margin: 0 3px;
-  margin-bottom: .1rem;
+  margin-bottom: 0.1rem;
 }
 .inlineSpinner:before {
   border-color: #74a8d0 #74a8d0 transparent transparent;

@@ -54,7 +54,11 @@ export const PageGrid = component$((props: PageGridProps) => {
         },
       })
       .catch((e) => {
-        console.error("Error fetching stories for page grid", props.pageType, e);
+        console.error(
+          "Error fetching stories for page grid",
+          props.pageType,
+          e,
+        );
         throw e;
       });
 
@@ -102,8 +106,8 @@ export const PageGrid = component$((props: PageGridProps) => {
                   description: page.content.description,
                   href: page.content.url,
                   headerImageObjectFit: page.content.previewImageObjectFit,
-                }) as CardProps
-            )
+                }) as CardProps,
+            ),
           )}
         >
           <div q:slot="title">{TitleSlot}</div>

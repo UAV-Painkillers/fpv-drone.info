@@ -29,7 +29,7 @@ export const useRouteURL = routeLoader$(async ({ url }) => {
 
 export const useStory = routeLoader$(async ({ resolveValue }) => {
   const { versionToLoad, language, slug } = await resolveValue(
-    useStoryBlokPreviewInformation
+    useStoryBlokPreviewInformation,
   );
 
   const { data } = await getStoryBlokApi()
@@ -73,7 +73,7 @@ export default component$(() => {
       storyblokInstance.on("input", (event) => {
         story.value = event?.story as ISbStoryData;
       });
-    })
+    }),
   );
 
   const backButtonHref = useStoryblokURL(story.value?.content.backButtonHref);
@@ -208,8 +208,8 @@ export const onStaticGenerate: StaticGenerateHandler = async () => {
     params: allStories.map((story) => {
       let index = story.full_slug;
 
-      if (index === 'home') {
-        index = '';
+      if (index === "home") {
+        index = "";
       }
 
       return { index } as PathParams;

@@ -48,8 +48,8 @@ export const BuyMeACoffeButton = component$(
 export const BuyMeACoffeeButtonRegistryDefinition: CMSRegisteredComponent = {
   component: component$((storyData: any) => {
     return (
-      <BuyMeACoffeButton {...storyData} {...storyblokEditable(storyData) } />
-    )
+      <BuyMeACoffeButton {...storyData} {...storyblokEditable(storyData)} />
+    );
   }),
   name: "BuyMeACoffeButton",
 };

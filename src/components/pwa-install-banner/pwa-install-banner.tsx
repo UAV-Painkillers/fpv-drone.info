@@ -18,9 +18,13 @@ export const PWAInstallBanner = component$(() => {
     useSignal<NoSerialize<{ prompt: () => Promise<any> } | null>>();
   const isOnline = useSignal(false);
 
-  const showBanner = useComputed$(() => !!installPromptEvent.value && isOnline.value);
+  const showBanner = useComputed$(
+    () => !!installPromptEvent.value && isOnline.value,
+  );
 
-  const { stage, shouldMount } = useCSSTransition(showBanner, { timeout: 1000 });
+  const { stage, shouldMount } = useCSSTransition(showBanner, {
+    timeout: 1000,
+  });
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
@@ -48,7 +52,7 @@ export const PWAInstallBanner = component$(() => {
     $((event) => {
       event.preventDefault();
       installPromptEvent.value = noSerialize(event as any);
-    })
+    }),
   );
 
   const onInstallButtonClick = $(async () => {
@@ -63,7 +67,7 @@ export const PWAInstallBanner = component$(() => {
   });
 
   const ariaButtonLabel = useTranslation(
-    "pwa.install.button.ariaLabel"
+    "pwa.install.button.ariaLabel",
   ) as string;
   const buttonlabel = useTranslation("pwa.install.button.label") as string;
 

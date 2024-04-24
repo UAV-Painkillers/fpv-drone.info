@@ -22,7 +22,7 @@ export const SWClearCacheButton = component$(() => {
   });
 
   const ariaLabel = useTranslation(
-    "cache.clearAndReloadButton.label"
+    "cache.clearAndReloadButton.label",
   ) as string;
   const label = useTranslation("cache.clearAndReloadButton.label") as string;
 

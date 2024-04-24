@@ -161,7 +161,7 @@ export class ResponsePlotter {
       },
       textStyle: {
         color,
-      }
+      },
     };
 
     if (
@@ -183,7 +183,7 @@ export class ResponsePlotter {
         },
         textStyle: {
           color,
-        }
+        },
       };
       (options.grid as any).top = 80;
     }

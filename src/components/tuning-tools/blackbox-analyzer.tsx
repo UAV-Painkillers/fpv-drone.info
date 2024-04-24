@@ -129,7 +129,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -160,7 +160,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR
+      (s) => s.state === AnalyzerStepStatus.ERROR,
     );
   });
 
@@ -183,35 +183,35 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   });
 
   const loadingMessage = useTranslation(
-    "blackboxAnalyzer.loadingIndicator.label"
+    "blackboxAnalyzer.loadingIndicator.label",
   ) as string;
 
   const logAnalyzationError = useTranslation(
-    "blackboxAnalyzer.error.logAnalyzation"
+    "blackboxAnalyzer.error.logAnalyzation",
   ) as string;
 
   const openFileButtonLabel = useTranslation(
-    "blackboxAnalyzer.openFileButton.label"
+    "blackboxAnalyzer.openFileButton.label",
   ) as string;
 
   const openFileButtonAriaLabel = useTranslation(
-    "blackboxAnalyzer.openFileButton.ariaLabel"
+    "blackboxAnalyzer.openFileButton.ariaLabel",
   ) as string;
 
   const addFileToCurrentAnalysisButtonLabel = useTranslation(
-    "blackboxAnalyzer.addFileToCurrentAnalysisButton.label"
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.label",
   ) as string;
 
   const addFileToCurrentAnalysisButtonAriaLabel = useTranslation(
-    "blackboxAnalyzer.addFileToCurrentAnalysisButton.ariaLabel"
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.ariaLabel",
   ) as string;
 
   const replaceCurrentAnalysisButtonLabel = useTranslation(
-    "blackboxAnalyzer.replaceCurrentAnalysisButton.label"
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.label",
   ) as string;
 
   const replaceCurrentAnalysisButtonAriaLabel = useTranslation(
-    "blackboxAnalyzer.replaceCurrentAnalysisButton.ariaLabel"
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.ariaLabel",
   ) as string;
 
   const translationContext = useContext(TranslationsContext);
@@ -418,17 +418,17 @@ export const BlackboxAnalyzerRegistryDefinition: CMSRegisteredComponent = {
               template: plotLabelsStoryData.labelNoiseDTermTemplate,
             },
           },
-        }) as PlotLabelDefinitions
+        }) as PlotLabelDefinitions,
     );
     const activePlots = useComputed$(() =>
       Object.fromEntries(
-        activePlotsStoryData.map((plotName: string) => [plotName, true])
-      )
+        activePlotsStoryData.map((plotName: string) => [plotName, true]),
+      ),
     );
     const navigation = useComputed$(() =>
       Object.fromEntries(
-        navigationStoryData.map((navTypeName: string) => [navTypeName, true])
-      )
+        navigationStoryData.map((navTypeName: string) => [navTypeName, true]),
+      ),
     );
 
     return (

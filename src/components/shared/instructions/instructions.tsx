@@ -1,10 +1,5 @@
 import type { IntrinsicElements } from "@builder.io/qwik";
-import {
-  $,
-  Slot,
-  component$,
-  useComputed$,
-} from "@builder.io/qwik";
+import { Slot, component$, useComputed$ } from "@builder.io/qwik";
 import {
   Prerequesites,
   type PrerequesitesProps,
@@ -31,7 +26,7 @@ export const Instructions = component$(
         <Slot />
       </article>
     );
-  }
+  },
 );
 
 export const InstructionsRegistryDefinition: CMSRegisteredComponent = {
@@ -40,7 +35,10 @@ export const InstructionsRegistryDefinition: CMSRegisteredComponent = {
       return {
         title: storyData.prerequisitesTitle,
         image: storyData.prerequisitesImage?.filename,
-        items: storyData.prerequisitesItems,
+        items: storyData.prerequisitesItems.map((item: any) => ({
+          ...storyblokEditable(item),
+          ...item,
+        })),
       } as Props["prerequesites"];
     });
 
@@ -62,7 +60,7 @@ export const InstructionsRegistryDefinition: CMSRegisteredComponent = {
           description: sourceStepContent.description,
           image: sourceStepContent.image.filename,
           customBloks: sourceStepContent.bloks,
-        }
+        };
       });
     });
 

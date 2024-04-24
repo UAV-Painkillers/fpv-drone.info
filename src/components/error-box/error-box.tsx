@@ -18,13 +18,14 @@ export const ErrorBox = component$((props: Props) => {
       <RacoonError style={{ float: "right" }} />
       <b style={{ color: "var(--alarm-color)", display: "block" }}>ERRORS:</b>
       {errorLines.value.map((line, errorLineIndex) =>
-        line
-          .split("\n")
-          .map((line, subLineIndex) => (
-            <div style={{minHeight: '1em'}} key={"sublog-error-" + errorLineIndex + "-" + subLineIndex}>
-              {line}
-            </div>
-          ))
+        line.split("\n").map((line, subLineIndex) => (
+          <div
+            style={{ minHeight: "1em" }}
+            key={"sublog-error-" + errorLineIndex + "-" + subLineIndex}
+          >
+            {line}
+          </div>
+        )),
       )}
 
       <div style={{ clear: "both" }} />

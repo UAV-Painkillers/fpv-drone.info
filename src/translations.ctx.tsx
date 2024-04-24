@@ -10,9 +10,12 @@ export const TranslationsContext =
   createContextId<TranslationsContextState>("translations");
 
 export const useTranslationFunction = (
-  translations: Record<string, string>
+  translations: Record<string, string>,
 ) => {
-  return (key: string, replacements?: Record<string, JSX.Element>): string | JSX.Element => {
+  return (
+    key: string,
+    replacements?: Record<string, JSX.Element>,
+  ): string | JSX.Element => {
     const translation = translations[key] ?? key;
     if (!replacements) {
       return translation;
@@ -54,7 +57,7 @@ export const useTranslationFunction = (
 
 export const useTranslation = (
   key: string,
-  replacements?: Record<string, JSX.Element>
+  replacements?: Record<string, JSX.Element>,
 ) => {
   const translationsContext = useContext(TranslationsContext);
   const translate = useTranslationFunction(translationsContext.translations);

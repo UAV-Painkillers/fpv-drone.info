@@ -1,3 +1,4 @@
+import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$ } from "@builder.io/qwik";
 import styles from "./prerequesites.module.css";
 import classNames from "classnames";
@@ -6,7 +7,7 @@ import { ExpandableImage } from "../../expandable-image/expandable-image";
 export interface PrerequesitesProps {
   class?: string;
   title?: string;
-  items: Array<{ label: string }>;
+  items: Array<{ label: string } & IntrinsicElements["li"]>;
   image?: string;
 }
 export const Prerequesites = component$<PrerequesitesProps>((props) => {

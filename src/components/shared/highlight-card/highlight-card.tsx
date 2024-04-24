@@ -3,7 +3,11 @@ import { component$ } from "@builder.io/qwik";
 import { formatHtmlText } from "~/utils/formatHtmlText";
 import styles from "./highlight-card.module.css";
 import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
-import { storyblokEditable, type SbBlokData, renderRichText } from "@storyblok/js";
+import {
+  storyblokEditable,
+  type SbBlokData,
+  renderRichText,
+} from "@storyblok/js";
 
 interface Props {
   title?: string;
@@ -20,7 +24,7 @@ export const HighlightCard = component$(
         <div dangerouslySetInnerHTML={contentHtml}></div>
       </div>
     );
-  }
+  },
 );
 
 export const HighlightCardRegistryDefinition: CMSRegisteredComponent = {

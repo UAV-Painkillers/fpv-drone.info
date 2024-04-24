@@ -4,7 +4,7 @@ import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { StoryBlokComponentArray } from "../storyblok/component-array";
 import { storyblokEditable } from "@storyblok/js";
 
-export const CSSBox = component$((props: IntrinsicElements['div']) => {
+export const CSSBox = component$((props: IntrinsicElements["div"]) => {
   return (
     <div {...props}>
       <Slot />
@@ -18,7 +18,11 @@ export const CSSBoxRegistryDefinition: CMSRegisteredComponent = {
     const { items, className, ...styles } = storyData;
 
     return (
-      <CSSBox class={className} style={styles} {...storyblokEditable(storyData)}>
+      <CSSBox
+        class={className}
+        style={styles}
+        {...storyblokEditable(storyData)}
+      >
         <StoryBlokComponentArray bloks={items} />
       </CSSBox>
     );

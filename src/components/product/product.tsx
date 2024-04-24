@@ -165,11 +165,15 @@ export const Product = component$((props: ProductProps) => {
   ): string {
     const mainInputs = ProductRegistryDefinition.inputs!.find(
       (input) => input.name === "technicalSpecs",
-    )!.subFields!.find((subField: any) => subField.name === specType)!.subFields!;
+    )!.subFields!.find(
+      (subField: any) => subField.name === specType,
+    )!.subFields!;
 
     const keyParts = key.split(".");
     const firstKeyPart = keyParts.shift()!;
-    let parentInput = mainInputs.find((input: any) => input.name === firstKeyPart);
+    let parentInput = mainInputs.find(
+      (input: any) => input.name === firstKeyPart,
+    );
     if (!parentInput) {
       return key;
     }
@@ -451,7 +455,9 @@ const mountingPatternInput = {
   ],
 };
 
-export const ProductRegistryDefinition: CMSRegisteredComponent & {inputs: Array<any>} = {
+export const ProductRegistryDefinition: CMSRegisteredComponent & {
+  inputs: Array<any>;
+} = {
   component: Product,
   name: "Product",
   inputs: [

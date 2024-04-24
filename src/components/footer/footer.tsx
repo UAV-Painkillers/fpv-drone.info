@@ -7,7 +7,6 @@ import { NavLink } from "../shared/nav-link/nav-link";
 import { useTranslation } from "~/translations.ctx";
 
 export const Footer = component$<IntrinsicElements["footer"]>((props) => {
-
   const ownerLine = useTranslation("footer.owner", {
     link: (
       <NavLink href="https://uav-painkillers.de" target="_blank">

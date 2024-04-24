@@ -1,4 +1,4 @@
-import type { IntrinsicElements} from "@builder.io/qwik";
+import type { IntrinsicElements } from "@builder.io/qwik";
 import { Slot, component$, useComputed$ } from "@builder.io/qwik";
 import styles from "./step.module.css";
 import { formatHtmlText } from "../../../../utils/formatHtmlText";
@@ -10,7 +10,9 @@ export interface StepProps {
   description: string;
   image?: string;
 }
-export const InstructionsStep = component$<StepProps & IntrinsicElements['section']>((props) => {
+export const InstructionsStep = component$<
+  StepProps & IntrinsicElements["section"]
+>((props) => {
   const { description, index, title, image, ...sectionProps } = props;
 
   const formattedDescription = useComputed$(() => formatHtmlText(description));
@@ -20,11 +22,7 @@ export const InstructionsStep = component$<StepProps & IntrinsicElements['sectio
       <h3 class={styles.index}>Step {index}</h3>
       <h2 class={styles.title}>{title}</h2>
       {image && (
-        <ExpandableImage
-          src={image}
-          alt="step details"
-          class={styles.image}
-        />
+        <ExpandableImage src={image} alt="step details" class={styles.image} />
       )}
       <div
         dangerouslySetInnerHTML={formattedDescription.value}

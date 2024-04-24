@@ -32,7 +32,7 @@ self.__WB_MANIFEST.forEach((manifest) => {
         : {
             revision: manifest.revision,
             url: "/",
-          }
+          },
     );
   }
 
@@ -44,7 +44,7 @@ self.__WB_MANIFEST.forEach((manifest) => {
         : {
             revision: manifest.revision,
             url: urlWithoutIndex,
-          }
+          },
     );
   }
 
@@ -62,12 +62,12 @@ async function sendToClients(eventType: string, payload?: any): Promise<void>;
 async function sendToClients(
   clients: Array<Client>,
   eventType: string,
-  payload?: any
+  payload?: any,
 ): Promise<void>;
 async function sendToClients(
   eventTypeOrClients: string | Array<Client>,
   payloadOrEventType?: any,
-  payloadOrNone?: any
+  payloadOrNone?: any,
 ) {
   let clients: Array<Client> | undefined;
   let eventType: string = "";
@@ -155,7 +155,7 @@ self.addEventListener("message", async (event) => {
 });
 
 async function checkForPIDResourceInSingleCache(
-  cacheName: string
+  cacheName: string,
 ): Promise<boolean> {
   const cache = await self.caches.open(cacheName);
   const keys = await cache.keys();
@@ -184,9 +184,11 @@ async function checkDidCachePIDAnalyzerDependencies() {
 }
 
 precacheAndRoute(STATIC_ASSETS_MANIFESTS);
-setDefaultHandler(new NetworkFirst({
-  cacheName: CACHE_NAMES.DYNAMIC,
-}))
+setDefaultHandler(
+  new NetworkFirst({
+    cacheName: CACHE_NAMES.DYNAMIC,
+  }),
+);
 // registerRoute(new NavigationRoute(createHandlerBoundToURL("/")));
 
 declare const self: ServiceWorkerGlobalScope;

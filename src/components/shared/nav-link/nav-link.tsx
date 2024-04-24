@@ -1,7 +1,4 @@
-import {
-  Slot,
-  component$,
-} from "@builder.io/qwik";
+import { Slot, component$ } from "@builder.io/qwik";
 import { Link, type LinkProps } from "@builder.io/qwik-city";
 
 type NavLinkProps = LinkProps & { activeClass?: string };
@@ -11,10 +8,7 @@ export const NavLink = component$((props: NavLinkProps) => {
   const { activeClass, ...elProps } = props;
 
   return (
-    <Link
-      {...elProps}
-      class={`${elProps.class || ""} anchor`}
-    >
+    <Link {...elProps} class={`${elProps.class || ""} anchor`}>
       <Slot />
     </Link>
   );

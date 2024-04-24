@@ -21,7 +21,7 @@ export const onGet: RequestHandler = async (requestEvent) => {
   const builderIoID = requestEvent.url.searchParams.get("builder-io-id");
 
   if (builderIoID) {
-    const {data} = await getStoryBlokApi().getStory(builderIoID, {
+    const { data } = await getStoryBlokApi().getStory(builderIoID, {
       version: "published",
       // TODO: determine language to use
       language: "en",

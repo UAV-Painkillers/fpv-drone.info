@@ -29,9 +29,7 @@ export const RouterHead = component$(() => {
         };
         delete props.key;
 
-        return (
-          <style key={s.key} {...props} />
-        );
+        return <style key={s.key} {...props} />;
       })}
 
       {/* GENERATED AUTOMATICALLY DO NOT TOUCH */}

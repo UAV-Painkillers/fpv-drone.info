@@ -57,7 +57,7 @@ export const useStoryBlokPreviewInformation = routeLoader$(
       language,
       slug,
     };
-  }
+  },
 );
 
 export const useTranslationsFromStoryblok = routeLoader$(
@@ -74,7 +74,7 @@ export const useTranslationsFromStoryblok = routeLoader$(
           dimension: language,
           page: nextPage,
           per_page: 100,
-        }
+        },
       );
 
       allDataSourceEntries.push(...data.datasource_entries);
@@ -90,9 +90,9 @@ export const useTranslationsFromStoryblok = routeLoader$(
       allDataSourceEntries.map((entry: any) => [
         entry.name,
         entry.dimension_value ?? entry.value,
-      ])
+      ]),
     );
-  }
+  },
 );
 
 export default component$(() => {

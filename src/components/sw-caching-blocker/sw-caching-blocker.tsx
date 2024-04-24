@@ -23,7 +23,7 @@ export const SWCachingBlocker = component$((props: Props) => {
   const serviceWorkerDidCache = useSignal<boolean | null>(null);
 
   const show = useComputed$(() =>
-    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER)
+    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER),
   );
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -66,9 +66,12 @@ export const SWCachingBlocker = component$((props: Props) => {
     return true;
   });
 
-  const acceptButtonLabel = useTranslation("cachingBlocker.acceptButton.label", {
-    downloadSizeMB: props.downloadSizeMB,
-  });
+  const acceptButtonLabel = useTranslation(
+    "cachingBlocker.acceptButton.label",
+    {
+      downloadSizeMB: props.downloadSizeMB,
+    },
+  );
 
   if (showBlocker.value) {
     return (

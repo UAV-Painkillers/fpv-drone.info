@@ -34,7 +34,7 @@ const WrapperComponent = component$(
         <Slot />
       </div>
     );
-  }
+  },
 );
 
 export interface CardProps {
@@ -74,7 +74,7 @@ export const Card = component$(
         class={classNames(
           styles.card,
           { [styles.withLink]: !!href },
-          { [styles.isLoading]: isLoading }
+          { [styles.isLoading]: isLoading },
         )}
         href={href}
         onClick$={onClick$}
@@ -95,7 +95,7 @@ export const Card = component$(
         )}
       </WrapperComponent>
     );
-  }
+  },
 );
 
 export const CardRegistryDefinition: CMSRegisteredComponent = {

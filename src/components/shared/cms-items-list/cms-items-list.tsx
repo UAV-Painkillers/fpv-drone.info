@@ -34,7 +34,7 @@ export const CMSItemsList = component$((props: Props) => {
         console.error(
           "Error fetching cms-items-list",
           props.itemsListStorySlug,
-          e
+          e,
         );
         throw e;
       });
@@ -54,7 +54,7 @@ export const CMSItemsList = component$((props: Props) => {
       storyblokInstance.on("input", (event) => {
         previewItemsList.value = event?.story;
       });
-    })
+    }),
   );
 
   if (previewItemsList.value) {

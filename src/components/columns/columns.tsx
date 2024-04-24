@@ -1,4 +1,4 @@
-import type { IntrinsicElements} from "@builder.io/qwik";
+import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$, useComputed$ } from "@builder.io/qwik";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { StoryBlokComponent } from "../storyblok/component";
@@ -33,7 +33,7 @@ export const Columns = component$(
         ))}
       </div>
     );
-  }
+  },
 );
 
 export const ColumnsRegistryDefinition: CMSRegisteredComponent = {
@@ -45,6 +45,12 @@ export const ColumnsRegistryDefinition: CMSRegisteredComponent = {
       ));
     });
 
-    return <Columns columns={columns.value} rowMinLength={story.rowMinLength} {...storyblokEditable(story)} />;
+    return (
+      <Columns
+        columns={columns.value}
+        rowMinLength={story.rowMinLength}
+        {...storyblokEditable(story)}
+      />
+    );
   }),
 };

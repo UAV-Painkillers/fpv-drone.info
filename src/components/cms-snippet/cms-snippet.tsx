@@ -1,7 +1,7 @@
 import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$, useComputed$ } from "@builder.io/qwik";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
-import type { SbBlokData} from "@storyblok/js";
+import type { SbBlokData } from "@storyblok/js";
 import { storyblokEditable } from "@storyblok/js";
 import { StoryBlokComponentArray } from "../storyblok/component-array";
 
@@ -16,7 +16,7 @@ export const CMSSnippet = component$(
       reference
         .map((r) => r.content as { items: SbBlokData[] })
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        .filter((b) => !!b)
+        .filter((b) => !!b),
     );
 
     return (
@@ -26,7 +26,7 @@ export const CMSSnippet = component$(
         ))}
       </div>
     );
-  }
+  },
 );
 
 export const CMSSnippetRegistryDefinition: CMSRegisteredComponent = {
