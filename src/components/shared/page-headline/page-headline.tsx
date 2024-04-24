@@ -2,6 +2,7 @@ import { component$ } from "@builder.io/qwik";
 import styles from "./page-headline.module.css";
 import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { Link } from "@builder.io/qwik-city";
+import { FaChevronLeftSolid } from "@qwikest/icons/font-awesome";
 
 interface Props {
   title: string;
@@ -22,9 +23,12 @@ export const PageHeadline = component$((props: Props) => {
             class="anchor"
             style={{ display: "inline-block" }}
           >
-            &#10094;&nbsp;
-            {!props.backUrl.href && "NO HREF SPECIFIED FOR BACK URL"}
-            {props.backUrl.label || "NO LABEL SPECIFIED FOR BACK URL"}
+            <FaChevronLeftSolid />
+            <span>
+              &nbsp;
+              {!props.backUrl.href && "NO HREF SPECIFIED FOR BACK URL"}
+              {props.backUrl.label || "NO LABEL SPECIFIED FOR BACK URL"}
+            </span>
           </Link>
         </div>
       )}
