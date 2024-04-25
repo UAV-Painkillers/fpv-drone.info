@@ -1,3 +1,5 @@
+import path from "path";
+
 export function changeLanguageInURLPathname(
   pathname: string,
   currentLang: string,
@@ -18,6 +20,10 @@ export function changeLanguageInURLPathname(
 
   if (!pathnameWithChangedLang || pathnameWithChangedLang === "/") {
     return `/${targetLang}`;
+  }
+
+  if (pathnameWithChangedLang.startsWith("/")) {
+    pathnameWithChangedLang = pathnameWithChangedLang.slice(1);
   }
 
   return `/${targetLang}/${pathnameWithChangedLang}`;
