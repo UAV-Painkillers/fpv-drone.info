@@ -2,12 +2,13 @@ import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$, useSignal, $ } from "@builder.io/qwik";
 import type { SbBlokData } from "@storyblok/js";
 import { storyblokEditable } from "@storyblok/js";
+import { inlineTranslate } from "qwik-speak";
 import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
-import { useTranslation } from "~/translations.ctx";
 
 export const DynamicIdleCalculator = component$(
   (props: IntrinsicElements["div"]) => {
     const dynamicIdle = useSignal(0);
+    const t = inlineTranslate();
 
     const onPropDiaChange = $((e: Event) => {
       const input = e.target as HTMLInputElement;
@@ -17,11 +18,9 @@ export const DynamicIdleCalculator = component$(
       dynamicIdle.value = Math.round(dynIdleRpm / 100);
     });
 
-    const propSizeInputLabel = useTranslation(
-      "dynamicIdleCalculator.propSizeInput.label",
-    );
-    const dynamicIdleResultLabel = useTranslation(
-      "dynamicIdleCalculator.dynamicIdleResult.label",
+    const propSizeInputLabel = t("dynamicIdleCalculator.propSizeInput.label");
+    const dynamicIdleResultLabel = t(
+      "dynamicIdleCalculator.dynamicIdleResult.label"
     );
 
     return (
@@ -47,7 +46,7 @@ export const DynamicIdleCalculator = component$(
         </label>
       </div>
     );
-  },
+  }
 );
 
 export const DynamicIdleCalculatorRegistryDefinition: CMSRegisteredComponent = {

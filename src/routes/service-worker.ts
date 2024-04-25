@@ -132,7 +132,7 @@ async function clearCaches(...cachesToKeep: string[]) {
       continue;
     }
 
-    console.log("deleting cache", name);
+    console.debug("deleting cache", name);
     caches.delete(name);
   }
   sendToClients("CACHES_CLEARED");

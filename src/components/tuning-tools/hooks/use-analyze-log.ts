@@ -49,7 +49,6 @@ export function useAnalyzeLog() {
         console.error("Error initializing analyzer", e);
         state.value = AnalyzerState.ERROR;
         error.value = (e as Error).message;
-        console.error(e);
       }
     },
     {

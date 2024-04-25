@@ -13,7 +13,7 @@ interface Props {
 export const PageHeadline = component$((props: Props) => {
   return (
     <>
-      {(props.backButtonLabel || props.backButtonHref) && (
+      {props.backButtonLabel && (
         <div style={{ marginTop: "-3rem", marginBottom: "3rem" }}>
           <Link
             href={props.backButtonHref}

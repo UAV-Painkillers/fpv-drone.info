@@ -2,7 +2,7 @@ import type { QRL } from "@builder.io/qwik";
 import { Slot, component$, useSignal, $ } from "@builder.io/qwik";
 import classNames from "classnames";
 import styles from "./dialog.module.css";
-import { useTranslation } from "~/translations.ctx";
+import { inlineTranslate } from "qwik-speak";
 
 interface Props {
   onClose?: QRL<() => any>;
@@ -11,6 +11,7 @@ interface Props {
 }
 export const Dialog = component$<Props>((props) => {
   const dialogRef = useSignal<HTMLDialogElement>();
+  const t = inlineTranslate();
 
   if (props.isOpen) {
     dialogRef.value?.showModal();
@@ -18,7 +19,7 @@ export const Dialog = component$<Props>((props) => {
     dialogRef.value?.close();
   }
 
-  const closeLabel = useTranslation("dialog.close") as string;
+  const closeLabel = t("dialog.close") as string;
 
   return (
     <dialog

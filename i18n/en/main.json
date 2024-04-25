@@ -1,0 +1,120 @@
+{
+  "pwa": {
+    "install": {
+      "button": {
+        "label": "Install APP",
+        "ariaLabel": "Install Website as PWA"
+      },
+      "banner": {
+        "text": "fpv-drone.info is available as a PWA App"
+      }
+    }
+  },
+  "Firmware Type": "fwType",
+  "PID Roll": "rollPID",
+  "footer": {
+    "owner": "fpv-drone.info is a {{link}} project"
+  },
+  "PID Pitch": "pitchPID",
+  "PID Yaw": "yawPID",
+  "cache": {
+    "clearAndReloadButton": {
+      "label": "Clear Cache and Reload",
+      "ariaLabel": "Clear Cache and Reload"
+    }
+  },
+  "Max Throttle": "maxThrottle",
+  "blackboxAnalyzer": {
+    "cacheBlockMessage": "In order to use the Tuning Tools Analyzer, you need to download and cache the actual analyzer. The files are about {{downloadSizeMB}} MB in size, if you are currently on a limited data plan, please be aware of this.",
+    "loadingIndicator": {
+      "label": "loading analyzer..."
+    },
+    "error": {
+      "logAnalyzation": "Could not analyze log-file..."
+    },
+    "openFileButton": {
+      "label": "Click to open a Blackbox File (.bbl) or drag and drop it here",
+      "ariaLabel": "Button to open a blackbox file for analysis"
+    },
+    "addFileToCurrentAnalysisButton": {
+      "label": "Add to current Analysis",
+      "ariaLabel": "add to current analysis"
+    },
+    "replaceCurrentAnalysisButton": {
+      "label": "Replace current Analysis",
+      "ariaLabel": "replace current analysis"
+    },
+    "subLogError": "> Sublog {{index}}: {{error}}",
+    "progress": {
+      "runningAnalysis": "Analysis is running",
+      "splittingLog": "Splitting log into flights",
+      "analyzingSubLog": "Analyzing Sub Log #{{flightIndex}}",
+      "readingHeaders": "reading headers",
+      "decoding": "decoding",
+      "readingDecodedLog": "reading decoded log",
+      "exportingHeaders": "exporting headers",
+      "analyzingAxis": "analysing {{axis}}"
+    },
+    "plotNavigation": {
+      "combinedLogsSelection": {
+        "label": "Combined Logs ({{count}} / {{total}})",
+        "ariaLabel": "combined logs selection"
+      },
+      "activeFlightLog": {
+        "label": "Active Flightlog #{{index}}"
+      },
+      "axisSelection": {
+        "roll": {
+          "label": "Axis: Roll"
+        },
+        "pitch": {
+          "label": "Axis: Pitch"
+        },
+        "yaw": {
+          "label": "Axis: Yaw"
+        }
+      }
+    }
+  },
+  "TPA Breakpoint": "tpa_breakpoint",
+  "TPA Percent": "tpa_percent",
+  "cachingBlocker": {
+    "acceptButton": {
+      "label": "I understand, please download {{downloadSizeMB}} MB"
+    }
+  },
+  "D Gain": "simplified_d_gain",
+  "D-Max Gain": "simplified_dmax_gain",
+  "D-Term Filter": "simplified_dterm_filter",
+  "D-Term Filter Multiplier": "simplified_dterm_filter_multiplier",
+  "Feedforward Gain": "simplified_feedforward_gain",
+  "Gyro Filter": "simplified_gyro_filter",
+  "Gyro Filter Multiplier": "simplified_gyro_filter_multiplier",
+  "I Gain": "simplified_i_gain",
+  "Master Multiplier": "simplified_master_multiplier",
+  "PI Gain": "simplified_pi_gain",
+  "Pitch D Gain": "simplified_pitch_d_gain",
+  "Pitch PI Gain": "simplified_pitch_pi_gain",
+  "dialog": {
+    "close": "Close"
+  },
+  "dynamicIdleCalculator": {
+    "propSizeInput": {
+      "label": "Prop Diameter (inches)"
+    },
+    "dynamicIdleResult": {
+      "label": "Resulting Dynamic Idle"
+    }
+  },
+  "languageBanner": {
+    "text": "Do you want to change the language to {{language}}?",
+    "button": {
+      "label": "change language"
+    }
+  },
+  "language": {
+    "de": "German",
+    "en": "English"
+  },
+  "why": "works. k"
+}

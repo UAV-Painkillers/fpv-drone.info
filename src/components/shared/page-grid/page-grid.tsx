@@ -13,6 +13,7 @@ import type { CMSRegisteredComponent } from "~/components/cms-registered-compone
 import { getStoryBlokApi } from "~/routes/plugin@storyblok";
 import { StoryblokContext } from "~/routes/[...index]/storyblok.ctx";
 import type { ISbStoryData } from "@storyblok/js";
+import { useSpeakLocale } from "qwik-speak";
 
 enum PageType {
   Page = "page",
@@ -42,12 +43,13 @@ export const PageGrid = component$((props: PageGridProps) => {
   const storyblokContext = useContext(StoryblokContext);
   const showTitle = useSignal(!!props.title);
   const hideTitleIfEmpty = props.hideTitleIfEmpty ?? false;
+  const locale = useSpeakLocale();
 
   const matches = useResource$(async () => {
     const { data } = await getStoryBlokApi()
       .getStories({
         version: storyblokContext.versionToLoad,
-        language: storyblokContext.language,
+        language: locale.lang,
         content_type: "page",
         filter_query: {
           type: { in: props.pageType },

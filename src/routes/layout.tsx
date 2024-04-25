@@ -11,17 +11,11 @@ import { QwikCityNprogress } from "@quasarwork/qwik-city-nprogress";
 import { PWAInstallBanner } from "~/components/pwa-install-banner/pwa-install-banner";
 import { ServiceWorkerManager } from "~/components/service-worker-manager/service-worker-manager";
 import { StoryblokContext } from "./[...index]/storyblok.ctx";
-import { getStoryBlokApi } from "./plugin@storyblok";
-import { TranslationsContext } from "~/translations.ctx";
-
-enum LANGUAGE {
-  DE = "de",
-  EN = "en",
-}
-const DEFAULT_LANGUAGE = LANGUAGE.EN;
+import { LanguageBanner } from "~/components/language-banner/language-banner";
+import { config as speakConfig } from "~/speak";
 
 export const useStoryBlokPreviewInformation = routeLoader$(
-  ({ params, query }) => {
+  ({ params, query, locale }) => {
     const isVisualEditor = query.has("_storyblok");
     const previewLanguage = query.get("_storyblok_lang");
 
@@ -29,20 +23,27 @@ export const useStoryBlokPreviewInformation = routeLoader$(
       ? "draft"
       : "published";
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const indexParam = params.index ?? "";
-    const [languagePart, ...remainingPath] = indexParam.split("/");
+    const { index: indexParam } = params;
 
-    let languageSlug: LANGUAGE = DEFAULT_LANGUAGE;
-    if (Object.values(LANGUAGE).includes(languagePart as LANGUAGE)) {
-      languageSlug = languagePart as LANGUAGE;
-    } else {
-      remainingPath.unshift(languagePart);
+    // eslint-disable-next-line prefer-const, @typescript-eslint/no-unnecessary-condition
+    let [langPart, ...indexParamParts] = (indexParam ?? '').split("/");
+
+    if (langPart.length !== 2) {
+      indexParamParts.unshift(langPart);
+      langPart = '';
     }
 
-    const language: string = previewLanguage ?? languageSlug;
+    let slug = indexParamParts.join("/");
+    if (
+      langPart &&
+      !speakConfig.supportedLocales.find((locale) => locale.lang === langPart)
+    ) {
+      slug = `${langPart}/${slug}`;
+    }
 
-    let slug = remainingPath.join("/");
+    if (!slug || slug.trim() === "") {
+      slug = "/";
+    }
 
     if (slug === "/" || slug === "") {
       slug = "home";
@@ -52,46 +53,13 @@ export const useStoryBlokPreviewInformation = routeLoader$(
       slug = slug.slice(0, -1);
     }
 
+    const language = previewLanguage ?? locale();
+
     return {
       versionToLoad,
       language,
       slug,
     };
-  },
-);
-
-export const useTranslationsFromStoryblok = routeLoader$(
-  async ({ resolveValue }) => {
-    const { language } = await resolveValue(useStoryBlokPreviewInformation);
-
-    const allDataSourceEntries = [];
-    let nextPage = 1;
-    for (;;) {
-      const { data, total } = await getStoryBlokApi().get(
-        "cdn/datasource_entries",
-        {
-          datasource: "translations",
-          dimension: language,
-          page: nextPage,
-          per_page: 100,
-        },
-      );
-
-      allDataSourceEntries.push(...data.datasource_entries);
-
-      if (total <= allDataSourceEntries.length) {
-        break;
-      }
-
-      nextPage++;
-    }
-
-    return Object.fromEntries(
-      allDataSourceEntries.map((entry: any) => [
-        entry.name,
-        entry.dimension_value ?? entry.value,
-      ]),
-    );
   },
 );
 
@@ -101,26 +69,15 @@ export default component$(() => {
 
   const storyblokContext = useContext(StoryblokContext);
   const storyBlokPreviewData = useStoryBlokPreviewInformation();
-  const translationsData = useTranslationsFromStoryblok();
-  const translationsContext = useContext(TranslationsContext);
 
   useTask$(({ track }) => {
     track(storyBlokPreviewData);
 
     try {
       storyblokContext.versionToLoad = storyBlokPreviewData.value.versionToLoad;
-      storyblokContext.language = storyBlokPreviewData.value.language;
     } catch (e) {
       console.error("Error setting storyblok preview data", e);
     }
-  });
-
-  useTask$(({ track }) => {
-    track(translationsData);
-    track(storyBlokPreviewData);
-
-    translationsContext.activeLanguage = storyBlokPreviewData.value.language;
-    translationsContext.translations = translationsData.value;
   });
 
   useTask$(({ track }) => {
@@ -133,6 +90,7 @@ export default component$(() => {
     <>
       <QwikCityNprogress />
       <PWAInstallBanner />
+      <LanguageBanner />
       <div class={styles.appContainer}>
         {appContext.showPageHeader && (
           <>

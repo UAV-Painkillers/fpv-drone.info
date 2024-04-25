@@ -1,9 +1,4 @@
-import {
-  component$,
-  useComputed$,
-  useContext,
-  useSignal,
-} from "@builder.io/qwik";
+import { component$, useComputed$, useSignal } from "@builder.io/qwik";
 import { Dialog } from "../../shared/dialog/dialog";
 import type {
   AnalyzerProgress,
@@ -13,10 +8,7 @@ import { AnalyzerStepStatus } from "../hooks/types";
 import type { StepProps } from "./step/step";
 import { Step } from "./step/step";
 import { RacoonLoader } from "../racoon-animations/racoon-animation";
-import {
-  TranslationsContext,
-  useTranslationFunction,
-} from "~/translations.ctx";
+import { inlineTranslate } from "qwik-speak";
 
 interface Props {
   isOpen: boolean;
@@ -24,45 +16,31 @@ interface Props {
 }
 
 export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
-  const translationContext = useContext(TranslationsContext);
-  const translate = useTranslationFunction(translationContext.translations);
+  const t = inlineTranslate();
 
   const translations = useSignal({
-    runningAnalysis: translate(
-      "blackboxAnalyzer.progress.runningAnalysis",
-    ) as string,
-    splittingLog: translate("blackboxAnalyzer.progress.splittingLog") as string,
-    analyzingSubLog: translate(
-      "blackboxAnalyzer.progress.analyzingSubLog",
-    ) as string,
-    readingHeaders: translate(
-      "blackboxAnalyzer.progress.readingHeaders",
-    ) as string,
-    decoding: translate("blackboxAnalyzer.progress.decoding") as string,
-    readingDecodedLog: translate(
-      "blackboxAnalyzer.progress.readingDecodedLog",
-    ) as string,
-    exportingHeaders: translate(
-      "blackboxAnalyzer.progress.exportingHeaders",
-    ) as string,
-    analyzingAxis: translate(
-      "blackboxAnalyzer.progress.analyzingAxis",
-    ) as string,
-    analyzingAxis_roll: translate("blackboxAnalyzer.progress.analyzingAxis", {
+    runningAnalysis: t("blackboxAnalyzer.progress.runningAnalysis"),
+    splittingLog: t("blackboxAnalyzer.progress.splittingLog"),
+    readingHeaders: t("blackboxAnalyzer.progress.readingHeaders"),
+    decoding: t("blackboxAnalyzer.progress.decoding"),
+    readingDecodedLog: t("blackboxAnalyzer.progress.readingDecodedLog"),
+    exportingHeaders: t("blackboxAnalyzer.progress.exportingHeaders"),
+    analyzingAxis: t("blackboxAnalyzer.progress.analyzingAxis"),
+    analyzingAxis_roll: t("blackboxAnalyzer.progress.analyzingAxis", {
       axis: "roll",
-    }) as string,
-    analyzingAxis_pitch: translate("blackboxAnalyzer.progress.analyzingAxis", {
+    }),
+    analyzingAxis_pitch: t("blackboxAnalyzer.progress.analyzingAxis", {
       axis: "pitch",
-    }) as string,
-    analyzingAxis_yaw: translate("blackboxAnalyzer.progress.analyzingAxis", {
+    }),
+    analyzingAxis_yaw: t("blackboxAnalyzer.progress.analyzingAxis", {
       axis: "yaw",
-    }) as string,
+    }),
   });
 
   const steps = useComputed$(() => {
     const getStateOfItemInIndexArray = (
       indexArray: AnalyzerStepStatusIndexArray,
-      index: number,
+      index: number
     ): AnalyzerStepStatus => {
       const item = indexArray.find((i) => i.index === index);
       return item ? item.state : AnalyzerStepStatus.PENDING;
@@ -75,6 +53,8 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
       label: translations.value.runningAnalysis,
     });
 
+    const t2 = inlineTranslate();
+
     stepItems.push({
       state: props.analyzerProgress.splitting.state,
       label: translations.value.splittingLog,
@@ -84,24 +64,21 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
           ({
             state: getStateOfItemInIndexArray(
               props.analyzerProgress.subLogs.state,
-              flightIndex,
+              flightIndex
             ),
-            label: translations.value.analyzingSubLog.replace(
-              "{flightIndex}",
-              (flightIndex + 1).toString(),
-            ),
+            label: t2("blackboxAnalyzer.progress.analyzingSubLog", { flightIndex: flightIndex + 1 }),
             subSteps: [
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.readingHeaders,
-                  flightIndex,
+                  flightIndex
                 ),
                 label: translations.value.readingHeaders,
               },
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.decoding,
-                  flightIndex,
+                  flightIndex
                 ),
                 label: translations.value.decoding,
               },
@@ -109,13 +86,13 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
                 label: translations.value.readingDecodedLog,
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.readingCSV,
-                  flightIndex,
+                  flightIndex
                 ),
               },
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.writingHeadDictToJson,
-                  flightIndex,
+                  flightIndex
                 ),
                 label: translations.value.exportingHeaders,
               },
@@ -123,14 +100,14 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
                 label: translations.value.runningAnalysis,
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.analyzingPID,
-                  flightIndex,
+                  flightIndex
                 ),
                 subSteps: ["roll", "pitch", "yaw"].map((axis) => ({
                   state: getStateOfItemInIndexArray(
                     props.analyzerProgress.subLogs.analyzingPIDTrace[
                       axis as "roll" | "pitch" | "yaw"
                     ],
-                    flightIndex,
+                    flightIndex
                   ),
                   label:
                     translations.value[
@@ -139,7 +116,7 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
                 })),
               },
             ],
-          }) as StepProps,
+          }) as StepProps
       ),
     });
 

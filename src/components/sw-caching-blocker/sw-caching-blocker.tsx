@@ -7,8 +7,8 @@ import {
 } from "@builder.io/qwik";
 import type { QRL } from "@builder.io/qwik";
 import type { JSX } from "@builder.io/qwik/jsx-runtime";
+import { inlineTranslate } from "qwik-speak";
 import { AppContext, BlockableCaches } from "~/app.ctx";
-import { useTranslation } from "~/translations.ctx";
 
 interface Props {
   render: QRL<() => JSX.Element>;
@@ -22,8 +22,10 @@ export const SWCachingBlocker = component$((props: Props) => {
   const serviceWorkerAvailable = useSignal<boolean | null>(null);
   const serviceWorkerDidCache = useSignal<boolean | null>(null);
 
+  const t = inlineTranslate();
+
   const show = useComputed$(() =>
-    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER),
+    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER)
   );
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -66,12 +68,9 @@ export const SWCachingBlocker = component$((props: Props) => {
     return true;
   });
 
-  const acceptButtonLabel = useTranslation(
-    "cachingBlocker.acceptButton.label",
-    {
-      downloadSizeMB: props.downloadSizeMB,
-    },
-  );
+  const acceptButtonLabel = t("cachingBlocker.acceptButton.label", {
+    downloadSizeMB: props.downloadSizeMB,
+  });
 
   if (showBlocker.value) {
     return (

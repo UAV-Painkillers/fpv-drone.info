@@ -32,11 +32,7 @@ import dragDrop from "drag-drop";
 import { ErrorBox } from "../error-box/error-box";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { storyblokEditable } from "@storyblok/js";
-import {
-  TranslationsContext,
-  useTranslation,
-  useTranslationFunction,
-} from "~/translations.ctx";
+import { inlineTranslate } from "qwik-speak";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -52,6 +48,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   const dropzoneRef = useSignal<HTMLElement>();
 
   useHideHeader();
+  const t = inlineTranslate();
 
   const {
     state: analyzerState,
@@ -129,7 +126,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -160,7 +157,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR,
+      (s) => s.state === AnalyzerStepStatus.ERROR
     );
   });
 
@@ -182,43 +179,34 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     analyzeFile(temporaryFileStorage.value, true);
   });
 
-  const loadingMessage = useTranslation(
-    "blackboxAnalyzer.loadingIndicator.label",
-  ) as string;
+  const loadingMessage = t("blackboxAnalyzer.loadingIndicator.label");
 
-  const logAnalyzationError = useTranslation(
-    "blackboxAnalyzer.error.logAnalyzation",
-  ) as string;
+  const logAnalyzationError = t("blackboxAnalyzer.error.logAnalyzation");
 
-  const openFileButtonLabel = useTranslation(
-    "blackboxAnalyzer.openFileButton.label",
-  ) as string;
+  const openFileButtonLabel = t("blackboxAnalyzer.openFileButton.label");
 
-  const openFileButtonAriaLabel = useTranslation(
-    "blackboxAnalyzer.openFileButton.ariaLabel",
-  ) as string;
+  const openFileButtonAriaLabel = t(
+    "blackboxAnalyzer.openFileButton.ariaLabel"
+  );
 
-  const addFileToCurrentAnalysisButtonLabel = useTranslation(
-    "blackboxAnalyzer.addFileToCurrentAnalysisButton.label",
-  ) as string;
+  const addFileToCurrentAnalysisButtonLabel = t(
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.label"
+  );
 
-  const addFileToCurrentAnalysisButtonAriaLabel = useTranslation(
-    "blackboxAnalyzer.addFileToCurrentAnalysisButton.ariaLabel",
-  ) as string;
+  const addFileToCurrentAnalysisButtonAriaLabel = t(
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.ariaLabel"
+  );
 
-  const replaceCurrentAnalysisButtonLabel = useTranslation(
-    "blackboxAnalyzer.replaceCurrentAnalysisButton.label",
-  ) as string;
+  const replaceCurrentAnalysisButtonLabel = t(
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.label"
+  );
 
-  const replaceCurrentAnalysisButtonAriaLabel = useTranslation(
-    "blackboxAnalyzer.replaceCurrentAnalysisButton.ariaLabel",
-  ) as string;
-
-  const translationContext = useContext(TranslationsContext);
-  const translate = useTranslationFunction(translationContext.translations);
+  const replaceCurrentAnalysisButtonAriaLabel = t(
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.ariaLabel"
+  );
 
   const subLogError = (logIndex: number, error: string) =>
-    translate("blackboxAnalyzer.subLogError", { logIndex, error }) as string;
+    t("blackboxAnalyzer.subLogError", { logIndex, error });
 
   return (
     <>
@@ -320,10 +308,13 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 });
 
 export const BlackboxAnalyzer = component$((props: Props) => {
+  const t = inlineTranslate();
+
   const downloadSizeMB = 150;
-  const blockMessage = useTranslation("blackboxAnalyzer.cacheBlockMessage", {
+  const blockMessage = t("blackboxAnalyzer.cacheBlockMessage", {
     downloadSizeMB,
-  }) as string;
+  });
+
   return (
     <div style={{ marginBlock: "1rem" }}>
       <SWCachingBlocker
@@ -418,17 +409,17 @@ export const BlackboxAnalyzerRegistryDefinition: CMSRegisteredComponent = {
               template: plotLabelsStoryData.labelNoiseDTermTemplate,
             },
           },
-        }) as PlotLabelDefinitions,
+        }) as PlotLabelDefinitions
     );
     const activePlots = useComputed$(() =>
       Object.fromEntries(
-        activePlotsStoryData.map((plotName: string) => [plotName, true]),
-      ),
+        activePlotsStoryData.map((plotName: string) => [plotName, true])
+      )
     );
     const navigation = useComputed$(() =>
       Object.fromEntries(
-        navigationStoryData.map((navTypeName: string) => [navTypeName, true]),
-      ),
+        navigationStoryData.map((navTypeName: string) => [navTypeName, true])
+      )
     );
 
     return (

@@ -1,9 +1,11 @@
 import { component$, $ } from "@builder.io/qwik";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { storyblokEditable } from "@storyblok/js";
-import { useTranslation } from "~/translations.ctx";
+import { inlineTranslate } from "qwik-speak";
 
 export const SWClearCacheButton = component$(() => {
+  const t = inlineTranslate();
+
   const clearCache = $(() => {
     const sw = navigator.serviceWorker;
 
@@ -21,10 +23,8 @@ export const SWClearCacheButton = component$(() => {
     sw.controller?.postMessage({ type: "CLEAR_CACHES" });
   });
 
-  const ariaLabel = useTranslation(
-    "cache.clearAndReloadButton.label",
-  ) as string;
-  const label = useTranslation("cache.clearAndReloadButton.label") as string;
+  const ariaLabel = t("cache.clearAndReloadButton.label") as string;
+  const label = t("cache.clearAndReloadButton.label") as string;
 
   return (
     <button class="button" onClick$={clearCache} aria-label={ariaLabel}>

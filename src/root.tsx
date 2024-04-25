@@ -17,10 +17,14 @@ import { useDarkmode } from "./hooks/use-darkmode";
 import classNames from "classnames";
 import type { StoryblokContextState } from "./routes/[...index]/storyblok.ctx";
 import { StoryblokContext } from "./routes/[...index]/storyblok.ctx";
-import type { TranslationsContextState } from "./translations.ctx";
-import { TranslationsContext } from "./translations.ctx";
+import { useQwikSpeak } from "qwik-speak";
+import {
+  translationFn as speakTranslationFn,
+  config as speakConfig,
+} from "./speak";
 
 export default component$(() => {
+  useQwikSpeak({ config: speakConfig, translationFn: speakTranslationFn });
   const appContextData = useStore<AppContextState>({
     showPageHeader: true,
     isPreviewing: false,
@@ -30,15 +34,8 @@ export default component$(() => {
   });
   useContextProvider(AppContext, appContextData);
 
-  const translationsContextData = useStore<TranslationsContextState>({
-    activeLanguage: "en",
-    translations: {},
-  });
-  useContextProvider(TranslationsContext, translationsContextData);
-
   const storyblokContextData = useStore<StoryblokContextState>({
     versionToLoad: "published",
-    language: "en",
   });
   useContextProvider(StoryblokContext, storyblokContextData);
 

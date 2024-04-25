@@ -8,24 +8,23 @@ import {
   useVisibleTask$,
   useComputed$,
 } from "@builder.io/qwik";
-import { useTranslation } from "~/translations.ctx";
-import styles from "./pwa-install-banner.module.css";
-import { useCSSTransition } from "qwik-transition";
-import classNames from "classnames";
+import { Banner } from "../shared/banner/banner";
+import { inlineTranslate } from "qwik-speak";
 
 export const PWAInstallBanner = component$(() => {
   const installPromptEvent =
     useSignal<NoSerialize<{ prompt: () => Promise<any> } | null>>();
   const isOnline = useSignal(false);
 
+  const t = inlineTranslate();
+
   const showBanner = useComputed$(
     () => !!installPromptEvent.value && isOnline.value,
   );
 
-  const { stage, shouldMount } = useCSSTransition(showBanner, {
-    timeout: 1000,
-  });
-
+  /**
+   * Listen to online/offline events and update the `isOnline` signal.
+   */
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
     isOnline.value = navigator.onLine;
@@ -47,6 +46,9 @@ export const PWAInstallBanner = component$(() => {
     });
   });
 
+  /**
+   * Listen to the `beforeinstallprompt` event and prevent the default behavior.
+   */
   useOnWindow(
     "beforeinstallprompt",
     $((event) => {
@@ -66,34 +68,24 @@ export const PWAInstallBanner = component$(() => {
     installPromptEvent.value = noSerialize(undefined);
   });
 
-  const ariaButtonLabel = useTranslation(
-    "pwa.install.button.ariaLabel",
+  const ariaButtonLabel = t(
+    "pwa.install.button.ariaLabel"
   ) as string;
-  const buttonlabel = useTranslation("pwa.install.button.label") as string;
+  const buttonlabel = t("pwa.install.button.label") as string;
 
-  const bannerText = useTranslation("pwa.install.banner.text") as string;
+  const bannerText = t("pwa.install.banner.text") as string;
 
   return (
-    <>
-      {shouldMount.value ? (
-        <div
-          class={classNames(styles.banner, {
-            [styles.hidden]: stage.value !== "enterTo",
-          })}
-        >
-          <span>{bannerText}</span>
-          <button
-            id="install"
-            class="button"
-            onClick$={onInstallButtonClick}
-            aria-label={ariaButtonLabel}
-          >
-            {buttonlabel}
-          </button>
-        </div>
-      ) : (
-        <div></div>
-      )}
-    </>
+    <Banner show={showBanner}>
+      <span>{bannerText}</span>
+      <button
+        id="install"
+        class="button"
+        onClick$={onInstallButtonClick}
+        aria-label={ariaButtonLabel}
+      >
+        {buttonlabel}
+      </button>
+    </Banner>
   );
 });

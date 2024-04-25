@@ -11,6 +11,7 @@ import type { QRL } from "@builder.io/qwik";
 import type { JSX } from "@builder.io/qwik/jsx-runtime";
 import type { ISbStoryData } from "@storyblok/js";
 import { loadStoryblokBridge } from "@storyblok/js";
+import { useSpeakLocale } from "qwik-speak";
 import { StoryblokContext } from "~/routes/[...index]/storyblok.ctx";
 import { getStoryBlokApi } from "~/routes/plugin@storyblok";
 
@@ -22,12 +23,13 @@ interface Props {
 export const CMSItemsList = component$((props: Props) => {
   const storyblokContext = useContext(StoryblokContext);
   const previewItemsList = useSignal<ISbStoryData>();
+  const locale = useSpeakLocale();
 
   const itemsResource = useResource$<ISbStoryData>(async () => {
     const { data } = await getStoryBlokApi()
       .getStory(props.itemsListStorySlug, {
         version: storyblokContext.versionToLoad,
-        language: storyblokContext.language,
+        language: locale.lang,
         resolve_relations: "items",
       })
       .catch((e) => {
