@@ -68,9 +68,7 @@ export const PWAInstallBanner = component$(() => {
     installPromptEvent.value = noSerialize(undefined);
   });
 
-  const ariaButtonLabel = t(
-    "pwa.install.button.ariaLabel"
-  ) as string;
+  const ariaButtonLabel = t("pwa.install.button.ariaLabel") as string;
   const buttonlabel = t("pwa.install.button.label") as string;
 
   const bannerText = t("pwa.install.banner.text") as string;

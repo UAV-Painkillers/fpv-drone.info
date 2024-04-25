@@ -10,17 +10,14 @@ import { config } from "../speak";
  */
 export const onRequest: RequestHandler = ({ params, locale }) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  let [langPart] = (params.index ?? '').split("/");
+  let [langPart] = (params.index ?? "").split("/");
 
   if (langPart.length !== 2) {
     langPart = "";
   }
 
   let langFromPath = config.defaultLocale.lang;
-  if (
-    langPart &&
-    !config.supportedLocales.find((locale) => locale.lang === langPart)
-  ) {
+  if (config.supportedLocales.find((locale) => locale.lang === langPart)) {
     langFromPath = langPart;
   }
 

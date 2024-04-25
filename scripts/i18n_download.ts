@@ -21,13 +21,16 @@ async function fetchTranslations(lang: string, asset: string) {
   let nextPage = 1;
   for (;;) {
     const cacheBuster = Date.now();
-    const { data, total } = await storyblokApi!.get(`cdn/datasource_entries?buster=${cacheBuster}`, {
-      datasource: `translations-${asset}`,
-      dimension: lang,
-      page: nextPage,
-      per_page: 100,
-      version: "published",
-    });
+    const { data, total } = await storyblokApi!.get(
+      `cdn/datasource_entries?buster=${cacheBuster}`,
+      {
+        datasource: `translations-${asset}`,
+        dimension: lang,
+        page: nextPage,
+        per_page: 100,
+        version: "published",
+      },
+    );
 
     allDataSourceEntries.push(...data.datasource_entries);
 
@@ -42,7 +45,7 @@ async function fetchTranslations(lang: string, asset: string) {
   allDataSourceEntries.forEach(
     (entry: { name: string; dimension_value?: string; value?: string }) => {
       set(translations, entry.name, entry.dimension_value ?? entry.value);
-    }
+    },
   );
 
   return translations;
@@ -80,7 +83,7 @@ for (const [langAsset, translations] of downloadedTranslations) {
   await fs.mkdir(`i18n/${lang}`, { recursive: true });
   await fs.writeFile(
     `i18n/${lang}/${asset}.json`,
-    JSON.stringify(translations, null, 2)
+    JSON.stringify(translations, null, 2),
   );
   console.log(`Saved ${lang}/${asset}.json`);
 }

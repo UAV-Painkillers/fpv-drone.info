@@ -126,7 +126,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -157,7 +157,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR
+      (s) => s.state === AnalyzerStepStatus.ERROR,
     );
   });
 
@@ -186,23 +186,23 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   const openFileButtonLabel = t("blackboxAnalyzer.openFileButton.label");
 
   const openFileButtonAriaLabel = t(
-    "blackboxAnalyzer.openFileButton.ariaLabel"
+    "blackboxAnalyzer.openFileButton.ariaLabel",
   );
 
   const addFileToCurrentAnalysisButtonLabel = t(
-    "blackboxAnalyzer.addFileToCurrentAnalysisButton.label"
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.label",
   );
 
   const addFileToCurrentAnalysisButtonAriaLabel = t(
-    "blackboxAnalyzer.addFileToCurrentAnalysisButton.ariaLabel"
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.ariaLabel",
   );
 
   const replaceCurrentAnalysisButtonLabel = t(
-    "blackboxAnalyzer.replaceCurrentAnalysisButton.label"
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.label",
   );
 
   const replaceCurrentAnalysisButtonAriaLabel = t(
-    "blackboxAnalyzer.replaceCurrentAnalysisButton.ariaLabel"
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.ariaLabel",
   );
 
   const subLogError = (logIndex: number, error: string) =>
@@ -409,17 +409,17 @@ export const BlackboxAnalyzerRegistryDefinition: CMSRegisteredComponent = {
               template: plotLabelsStoryData.labelNoiseDTermTemplate,
             },
           },
-        }) as PlotLabelDefinitions
+        }) as PlotLabelDefinitions,
     );
     const activePlots = useComputed$(() =>
       Object.fromEntries(
-        activePlotsStoryData.map((plotName: string) => [plotName, true])
-      )
+        activePlotsStoryData.map((plotName: string) => [plotName, true]),
+      ),
     );
     const navigation = useComputed$(() =>
       Object.fromEntries(
-        navigationStoryData.map((navTypeName: string) => [navTypeName, true])
-      )
+        navigationStoryData.map((navTypeName: string) => [navTypeName, true]),
+      ),
     );
 
     return (

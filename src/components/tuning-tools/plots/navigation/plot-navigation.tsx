@@ -24,7 +24,7 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
     let resultingSelectedLogIndexes: number[];
     if (wasSelected) {
       resultingSelectedLogIndexes = analyzerContext.selectedLogIndexes.filter(
-        (i) => i !== index
+        (i) => i !== index,
       );
     } else {
       resultingSelectedLogIndexes = [
@@ -51,10 +51,10 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
     {
       count: analyzerContext.selectedLogIndexes.length,
       total: analyzerContext.results?.length,
-    }
+    },
   ) as string;
   const combinedLogSelectionAriaLabel = t(
-    "blackboxAnalyzer.plotNavigation.combinedLogsSelection.ariaLabel"
+    "blackboxAnalyzer.plotNavigation.combinedLogsSelection.ariaLabel",
   ) as string;
 
   const activeFlightLogLabel = (index: number) =>
@@ -63,13 +63,13 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
     });
 
   const axisSelectionRollLabel = t(
-    "blackboxAnalyzer.plotNavigation.axisSelection.roll.label"
+    "blackboxAnalyzer.plotNavigation.axisSelection.roll.label",
   ) as string;
   const axisSelectionPitchLabel = t(
-    "blackboxAnalyzer.plotNavigation.axisSelection.pitch.label"
+    "blackboxAnalyzer.plotNavigation.axisSelection.pitch.label",
   ) as string;
   const axisSelectionYawLabel = t(
-    "blackboxAnalyzer.plotNavigation.axisSelection.yaw.label"
+    "blackboxAnalyzer.plotNavigation.axisSelection.yaw.label",
   ) as string;
 
   return (

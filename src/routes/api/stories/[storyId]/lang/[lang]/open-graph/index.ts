@@ -1,6 +1,9 @@
+import type { StaticGenerateHandler } from "@builder.io/qwik-city";
 import { type RequestHandler } from "@builder.io/qwik-city";
 import { generateOgImage } from "./generate-og-image";
 import { getStoryBlokApi } from "~/routes/plugin@storyblok";
+import { getAllPageStories } from "~/utils/storyblok";
+import { config as speakConfig } from "~/speak";
 
 export const onGet: RequestHandler = async (requestEvent) => {
   requestEvent.headers.set("Content-Type", "image/jpeg");
@@ -12,19 +15,19 @@ export const onGet: RequestHandler = async (requestEvent) => {
   const TITLE_MAX_LENGTH = 26;
   const SUB_TITLE_MAX_LENGTH = 38;
 
-  let title =
-    requestEvent.url.searchParams.get("title") ||
-    "fpv-drone.info".substring(0, TITLE_MAX_LENGTH);
-  let subTitle =
-    requestEvent.url.searchParams.get("subTitle") ||
-    "Guides, Tools and Products".substring(0, SUB_TITLE_MAX_LENGTH);
-  const builderIoID = requestEvent.url.searchParams.get("builder-io-id");
+  const DEFAULT_TITLE = "fpv-drone.info";
+  const DEFAULT_SUB_TITLE = "Guides, Tools and Products";
+
+  let title = DEFAULT_TITLE;
+  let subTitle = DEFAULT_SUB_TITLE;
+
+  const builderIoID = requestEvent.params.storyId;
+  const language = requestEvent.params.lang;
 
   if (builderIoID) {
     const { data } = await getStoryBlokApi().getStory(builderIoID, {
       version: "published",
-      // TODO: determine language to use
-      language: "en",
+      language,
     });
 
     const page = data.story;
@@ -32,6 +35,9 @@ export const onGet: RequestHandler = async (requestEvent) => {
     title = page.content.ogTitle || title;
     subTitle = page.content.ogDescription || subTitle;
   }
+
+  title = title.substring(0, TITLE_MAX_LENGTH);
+  subTitle = subTitle.substring(0, SUB_TITLE_MAX_LENGTH);
 
   const endpoint = requestEvent.env.get("OG_IMAGE_GENERATOR_ENDPOINT");
   if (!endpoint) {
@@ -72,4 +78,23 @@ export const onGet: RequestHandler = async (requestEvent) => {
   }
 
   ogImageBlob.stream().pipeTo(writableStream);
+};
+
+export const onStaticGenerate: StaticGenerateHandler = async () => {
+  const allStories = await getAllPageStories();
+
+  const params: Array<Record<string, string>> = [];
+
+  speakConfig.supportedLocales.forEach((locale) => {
+    allStories.forEach((story) => {
+      params.push({
+        lang: locale.lang,
+        storyId: story.id.toString(),
+      });
+    });
+  });
+
+  return {
+    params,
+  };
 };

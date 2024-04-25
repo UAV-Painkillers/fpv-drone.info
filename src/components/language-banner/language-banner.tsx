@@ -39,7 +39,7 @@ export const LanguageBanner = component$(() => {
   const isBannerVisible = useComputed$(() => {
     if (
       !speakConfig.supportedLocales.find(
-        (locale) => locale.lang === browserLanguage.value
+        (locale) => locale.lang === browserLanguage.value,
       )
     ) {
       return false;
@@ -50,22 +50,30 @@ export const LanguageBanner = component$(() => {
 
   const buttonLabel = t("languageBanner.button.label");
 
-  const targetLanguage = useComputed$(() => {
+  const languages = useComputed$(() => {
     const t2 = inlineTranslate();
-    return t2(`language.${browserLanguage.value}`);
+    return speakConfig.supportedLocales.map((locale) => ({
+      lang: locale.lang,
+      name: t2(`language.${locale.lang}`),
+    }));
   });
 
   const bannerText = useComputed$(() => {
     const t2 = inlineTranslate();
-    return t2("languageBanner.text", { language: targetLanguage.value })
-});
+    return t2("languageBanner.text", {
+      language: languages.value.find((l) => l.lang === browserLanguage.value)
+        ?.name,
+    });
+  });
 
   const targetLangHref = useComputed$(() => {
-    return changeLanguageInURLPathname(
+    const href = changeLanguageInURLPathname(
       location.url.pathname,
       activeLocale.lang,
-      browserLanguage.value!
+      browserLanguage.value!,
     );
+
+    return href;
   });
 
   return (

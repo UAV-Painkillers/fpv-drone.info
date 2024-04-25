@@ -13,43 +13,13 @@ import type {
   RequestHandler,
   StaticGenerateHandler,
 } from "@builder.io/qwik-city";
-import { routeLoader$ } from "@builder.io/qwik-city";
 import { loadStoryblokBridge, type ISbStoryData } from "@storyblok/js";
 import { StoryBlokComponentArray } from "~/components/storyblok/component-array";
-import { useStoryBlokPreviewInformation } from "../layout";
+import { useStory, useStoryblok } from "../layout";
 import { getAllPageStories } from "../../utils/storyblok";
 import { useStoryblokURL } from "~/components/shared/utils/url";
 import { config as speakConfig } from "../../speak";
-import { getStoryBlokApi } from "../plugin@storyblok";
 import { PageHeadline } from "~/components/shared/page-headline/page-headline";
-
-export const useRouteURL = routeLoader$(async ({ url }) => {
-  return url;
-});
-
-export const useStory = routeLoader$(async ({ resolveValue }) => {
-  const { versionToLoad, slug, language } = await resolveValue(
-    useStoryBlokPreviewInformation
-  );
-
-  const { data } = await getStoryBlokApi()
-    .getStory(slug, {
-      version: versionToLoad,
-      language,
-      resolve_relations: [
-        "*",
-        "cms-snippet.reference",
-        "instruction-step-item.sourceStep",
-        "instruction-step-item.*",
-      ],
-    })
-    .catch((e) => {
-      console.error("Error fetching story for page", slug, e);
-      return { data: { story: null } };
-    });
-
-  return data.story as ISbStoryData | null;
-});
 
 export default component$(() => {
   const loadedStory = useStory();
@@ -73,7 +43,7 @@ export default component$(() => {
       storyblokInstance.on("input", (event) => {
         story.value = event?.story as ISbStoryData;
       });
-    })
+    }),
   );
 
   const backButtonHref = useStoryblokURL(story.value?.content.backButtonHref);
@@ -120,9 +90,9 @@ export default component$(() => {
   );
 });
 
-export const head: DocumentHead = ({ resolveValue }) => {
+export const head: DocumentHead = ({ resolveValue, url }) => {
   const story = resolveValue(useStory);
-  const location = resolveValue(useRouteURL);
+  const { language } = resolveValue(useStoryblok);
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!story) {
@@ -136,7 +106,7 @@ export const head: DocumentHead = ({ resolveValue }) => {
   const meta = [
     {
       property: "og:image",
-      content: `${location.origin}/api/open-graph?builder-io-id=${story.id}`,
+      content: `/api/stories/${story.id}/lang/${language}/open-graph`,
     },
     {
       property: "og:title",
@@ -148,7 +118,7 @@ export const head: DocumentHead = ({ resolveValue }) => {
     },
     {
       property: "og:url",
-      content: location.href,
+      content: url.href,
     },
     {
       property: "description",

@@ -25,7 +25,7 @@ export const SWCachingBlocker = component$((props: Props) => {
   const t = inlineTranslate();
 
   const show = useComputed$(() =>
-    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER)
+    appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER),
   );
 
   // eslint-disable-next-line qwik/no-use-visible-task

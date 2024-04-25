@@ -20,7 +20,7 @@ export const DynamicIdleCalculator = component$(
 
     const propSizeInputLabel = t("dynamicIdleCalculator.propSizeInput.label");
     const dynamicIdleResultLabel = t(
-      "dynamicIdleCalculator.dynamicIdleResult.label"
+      "dynamicIdleCalculator.dynamicIdleResult.label",
     );
 
     return (
@@ -46,7 +46,7 @@ export const DynamicIdleCalculator = component$(
         </label>
       </div>
     );
-  }
+  },
 );
 
 export const DynamicIdleCalculatorRegistryDefinition: CMSRegisteredComponent = {
