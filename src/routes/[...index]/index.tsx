@@ -183,6 +183,10 @@ export const onStaticGenerate: StaticGenerateHandler = async () => {
 
     allStories.forEach((story) => {
       params.push({
+        index: story.full_slug,
+      });
+
+      params.push({
         index: `${locale.lang}/${story.full_slug}`,
       });
     });
