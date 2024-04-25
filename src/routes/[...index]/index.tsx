@@ -106,7 +106,7 @@ export const head: DocumentHead = ({ resolveValue, url }) => {
   const meta = [
     {
       property: "og:image",
-      content: `/api/stories/${story.id}/lang/${language}/open-graph`,
+      content: `${url.origin}/api/stories/${story.id}/lang/${language}/open-graph`,
     },
     {
       property: "og:title",
