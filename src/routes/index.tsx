@@ -1,3 +1,1 @@
-import IndexComponent from "./[...index]/index";
-
-export default IndexComponent;
+export * from "./[...index]/index";
