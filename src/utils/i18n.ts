@@ -1,5 +1,3 @@
-import path from "path";
-
 export function changeLanguageInURLPathname(
   pathname: string,
   currentLang: string,
