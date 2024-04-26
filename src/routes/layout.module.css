@@ -17,6 +17,13 @@
   padding-inline: 50px;
 }
 
+/** is mobile */
+@media screen and (max-width: 768px) {
+  .appContainer {
+    padding-inline: 25px;
+  }
+}
+
 .logo {
   grid-area: logo;
   justify-self: start;

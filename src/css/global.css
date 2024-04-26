@@ -16,13 +16,6 @@ body {
   font-style: normal;
 }
 
-/** is mobile */
-@media screen and (max-width: 768px) {
-  body {
-    padding-inline: 25px;
-  }
-}
-
 h1,
 h2,
 h3 {

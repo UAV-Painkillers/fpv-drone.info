@@ -10,6 +10,13 @@
   height: var(--banner-height);
 }
 
+/** is mobile */
+@media screen and (max-width: 768px) {
+  .banner {
+    --banner-height: 5rem;
+  }
+}
+
 .hidden {
   margin-top: calc(-1 * var(--banner-height));
 }
