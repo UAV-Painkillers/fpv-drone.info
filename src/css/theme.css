@@ -6,8 +6,12 @@ body {
 
   --success-color: #16c969;
   --success-background-color: hsl(148, 40%, 44%);
+  
   --warning-color: #c98716;
-  --alarm-color: #c91652;
+  --warning-background-color: hsl(34.72, 100%, 50%);
+
+  --error-color: #c91652;
+  --error-background-color: hsl(340, 40%, 44%);
 
   --text-color: var(--base-black);
   --body-background: 255, 255, 255;
@@ -50,7 +54,7 @@ body {
 
   --button-danger-background: linear-gradient(
     45deg,
-    var(--alarm-color),
+    var(--error-color),
     var(--base-black)
   );
 
@@ -114,6 +118,8 @@ body.dark {
 
   --text-color: var(--base-white);
   --body-background: 25, 25, 25;
+
+  --warning-background-color: hsl(34.72deg, 100%, 39.8%);
 
   --button-glow-background: linear-gradient(
     45deg,

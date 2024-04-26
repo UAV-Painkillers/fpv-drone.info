@@ -274,7 +274,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
         {subLogsWithErrors.value.length > 0 && (
           <code>
             <RacoonError style={{ float: "right" }} />
-            <b style={{ color: "var(--alarm-color)", display: "block" }}>
+            <b style={{ color: "var(--error-color)", display: "block" }}>
               ERRORS:
             </b>
             {subLogsWithErrors.value.map(({ index, error }) => (

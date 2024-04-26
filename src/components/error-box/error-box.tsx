@@ -16,7 +16,7 @@ export const ErrorBox = component$((props: Props) => {
   return (
     <code>
       <RacoonError style={{ float: "right" }} />
-      <b style={{ color: "var(--alarm-color)", display: "block" }}>ERRORS:</b>
+      <b style={{ color: "var(--error-color)", display: "block" }}>ERRORS:</b>
       {errorLines.value.map((line, errorLineIndex) =>
         line.split("\n").map((line, subLineIndex) => (
           <div

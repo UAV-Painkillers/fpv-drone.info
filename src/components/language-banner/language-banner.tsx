@@ -80,7 +80,7 @@ export const LanguageBanner = component$(() => {
 
   return (
     <div>
-      <Banner show={isBannerVisible}>
+      <Banner show={isBannerVisible} variant="warning">
         <div class={styles.container}>
           <span>{bannerText}</span>
           <a class={classNames("button")} href={targetLangHref.value}>

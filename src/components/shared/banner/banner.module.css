@@ -10,6 +10,31 @@
   min-height: var(--banner-height);
 }
 
+.banner.success {
+  /* from --body-background (bottom), to --success-background-color (top) */
+  background: linear-gradient(
+    0deg,
+    rgb(var(--body-background)),
+    var(--success-background-color)
+  );
+}
+
+.banner.error {
+  background: linear-gradient(
+    0deg,
+    rgb(var(--body-background)),
+    var(--error-background-color)
+  );
+}
+
+.banner.warning {
+  background: linear-gradient(
+    0deg,
+    rgb(var(--body-background)),
+    var(--warning-background-color)
+  );
+}
+
 /** is mobile */
 @media screen and (max-width: 768px) {
   .banner {
