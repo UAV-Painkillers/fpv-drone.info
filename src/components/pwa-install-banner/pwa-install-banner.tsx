@@ -74,7 +74,7 @@ export const PWAInstallBanner = component$(() => {
   const bannerText = t("pwa.install.banner.text") as string;
 
   return (
-    <Banner show={showBanner}>
+    <Banner show={showBanner} variant="success">
       <span>{bannerText}</span>
       <button
         id="install"
