@@ -7,7 +7,7 @@
   align-items: center;
   margin-top: 0;
   transition: margin-top 0.5s;
-  height: var(--banner-height);
+  min-height: var(--banner-height);
 }
 
 /** is mobile */

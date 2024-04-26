@@ -9,6 +9,8 @@ import { Banner } from "../shared/banner/banner";
 import { inlineTranslate, useSpeakConfig, useSpeakLocale } from "qwik-speak";
 import { useLocation } from "@builder.io/qwik-city";
 import { changeLanguageInURLPathname } from "~/utils/i18n";
+import classNames from "classnames";
+import styles from "./language-banner.module.css";
 
 export const LanguageBanner = component$(() => {
   const location = useLocation();
@@ -39,7 +41,7 @@ export const LanguageBanner = component$(() => {
   const isBannerVisible = useComputed$(() => {
     if (
       !speakConfig.supportedLocales.find(
-        (locale) => locale.lang === browserLanguage.value,
+        (locale) => locale.lang === browserLanguage.value
       )
     ) {
       return false;
@@ -70,7 +72,7 @@ export const LanguageBanner = component$(() => {
     const href = changeLanguageInURLPathname(
       location.url.pathname,
       activeLocale.lang,
-      browserLanguage.value!,
+      browserLanguage.value!
     );
 
     return href;
@@ -79,10 +81,12 @@ export const LanguageBanner = component$(() => {
   return (
     <div>
       <Banner show={isBannerVisible}>
-        <span>{bannerText}</span>
-        <a class="button" href={targetLangHref.value}>
-          {buttonLabel}
-        </a>
+        <div class={styles.container}>
+          <span>{bannerText}</span>
+          <a class={classNames("button")} href={targetLangHref.value}>
+            {buttonLabel}
+          </a>
+        </div>
       </Banner>
     </div>
   );
