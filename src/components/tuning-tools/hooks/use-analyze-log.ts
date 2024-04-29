@@ -11,7 +11,6 @@ import {
   AnalyzeOneFlightStep,
   SplitBBLStep,
 } from "@uav.painkillers/pid-analyzer-wasm";
-import { useLocation } from "@builder.io/qwik-city";
 import type { AnalyzerProgress } from "./types";
 import { AnalyzerStepStatus, makeEmptyProgress } from "./types";
 import { track } from "@vercel/analytics";
@@ -26,7 +25,6 @@ export enum AnalyzerState {
 
 export function useAnalyzeLog() {
   const analyzerState = useBlackboxAnalyzerContextProvider();
-  const location = useLocation();
 
   const state = useSignal<AnalyzerState>(AnalyzerState.LOADING);
   const progress = useSignal<AnalyzerProgress>(makeEmptyProgress());
@@ -43,7 +41,7 @@ export function useAnalyzeLog() {
       try {
         state.value = AnalyzerState.LOADING;
         analyzer.value = noSerialize(
-          new PIDAnalyzer(`${location.url.origin}/pid-analyer-dependencies`)
+          new PIDAnalyzer("/pid-analyer-dependencies"),
         );
         await analyzer.value!.init();
         state.value = AnalyzerState.IDLE;
@@ -51,18 +49,17 @@ export function useAnalyzeLog() {
         console.error("Error initializing analyzer", e);
         state.value = AnalyzerState.ERROR;
         error.value = (e as Error).message;
-        console.error(e);
       }
     },
     {
       strategy: "intersection-observer",
-    }
+    },
   );
 
   const onSplitBBLStatusReport = $(
     <TKey extends SplitBBLStep>(
       step: TKey,
-      payload: SplitBBLStepToPayloadMap[TKey]
+      payload: SplitBBLStepToPayloadMap[TKey],
     ) => {
       switch (step) {
         case SplitBBLStep.RUNNING: {
@@ -137,7 +134,7 @@ export function useAnalyzeLog() {
             (item) =>
               item.index === subFileIndex
                 ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                : item
+                : item,
           );
           progress.value = {
             ...progress.value,
@@ -180,7 +177,7 @@ export function useAnalyzeLog() {
           const newDecoding = progress.value.subLogs.decoding.map((item) =>
             item.index === subFileIndex
               ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-              : item
+              : item,
           );
           progress.value = {
             ...progress.value,
@@ -203,14 +200,14 @@ export function useAnalyzeLog() {
           break;
         }
       }
-    }
+    },
   );
 
   const onAnalyzerStatusReport = $(
     <TKey extends AnalyzeOneFlightStep>(
       step: TKey,
       flightLogIndex: number,
-      payload: AnalyzeOneFlightStepToPayloadMap[TKey]
+      payload: AnalyzeOneFlightStepToPayloadMap[TKey],
     ) => {
       switch (step) {
         case AnalyzeOneFlightStep.START: {
@@ -240,7 +237,7 @@ export function useAnalyzeLog() {
               readingCSV: progress.value.subLogs.readingCSV.map((item) =>
                 item.index === flightLogIndex
                   ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                  : item
+                  : item,
               ),
             },
           };
@@ -270,7 +267,7 @@ export function useAnalyzeLog() {
                 progress.value.subLogs.writingHeadDictToJson.map((item) =>
                   item.index === flightLogIndex
                     ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                    : item
+                    : item,
                 ),
             },
           };
@@ -324,7 +321,7 @@ export function useAnalyzeLog() {
                 ].map((item) =>
                   item.index === flightLogIndex
                     ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                    : item
+                    : item,
                 ),
               },
             },
@@ -340,7 +337,7 @@ export function useAnalyzeLog() {
               analyzingPID: progress.value.subLogs.analyzingPID.map((item) =>
                 item.index === flightLogIndex
                   ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                  : item
+                  : item,
               ),
             },
           };
@@ -355,7 +352,7 @@ export function useAnalyzeLog() {
               state: progress.value.subLogs.state.map((item) =>
                 item.index === flightLogIndex
                   ? { index: item.index, state: AnalyzerStepStatus.COMPLETE }
-                  : item
+                  : item,
               ),
             },
           };
@@ -373,7 +370,7 @@ export function useAnalyzeLog() {
                       state: AnalyzerStepStatus.ERROR,
                       error: payload as string,
                     }
-                  : item
+                  : item,
               ),
             },
           };
@@ -383,7 +380,7 @@ export function useAnalyzeLog() {
         default:
           console.warn("Unknown step", step, payload);
       }
-    }
+    },
   );
 
   const analyzeFile = $(async (file?: File, replaceCurrentAnalysis = true) => {
@@ -402,14 +399,14 @@ export function useAnalyzeLog() {
         await file.arrayBuffer(),
         (status, payload) => {
           onSplitBBLStatusReport(status, payload);
-        }
+        },
       );
 
       const analyzerResult = await analyzer.value!.analyze(
         decoderResults,
         (status, index, payload) => {
           onAnalyzerStatusReport(status, index, payload);
-        }
+        },
       );
 
       let newResults: PIDAnalyzerResult[];
@@ -424,8 +421,8 @@ export function useAnalyzeLog() {
         ).concat(analyzerResult as PIDAnalyzerResult[]);
         newSelectedLogIndexes = analyzerState.selectedLogIndexes.concat(
           analyzerResult.map(
-            (_, index) => index + (analyzerState.results?.length ?? 0)
-          )
+            (_, index) => index + (analyzerState.results?.length ?? 0),
+          ),
         );
       }
 
@@ -458,8 +455,7 @@ export function useAnalyzeLog() {
       let message = (e as Error).message;
       if (message.includes("(OOM)")) {
         message =
-          "Out of memory error.\n" +
-          "Most likely your logfile is too large..."
+          "Out of memory error.\n" + "Most likely your logfile is too large...";
       }
       error.value = message;
     }

@@ -5,8 +5,13 @@ body {
   --base-white: #ffffff;
 
   --success-color: #16c969;
+  --success-background-color: hsl(148, 40%, 44%);
+  
   --warning-color: #c98716;
-  --alarm-color: #c91652;
+  --warning-background-color: hsl(34.72, 100%, 50%);
+
+  --error-color: #c91652;
+  --error-background-color: hsl(340, 40%, 44%);
 
   --text-color: var(--base-black);
   --body-background: 255, 255, 255;
@@ -49,7 +54,7 @@ body {
 
   --button-danger-background: linear-gradient(
     45deg,
-    var(--alarm-color),
+    var(--error-color),
     var(--base-black)
   );
 
@@ -86,7 +91,7 @@ body {
   --pre-background: var(--base-black);
   --pre-color: var(--base-white);
 
-  --alert-border-color: var(--waning-color);
+  --alert-border-color: var(--warning-color);
 
   --card--background: #f5f5f7;
   --card--shadow-color: #e5e5e5;
@@ -109,10 +114,12 @@ body.dark {
   --base-black: #000000;
 
   --base-green: #186f5b;
-  --base-blue: #1653c9;
+  --base-blue: #1666c9;
 
   --text-color: var(--base-white);
   --body-background: 25, 25, 25;
+
+  --warning-background-color: hsl(34.72deg, 100%, 39.8%);
 
   --button-glow-background: linear-gradient(
     45deg,

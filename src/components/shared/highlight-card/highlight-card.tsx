@@ -1,39 +1,41 @@
+import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$ } from "@builder.io/qwik";
 import { formatHtmlText } from "~/utils/formatHtmlText";
 import styles from "./highlight-card.module.css";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
+import {
+  storyblokEditable,
+  type SbBlokData,
+  renderRichText,
+} from "@storyblok/js";
 
 interface Props {
   title?: string;
   content?: string;
 }
-export const HighlightCard = component$((props: Props) => {
-  const contentHtml = formatHtmlText(props.content ?? "");
+export const HighlightCard = component$(
+  (props: Props & IntrinsicElements["div"]) => {
+    const { title, content, ...divProps } = props;
+    const contentHtml = formatHtmlText(content ?? "");
 
-  return (
-    <div class={styles.tipCard}>
-      <b>{props.title}:</b>
-      <div dangerouslySetInnerHTML={contentHtml}></div>
-    </div>
-  );
-});
+    return (
+      <div {...divProps} class={styles.tipCard}>
+        <b>{title}:</b>
+        <div dangerouslySetInnerHTML={contentHtml}></div>
+      </div>
+    );
+  },
+);
 
-export const HighlightCardRegistryDefinition: RegisteredComponent = {
-  component: HighlightCard,
-  name: "HightlightCard",
-  friendlyName: "Higlight Card",
-  inputs: [
-    {
-      name: "title",
-      friendlyName: "Title",
-      type: "string",
-      required: true,
-    },
-    {
-      name: "content",
-      friendlyName: "Content",
-      type: "richText",
-      required: true,
-    },
-  ],
+export const HighlightCardRegistryDefinition: CMSRegisteredComponent = {
+  component: component$((blok: SbBlokData) => {
+    return (
+      <HighlightCard
+        {...storyblokEditable(blok)}
+        title={blok.title as string}
+        content={renderRichText(blok.content as any)}
+      />
+    );
+  }),
+  name: "HighlightCard",
 };

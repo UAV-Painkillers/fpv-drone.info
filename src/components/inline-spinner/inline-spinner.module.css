@@ -25,6 +25,7 @@
 .inlineSpinner {
   top: 3px;
   margin: 0 3px;
+  margin-bottom: 0.1rem;
 }
 .inlineSpinner:before {
   border-color: #74a8d0 #74a8d0 transparent transparent;
@@ -53,8 +54,8 @@
 }
 
 .error {
-  background-color: var(--alarm-color);
-  border: 2px solid var(--alarm-color);
+  background-color: var(--error-color);
+  border: 2px solid var(--error-color);
   animation: none;
 }
 .error:before {

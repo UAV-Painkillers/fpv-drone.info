@@ -1,44 +1,57 @@
+import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$, useSignal, $ } from "@builder.io/qwik";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import type { SbBlokData } from "@storyblok/js";
+import { storyblokEditable } from "@storyblok/js";
+import { inlineTranslate } from "qwik-speak";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
-export const DynamicIdleCalculator = component$(() => {
-  const dynamicIdle = useSignal(0);
+export const DynamicIdleCalculator = component$(
+  (props: IntrinsicElements["div"]) => {
+    const dynamicIdle = useSignal(0);
+    const t = inlineTranslate();
 
-  const onPropDiaChange = $((e: Event) => {
-    const input = e.target as HTMLInputElement;
-    const propDia = parseFloat(input.value);
+    const onPropDiaChange = $((e: Event) => {
+      const input = e.target as HTMLInputElement;
+      const propDia = parseFloat(input.value);
 
-    const dynIdleRpm = 15000 / propDia;
-    dynamicIdle.value = Math.round(dynIdleRpm / 100);
-  });
+      const dynIdleRpm = 15000 / propDia;
+      dynamicIdle.value = Math.round(dynIdleRpm / 100);
+    });
 
-  return (
-    <div>
-      <label style={{ display: "block", marginBottom: "1rem" }}>
-        Prop Diameter (inches)
-        <input
-          style={{ display: "block" }}
-          type="number"
-          min={0}
-          onInput$={onPropDiaChange}
-        />
-      </label>
+    const propSizeInputLabel = t("dynamicIdleCalculator.propSizeInput.label");
+    const dynamicIdleResultLabel = t(
+      "dynamicIdleCalculator.dynamicIdleResult.label",
+    );
 
-      <label style={{ display: "block" }}>
-        Resulting Dynamic Idle
-        <input
-          style={{ display: "block" }}
-          type="number"
-          readOnly
-          value={dynamicIdle.value}
-        />
-      </label>
-    </div>
-  );
-});
+    return (
+      <div {...props}>
+        <label style={{ display: "block", marginBottom: "1rem" }}>
+          {propSizeInputLabel}
+          <input
+            style={{ display: "block" }}
+            type="number"
+            min={0}
+            onInput$={onPropDiaChange}
+          />
+        </label>
 
-export const DynamicIdleCalculatorRegistryDefinition: RegisteredComponent = {
-  component: DynamicIdleCalculator,
+        <label style={{ display: "block" }}>
+          {dynamicIdleResultLabel}
+          <input
+            style={{ display: "block" }}
+            type="number"
+            readOnly
+            value={dynamicIdle.value}
+          />
+        </label>
+      </div>
+    );
+  },
+);
+
+export const DynamicIdleCalculatorRegistryDefinition: CMSRegisteredComponent = {
+  component: component$((blok: SbBlokData) => {
+    return <DynamicIdleCalculator {...storyblokEditable(blok)} />;
+  }),
   name: "DynamicIdleCalculator",
-  friendlyName: "Dynamic Idle Calculator",
 };

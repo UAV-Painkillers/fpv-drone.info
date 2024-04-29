@@ -2,6 +2,7 @@ import { component$, $, useSignal, useContext } from "@builder.io/qwik";
 import { Dialog } from "~/components/shared/dialog/dialog";
 import { BlackboxAnalyzerContext } from "../../context/blackbox-analyzer.context";
 import styles from "./plot-navigation.module.css";
+import { inlineTranslate } from "qwik-speak";
 
 export interface PlotNavigationProps {
   showCombinedLogsSelection?: boolean;
@@ -43,6 +44,34 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
     return null;
   }
 
+  const t = inlineTranslate();
+
+  const combinedLogSelectionLabel = t(
+    "blackboxAnalyzer.plotNavigation.combinedLogsSelection.label",
+    {
+      count: analyzerContext.selectedLogIndexes.length,
+      total: analyzerContext.results?.length,
+    },
+  ) as string;
+  const combinedLogSelectionAriaLabel = t(
+    "blackboxAnalyzer.plotNavigation.combinedLogsSelection.ariaLabel",
+  ) as string;
+
+  const activeFlightLogLabel = (index: number) =>
+    t("blackboxAnalyzer.plotNavigation.activeFlightLog.label", {
+      index,
+    });
+
+  const axisSelectionRollLabel = t(
+    "blackboxAnalyzer.plotNavigation.axisSelection.roll.label",
+  ) as string;
+  const axisSelectionPitchLabel = t(
+    "blackboxAnalyzer.plotNavigation.axisSelection.pitch.label",
+  ) as string;
+  const axisSelectionYawLabel = t(
+    "blackboxAnalyzer.plotNavigation.axisSelection.yaw.label",
+  ) as string;
+
   return (
     <>
       <Dialog isOpen={showLogSelection.value} onClose={onLogSelectionClose}>
@@ -66,10 +95,9 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
           <button
             class="button"
             onClick$={() => (showLogSelection.value = !showLogSelection.value)}
-            aria-label="combined logs selection"
+            aria-label={combinedLogSelectionAriaLabel}
           >
-            Combined Logs ({analyzerContext.selectedLogIndexes.length} /{" "}
-            {analyzerContext.results?.length})
+            {combinedLogSelectionLabel}
           </button>
         )}
 
@@ -86,7 +114,9 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
                 key={i}
                 selected={analyzerContext.activeMainLogIndex === i}
                 value={i}
-              >{`Active Flightlog #${i + 1}`}</option>
+              >
+                {activeFlightLogLabel(i + 1)}
+              </option>
             ))}
           </select>
         )}
@@ -106,19 +136,19 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
               value="roll"
               selected={analyzerContext.analyzerActiveAxis === "roll"}
             >
-              Axis: Roll
+              {axisSelectionRollLabel}
             </option>
             <option
               value="pitch"
               selected={analyzerContext.analyzerActiveAxis === "pitch"}
             >
-              Axis: Pitch
+              {axisSelectionPitchLabel}
             </option>
             <option
               value="yaw"
               selected={analyzerContext.analyzerActiveAxis === "yaw"}
             >
-              Axis: Yaw
+              {axisSelectionYawLabel}
             </option>
           </select>
         )}

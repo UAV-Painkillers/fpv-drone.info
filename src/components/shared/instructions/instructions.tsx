@@ -1,90 +1,92 @@
-import { component$ } from "@builder.io/qwik";
-import { InstructionsStep, type StepProps } from "./step/step";
-import type { PrerequesitesProps } from "./prerequesites/prerequesites";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
-import { CustomInstructions } from "./custom-instructions";
+import type { IntrinsicElements } from "@builder.io/qwik";
+import { Slot, component$, useComputed$ } from "@builder.io/qwik";
+import {
+  Prerequesites,
+  type PrerequesitesProps,
+} from "./prerequesites/prerequesites";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
+import { InstructionsStep } from "./step/step";
+import { StoryBlokComponentArray } from "~/components/storyblok/component-array";
+import { renderRichText, storyblokEditable } from "@storyblok/js";
 
 interface Props {
   prerequesites?: PrerequesitesProps;
-  steps?: StepProps[];
 }
-export const Instructions = component$<Props>((props) => {
-  return (
-    <CustomInstructions prerequesites={props.prerequesites}>
-      {props.steps?.map((step, index) => (
-        <>
-          <InstructionsStep key={`step-${index}`} {...step} index={index + 1} />
-          {index < (props.steps?.length ?? 0) - 1 && <hr />}
-        </>
-      ))}
-    </CustomInstructions>
-  );
-});
+export const Instructions = component$(
+  (props: Props & IntrinsicElements["article"]) => {
+    const { prerequesites, ...articleProps } = props;
+    return (
+      <article {...articleProps}>
+        {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
+        {(prerequesites?.items?.length ?? 0) > 0 && (
+          <>
+            <Prerequesites {...prerequesites!} />
+          </>
+        )}
+        <Slot />
+      </article>
+    );
+  },
+);
 
-export const InstructionsRegistryDefinition: RegisteredComponent = {
-  component: Instructions,
+export const InstructionsRegistryDefinition: CMSRegisteredComponent = {
+  component: component$((storyData) => {
+    const prerequesites = useComputed$(() => {
+      return {
+        title: storyData.prerequisitesTitle,
+        image: storyData.prerequisitesImage?.filename,
+        items: storyData.prerequisitesItems.map((item: any) => ({
+          ...storyblokEditable(item),
+          ...item,
+        })),
+      } as Props["prerequesites"];
+    });
+
+    const steps = useComputed$(() => {
+      return storyData.steps?.map((step: any) => {
+        const [sourceStep] = step.sourceStep ?? [];
+        const [sourceStepContent] = sourceStep?.content?.items ?? [];
+
+        if (!sourceStepContent) {
+          return {
+            ...step,
+            image: step.image.filename,
+          };
+        }
+
+        return {
+          ...step,
+          title: sourceStepContent.title,
+          description: sourceStepContent.description,
+          image: sourceStepContent.image.filename,
+          customBloks: sourceStepContent.bloks,
+        };
+      });
+    });
+
+    return (
+      <Instructions
+        {...storyblokEditable(storyData)}
+        prerequesites={prerequesites.value}
+      >
+        {steps.value?.map((step: any, stepIndex: number) => (
+          <InstructionsStep
+            {...storyblokEditable(step)}
+            index={step.index}
+            key={stepIndex}
+            title={step.title}
+            description={
+              step.description ? renderRichText(step.description) : ""
+            }
+            image={step.image}
+          >
+            {step.customBloks && (
+              <StoryBlokComponentArray bloks={step.customBloks} />
+            )}
+          </InstructionsStep>
+        ))}
+      </Instructions>
+    );
+  }),
   name: "Instructions",
-  inputs: [
-    {
-      name: "prerequesites",
-      friendlyName: "Prerequesites",
-      type: "object",
-      required: false,
-      subFields: [
-        {
-          name: "title",
-          friendlyName: "Title",
-          type: "string",
-          required: false,
-        },
-        {
-          name: "items",
-          friendlyName: "Items",
-          type: "list",
-          required: true,
-          subFields: [
-            {
-              name: "label",
-              type: "string",
-              required: true,
-            },
-          ],
-        },
-        {
-          name: "image",
-          friendlyName: "Image",
-          type: "file",
-          required: true,
-          allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
-        },
-      ],
-    },
-    {
-      name: "steps",
-      friendlyName: "Steps",
-      type: "list",
-      required: true,
-      subFields: [
-        {
-          name: "title",
-          friendlyName: "Title",
-          type: "string",
-          required: true,
-        },
-        {
-          name: "image",
-          friendlyName: "Image",
-          type: "file",
-          required: false,
-          allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
-        },
-        {
-          name: "description",
-          friendlyName: "Description",
-          type: "richText",
-          required: true,
-        },
-      ],
-    },
-  ],
 };

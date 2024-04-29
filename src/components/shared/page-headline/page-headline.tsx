@@ -1,30 +1,28 @@
 import { component$ } from "@builder.io/qwik";
 import styles from "./page-headline.module.css";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { Link } from "@builder.io/qwik-city";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 interface Props {
   title: string;
   subtitle?: string;
-  backUrl?: {
-    href?: string;
-    label?: string;
-  };
+  backButtonHref?: string;
+  backButtonLabel?: string;
 }
 
 export const PageHeadline = component$((props: Props) => {
   return (
     <>
-      {props.backUrl && (
+      {props.backButtonLabel && (
         <div style={{ marginTop: "-3rem", marginBottom: "3rem" }}>
           <Link
-            href={props.backUrl.href}
+            href={props.backButtonHref}
             class="anchor"
             style={{ display: "inline-block" }}
           >
             &#10094;&nbsp;
-            {!props.backUrl.href && "NO HREF SPECIFIED FOR BACK URL"}
-            {props.backUrl.label || "NO LABEL SPECIFIED FOR BACK URL"}
+            {!props.backButtonHref && "NO HREF SPECIFIED FOR BACK URL"}
+            {props.backButtonLabel || "NO LABEL SPECIFIED FOR BACK URL"}
           </Link>
         </div>
       )}
@@ -36,41 +34,7 @@ export const PageHeadline = component$((props: Props) => {
   );
 });
 
-export const PageHeadlineRegistryDefinition: RegisteredComponent = {
+export const PageHeadlineRegistryDefinition: CMSRegisteredComponent = {
   component: PageHeadline,
   name: "PageHeadline",
-  inputs: [
-    {
-      name: "title",
-      friendlyName: "Title",
-      type: "string",
-      required: true,
-    },
-    {
-      name: "subtitle",
-      friendlyName: "Subtitle",
-      type: "string",
-      required: false,
-    },
-    {
-      name: "backUrl",
-      friendlyName: "Back URL",
-      type: "object",
-      required: false,
-      subFields: [
-        {
-          name: "href",
-          friendlyName: "URL",
-          type: "string",
-          required: true,
-        },
-        {
-          name: "label",
-          friendlyName: "Label",
-          type: "string",
-          required: true,
-        },
-      ],
-    },
-  ],
 };

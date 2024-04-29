@@ -10,6 +10,18 @@
   grid-template-areas:
     "logo navigation search"
     "main main main";
+
+  max-width: min(1200px, 85vw);
+  width: 85vw;
+  margin: 0 auto;
+  padding-inline: 50px;
+}
+
+/** is mobile */
+@media screen and (max-width: 768px) {
+  .appContainer {
+    padding-inline: 25px;
+  }
 }
 
 .logo {
@@ -32,6 +44,7 @@
 
 .main {
   grid-area: main;
+  padding-top: 4rem;
 }
 
 /** is mobile */

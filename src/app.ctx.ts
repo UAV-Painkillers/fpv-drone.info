@@ -10,6 +10,7 @@ export interface AppContextState {
   isPreviewing: boolean;
   serviceWorker: NoSerialize<ServiceWorker | undefined>;
   unblockedCaches: Array<BlockableCaches>;
+  translations: Record<string, string>;
 }
 
 export const AppContext = createContextId<AppContextState>("app");

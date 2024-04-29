@@ -1,4 +1,4 @@
-import { component$, useComputed$ } from "@builder.io/qwik";
+import { component$, useComputed$, useSignal } from "@builder.io/qwik";
 import { Dialog } from "../../shared/dialog/dialog";
 import type {
   AnalyzerProgress,
@@ -8,6 +8,7 @@ import { AnalyzerStepStatus } from "../hooks/types";
 import type { StepProps } from "./step/step";
 import { Step } from "./step/step";
 import { RacoonLoader } from "../racoon-animations/racoon-animation";
+import { inlineTranslate } from "qwik-speak";
 
 interface Props {
   isOpen: boolean;
@@ -15,6 +16,27 @@ interface Props {
 }
 
 export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
+  const t = inlineTranslate();
+
+  const translations = useSignal({
+    runningAnalysis: t("blackboxAnalyzer.progress.runningAnalysis"),
+    splittingLog: t("blackboxAnalyzer.progress.splittingLog"),
+    readingHeaders: t("blackboxAnalyzer.progress.readingHeaders"),
+    decoding: t("blackboxAnalyzer.progress.decoding"),
+    readingDecodedLog: t("blackboxAnalyzer.progress.readingDecodedLog"),
+    exportingHeaders: t("blackboxAnalyzer.progress.exportingHeaders"),
+    analyzingAxis: t("blackboxAnalyzer.progress.analyzingAxis"),
+    analyzingAxis_roll: t("blackboxAnalyzer.progress.analyzingAxis", {
+      axis: "roll",
+    }),
+    analyzingAxis_pitch: t("blackboxAnalyzer.progress.analyzingAxis", {
+      axis: "pitch",
+    }),
+    analyzingAxis_yaw: t("blackboxAnalyzer.progress.analyzingAxis", {
+      axis: "yaw",
+    }),
+  });
+
   const steps = useComputed$(() => {
     const getStateOfItemInIndexArray = (
       indexArray: AnalyzerStepStatusIndexArray,
@@ -28,12 +50,14 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
 
     stepItems.push({
       state: props.analyzerProgress.splitting.state,
-      label: "Running Analysis",
+      label: translations.value.runningAnalysis,
     });
+
+    const t2 = inlineTranslate();
 
     stepItems.push({
       state: props.analyzerProgress.splitting.state,
-      label: "Splitting log into flights",
+      label: translations.value.splittingLog,
       subStepsAllwaysVisible: true,
       subSteps: Array.from({ length: props.analyzerProgress.flightsCount }).map(
         (_, flightIndex) =>
@@ -42,24 +66,26 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
               props.analyzerProgress.subLogs.state,
               flightIndex,
             ),
-            label: `Analyzing Sub Log #${flightIndex + 1}`,
+            label: t2("blackboxAnalyzer.progress.analyzingSubLog", {
+              flightIndex: flightIndex + 1,
+            }),
             subSteps: [
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.readingHeaders,
                   flightIndex,
                 ),
-                label: "reading headers",
+                label: translations.value.readingHeaders,
               },
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.decoding,
                   flightIndex,
                 ),
-                label: "decoding",
+                label: translations.value.decoding,
               },
               {
-                label: "reading decoded log",
+                label: translations.value.readingDecodedLog,
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.readingCSV,
                   flightIndex,
@@ -70,10 +96,10 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
                   props.analyzerProgress.subLogs.writingHeadDictToJson,
                   flightIndex,
                 ),
-                label: "exporting headers",
+                label: translations.value.exportingHeaders,
               },
               {
-                label: "running analysis",
+                label: translations.value.runningAnalysis,
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.analyzingPID,
                   flightIndex,
@@ -85,7 +111,10 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
                     ],
                     flightIndex,
                   ),
-                  label: `analysing ${axis}`,
+                  label:
+                    translations.value[
+                      `analyzingAxis_${axis}` as `analyzingAxis_${"roll" | "pitch" | "yaw"}`
+                    ],
                 })),
               },
             ],

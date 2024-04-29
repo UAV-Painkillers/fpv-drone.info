@@ -4,7 +4,7 @@ import LogoImage from "./logo.webp?jsx";
 import LogoDarkImage from "./logo_dark.webp?jsx";
 import styles from "./logo.module.css";
 import classNames from "classnames";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { useDarkmode } from "~/hooks/use-darkmode";
 
 export const Logo = component$<QwikIntrinsicElements["img"]>((props) => {
@@ -25,8 +25,7 @@ export const Logo = component$<QwikIntrinsicElements["img"]>((props) => {
   return <LogoImage {...imageProps} />;
 });
 
-export const LogoRegistryInformation: RegisteredComponent = {
+export const LogoRegistryInformation: CMSRegisteredComponent = {
   component: Logo,
   name: "Logo",
-  inputs: [],
 };

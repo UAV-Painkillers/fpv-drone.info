@@ -8,23 +8,12 @@ body {
   line-height: 1.2;
   background: rgb(var(--body-background));
   min-height: 100vh;
-  max-width: min(1200px, 85vw);
   overflow-x: hidden;
-  padding-inline: 50px;
-  width: 85vw;
-  margin: 0 auto;
 
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-}
-
-/** is mobile */
-@media screen and (max-width: 768px) {
-  body {
-    padding-inline: 25px;
-  }
 }
 
 h1,
@@ -207,6 +196,7 @@ tr:nth-child(odd) td {
   -webkit-user-select: none;
   touch-action: manipulation;
   transition: transform 0.3s ease;
+  display: inline-block;
 
   cursor: pointer;
 }
@@ -370,4 +360,8 @@ pre {
   border-style: dashed;
   border-radius: 10px;
   padding: 1rem;
+}
+
+dialog {
+  color: currentColor;
 }

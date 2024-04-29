@@ -1,12 +1,12 @@
 import type { QRL } from "@builder.io/qwik";
 import { $, component$, useComputed$, useSignal } from "@builder.io/qwik";
 import { Dialog } from "../dialog/dialog";
-import type { BuilderContent } from "@builder.io/sdk-qwik";
 import type { CardGridProps } from "../card/card-grid";
 import { CardGrid } from "../card/card-grid";
 import styles from "./search-dialog.module.css";
+import type { ISbStoryData } from "@storyblok/js";
 
-type StoredAlgoliaResult = Omit<BuilderContent, "data"> & {
+type StoredAlgoliaResult = Omit<ISbStoryData, "data"> & {
   data?: Partial<{
     title: string;
     description: string;
@@ -16,7 +16,7 @@ type StoredAlgoliaResult = Omit<BuilderContent, "data"> & {
 };
 
 type AlgoliaResult = {
-  hits: (BuilderContent & {
+  hits: (ISbStoryData & {
     query: Array<{ property: string; operator: string; value: string }>;
   })[];
 };
@@ -50,7 +50,7 @@ const DialogContent = component$((props: DialogContentProps) => {
           ({
             ...h,
             data: {
-              ...h.data,
+              ...h.content,
               blocks: undefined,
             },
             uri:

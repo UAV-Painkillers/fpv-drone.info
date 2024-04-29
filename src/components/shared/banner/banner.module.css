@@ -1,0 +1,47 @@
+.banner {
+  --banner-height: 3.5rem;
+  padding-inline: 1rem;
+  background: var(--success-background-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0;
+  transition: margin-top 0.5s;
+  min-height: var(--banner-height);
+}
+
+.banner.success {
+  /* from --body-background (bottom), to --success-background-color (top) */
+  background: linear-gradient(
+    0deg,
+    rgb(var(--body-background)),
+    var(--success-background-color)
+  );
+}
+
+.banner.error {
+  background: linear-gradient(
+    0deg,
+    rgb(var(--body-background)),
+    var(--error-background-color)
+  );
+}
+
+.banner.warning {
+  background: linear-gradient(
+    0deg,
+    rgb(var(--body-background)),
+    var(--warning-background-color)
+  );
+}
+
+/** is mobile */
+@media screen and (max-width: 768px) {
+  .banner {
+    --banner-height: 5rem;
+  }
+}
+
+.hidden {
+  margin-top: calc(-1 * var(--banner-height));
+}

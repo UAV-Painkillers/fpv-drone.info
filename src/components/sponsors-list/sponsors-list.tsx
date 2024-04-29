@@ -1,72 +1,90 @@
-import { component$, $ } from "@builder.io/qwik";
-import { BuilderDataList } from "../shared/builder-data-list/builder-data-list";
-import type { BuilderContent, RegisteredComponent } from "@builder.io/sdk-qwik";
+import type { IntrinsicElements } from "@builder.io/qwik";
+import { component$, useComputed$ } from "@builder.io/qwik";
+import { storyblokEditable } from "@storyblok/js";
+import type { CMSRegisteredComponent } from "../cms-registered-component";
+import { transformStoryblokHref } from "../shared/utils/url";
+
+interface Sponsor {
+  href: string;
+  logoSrc: string;
+  name: string;
+}
+const SingleSponsor = component$((sponsor: Sponsor) => (
+  <a
+    href={sponsor.href}
+    target="_blank"
+    rel="noreferrer"
+    class="clickable"
+    style={{
+      width: "100%",
+      maxWidth: "200px",
+    }}
+  >
+    {/* eslint-disable-next-line qwik/jsx-img */}
+    <img
+      src={sponsor.logoSrc}
+      alt={sponsor.name}
+      height="100"
+      width="200"
+      loading="lazy"
+      style={{
+        objectFit: "contain",
+        maxHeight: "100px",
+        maxWidth: "200px",
+        marginBottom: "15px",
+        display: "block",
+      }}
+    />
+    <label class="anchor" style={{ display: "block", textAlign: "center" }}>
+      {sponsor.name}
+    </label>
+  </a>
+));
 
 interface Props {
-  sponsorModelName: string;
+  sponsors?: Sponsor[];
 }
-export const SponsorsList = component$((props: Props) => {
-  const renderSponsor = $((sponsor: BuilderContent) => (
-    <a
-      href={sponsor.data?.href}
-      target="_blank"
-      rel="noreferrer"
-      class="clickable"
-      style={{
-        width: "100%",
-        maxWidth: "200px",
-      }}
-    >
-      {/* eslint-disable-next-line qwik/jsx-img */}
-      <img
-        src={sponsor.data?.logo}
-        alt={sponsor.data?.name}
-        height="100"
-        width="200"
-        loading="lazy"
+export const SponsorsList = component$(
+  (props: Props & IntrinsicElements["div"]) => {
+    const { sponsors, ...divProps } = props;
+
+    return (
+      <div
+        {...divProps}
         style={{
-          objectFit: "contain",
-          maxHeight: "100px",
-          maxWidth: "200px",
-          marginBottom: "15px",
-          display: "block",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-around",
+          gap: "25px 0",
         }}
-      />
-      <label class="anchor" style={{ display: "block", textAlign: "center" }}>
-        {sponsor.data?.name}
-      </label>
-    </a>
-  ));
+      >
+        {(sponsors ?? []).map((sponsor, index) => (
+          <SingleSponsor key={index} {...sponsor} />
+        ))}
+      </div>
+    );
+  },
+);
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around",
-        gap: "25px 0",
-      }}
-    >
-      <BuilderDataList
-        dataModelName={props.sponsorModelName}
-        item={renderSponsor}
-      />
-    </div>
-  );
-});
+export const SponsorsListRegistryDefinition: CMSRegisteredComponent = {
+  component: component$((storyData) => {
+    const sponsors = useComputed$(() => {
+      return (storyData.items ?? []).map((item: any) => {
+        const href = transformStoryblokHref(item.href);
+        return {
+          href,
+          logoSrc: item.logo.filename,
+          name: item.name,
+        };
+      });
+    });
 
-export const SponsorsListRegistryDefinition: RegisteredComponent = {
-  component: SponsorsList,
+    return (
+      <SponsorsList
+        {...storyblokEditable(storyData)}
+        sponsors={sponsors.value}
+      />
+    );
+  }),
   name: "SponsorsList",
-  friendlyName: "Sponsors List",
-  inputs: [
-    {
-      name: "sponsorModelName",
-      type: "string",
-      defaultValue: "sponsor",
-      required: true,
-      friendlyName: "Sponsor Model Name",
-      description: "The name of the model that contains the sponsor data.",
-    },
-  ],
 };

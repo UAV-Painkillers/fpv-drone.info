@@ -7,7 +7,7 @@ import classNames from "classnames";
 export const Navigation = component$<IntrinsicElements["nav"]>((props) => {
   return (
     <nav {...props} class={classNames(styles.container, props.class)}>
-      <DynamicLinkList linkModel="navigation-link" />
+      <DynamicLinkList navigationStorySlug="navigations/navigation-main" />
     </nav>
   );
 });

@@ -35,7 +35,9 @@ export async function generateOgImage(
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to generate OG image: ${response.statusText}`);
+    throw new Error(
+      `Failed to generate OG image (${ogImageGeneratorImageUrl}): ${response.statusText}`,
+    );
   }
 
   return await response.blob();

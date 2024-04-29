@@ -1,29 +1,48 @@
 import type { IntrinsicElements } from "@builder.io/qwik";
-import { component$ } from "@builder.io/qwik";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
+import { component$, useComputed$ } from "@builder.io/qwik";
 import { formatHtmlText } from "../../../utils/formatHtmlText";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
+import { renderRichText, storyblokEditable } from "@storyblok/js";
 
 export interface TextProps {
   text: string;
+  align?: "left" | "center" | "right";
+  wrapWithSmall?: boolean;
 }
 
 type ComponentProps = TextProps & IntrinsicElements["div"];
 
 export const Text = component$<ComponentProps>((props) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const html = formatHtmlText(props.text ?? "");
-  return <div {...props} dangerouslySetInnerHTML={html} />;
+  const html = useComputed$(() => formatHtmlText(props.text ?? ""));
+  const content = () => (
+    <div
+      {...props}
+      style={{ textAlign: props.align }}
+      dangerouslySetInnerHTML={html.value}
+    />
+  );
+
+  if (props.wrapWithSmall) {
+    return <small>{content()}</small>;
+  }
+
+  return content();
 });
 
-export const TextRegistryDefinition: RegisteredComponent = {
-  component: Text,
+export const TextRegistryDefinition: CMSRegisteredComponent = {
+  component: component$((storyProps: { text: any }) => {
+    const renderedText = useComputed$(() => {
+      return renderRichText(storyProps.text);
+    });
+
+    return (
+      <Text
+        {...storyblokEditable(storyProps)}
+        {...storyProps}
+        text={renderedText.value}
+      />
+    );
+  }),
   name: "Text",
-  inputs: [
-    {
-      name: "text",
-      friendlyName: "Text",
-      type: "richText",
-      required: true,
-    },
-  ],
 };

@@ -1,4 +1,3 @@
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { ProductRegistryDefinition } from "./product/product";
 import { LogoRegistryInformation } from "./logo/logo";
 import { CardRegistryDefinition } from "./shared/card/card";
@@ -11,13 +10,16 @@ import { TextRegistryDefinition } from "./shared/text/text";
 import { TLDRRegistryDefinition } from "./shared/tldr/tldr";
 import { BlackboxAnalyzerRegistryDefinition } from "./tuning-tools/blackbox-analyzer";
 import { BuyMeACoffeeButtonRegistryDefinition } from "./shared/buy-me-a-coffe/button";
-import { CustomInstructionsRegistryDefinition } from "./shared/instructions/custom-instructions";
-import { InstructionsStepRegistryDefinition } from "./shared/instructions/step/step";
 import { HighlightCardRegistryDefinition } from "./shared/highlight-card/highlight-card";
 import { DynamicIdleCalculatorRegistryDefinition } from "./tuning-tools/dynamic-idle-calculator/dynamic-idle-calculator";
 import { SWClearCacheButtonRegistryDefinition } from "./sw-clear-cache-button/sw-clear-cache-button";
 import { SponsorsListRegistryDefinition } from "./sponsors-list/sponsors-list";
 import { BuyMeARacoonButtonRegistryDefinition } from "./buy-me-a-racoon/buy-me-a-racoon";
+import type { CMSRegisteredComponent } from "./cms-registered-component";
+import { ColumnsRegistryDefinition } from "./columns/columns";
+import { CenteredRegistryDefinition } from "./centered/centered";
+import { CSSBoxRegistryDefinition } from "./css-box/css-box";
+import { CMSSnippetRegistryDefinition } from "./cms-snippet/cms-snippet";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -30,12 +32,10 @@ import { BuyMeARacoonButtonRegistryDefinition } from "./buy-me-a-racoon/buy-me-a
  * https://www.builder.io/c/docs/guides/components-only-mode
  */
 
-export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
+export const CMSComponents: CMSRegisteredComponent[] = [
   PageGridRegistryDefinition,
   CardRegistryDefinition,
   InstructionsRegistryDefinition,
-  CustomInstructionsRegistryDefinition,
-  InstructionsStepRegistryDefinition,
   LogoRegistryInformation,
   PageHeadlineRegistryDefinition,
   ExpandableImageRegistryDefinition,
@@ -44,16 +44,14 @@ export const CUSTOM_COMPONENTS: RegisteredComponent[] = [
   NewsRegistryDefinition,
   ProductRegistryDefinition,
   BlackboxAnalyzerRegistryDefinition,
-  BuyMeACoffeeButtonRegistryDefinition(
-    "uav.painkillers",
-    "Buy me a smokestopper",
-  ),
-  BuyMeARacoonButtonRegistryDefinition(
-    "uav.painkillers",
-    "Buy me a smokestopper",
-  ),
+  BuyMeACoffeeButtonRegistryDefinition,
+  BuyMeARacoonButtonRegistryDefinition,
   HighlightCardRegistryDefinition,
   DynamicIdleCalculatorRegistryDefinition,
   SWClearCacheButtonRegistryDefinition,
   SponsorsListRegistryDefinition,
+  ColumnsRegistryDefinition,
+  CenteredRegistryDefinition,
+  CSSBoxRegistryDefinition,
+  CMSSnippetRegistryDefinition,
 ];

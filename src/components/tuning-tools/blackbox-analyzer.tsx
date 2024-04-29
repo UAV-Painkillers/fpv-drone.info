@@ -8,7 +8,6 @@ import {
   noSerialize,
   useVisibleTask$,
 } from "@builder.io/qwik";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik/types/src/server-index";
 import styles from "./blackbox-analyzer.module.css";
 import { BlackboxAnalyzerStatusDialog } from "./status-dialog/status-dialog";
 import { InlineSpinner } from "../inline-spinner/inline-spinner";
@@ -18,7 +17,7 @@ import { useBlackboxAnalyzerContextProvider } from "./context/blackbox-analyzer.
 import { useHideHeader } from "~/hooks/use-hide-header/use-hide-header";
 import { AnalyzerState, useAnalyzeLog } from "./hooks/use-analyze-log";
 import type { PlotLabelDefinitions } from "./plots/response.plotter";
-import { NoiseFields, PlotName } from "./plots/response.plotter";
+import { PlotName } from "./plots/response.plotter";
 import { AppContext } from "~/app.ctx";
 import type { PlotNavigationProps } from "./plots/navigation/plot-navigation";
 import {
@@ -31,6 +30,9 @@ import { SWCachingBlocker } from "../sw-caching-blocker/sw-caching-blocker";
 // @ts-ignore
 import dragDrop from "drag-drop";
 import { ErrorBox } from "../error-box/error-box";
+import type { CMSRegisteredComponent } from "../cms-registered-component";
+import { storyblokEditable } from "@storyblok/js";
+import { inlineTranslate } from "qwik-speak";
 
 const WILDCARD_PLOTNAME = "*" as const;
 
@@ -46,6 +48,8 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   const dropzoneRef = useSignal<HTMLElement>();
 
   useHideHeader();
+  const t = inlineTranslate();
+
   const {
     state: analyzerState,
     analyzeFile,
@@ -53,6 +57,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     error: analyzerError,
     hasAnalysisInMemory,
   } = useAnalyzeLog();
+
   const temporaryFileStorage =
     useSignal<NoSerialize<File | undefined>>(undefined);
   const showSelectAnalysisOverwriteMethodDialog = useSignal(false);
@@ -121,7 +126,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     const activePlots = props.activePlots || {};
     const activePlotNames = Object.entries(activePlots)
       .filter(
-        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME
+        ([plotName, isActive]) => isActive && plotName !== WILDCARD_PLOTNAME,
       )
       .map(([plotName]) => plotName as PlotName);
 
@@ -152,7 +157,7 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 
   const subLogsWithErrors = useComputed$(() => {
     return analyzerProgress.value.subLogs.state.filter(
-      (s) => s.state === AnalyzerStepStatus.ERROR
+      (s) => s.state === AnalyzerStepStatus.ERROR,
     );
   });
 
@@ -174,9 +179,38 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
     analyzeFile(temporaryFileStorage.value, true);
   });
 
+  const loadingMessage = t("blackboxAnalyzer.loadingIndicator.label");
+
+  const logAnalyzationError = t("blackboxAnalyzer.error.logAnalyzation");
+
+  const openFileButtonLabel = t("blackboxAnalyzer.openFileButton.label");
+
+  const openFileButtonAriaLabel = t(
+    "blackboxAnalyzer.openFileButton.ariaLabel",
+  );
+
+  const addFileToCurrentAnalysisButtonLabel = t(
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.label",
+  );
+
+  const addFileToCurrentAnalysisButtonAriaLabel = t(
+    "blackboxAnalyzer.addFileToCurrentAnalysisButton.ariaLabel",
+  );
+
+  const replaceCurrentAnalysisButtonLabel = t(
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.label",
+  );
+
+  const replaceCurrentAnalysisButtonAriaLabel = t(
+    "blackboxAnalyzer.replaceCurrentAnalysisButton.ariaLabel",
+  );
+
+  const subLogError = (logIndex: number, error: string) =>
+    t("blackboxAnalyzer.subLogError", { logIndex, error });
+
   return (
     <>
-      {showLoader.value && <RacoonLoader label="Loading analyzer..." />}
+      {showLoader.value && <RacoonLoader label={loadingMessage} />}
 
       <div
         class={classNames(styles.wrapper, {
@@ -191,16 +225,14 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
           class={classNames("button", styles.uploadButton, {
             [styles.uploadButtonDropover]: isDroppingOver.value,
           })}
-          aria-label="Button to open a blackbox file for analysis"
+          aria-label={openFileButtonAriaLabel}
         >
           {analyzerState.value === AnalyzerState.RUNNING && <InlineSpinner />}
-          Click to open a Blackbox File (.bbl) or drag and drop it here
+          {openFileButtonLabel}
         </button>
 
         {showAnalyzerError.value && (
-          <ErrorBox
-            errorLines={analyzerError.value ?? "Could not analyze log-file..."}
-          />
+          <ErrorBox errorLines={analyzerError.value ?? logAnalyzationError} />
         )}
 
         <Dialog isOpen={showSelectAnalysisOverwriteMethodDialog.value}>
@@ -219,17 +251,17 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
               class="button"
               style={{ width: "100%" }}
               onClick$={addFileToCurrentAnalysis}
-              aria-label="add to current analysis"
+              aria-label={addFileToCurrentAnalysisButtonAriaLabel}
             >
-              Add to current Analysis
+              {addFileToCurrentAnalysisButtonLabel}
             </button>
             <button
               class="button"
               style={{ width: "100%" }}
               onClick$={overwriteCurrentAnalysisWithFile}
-              aria-label="replace current analysis"
+              aria-label={replaceCurrentAnalysisButtonAriaLabel}
             >
-              Replace current Analysis
+              {replaceCurrentAnalysisButtonLabel}
             </button>
           </div>
         </Dialog>
@@ -242,13 +274,13 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
         {subLogsWithErrors.value.length > 0 && (
           <code>
             <RacoonError style={{ float: "right" }} />
-            <b style={{ color: "var(--alarm-color)", display: "block" }}>
+            <b style={{ color: "var(--error-color)", display: "block" }}>
               ERRORS:
             </b>
             {subLogsWithErrors.value.map(({ index, error }) => (
-              <div
-                key={"sublog-error-" + index}
-              >{`> Sublog ${index}: ${error}`}</div>
+              <div key={"sublog-error-" + index}>
+                {subLogError(index, error!)}
+              </div>
             ))}
 
             <div style={{ clear: "both" }} />
@@ -276,160 +308,129 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
 });
 
 export const BlackboxAnalyzer = component$((props: Props) => {
+  const t = inlineTranslate();
+
+  const downloadSizeMB = 150;
+  const blockMessage = t("blackboxAnalyzer.cacheBlockMessage", {
+    downloadSizeMB,
+  });
+
   return (
-    <SWCachingBlocker
-      render={$(() => (
-        <BlackboxAnalyzerContent {...props} />
-      ))}
-    />
+    <div style={{ marginBlock: "1rem" }}>
+      <SWCachingBlocker
+        blockMessage={blockMessage}
+        downloadSizeMB={downloadSizeMB}
+        render={$(() => (
+          <BlackboxAnalyzerContent {...props} />
+        ))}
+      />
+    </div>
   );
 });
 
-enum PIDAnalyzerHeaderInformationKeys {
-  fwType,
-  rollPID,
-  pitchPID,
-  yawPID,
-  maxThrottle,
-  tpa_breakpoint,
-  tpa_percent,
-  simplified_d_gain,
-  simplified_dmax_gain,
-  simplified_dterm_filter,
-  simplified_dterm_filter_multiplier,
-  simplified_feedforward_gain,
-  simplified_gyro_filter,
-  simplified_gyro_filter_multiplier,
-  simplified_i_gain,
-  simplified_master_multiplier,
-  simplified_pi_gain,
-  simplified_pitch_d_gain,
-  simplified_pitch_pi_gain,
-}
+export const BlackboxAnalyzerRegistryDefinition: CMSRegisteredComponent = {
+  component: component$((storyData: any) => {
+    const {
+      activePlots: activePlotsStoryData,
+      navigation: navigationStoryData,
+      ...plotLabelsStoryData
+    } = storyData;
 
-function makeSeriesLabelDefinitionInput(name: string, friendlyName?: string) {
-  return {
-    name,
-    friendlyName,
-    type: "object",
-    required: false,
-    subFields: [
-      {
-        name: "headdictField",
-        friendlyName: "Header Name",
-        type: "string",
-        required: true,
-        enum: Object.values(PIDAnalyzerHeaderInformationKeys) as string[],
-      },
-      {
-        name: "template",
-        friendlyName: "Template",
-        type: "string",
-        required: false,
-      },
-    ],
-  };
-}
+    const plotLabels = useComputed$(
+      () =>
+        ({
+          responseTrace: {
+            gyro: {
+              headdictField: plotLabelsStoryData.labelTraceGyroHeaderField,
+              template: plotLabelsStoryData.labelTraceGyroTemplate,
+            },
+            setPoint: {
+              headdictField: plotLabelsStoryData.labelTraceSetpointHeaderField,
+              template: plotLabelsStoryData.labelTraceSetpointTemplate,
+            },
+            feedForward: {
+              headdictField:
+                plotLabelsStoryData.labelTraceFeedforwardHeaderField,
+              template: plotLabelsStoryData.labelTraceFeedforwardTemplate,
+            },
+          },
+          responseThrottle: {
+            throttle: {
+              headdictField: plotLabelsStoryData.labelThrottleHeaderField,
+              template: plotLabelsStoryData.labelThrottleTemplate,
+            },
+          },
+          responseStrength: {
+            response: {
+              headdictField: plotLabelsStoryData.labelStrengthHeaderField,
+              template: plotLabelsStoryData.labelStrengthTemplate,
+            },
+          },
+          responseDelay: {
+            delay: {
+              headdictField: plotLabelsStoryData.labelDelayHeaderField,
+              template: plotLabelsStoryData.labelDelayTemplate,
+            },
+          },
+          responseStrengthPeak: {
+            peak: {
+              headdictField: plotLabelsStoryData.labelStrengthPeakHeaderField,
+              template: plotLabelsStoryData.labelStrengthPeakTemplate,
+            },
+          },
+          noiseFrequencies: {
+            noise_gyro: {
+              headdictField:
+                plotLabelsStoryData.labelNoiseFrequenciesGyroHeaderField,
+              template: plotLabelsStoryData.labelNoiseFrequenciesGyroTemplate,
+            },
+            noise_debug: {
+              headdictField:
+                plotLabelsStoryData.labelNoiseFrequenciesDebugHeaderField,
+              template: plotLabelsStoryData.labelNoiseFrequenciesDebugTemplate,
+            },
+            noise_d: {
+              headdictField:
+                plotLabelsStoryData.labelNoiseFrequenciesDTermHeaderField,
+              template: plotLabelsStoryData.labelNoiseFrequenciesDTermTemplate,
+            },
+          },
+          noise: {
+            noise_gyro: {
+              headdictField: plotLabelsStoryData.labelNoiseGyroHeaderField,
+              template: plotLabelsStoryData.labelNoiseGyroTemplate,
+            },
+            noise_debug: {
+              headdictField: plotLabelsStoryData.labelNoiseDebugHeaderField,
+              template: plotLabelsStoryData.labelNoiseDebugTemplate,
+            },
+            noise_d: {
+              headdictField: plotLabelsStoryData.labelNoiseDTermHeaderField,
+              template: plotLabelsStoryData.labelNoiseDTermTemplate,
+            },
+          },
+        }) as PlotLabelDefinitions,
+    );
+    const activePlots = useComputed$(() =>
+      Object.fromEntries(
+        activePlotsStoryData.map((plotName: string) => [plotName, true]),
+      ),
+    );
+    const navigation = useComputed$(() =>
+      Object.fromEntries(
+        navigationStoryData.map((navTypeName: string) => [navTypeName, true]),
+      ),
+    );
 
-export const BlackboxAnalyzerRegistryDefinition: RegisteredComponent = {
-  component: BlackboxAnalyzer,
+    return (
+      <div {...storyblokEditable(storyData)}>
+        <BlackboxAnalyzer
+          activePlots={activePlots.value}
+          navigation={navigation.value}
+          plotLabels={plotLabels.value}
+        />
+      </div>
+    );
+  }),
   name: "BlackboxAnalyzer",
-  friendlyName: "Blackbox Analyzer",
-  inputs: [
-    {
-      name: "activePlots",
-      friendlyName: "active Plots",
-      type: "object",
-      required: true,
-      defaultValue: {
-        "*": true,
-      },
-      subFields: [
-        {
-          name: "*",
-          friendlyName: "All",
-          type: "boolean",
-          required: false,
-        },
-        ...Object.values(PlotName).map((plotName) => ({
-          name: plotName,
-          friendlyName: plotName,
-          type: "boolean",
-          required: false,
-        })),
-      ],
-    },
-    {
-      name: "navigation",
-      friendlyName: "Navigation",
-      type: "object",
-      required: false,
-      subFields: [
-        {
-          name: "showCombinedLogsSelection",
-          friendlyName: "Show Combined Logs Selection",
-          type: "boolean",
-          required: false,
-          defaultValue: true,
-        },
-        {
-          name: "showActiveAxisSelection",
-          friendlyName: "Show Active Axis Selection",
-          type: "boolean",
-          required: false,
-          defaultValue: true,
-        },
-        {
-          name: "showMainLogSelection",
-          friendlyName: "Show Main Log Selection",
-          type: "boolean",
-          required: false,
-          defaultValue: true,
-        },
-      ],
-    },
-    {
-      name: "plotLabels",
-      friendlyName: "Plot Labels",
-      type: "object",
-      required: false,
-      defaultValue: {},
-      subFields: [
-        {
-          name: "responseTrace",
-          friendlyName: "Response Trace",
-          type: "object",
-          required: false,
-          subFields: [
-            makeSeriesLabelDefinitionInput("gyro", "Gyro"),
-            makeSeriesLabelDefinitionInput("setPoint", "Setpoint"),
-            makeSeriesLabelDefinitionInput("feedForward", "Feedforward"),
-          ],
-        },
-        {
-          name: "responseThrottle",
-          friendlyName: "Response Throttle",
-          type: "object",
-          required: false,
-          subFields: [makeSeriesLabelDefinitionInput("throttle", "Throttle")],
-        },
-        {
-          name: "responseStrength",
-          friendlyName: "Response Strength",
-          type: "object",
-          required: false,
-          subFields: [makeSeriesLabelDefinitionInput("response", "Response")],
-        },
-        {
-          name: "responseStrength",
-          friendlyName: "Response Strength",
-          type: "object",
-          required: false,
-          subFields: Object.values(NoiseFields).map((noiseField) =>
-            makeSeriesLabelDefinitionInput(noiseField)
-          ),
-        },
-      ],
-    },
-  ],
 };

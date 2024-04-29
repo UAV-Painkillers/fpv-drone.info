@@ -4,8 +4,8 @@ import { Dialog } from "../dialog/dialog";
 import styles from "./expandable-image.module.css";
 import classNames from "classnames";
 import { Link } from "@builder.io/qwik-city";
-import type { RegisteredComponent } from "@builder.io/sdk-qwik";
 import { srcToSrcSet } from "../../../utils/srcToSrcSet";
+import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 interface Props {
   onClick$?: () => void;
@@ -65,22 +65,7 @@ export const ExpandableImage = component$<
   );
 });
 
-export const ExpandableImageRegistryDefinition: RegisteredComponent = {
+export const ExpandableImageRegistryDefinition: CMSRegisteredComponent = {
   component: ExpandableImage,
   name: "ExpandableImage",
-  inputs: [
-    {
-      name: "src",
-      friendlyName: "Image",
-      type: "file",
-      required: true,
-      allowedFileTypes: ["jpeg", "png", "jpg", "svg", "gif", "webp"],
-    },
-    {
-      name: "alt",
-      friendlyName: "Alt Text",
-      type: "string",
-      required: true,
-    },
-  ],
 };

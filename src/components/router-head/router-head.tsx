@@ -22,9 +22,15 @@ export const RouterHead = component$(() => {
         <link key={l.key} {...l} />
       ))}
 
-      {head.styles.map((s) => (
-        <style key={s.key} {...s.props} dangerouslySetInnerHTML={s.style} />
-      ))}
+      {head.styles.map((s) => {
+        const props = {
+          ...s.props,
+          dangerouslySetInnerHTML: s.style,
+        };
+        delete props.key;
+
+        return <style key={s.key} {...props} />;
+      })}
 
       {/* GENERATED AUTOMATICALLY DO NOT TOUCH */}
       <link

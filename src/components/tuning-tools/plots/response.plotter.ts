@@ -139,10 +139,17 @@ export class ResponsePlotter {
     title: string,
     optionsToMerge: ECBasicOption,
   ) {
+    // get css variable
+    const root = document.body;
+    const color = getComputedStyle(root).getPropertyValue("--text-color");
+
     const options: ECBasicOption = {
       title: {
         show: true,
         text: title,
+        textStyle: {
+          color,
+        },
       },
       toolbox: {
         feature: {
@@ -151,6 +158,9 @@ export class ResponsePlotter {
       },
       grid: {
         show: true,
+      },
+      textStyle: {
+        color,
       },
     };
 
@@ -168,6 +178,12 @@ export class ResponsePlotter {
       options.legend = {
         top: 30, // the size of title + margin
         left: "left", //or 0 or '0%'
+        itemStyle: {
+          color,
+        },
+        textStyle: {
+          color,
+        },
       };
       (options.grid as any).top = 80;
     }

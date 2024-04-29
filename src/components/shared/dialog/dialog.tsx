@@ -2,6 +2,7 @@ import type { QRL } from "@builder.io/qwik";
 import { Slot, component$, useSignal, $ } from "@builder.io/qwik";
 import classNames from "classnames";
 import styles from "./dialog.module.css";
+import { inlineTranslate } from "qwik-speak";
 
 interface Props {
   onClose?: QRL<() => any>;
@@ -10,12 +11,15 @@ interface Props {
 }
 export const Dialog = component$<Props>((props) => {
   const dialogRef = useSignal<HTMLDialogElement>();
+  const t = inlineTranslate();
 
   if (props.isOpen) {
     dialogRef.value?.showModal();
   } else {
     dialogRef.value?.close();
   }
+
+  const closeLabel = t("dialog.close") as string;
 
   return (
     <dialog
@@ -52,7 +56,7 @@ export const Dialog = component$<Props>((props) => {
             onClick$={props.onClose}
             class={classNames("button", "warning", styles.closeButton)}
           >
-            Close
+            {closeLabel}
           </button>
         )}
       </div>
