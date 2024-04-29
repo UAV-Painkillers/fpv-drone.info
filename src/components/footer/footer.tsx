@@ -6,6 +6,7 @@ import { DynamicLinkList } from "../shared/dynamic-link-list/dynamic-link-list";
 import { inlineTranslate, useSpeakConfig, useSpeakLocale } from "qwik-speak";
 import { changeLanguageInURLPathname } from "~/utils/i18n";
 import { useLocation } from "@builder.io/qwik-city";
+import LanguagesFroggoImage from "../../assets/languages_froggo_cropped.png?jsx";
 
 export const Footer = component$<IntrinsicElements["footer"]>((props) => {
   const speakConfig = useSpeakConfig();
@@ -33,23 +34,39 @@ export const Footer = component$<IntrinsicElements["footer"]>((props) => {
 
   return (
     <footer {...props} class={classNames(styles.container, props.class)}>
-      <DynamicLinkList navigationStorySlug="navigations/navigation-footer" />
+      <div>
+        <div style={{ display: "inline-block" }}>
+          <DynamicLinkList
+            class="aligned-list"
+            navigationStorySlug="navigations/navigation-footer"
+          />
+        </div>
+      </div>
       <br />
-      <ul>
-        {languages.value.map((language) => (
-          <li key={language.lang}>
-            <a
-              href={language.url}
-              class={classNames("anchor", {
-                active: language.active,
-              })}
-            >
-              {t(`language.${language.lang}`)}
-            </a>
-          </li>
-        ))}
-      </ul>
+
+      <LanguagesFroggoImage style={{ width: 100, height: "auto" }} />
+
+      <div>
+        <div style={{ display: "inline-block" }}>
+          <ul class="aligned-list">
+            {languages.value.map((language) => (
+              <li key={language.lang} style={{ flexBasis: "100%" }}>
+                <a
+                  href={language.url}
+                  class={classNames("anchor", {
+                    active: language.active,
+                  })}
+                >
+                  {t(`language.${language.lang}`)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
       <br />
+
       <p>
         <span dangerouslySetInnerHTML={ownerLine}></span>
         <br />

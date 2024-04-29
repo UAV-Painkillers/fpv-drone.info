@@ -1,18 +1,17 @@
 .container {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: .5rem;
-    padding-block: .5rem;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.5rem;
 }
-
 
 /** is mobile */
 @media screen and (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        padding-bottom: 1.5rem;
-    }
+  .container {
+    flex-direction: column;
+    padding-bottom: 1.5rem;
+  }
 }
