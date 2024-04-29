@@ -41,7 +41,7 @@ export const LanguageBanner = component$(() => {
   const isBannerVisible = useComputed$(() => {
     if (
       !speakConfig.supportedLocales.find(
-        (locale) => locale.lang === browserLanguage.value
+        (locale) => locale.lang === browserLanguage.value,
       )
     ) {
       return false;
@@ -72,7 +72,7 @@ export const LanguageBanner = component$(() => {
     const href = changeLanguageInURLPathname(
       location.url.pathname,
       activeLocale.lang,
-      browserLanguage.value!
+      browserLanguage.value!,
     );
 
     return href;

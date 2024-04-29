@@ -6,7 +6,7 @@ import styles from "./banner.module.css";
 
 interface Props {
   show: Signal<boolean>;
-  variant: 'success' | 'warning' | 'error';
+  variant: "success" | "warning" | "error";
 }
 
 export const Banner = component$((props: Props) => {
@@ -18,9 +18,13 @@ export const Banner = component$((props: Props) => {
     <>
       {shouldMount.value ? (
         <div
-          class={classNames(styles.banner, {
-            [styles.hidden]: stage.value !== "enterTo",
-          }, styles[props.variant])}
+          class={classNames(
+            styles.banner,
+            {
+              [styles.hidden]: stage.value !== "enterTo",
+            },
+            styles[props.variant],
+          )}
         >
           <Slot />
         </div>
