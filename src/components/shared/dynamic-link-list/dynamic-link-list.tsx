@@ -65,5 +65,5 @@ export const DynamicLinkList = component$(
         render={render}
       />
     );
-  }
+  },
 );

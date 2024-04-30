@@ -6,7 +6,7 @@ import styles from "./banner.module.css";
 
 interface Props {
   show: Signal<boolean>;
-  variant: "success" | "warning" | "error";
+  variant: "success" | "warning" | "error" | "info";
 }
 
 export const Banner = component$((props: Props) => {

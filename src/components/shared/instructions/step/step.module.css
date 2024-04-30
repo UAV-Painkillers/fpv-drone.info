@@ -1,5 +1,6 @@
 .wrapper {
   border-top: 1px solid var(--text-color);
+  padding-block: 3rem;
 }
 
 .index {
