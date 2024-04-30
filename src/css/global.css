@@ -96,6 +96,11 @@ a {
 ul {
   margin: 0;
   padding-left: 20px;
+  display: block;
+}
+
+ul li {
+  display: inline-block;
 }
 
 input[type="checkbox"] {
@@ -376,4 +381,13 @@ dialog {
   flex-basis: 100%;
   margin-inline: 0;
   padding-inline: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .aligned-list {
+    display: block;
+  }
+
+  .aligned-list li {
+  }
 }

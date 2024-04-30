@@ -60,12 +60,10 @@ export const DynamicLinkList = component$(
     });
 
     return (
-      <ul>
-        <CMSItemsList
-          itemsListStorySlug={props.navigationStorySlug}
-          render={render}
-        />
-      </ul>
+      <CMSItemsList
+        itemsListStorySlug={props.navigationStorySlug}
+        render={render}
+      />
     );
-  },
+  }
 );

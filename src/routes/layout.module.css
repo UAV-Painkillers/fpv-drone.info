@@ -1,4 +1,5 @@
 .appContainer {
+  --app-container-max-width: min(1200px, 85vw);
   margin: 0 auto;
   min-height: calc(100vh - 2rem);
 
@@ -11,17 +12,9 @@
     "logo navigation search"
     "main main main";
 
-  max-width: min(1200px, 85vw);
+  max-width: var(--app-container-max-width);
   width: 85vw;
-  margin: 0 auto;
   padding-inline: 50px;
-}
-
-/** is mobile */
-@media screen and (max-width: 768px) {
-  .appContainer {
-    padding-inline: 25px;
-  }
 }
 
 .logo {
@@ -50,6 +43,9 @@
 /** is mobile */
 @media screen and (max-width: 768px) {
   .appContainer {
+    --app-container-padding-inline: 25px;
+    --app-container-max-width: 100vw;
+    padding-inline: var(--app-container-padding-inline);
     display: block;
   }
 
@@ -61,7 +57,7 @@
 
   .search {
     position: fixed;
-    bottom: 2rem;
+    bottom: 3rem;
     right: 0.5rem;
     z-index: 1001;
     background: rgba(var(--body-background), 0.9) !important;
@@ -71,13 +67,16 @@
   }
 
   .navigation {
+    max-width: var(--app-container-max-width);
     position: fixed;
     bottom: 0;
-    left: 0;
+    left: calc(-1 * var(--app-container-padding-inline));
     right: 0;
+    overflow-x: auto;
     z-index: 1000;
     width: 100%;
-    padding-block: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
