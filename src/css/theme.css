@@ -4,6 +4,9 @@ body {
   --base-black: #3e3e3e;
   --base-white: #ffffff;
 
+  --text-color: var(--base-black);
+  --body-background: 255, 255, 255;
+
   --success-color: #16c969;
   --success-background-color: hsl(148, 40%, 44%);
 
@@ -13,8 +16,8 @@ body {
   --error-color: #c91652;
   --error-background-color: hsl(340, 40%, 44%);
 
-  --text-color: var(--base-black);
-  --body-background: 255, 255, 255;
+  --info-color: var(--base-blue);
+  --info-background-color: rgb(var(--body-background));
 
   --anchor-gradient-start: var(--base-green);
   --anchor-gradient-end: var(--base-blue);

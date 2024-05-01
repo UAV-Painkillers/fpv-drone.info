@@ -3,42 +3,37 @@
   padding-inline: 1rem;
   background: var(--success-background-color);
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0;
+  margin-top: 0px;
+  border-bottom: 1px solid var(--text-color);
   transition: margin-top 0.5s;
   min-height: var(--banner-height);
 }
 
 .banner.success {
-  /* from --body-background (bottom), to --success-background-color (top) */
-  background: linear-gradient(
-    0deg,
-    rgb(var(--body-background)),
-    var(--success-background-color)
-  );
+  background: var(--success-background-color);
 }
 
 .banner.error {
-  background: linear-gradient(
-    0deg,
-    rgb(var(--body-background)),
-    var(--error-background-color)
-  );
+  background: var(--error-background-color);
 }
 
 .banner.warning {
-  background: linear-gradient(
-    0deg,
-    rgb(var(--body-background)),
-    var(--warning-background-color)
-  );
+  background: var(--warning-background-color);
+}
+
+.banner.info {
+  background: var(--info-background-color);
 }
 
 /** is mobile */
 @media screen and (max-width: 768px) {
   .banner {
     --banner-height: 5rem;
+    flex-direction: column;
+    padding-block: 0.5rem;
   }
 }
 

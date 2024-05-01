@@ -9,9 +9,8 @@ import {
   useContext,
 } from "@builder.io/qwik";
 import type { NoSerialize } from "@builder.io/qwik";
-import classNames from "classnames";
-import { useCSSTransition } from "qwik-transition";
 import { AppContext } from "~/app.ctx";
+import { Banner } from "../shared/banner/banner";
 
 enum CACHING_EVENT {
   PRECACHING_STARTED = "PRECACHING_STARTED",
@@ -31,7 +30,7 @@ type CACHING_EVENT_PAYLOAD_MAP = {
   [CACHING_EVENT.PRECACHING_COMPLETE]: undefined;
 };
 
-export const ServiceWorkerManager = component$(() => {
+export const ServiceWorkerCachingBanner = component$(() => {
   const cachingStats = useStore({
     total: 0,
     cached: 0,
@@ -46,7 +45,6 @@ export const ServiceWorkerManager = component$(() => {
   const showBanner = useComputed$(
     () => cachingStats.cachingIsStarted && !cachingStats.cachingIsDone,
   );
-  const { stage, shouldMount } = useCSSTransition(showBanner, { timeout: 300 });
 
   const handleEvent = $(
     <TEventType extends CACHING_EVENT>(
@@ -123,26 +121,15 @@ export const ServiceWorkerManager = component$(() => {
   });
 
   return (
-    <>
-      {/* for whatever reason, this is needed in order for anything to be rendered... */}
-      <div></div>
-      {shouldMount.value && (
-        <div
-          class={classNames("button floating bottom", {
-            closed: stage.value !== "enterTo",
-          })}
-        >
-          <p>
-            <b>Updating App-Cache for offline usage.</b>
-            <br />
-            <small>Navigations might be slow during this process...</small>
-          </p>
-          <div>
-            {/* show percentage of completion */}
-            {completedPercentage}% completed
-          </div>
+    <div>
+      <Banner show={showBanner} variant="info">
+        <div>
+          Updating App-Cache for offline usage.
+          <br />
+          <small>Navigations might be slow during this process...</small>
         </div>
-      )}
-    </>
+        {completedPercentage}%
+      </Banner>
+    </div>
   );
 });

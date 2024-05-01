@@ -9,12 +9,13 @@ import { AppContext } from "~/app.ctx";
 import { SearchButton } from "~/components/shared/search/search-button";
 import { QwikCityNprogress } from "@quasarwork/qwik-city-nprogress";
 import { PWAInstallBanner } from "~/components/pwa-install-banner/pwa-install-banner";
-import { ServiceWorkerManager } from "~/components/service-worker-manager/service-worker-manager";
+import { ServiceWorkerCachingBanner } from "~/components/service-worker-caching-banner/service-worker-caching-banner";
 import { StoryblokContext } from "./[...index]/storyblok.ctx";
 import { LanguageBanner } from "~/components/language-banner/language-banner";
 import { config as speakConfig } from "~/speak";
 import { getStoryBlokApi } from "./plugin@storyblok";
 import type { ISbStoryData } from "@storyblok/js";
+import { useLastActiveLanguage } from "~/hooks/use-last-active-language";
 
 export const useStory = routeLoader$(async ({ resolveValue }) => {
   const { versionToLoad, slug, language } = await resolveValue(useStoryblok);
@@ -92,6 +93,8 @@ export default component$(() => {
   const storyblokContext = useContext(StoryblokContext);
   const storyBlokPreviewData = useStoryblok();
 
+  useLastActiveLanguage();
+
   useTask$(({ track }) => {
     track(storyBlokPreviewData);
 
@@ -113,6 +116,7 @@ export default component$(() => {
       <QwikCityNprogress />
       <PWAInstallBanner />
       <LanguageBanner />
+      <ServiceWorkerCachingBanner />
       <div class={styles.appContainer}>
         {appContext.showPageHeader && (
           <>
@@ -124,7 +128,6 @@ export default component$(() => {
           </>
         )}
         <main class={styles.main}>
-          <ServiceWorkerManager />
           <Slot />
         </main>
       </div>
