@@ -9,7 +9,7 @@ import { AppContext } from "~/app.ctx";
 import { SearchButton } from "~/components/shared/search/search-button";
 import { QwikCityNprogress } from "@quasarwork/qwik-city-nprogress";
 import { PWAInstallBanner } from "~/components/pwa-install-banner/pwa-install-banner";
-import { ServiceWorkerCachingBanner } from "~/components/service-worker-caching-banner/service-worker-caching-banner";
+import { ServiceWorkerBanners } from "~/components/service-worker-banners/service-worker-banners";
 import { StoryblokContext } from "./[...index]/storyblok.ctx";
 import { LanguageBanner } from "~/components/language-banner/language-banner";
 import { config as speakConfig } from "~/speak";
@@ -116,7 +116,7 @@ export default component$(() => {
       <QwikCityNprogress />
       <PWAInstallBanner />
       <LanguageBanner />
-      <ServiceWorkerCachingBanner />
+      <ServiceWorkerBanners />
       <div class={styles.appContainer}>
         {appContext.showPageHeader && (
           <>

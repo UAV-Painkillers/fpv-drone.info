@@ -1,11 +1,19 @@
-import { precacheAndRoute, addPlugins } from "workbox-precaching";
+import { addPlugins, precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 import { setDefaultHandler } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
+import {setCacheNameDetails} from 'workbox-core';
 
 enum CACHE_NAMES {
+  STATIC = "static",
   PID_ANALYZER = "pid-analyzer-dependencies",
   DYNAMIC = "dynamic",
 }
+
+setCacheNameDetails({
+  prefix: "",
+  precache: CACHE_NAMES.STATIC,
+  suffix: "",
+});
 
 const STATIC_ASSETS_MANIFESTS: typeof self.__WB_MANIFEST = [];
 const PID_ANALYZER_DEPENDENCIES_MANIFESTS: typeof self.__WB_MANIFEST = [];
@@ -32,7 +40,7 @@ self.__WB_MANIFEST.forEach((manifest) => {
         : {
             revision: manifest.revision,
             url: "/",
-          },
+          }
     );
   }
 
@@ -44,30 +52,33 @@ self.__WB_MANIFEST.forEach((manifest) => {
         : {
             revision: manifest.revision,
             url: urlWithoutIndex,
-          },
+          }
     );
   }
 
   STATIC_ASSETS_MANIFESTS.push(manifest);
 });
 
-const PRECACHING_LISTENER_CLIENTS: Client[] = [];
-
-addEventListener("install", (event) => {
-  (event as any).waitUntil(clearCaches(CACHE_NAMES.PID_ANALYZER));
+self.addEventListener("install", () => {
+  console.log("service worker: skip waiting");
   self.skipWaiting();
+});
+
+self.addEventListener("activate", () => {
+  self.clients.claim();
+  sendToClients("SERVICE_WORKER_ACTIVATED");
 });
 
 async function sendToClients(eventType: string, payload?: any): Promise<void>;
 async function sendToClients(
   clients: Array<Client>,
   eventType: string,
-  payload?: any,
+  payload?: any
 ): Promise<void>;
 async function sendToClients(
   eventTypeOrClients: string | Array<Client>,
   payloadOrEventType?: any,
-  payloadOrNone?: any,
+  payloadOrNone?: any
 ) {
   let clients: Array<Client> | undefined;
   let eventType: string = "";
@@ -97,6 +108,9 @@ addPlugins([
         return;
       }
 
+      const PRECACHING_LISTENER_CLIENTS =
+        (await self.clients.matchAll()) as Client[];
+
       if (!didSendInitialEvent) {
         sendToClients(PRECACHING_LISTENER_CLIENTS, "PRECACHING_STARTED", {
           total: manifestSize,
@@ -120,6 +134,9 @@ addPlugins([
 
       if (precacheCount >= manifestSize) {
         sendToClients(PRECACHING_LISTENER_CLIENTS, "PRECACHING_COMPLETE");
+
+        console.log("cleaning up outdated caches");
+        cleanupOutdatedCaches();
       }
     },
   },
@@ -144,10 +161,6 @@ self.addEventListener("message", async (event) => {
     clearCaches();
   }
 
-  if (event.data.type === "ATTACH_LISTENER_PRECACHING") {
-    PRECACHING_LISTENER_CLIENTS.push(event.source as Client);
-  }
-
   if (event.data.type === "PRECACHE_PID_ANALYZER_CHECK") {
     const didCache = await checkDidCachePIDAnalyzerDependencies();
     sendToClients("PRECACHE_PID_ANALYZER_CHECK_RESULT", didCache);
@@ -155,7 +168,7 @@ self.addEventListener("message", async (event) => {
 });
 
 async function checkForPIDResourceInSingleCache(
-  cacheName: string,
+  cacheName: string
 ): Promise<boolean> {
   const cache = await self.caches.open(cacheName);
   const keys = await cache.keys();
@@ -183,12 +196,13 @@ async function checkDidCachePIDAnalyzerDependencies() {
   return false;
 }
 
-precacheAndRoute(STATIC_ASSETS_MANIFESTS);
 setDefaultHandler(
   new NetworkFirst({
     cacheName: CACHE_NAMES.DYNAMIC,
-  }),
+  })
 );
-// registerRoute(new NavigationRoute(createHandlerBoundToURL("/")));
+
+console.log("precache, and route", STATIC_ASSETS_MANIFESTS);
+precacheAndRoute(STATIC_ASSETS_MANIFESTS);
 
 declare const self: ServiceWorkerGlobalScope;
