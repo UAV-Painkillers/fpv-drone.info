@@ -12,25 +12,27 @@ import type { NoSerialize } from "@builder.io/qwik";
 import { AppContext } from "~/app.ctx";
 import { Banner } from "../shared/banner/banner";
 
-enum CACHING_EVENT {
+enum SW_EVENT {
   PRECACHING_STARTED = "PRECACHING_STARTED",
   PRECACHING_PROGRESS = "PRECACHING_PROGRESS",
   PRECACHING_COMPLETE = "PRECACHING_COMPLETE",
+  SERVICE_WORKER_ACTIVATED = "SERVICE_WORKER_ACTIVATED",
 }
 
 type CACHING_EVENT_PAYLOAD_MAP = {
-  [CACHING_EVENT.PRECACHING_STARTED]: {
+  [SW_EVENT.PRECACHING_STARTED]: {
     total: number;
     cached: number;
   };
-  [CACHING_EVENT.PRECACHING_PROGRESS]: {
+  [SW_EVENT.PRECACHING_PROGRESS]: {
     total: number;
     cached: number;
   };
-  [CACHING_EVENT.PRECACHING_COMPLETE]: undefined;
+  [SW_EVENT.PRECACHING_COMPLETE]: undefined;
+  [SW_EVENT.SERVICE_WORKER_ACTIVATED]: undefined;
 };
 
-export const ServiceWorkerCachingBanner = component$(() => {
+export const ServiceWorkerBanners = component$(() => {
   const cachingStats = useStore({
     total: 0,
     cached: 0,
@@ -38,41 +40,47 @@ export const ServiceWorkerCachingBanner = component$(() => {
     cachingIsDone: false,
   });
   const serviceWorker = useSignal<NoSerialize<ServiceWorker | undefined>>(
-    noSerialize(undefined),
+    noSerialize(undefined)
   );
   const appContext = useContext(AppContext);
 
-  const showBanner = useComputed$(
-    () => cachingStats.cachingIsStarted && !cachingStats.cachingIsDone,
+  const showCachingProgressBanner = useComputed$(
+    () => cachingStats.cachingIsStarted && !cachingStats.cachingIsDone
   );
 
+  const showUpdateAvailableBanner = useSignal(false);
+
   const handleEvent = $(
-    <TEventType extends CACHING_EVENT>(
+    <TEventType extends SW_EVENT>(
       eventType: TEventType | string,
-      payload: CACHING_EVENT_PAYLOAD_MAP[TEventType],
+      payload: CACHING_EVENT_PAYLOAD_MAP[TEventType]
     ) => {
       switch (eventType) {
-        case CACHING_EVENT.PRECACHING_STARTED:
-        case CACHING_EVENT.PRECACHING_PROGRESS: {
+        case SW_EVENT.PRECACHING_STARTED:
+        case SW_EVENT.PRECACHING_PROGRESS: {
           const p =
-            payload as CACHING_EVENT_PAYLOAD_MAP[CACHING_EVENT.PRECACHING_STARTED];
+            payload as CACHING_EVENT_PAYLOAD_MAP[SW_EVENT.PRECACHING_STARTED];
           cachingStats.cachingIsStarted = true;
           cachingStats.total = p.total;
           cachingStats.cached = p.cached;
           break;
         }
 
-        case CACHING_EVENT.PRECACHING_COMPLETE:
+        case SW_EVENT.PRECACHING_COMPLETE:
           cachingStats.cachingIsDone = true;
           serviceWorker.value?.postMessage({
             type: "PRECACHE_PID_ANALYZER_CHECK",
           });
           break;
 
+        case SW_EVENT.SERVICE_WORKER_ACTIVATED:
+          showUpdateAvailableBanner.value = true;
+          break;
+
         default:
           console.error("Unknown event type:", eventType, payload);
       }
-    },
+    }
   );
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -93,7 +101,7 @@ export const ServiceWorkerCachingBanner = component$(() => {
       registration.installing ||
         registration.waiting ||
         registration.active ||
-        undefined,
+        undefined
     );
 
     appContext.serviceWorker = noSerialize(serviceWorker.value);
@@ -116,19 +124,28 @@ export const ServiceWorkerCachingBanner = component$(() => {
     });
   });
 
-  const completedPercentage = useComputed$(() => {
+  const cachingCompletedPercentage = useComputed$(() => {
     return Math.round((cachingStats.cached / cachingStats.total) * 100);
+  });
+
+  const reload = $(() => {
+    location.reload();
   });
 
   return (
     <div>
-      <Banner show={showBanner} variant="info">
+      <Banner show={showCachingProgressBanner} variant="info">
         <div>
           Updating App-Cache for offline usage.
           <br />
           <small>Navigations might be slow during this process...</small>
         </div>
-        {completedPercentage}%
+        {cachingCompletedPercentage}%
+      </Banner>
+      <Banner show={showUpdateAvailableBanner} variant="success">
+        a new version was loaded in the background!
+        <br />
+        <button onClick$={reload} class="button">Reload now!</button>
       </Banner>
     </div>
   );
