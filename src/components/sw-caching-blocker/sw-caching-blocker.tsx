@@ -42,7 +42,7 @@ export const SWCachingBlocker = component$((props: Props) => {
       console.log("receive: PRECACHE_PID_ANALYZER_CHECK_RESULT", payload);
       serviceWorkerDidCache.value = payload as boolean;
     });
-    
+
     console.log("send: PRECACHE_PID_ANALYZER_CHECK");
     broadcastChannel.postMessage({ type: "PRECACHE_PID_ANALYZER_CHECK" });
   });
@@ -76,7 +76,6 @@ export const SWCachingBlocker = component$((props: Props) => {
         <p>{props.blockMessage}</p>
         <button
           class="button"
-          data-show={showBlocker.value ? 'true' : 'false'}
           onClick$={() =>
             (appContext.unblockedCaches = [
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

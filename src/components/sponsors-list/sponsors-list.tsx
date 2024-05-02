@@ -2,7 +2,7 @@ import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$, useComputed$ } from "@builder.io/qwik";
 import { storyblokEditable } from "@storyblok/js";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
-import { transformStoryblokHref } from "../shared/utils/url";
+import { transformStoryblokHref } from "../utils/url";
 
 interface Sponsor {
   href: string;

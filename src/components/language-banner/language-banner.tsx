@@ -5,7 +5,7 @@ import {
   useSignal,
   useVisibleTask$,
 } from "@builder.io/qwik";
-import { Banner } from "../shared/banner/banner";
+import { Banner } from "../banner/banner";
 import { inlineTranslate, useSpeakConfig, useSpeakLocale } from "qwik-speak";
 import { useLocation } from "@builder.io/qwik-city";
 import { changeLanguageInURLPathname } from "~/utils/i18n";

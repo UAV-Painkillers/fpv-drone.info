@@ -1,5 +1,5 @@
 import { component$, $, useSignal, useContext } from "@builder.io/qwik";
-import { Dialog } from "~/components/shared/dialog/dialog";
+import { Dialog } from "~/components/dialog/dialog";
 import { BlackboxAnalyzerContext } from "../../context/blackbox-analyzer.context";
 import styles from "./plot-navigation.module.css";
 import { inlineTranslate } from "qwik-speak";

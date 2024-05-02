@@ -1,7 +1,11 @@
-import { addPlugins, precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
+import {
+  addPlugins,
+  precacheAndRoute,
+  cleanupOutdatedCaches,
+} from "workbox-precaching";
 import { setDefaultHandler } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
-import {setCacheNameDetails} from 'workbox-core';
+import { setCacheNameDetails } from "workbox-core";
 
 enum CACHE_NAMES {
   STATIC = "static",
@@ -40,7 +44,7 @@ self.__WB_MANIFEST.forEach((manifest) => {
         : {
             revision: manifest.revision,
             url: "/",
-          }
+          },
     );
   }
 
@@ -52,7 +56,7 @@ self.__WB_MANIFEST.forEach((manifest) => {
         : {
             revision: manifest.revision,
             url: urlWithoutIndex,
-          }
+          },
     );
   }
 
@@ -64,10 +68,7 @@ broadcastChannel.addEventListener("message", (event) => {
   onClientMessage(event.data);
 });
 
-async function sendToClients(
-  eventType: string,
-  payload?: any
-): Promise<void> {
+async function sendToClients(eventType: string, payload?: any): Promise<void> {
   broadcastChannel.postMessage({ type: eventType, payload });
 }
 
@@ -125,7 +126,7 @@ async function clearCaches(...cachesToKeep: string[]) {
   sendToClients("CACHES_CLEARED");
 }
 
-async function onClientMessage(message: {type: string, payload: any}) {
+async function onClientMessage(message: { type: string; payload: any }) {
   switch (message.type) {
     case "CLEAR_CACHES":
       clearCaches();
@@ -138,7 +139,7 @@ async function onClientMessage(message: {type: string, payload: any}) {
 }
 
 async function checkForPIDResourceInSingleCache(
-  cacheName: string
+  cacheName: string,
 ): Promise<boolean> {
   const cache = await self.caches.open(cacheName);
   const keys = await cache.keys();
@@ -169,7 +170,7 @@ async function checkDidCachePIDAnalyzerDependencies() {
 setDefaultHandler(
   new NetworkFirst({
     cacheName: CACHE_NAMES.DYNAMIC,
-  })
+  }),
 );
 
 self.addEventListener("install", () => {

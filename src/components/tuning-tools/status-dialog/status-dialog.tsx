@@ -1,5 +1,5 @@
 import { component$, useComputed$, useSignal } from "@builder.io/qwik";
-import { Dialog } from "../../shared/dialog/dialog";
+import { Dialog } from "../../dialog/dialog";
 import type {
   AnalyzerProgress,
   AnalyzerStepStatusIndexArray,

@@ -8,7 +8,7 @@ import {
   useVisibleTask$,
   useComputed$,
 } from "@builder.io/qwik";
-import { Banner } from "../shared/banner/banner";
+import { Banner } from "../banner/banner";
 import { inlineTranslate } from "qwik-speak";
 
 export const PWAInstallBanner = component$(() => {

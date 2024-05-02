@@ -6,7 +6,7 @@ import {
   useSignal,
   useVisibleTask$,
 } from "@builder.io/qwik";
-import { Banner } from "../shared/banner/banner";
+import { Banner } from "../banner/banner";
 
 enum SW_EVENT {
   PRECACHING_STARTED = "PRECACHING_STARTED",
@@ -35,9 +35,9 @@ export const ServiceWorkerBanners = component$(() => {
     cachingIsStarted: false,
     cachingIsDone: false,
   });
-  
+
   const showCachingProgressBanner = useComputed$(
-    () => cachingStats.cachingIsStarted && !cachingStats.cachingIsDone
+    () => cachingStats.cachingIsStarted && !cachingStats.cachingIsDone,
   );
 
   const showUpdateAvailableBanner = useSignal(false);
@@ -46,7 +46,7 @@ export const ServiceWorkerBanners = component$(() => {
     <TEventType extends SW_EVENT>(
       broadcastChannel: BroadcastChannel,
       eventType: TEventType | string,
-      payload: CACHING_EVENT_PAYLOAD_MAP[TEventType]
+      payload: CACHING_EVENT_PAYLOAD_MAP[TEventType],
     ) => {
       switch (eventType) {
         case SW_EVENT.PRECACHING_STARTED:
@@ -73,7 +73,7 @@ export const ServiceWorkerBanners = component$(() => {
         default:
           console.error("Unknown event type:", eventType, payload);
       }
-    }
+    },
   );
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -124,7 +124,9 @@ export const ServiceWorkerBanners = component$(() => {
       <Banner show={showUpdateAvailableBanner} variant="success">
         a new version was loaded in the background!
         <br />
-        <button onClick$={reload} class="button">Reload now!</button>
+        <button onClick$={reload} class="button">
+          Reload now!
+        </button>
       </Banner>
     </div>
   );

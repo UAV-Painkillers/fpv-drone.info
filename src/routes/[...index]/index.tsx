@@ -17,9 +17,9 @@ import { loadStoryblokBridge, type ISbStoryData } from "@storyblok/js";
 import { StoryBlokComponentArray } from "~/components/storyblok/component-array";
 import { useStory, useStoryblok } from "../layout";
 import { getAllPageStories } from "../../utils/storyblok";
-import { useStoryblokURL } from "~/components/shared/utils/url";
+import { useStoryblokURL } from "~/components/utils/url";
 import { config as speakConfig } from "../../speak";
-import { PageHeadline } from "~/components/shared/page-headline/page-headline";
+import { PageHeadline } from "~/components/page-headline/page-headline";
 
 export default component$(() => {
   const loadedStory = useStory();

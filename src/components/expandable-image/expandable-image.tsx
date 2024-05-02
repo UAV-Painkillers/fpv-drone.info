@@ -4,7 +4,7 @@ import { Dialog } from "../dialog/dialog";
 import styles from "./expandable-image.module.css";
 import classNames from "classnames";
 import { Link } from "@builder.io/qwik-city";
-import { srcToSrcSet } from "../../../utils/srcToSrcSet";
+import { srcToSrcSet } from "../../utils/srcToSrcSet";
 import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 
 interface Props {

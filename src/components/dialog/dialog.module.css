@@ -37,7 +37,9 @@
 .content {
   margin: 2rem;
   z-index: var(--dialog-z-index);
-  max-height: calc(100vh - 4rem - var(--footer-height));
+  height: calc(100vh - 4rem - var(--footer-height));
+  overflow: auto;
+  width: 100%;
 }
 
 .footer {
