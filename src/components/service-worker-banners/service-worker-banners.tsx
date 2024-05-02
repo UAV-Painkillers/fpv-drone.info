@@ -1,15 +1,11 @@
 import {
   component$,
-  useVisibleTask$,
   $,
   useStore,
   useComputed$,
   useSignal,
-  noSerialize,
-  useContext,
+  useVisibleTask$,
 } from "@builder.io/qwik";
-import type { NoSerialize } from "@builder.io/qwik";
-import { AppContext } from "~/app.ctx";
 import { Banner } from "../shared/banner/banner";
 
 enum SW_EVENT {
@@ -39,11 +35,7 @@ export const ServiceWorkerBanners = component$(() => {
     cachingIsStarted: false,
     cachingIsDone: false,
   });
-  const serviceWorker = useSignal<NoSerialize<ServiceWorker | undefined>>(
-    noSerialize(undefined)
-  );
-  const appContext = useContext(AppContext);
-
+  
   const showCachingProgressBanner = useComputed$(
     () => cachingStats.cachingIsStarted && !cachingStats.cachingIsDone
   );
@@ -52,6 +44,7 @@ export const ServiceWorkerBanners = component$(() => {
 
   const handleEvent = $(
     <TEventType extends SW_EVENT>(
+      broadcastChannel: BroadcastChannel,
       eventType: TEventType | string,
       payload: CACHING_EVENT_PAYLOAD_MAP[TEventType]
     ) => {
@@ -68,7 +61,7 @@ export const ServiceWorkerBanners = component$(() => {
 
         case SW_EVENT.PRECACHING_COMPLETE:
           cachingStats.cachingIsDone = true;
-          serviceWorker.value?.postMessage({
+          broadcastChannel.postMessage({
             type: "PRECACHE_PID_ANALYZER_CHECK",
           });
           break;
@@ -94,30 +87,16 @@ export const ServiceWorkerBanners = component$(() => {
       return;
     }
 
-    const registration =
-      await navigator.serviceWorker.register("/service-worker.js");
+    await navigator.serviceWorker.register("/service-worker.js");
 
-    serviceWorker.value = noSerialize(
-      registration.installing ||
-        registration.waiting ||
-        registration.active ||
-        undefined
-    );
+    const broadcastChannel = new BroadcastChannel("service-worker");
+    broadcastChannel.postMessage({ type: "ATTACH_LISTENER_PRECACHING" });
 
-    appContext.serviceWorker = noSerialize(serviceWorker.value);
-
-    if (!serviceWorker.value) {
-      console.error("No service worker found");
-      return;
-    }
-
-    serviceWorker.value.postMessage({ type: "ATTACH_LISTENER_PRECACHING" });
-
-    navigator.serviceWorker.addEventListener("message", (event: any): void => {
+    broadcastChannel.addEventListener("message", (event: any): void => {
       try {
         const { type, payload } = event.data;
 
-        handleEvent(type, payload);
+        handleEvent(broadcastChannel, type, payload);
       } catch (e) {
         console.error("Failed to parse event data:", event);
       }
