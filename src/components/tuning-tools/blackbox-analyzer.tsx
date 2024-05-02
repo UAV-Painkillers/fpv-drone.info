@@ -14,7 +14,6 @@ import { InlineSpinner } from "../inline-spinner/inline-spinner";
 import classNames from "classnames";
 import { Plots } from "./plots/plots";
 import { useBlackboxAnalyzerContextProvider } from "./context/blackbox-analyzer.context";
-import { useHideHeader } from "~/hooks/use-hide-header/use-hide-header";
 import { AnalyzerState, useAnalyzeLog } from "./hooks/use-analyze-log";
 import type { PlotLabelDefinitions } from "./plots/response.plotter";
 import { PlotName } from "./plots/response.plotter";
@@ -25,7 +24,7 @@ import {
   RacoonLoader,
 } from "./racoon-animations/racoon-animation";
 import { AnalyzerStepStatus } from "./hooks/types";
-import { Dialog } from "../shared/dialog/dialog";
+import { Dialog } from "../dialog/dialog";
 import { SWCachingBlocker } from "../sw-caching-blocker/sw-caching-blocker";
 // @ts-ignore
 import dragDrop from "drag-drop";
@@ -47,7 +46,6 @@ const BlackboxAnalyzerContent = component$((props: Props) => {
   const appContext = useContext(AppContext);
   const dropzoneRef = useSignal<HTMLElement>();
 
-  useHideHeader();
   const t = inlineTranslate();
 
   const {

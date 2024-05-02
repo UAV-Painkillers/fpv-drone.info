@@ -1,6 +1,6 @@
 import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$, useComputed$ } from "@builder.io/qwik";
-import { formatHtmlText } from "../../../utils/formatHtmlText";
+import { formatHtmlText } from "../../utils/formatHtmlText";
 import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 import { renderRichText, storyblokEditable } from "@storyblok/js";
 

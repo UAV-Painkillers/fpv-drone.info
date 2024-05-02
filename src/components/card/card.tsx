@@ -4,7 +4,7 @@ import { Slot, component$ } from "@builder.io/qwik";
 import styles from "./card.module.css";
 import { Link } from "@builder.io/qwik-city";
 import classNames from "classnames";
-import { srcToSrcSet } from "../../../utils/srcToSrcSet";
+import { srcToSrcSet } from "../../utils/srcToSrcSet";
 import type { CMSRegisteredComponent } from "~/components/cms-registered-component";
 import { storyblokEditable } from "@storyblok/js";
 import { useStoryblokURL } from "../utils/url";

@@ -2,10 +2,10 @@ import { Link } from "@builder.io/qwik-city";
 import { component$ } from "@builder.io/qwik";
 import styles from "./product.module.css";
 import { formatHtmlText } from "~/utils/formatHtmlText";
-import { ExpandableImage } from "../shared/expandable-image/expandable-image";
-import { PageHeadline } from "../shared/page-headline/page-headline";
-import type { TableData, TableColumns } from "../shared/table/table";
-import { Table } from "../shared/table/table";
+import { ExpandableImage } from "../expandable-image/expandable-image";
+import { PageHeadline } from "../page-headline/page-headline";
+import type { TableData, TableColumns } from "../table/table";
+import { Table } from "../table/table";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
 
 enum ProductCategory {

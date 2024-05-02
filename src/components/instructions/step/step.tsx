@@ -1,7 +1,7 @@
 import type { IntrinsicElements } from "@builder.io/qwik";
 import { Slot, component$, useComputed$ } from "@builder.io/qwik";
 import styles from "./step.module.css";
-import { formatHtmlText } from "../../../../utils/formatHtmlText";
+import { formatHtmlText } from "../../../utils/formatHtmlText";
 import { ExpandableImage } from "../../expandable-image/expandable-image";
 
 export interface StepProps {

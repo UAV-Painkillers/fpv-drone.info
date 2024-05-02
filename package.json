@@ -27,7 +27,7 @@
     "preview": "qwik build preview && vite preview --open",
     "start": "vite --open --mode ssr",
     "upgrade-packages": "npx npm-check-updates --interactive",
-    "vercell-install": "git submodule init && git submodule update && npm ci && npm run i18n:download",
+    "vercell-install": "npm ci && npm run i18n:download",
     "qwik": "qwik",
     "i18n:download": "npx tsx ./scripts/i18n_download.ts"
   },

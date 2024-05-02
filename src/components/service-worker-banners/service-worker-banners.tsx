@@ -6,7 +6,7 @@ import {
   useSignal,
   useVisibleTask$,
 } from "@builder.io/qwik";
-import { Banner } from "../shared/banner/banner";
+import { Banner } from "../banner/banner";
 
 enum SW_EVENT {
   PRECACHING_STARTED = "PRECACHING_STARTED",

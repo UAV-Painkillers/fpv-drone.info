@@ -2,7 +2,7 @@ import type { IntrinsicElements } from "@builder.io/qwik";
 import { component$, useComputed$ } from "@builder.io/qwik";
 import styles from "./footer.module.css";
 import classNames from "classnames";
-import { DynamicLinkList } from "../shared/dynamic-link-list/dynamic-link-list";
+import { DynamicLinkList } from "../dynamic-link-list/dynamic-link-list";
 import { inlineTranslate, useSpeakConfig, useSpeakLocale } from "qwik-speak";
 import { changeLanguageInURLPathname } from "~/utils/i18n";
 import { useLocation } from "@builder.io/qwik-city";
