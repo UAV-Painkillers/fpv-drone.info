@@ -24,44 +24,42 @@ export const SWCachingBlocker = component$((props: Props) => {
 
   const t = inlineTranslate();
 
-  const show = useComputed$(() =>
+  const cachingIsUnblocked = useComputed$(() =>
     appContext.unblockedCaches.includes(BlockableCaches.PID_ANALYZER),
   );
 
   // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ track }) => {
-    const serviceWorker = track(() => appContext.serviceWorker);
+  useVisibleTask$(() => {
+    const broadcastChannel = new BroadcastChannel("service-worker");
 
-    if (!serviceWorker) {
-      serviceWorkerAvailable.value = false;
-      return;
-    }
-
-    serviceWorkerAvailable.value = true;
-
-    navigator.serviceWorker.addEventListener("message", (event: any) => {
+    broadcastChannel.addEventListener("message", (event: any) => {
       const { type, payload } = event.data;
 
       if (type !== "PRECACHE_PID_ANALYZER_CHECK_RESULT") {
         return;
       }
 
+      console.log("receive: PRECACHE_PID_ANALYZER_CHECK_RESULT", payload);
       serviceWorkerDidCache.value = payload as boolean;
     });
-
-    serviceWorker.postMessage({ type: "PRECACHE_PID_ANALYZER_CHECK" });
+    
+    console.log("send: PRECACHE_PID_ANALYZER_CHECK");
+    broadcastChannel.postMessage({ type: "PRECACHE_PID_ANALYZER_CHECK" });
   });
 
   const showBlocker = useComputed$(() => {
-    if (show.value) {
+    if (cachingIsUnblocked.value) {
+      console.log("caching is unblocked, skipping blocker");
       return false;
     }
 
     if (serviceWorkerAvailable.value === false) {
+      console.log("service worker not available, showing blocker");
       return true;
     }
 
     if (serviceWorkerDidCache.value === true) {
+      console.log("service worker did cache, skipping blocker");
       return false;
     }
 
@@ -78,6 +76,7 @@ export const SWCachingBlocker = component$((props: Props) => {
         <p>{props.blockMessage}</p>
         <button
           class="button"
+          data-show={showBlocker.value ? 'true' : 'false'}
           onClick$={() =>
             (appContext.unblockedCaches = [
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

@@ -9,7 +9,8 @@ export const SWClearCacheButton = component$(() => {
   const clearCache = $(() => {
     const sw = navigator.serviceWorker;
 
-    sw.addEventListener("message", async (event) => {
+    const broadcastChannel = new BroadcastChannel("service-worker");
+    broadcastChannel.addEventListener("message", async (event) => {
       if (event.data.type === "CACHES_CLEARED") {
         const registration = await sw.getRegistration();
         await registration?.unregister();
@@ -20,7 +21,7 @@ export const SWClearCacheButton = component$(() => {
       }
     });
 
-    sw.controller?.postMessage({ type: "CLEAR_CACHES" });
+    broadcastChannel.postMessage({ type: "CLEAR_CACHES" });
   });
 
   const ariaLabel = t("cache.clearAndReloadButton.label") as string;
