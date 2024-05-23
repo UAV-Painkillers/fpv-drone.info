@@ -57,10 +57,12 @@ export const PlotNavigation = component$((props: PlotNavigationProps) => {
     "blackboxAnalyzer.plotNavigation.combinedLogsSelection.ariaLabel",
   ) as string;
 
-  const activeFlightLogLabel = (index: number) =>
-    t("blackboxAnalyzer.plotNavigation.activeFlightLog.label", {
-      index,
+  const activeFlightLogLabel = (index: number) => {
+    console.log('getting label', {index});
+    return t("blackboxAnalyzer.plotNavigation.activeFlightLog.label", {
+      flight: index,
     });
+  };
 
   const axisSelectionRollLabel = t(
     "blackboxAnalyzer.plotNavigation.axisSelection.roll.label",

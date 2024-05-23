@@ -1,0 +1,15 @@
+{
+  "version": "v1.4.4",
+  "record": {
+    "hosts": [
+      "localhost",
+      "127.0.0.1",
+      "192.168.178.152"
+    ],
+    "hash": {
+      "key": "315b5d280c241f0e84707c07f0888e7bb55fe8f920d28ed1d76cc37198d2719d",
+      "cert": "d15dcb5d27bc0453ae2591c7db433805f41665cd78b2079dcd083531d4b1ddba"
+    }
+  },
+  "configFilePath": "/Users/jappy/code/fpv-drone.info/certs/config.json"
+}

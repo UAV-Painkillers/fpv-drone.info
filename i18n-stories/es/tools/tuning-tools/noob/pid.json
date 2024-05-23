@@ -1,0 +1,2365 @@
+{
+    "name": "PID Tuning Guide",
+    "created_at": "2024-04-18T21:39:02.482Z",
+    "published_at": "2024-04-26T08:47:07.000Z",
+    "id": 480594271,
+    "uuid": "e2d8d227-1eb7-4640-acda-3ef9c2661d96",
+    "content": {
+        "_uid": "88a5a5ed-9959-4bb0-b6c1-9cfe1f417dd1",
+        "type": "page",
+        "bloks": [
+            {
+                "_uid": "1b260ab3-67c0-4098-8ed3-f8dcc67d3a10",
+                "component": "cms-snippet",
+                "reference": [
+                    {
+                        "name": "Guide Header",
+                        "created_at": "2024-04-21T19:22:40.350Z",
+                        "published_at": "2024-04-26T10:25:16.000Z",
+                        "id": 481388389,
+                        "uuid": "92a594b3-4523-4a7a-9f11-adb825f87642",
+                        "content": {
+                            "_uid": "2044744c-f40e-482d-8d12-57ff3e681bc7",
+                            "items": [
+                                {
+                                    "_uid": "7e1d728f-98d4-4ae4-827b-63d55e77c482",
+                                    "component": "cms-snippet",
+                                    "reference": [
+                                        {
+                                            "name": "Clear SW Cache and Reload",
+                                            "created_at": "2024-04-19T08:17:23.037Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480904789,
+                                            "uuid": "00ed4694-1f05-423e-8280-8059f8469921",
+                                            "content": {
+                                                "_uid": "990d37ed-fc0c-4eb4-ab05-510d8d282136",
+                                                "items": [
+                                                    {
+                                                        "_uid": "f0174992-ff0d-45c3-846a-ad31986171f5",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "ac0ce5ad-f98f-4851-b699-6f6c6a282607",
+                                                                "text": {
+                                                                    "type": "doc",
+                                                                    "content": [
+                                                                        {
+                                                                            "type": "paragraph",
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "We are using an extensive amount of caching in order to give you the best performance and also the option to use the Tuning Tools offline without any Internet at all.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "paragraph",
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "But this comes with a downside, sometimes this prevents the site from updating certain elements and you might be stuck with an old version of the Tuning Tools.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "paragraph",
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Having problems? Or just wanting to make sure you got the latest version of the Analyzer in cache? Just hit this button to clear all caches and start with a fresh copy.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "align": "left",
+                                                                "component": "text",
+                                                                "wrapWithSmall": false
+                                                            },
+                                                            {
+                                                                "_uid": "d967095d-7f70-4d46-9bf2-bd91f659b421",
+                                                                "class": "",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "dd550a1e-2d0f-4f0c-af35-9d8c322c0db6",
+                                                                        "component": "sw-clear-cache-button"
+                                                                    }
+                                                                ],
+                                                                "width": "",
+                                                                "height": "",
+                                                                "maxWidth": "",
+                                                                "minWidth": "",
+                                                                "component": "css-box",
+                                                                "marginTop": "1rem",
+                                                                "maxHeight": "",
+                                                                "minHeight": "",
+                                                                "marginLeft": "",
+                                                                "paddingTop": "",
+                                                                "marginRight": "",
+                                                                "paddingLeft": "",
+                                                                "marginBottom": "4rem",
+                                                                "paddingRight": "",
+                                                                "internalLabel": "Clear Cache Button",
+                                                                "paddingBottom": ""
+                                                            }
+                                                        ],
+                                                        "component": "centered",
+                                                        "internalLabel": "Clear Cache notice"
+                                                    }
+                                                ],
+                                                "component": "Content Snipped"
+                                            },
+                                            "slug": "clear-sw-cache-and-reload",
+                                            "full_slug": "snippets/clear-sw-cache-and-reload",
+                                            "sort_by_date": null,
+                                            "position": -30,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "efbec660-0fde-42b8-bb30-f7af75b6a99b",
+                                            "first_published_at": "2024-04-19T08:17:54.892Z",
+                                            "release_id": null,
+                                            "lang": "default",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        },
+                                        {
+                                            "name": "Join Discord",
+                                            "created_at": "2024-04-19T08:16:36.861Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480904773,
+                                            "uuid": "5a9b6cbe-de1a-487e-9050-d3871ab13fad",
+                                            "content": {
+                                                "_uid": "6d71648f-12d4-4187-b062-2bb6dc6ccff6",
+                                                "items": [
+                                                    {
+                                                        "_uid": "3c701efe-981e-4ee4-acea-5af0a527b853",
+                                                        "class": "",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "d9b09006-7267-4b47-b003-8c612f52033d",
+                                                                "text": {
+                                                                    "type": "doc",
+                                                                    "content": [
+                                                                        {
+                                                                            "type": "heading",
+                                                                            "attrs": {
+                                                                                "level": 3
+                                                                            },
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Got questions? Need help? Have a suggestion?",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "heading",
+                                                                            "attrs": {
+                                                                                "level": 3
+                                                                            },
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Just want to talk?",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "align": "center",
+                                                                "component": "text",
+                                                                "wrapWithSmall": false
+                                                            },
+                                                            {
+                                                                "_uid": "61f91d49-8643-4413-9731-2554fb75618e",
+                                                                "class": "",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "bc60a98e-0f5f-4b55-b616-038f9706a255",
+                                                                        "text": {
+                                                                            "type": "doc",
+                                                                            "content": [
+                                                                                {
+                                                                                    "type": "paragraph",
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "text": "Join the fpv-drone.info Discord Server!",
+                                                                                            "type": "text",
+                                                                                            "marks": [
+                                                                                                {
+                                                                                                    "type": "link",
+                                                                                                    "attrs": {
+                                                                                                        "href": "https://discord.gg/eBv6Mke9NS",
+                                                                                                        "uuid": null,
+                                                                                                        "anchor": null,
+                                                                                                        "custom": {
+                                                                                                            "class": "button"
+                                                                                                        },
+                                                                                                        "target": "_blank",
+                                                                                                        "linktype": "url"
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "align": "center",
+                                                                        "component": "text",
+                                                                        "wrapWithSmall": false
+                                                                    }
+                                                                ],
+                                                                "width": "",
+                                                                "height": "",
+                                                                "maxWidth": "",
+                                                                "minWidth": "",
+                                                                "component": "css-box",
+                                                                "marginTop": "2rem",
+                                                                "maxHeight": "",
+                                                                "minHeight": "",
+                                                                "marginLeft": "",
+                                                                "paddingTop": "",
+                                                                "marginRight": "",
+                                                                "paddingLeft": "",
+                                                                "marginBottom": "2rem",
+                                                                "paddingRight": "",
+                                                                "internalLabel": "",
+                                                                "paddingBottom": ""
+                                                            }
+                                                        ],
+                                                        "width": "",
+                                                        "height": "",
+                                                        "maxWidth": "",
+                                                        "minWidth": "",
+                                                        "component": "css-box",
+                                                        "marginTop": "4rem",
+                                                        "maxHeight": "",
+                                                        "minHeight": "",
+                                                        "marginLeft": "",
+                                                        "paddingTop": "",
+                                                        "marginRight": "",
+                                                        "paddingLeft": "",
+                                                        "marginBottom": "4rem",
+                                                        "paddingRight": "",
+                                                        "internalLabel": "Join Discord",
+                                                        "paddingBottom": ""
+                                                    }
+                                                ],
+                                                "component": "Content Snipped"
+                                            },
+                                            "slug": "join-discord",
+                                            "full_slug": "snippets/join-discord",
+                                            "sort_by_date": null,
+                                            "position": -20,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "206180ca-e841-49a8-82c8-5bfa66b119fa",
+                                            "first_published_at": "2024-04-19T08:16:43.133Z",
+                                            "release_id": null,
+                                            "lang": "default",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        }
+                                    ],
+                                    "internalLabel": "SW Reload | Discord"
+                                }
+                            ],
+                            "component": "Content Snipped"
+                        },
+                        "slug": "guide-header",
+                        "full_slug": "snippets/guide-header",
+                        "sort_by_date": null,
+                        "position": -50,
+                        "tag_list": [],
+                        "is_startpage": false,
+                        "parent_id": 480602118,
+                        "meta_data": null,
+                        "group_id": "0ee9e04d-c27c-418b-b765-2383387538af",
+                        "first_published_at": "2024-04-21T19:22:57.420Z",
+                        "release_id": null,
+                        "lang": "default",
+                        "path": null,
+                        "alternates": [],
+                        "default_full_slug": null,
+                        "translated_slugs": null,
+                        "_stopResolving": true
+                    }
+                ],
+                "internalLabel": "Guide Header"
+            },
+            {
+                "_uid": "a2eeba42-9f6a-407e-bae9-e55f29682d37",
+                "steps": [
+                    {
+                        "_uid": "68bfcf33-4118-4045-b995-4e27586cbdd8",
+                        "image": {
+                            "id": 15483627,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1427x1500/639ebacd9c/pi_gains_setup.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "1.1",
+                        "title": "P & I Gains - Setup Betaflight",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "ordered_list",
+                                    "attrs": {
+                                        "order": 1
+                                    },
+                                    "content": [
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Connect your quad to Betaflight and go into the PID Tuning tab (#1).",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Enable Expert Mode in the top right of the Configurator (#2)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Move the \"Drift / Wobble\" (I Gain) Slider down to 0 (#3)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Move the \"Stick Response - FF Gains\" Slider (#4) to 0",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Hit \"Save\"",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "4b49d0c6-057b-439b-8ce2-3c8949804561",
+                        "image": {
+                            "id": 15483637,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1538x450/53d975730f/pi_gains_flights.gif",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "1.2",
+                        "title": "P & I Gains - Log flights",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [
+                            {
+                                "_uid": "d3f7f81f-bd32-434d-9254-9afdf315dd9b",
+                                "title": "Tip",
+                                "content": {
+                                    "type": "doc",
+                                    "content": [
+                                        {
+                                            "type": "paragraph",
+                                            "content": [
+                                                {
+                                                    "text": "It is way easier to change the slider value directly in the Betaflight FPV Goggle OSD than connecting your drone to your computer after each flight.",
+                                                    "type": "text"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "paragraph",
+                                            "content": [
+                                                {
+                                                    "text": "Just open up the OSD stick menu, navigate to profile > simplified tuning > PI Gains (this is the same as the \"Tracking Slider\")",
+                                                    "type": "text"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "component": "highlight-card"
+                            }
+                        ],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Now it's time to do some flights.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "You may fly in ANGLE or ACRO mode, it doesn't matter.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "The idea is to take a flight, then move the P & I Gains Slider (\"Tracking\") a step further up, and repeat until you hit the maximum slider position.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "We suggest to move it by 0.2.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "bullet_list",
+                                    "content": [
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Fly for ~20 seconds every time.",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Do quick roll and pitch movements (left, right, forward, backward)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "6ee5117b-b09c-43eb-b758-a5aaaa0c4374",
+                        "image": {
+                            "id": null,
+                            "alt": null,
+                            "name": "",
+                            "focus": null,
+                            "title": null,
+                            "source": null,
+                            "filename": "",
+                            "copyright": null,
+                            "fieldtype": "asset",
+                            "meta_data": {}
+                        },
+                        "index": "1.3",
+                        "title": "",
+                        "component": "instruction-step-item",
+                        "sourceStep": [
+                            {
+                                "name": "Extract Logfile",
+                                "created_at": "2024-04-23T13:27:24.502Z",
+                                "published_at": "2024-04-26T10:25:16.000Z",
+                                "id": 482454796,
+                                "uuid": "c66b472f-fa0f-49f1-ab38-349d59f691c4",
+                                "content": {
+                                    "_uid": "c85171bb-f032-4032-baaf-ee65a7f5cdfd",
+                                    "items": [
+                                        {
+                                            "_uid": "f787c0ed-6c53-4595-93c9-3396bf8e68af",
+                                            "image": {
+                                                "id": 15417794,
+                                                "alt": "",
+                                                "name": "",
+                                                "focus": "",
+                                                "title": "",
+                                                "source": "",
+                                                "filename": "https://a.storyblok.com/f/285148/1947x1500/d3866ac9fe/extract_logfile.png",
+                                                "copyright": "",
+                                                "fieldtype": "asset",
+                                                "meta_data": {},
+                                                "is_private": false,
+                                                "is_external_url": false
+                                            },
+                                            "index": "3",
+                                            "title": "Extract Logfile",
+                                            "component": "instruction-step-item",
+                                            "sourceStep": [],
+                                            "customBloks": [],
+                                            "description": {
+                                                "type": "doc",
+                                                "content": [
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "For the next step we will need access to the generated log file.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Connect your drone to the betaflight configurator, open the \"Blackbox\" tab and click on \"Activate Mass Storage Device Mode\".",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "A new USB storage device will connect / appear on your computer (like a USB stick)",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Open that device on your computer (like a USB stick) and find a file called \"btfl_all.bbl\"",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Copy this to your computer.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "component": "Content Snipped"
+                                },
+                                "slug": "extract-logfile",
+                                "full_slug": "snippets/instructions/tuning-guides/extract-logfile",
+                                "sort_by_date": null,
+                                "position": 0,
+                                "tag_list": [],
+                                "is_startpage": false,
+                                "parent_id": 481388634,
+                                "meta_data": null,
+                                "group_id": "aa743c50-b72f-4916-aa75-d989cc5bf5ad",
+                                "first_published_at": "2024-04-23T13:27:53.644Z",
+                                "release_id": null,
+                                "lang": "default",
+                                "path": null,
+                                "alternates": [],
+                                "default_full_slug": null,
+                                "translated_slugs": null,
+                                "_stopResolving": true
+                            }
+                        ],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "39a4bc61-cab5-4fab-ad37-c74c4f3641d3",
+                        "image": {
+                            "id": 15489993,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/400x374/4cacc8fbb1/pi_gains__analysis.gif",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "1.4",
+                        "title": "P & I Gains - Analysis",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [
+                            {
+                                "_uid": "8cf4bbcf-8ba9-4c13-941d-06fe6ec38ddf",
+                                "component": "blackbox-analyzer",
+                                "navigation": [],
+                                "activePlots": [
+                                    "responseStrength"
+                                ],
+                                "labelDelayTemplate": "",
+                                "labelDelayHeaderField": "",
+                                "labelStrengthTemplate": "#{{logIndex}} (PI {{headerValue}})",
+                                "labelThrottleTemplate": "",
+                                "labelNoiseGyroTemplate": "",
+                                "labelTraceGyroTemplate": "",
+                                "labelNoiseDTermTemplate": "",
+                                "labelNoiseDebugTemplate": "",
+                                "labelStrengthHeaderField": "simplified_pi_gain",
+                                "labelThrottleHeaderField": "",
+                                "labelNoiseGyroHeaderField": "",
+                                "labelStrengthPeakTemplate": "",
+                                "labelTraceGyroHeaderField": "",
+                                "labelNoiseDTermHeaderField": "",
+                                "labelNoiseDebugHeaderField": "",
+                                "labelTraceSetpointTemplate": "",
+                                "labelStrengthPeakHeaderField": "",
+                                "labelTraceFeedforwardTemplate": "",
+                                "labelTraceSetpointHeaderField": "",
+                                "labelTraceFeedforwardHeaderField": "",
+                                "labelNoiseFrequenciesGyroTemplate": "",
+                                "labelNoiseFrequenciesDTermTemplate": "",
+                                "labelNoiseFrequenciesDebugTemplate": "",
+                                "labelNoiseFrequenciesGyroHeaderField": "",
+                                "labelNoiseFrequenciesDTermHeaderField": "",
+                                "labelNoiseFrequenciesDebugHeaderField": ""
+                            }
+                        ],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Let's run your flight logs through the analyzer and find out which slider values resulted in the best response.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "The goal is to find the flight / response curve that gets the fastest and closest to a value of 1, without overshooting and without too much \"waving\" around a value of 1.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "See the example Animation attached to this step for an example analysis.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "We want to achieve that our quad responds quickly (quick move from bottom to the center line) and precisely (no overshoot / wobbles) without the need to correct itself afterwards.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph"
+                                },
+                                {
+                                    "type": "ordered_list",
+                                    "attrs": {
+                                        "order": 1
+                                    },
+                                    "content": [
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Upload your \"btfl_all.bbl\" file into the analyzer (big button below) and compare the flights (you can toggle visibility of each flight line in the plot by clicking its label in the legend on top of the plot)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Find the flight that is closest to the desired state.",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Set your P & I gains Slider to the value which was used during that flight and hit save (you can find the value in the legend/label of the plot)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph"
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "You successfully tuned your P & I gains.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "a9f7a260-9fc6-4533-b88d-a986a9980a4b",
+                        "image": {
+                            "id": null,
+                            "alt": null,
+                            "name": "",
+                            "focus": null,
+                            "title": null,
+                            "source": null,
+                            "filename": "",
+                            "copyright": null,
+                            "fieldtype": "asset",
+                            "meta_data": {}
+                        },
+                        "index": "2.1",
+                        "title": "",
+                        "component": "instruction-step-item",
+                        "sourceStep": [
+                            {
+                                "name": "Clear Blackbox",
+                                "created_at": "2024-04-23T14:28:41.475Z",
+                                "published_at": "2024-04-26T10:25:16.000Z",
+                                "id": 482534505,
+                                "uuid": "acea7c28-45a1-4d9a-b07c-9792aae0bd04",
+                                "content": {
+                                    "_uid": "da845724-157a-454c-a377-b4345b73e389",
+                                    "items": [
+                                        {
+                                            "_uid": "a1e1e7cb-49d0-4dd0-b9b1-bb531f61d481",
+                                            "image": {
+                                                "id": null,
+                                                "alt": null,
+                                                "name": "",
+                                                "focus": null,
+                                                "title": null,
+                                                "source": null,
+                                                "filename": "",
+                                                "copyright": null,
+                                                "fieldtype": "asset",
+                                                "meta_data": {}
+                                            },
+                                            "index": "",
+                                            "title": "Clear Blackbox",
+                                            "component": "instruction-step-item",
+                                            "sourceStep": [],
+                                            "customBloks": [],
+                                            "description": {
+                                                "type": "doc",
+                                                "content": [
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Let's start with a fresh blackbox so we are sure there is enough space left and also we don't need to filter out any previous flights from the upcoming analysis.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Please clear your blackbox flash memory now.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "component": "Content Snipped"
+                                },
+                                "slug": "clear-blackbox",
+                                "full_slug": "snippets/instructions/tuning-guides/clear-blackbox",
+                                "sort_by_date": null,
+                                "position": -10,
+                                "tag_list": [],
+                                "is_startpage": false,
+                                "parent_id": 481388634,
+                                "meta_data": null,
+                                "group_id": "55461061-36a6-4fe5-8d48-fe50ebc4b861",
+                                "first_published_at": "2024-04-23T14:29:26.213Z",
+                                "release_id": null,
+                                "lang": "default",
+                                "path": null,
+                                "alternates": [],
+                                "default_full_slug": null,
+                                "translated_slugs": null,
+                                "_stopResolving": true
+                            }
+                        ],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "d5f18747-1337-4dae-9403-ed1d0af2bad6",
+                        "image": {
+                            "id": 15490108,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1523x1500/fe9968d93d/master_slider__flights.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "2.2",
+                        "title": "Master Slider - Log flights",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [
+                            {
+                                "_uid": "5328305f-5299-477a-8e39-4a24a245d36c",
+                                "title": "Tip",
+                                "content": {
+                                    "type": "doc",
+                                    "content": [
+                                        {
+                                            "type": "paragraph",
+                                            "content": [
+                                                {
+                                                    "text": "If you are tuning a small quad, you might end up with increasing your Master Multiplier to the maximum of 2.0, however, there still may be potential for improvement (e.g. your Step Response Curve is not yet close enough to being perfect AND YOUR MOTORS DO NOT RUN HOT).",
+                                                    "type": "text"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "paragraph",
+                                            "content": [
+                                                {
+                                                    "text": "In this case you can double your current \"D Gain\" slider value, as well as double your current \"P & I Gain\" slider value and then move your Master Multiplier back to 1.0.",
+                                                    "type": "text"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "paragraph",
+                                            "content": [
+                                                {
+                                                    "text": "Now you can continue increasing your Master Multiplier.",
+                                                    "type": "text"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "component": "highlight-card"
+                            }
+                        ],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Now its time to do some flights.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "The idea is to take a flight, then move the Master Multiplier slider a step further up, and repeat until you hit the maximum slider position.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "We suggest to move it by 0.2.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "bullet_list",
+                                    "content": [
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Fly for ~20 seconds every time.",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Do quick roll and pitch movements (left, right, forward, backward)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "88d75ebb-3728-4b08-9e02-d813d6933713",
+                        "image": {
+                            "id": null,
+                            "alt": null,
+                            "name": "",
+                            "focus": null,
+                            "title": null,
+                            "source": null,
+                            "filename": "",
+                            "copyright": null,
+                            "fieldtype": "asset",
+                            "meta_data": {}
+                        },
+                        "index": "2.3",
+                        "title": "",
+                        "component": "instruction-step-item",
+                        "sourceStep": [
+                            {
+                                "name": "Extract Logfile",
+                                "created_at": "2024-04-23T13:27:24.502Z",
+                                "published_at": "2024-04-26T10:25:16.000Z",
+                                "id": 482454796,
+                                "uuid": "c66b472f-fa0f-49f1-ab38-349d59f691c4",
+                                "content": {
+                                    "_uid": "c85171bb-f032-4032-baaf-ee65a7f5cdfd",
+                                    "items": [
+                                        {
+                                            "_uid": "f787c0ed-6c53-4595-93c9-3396bf8e68af",
+                                            "image": {
+                                                "id": 15417794,
+                                                "alt": "",
+                                                "name": "",
+                                                "focus": "",
+                                                "title": "",
+                                                "source": "",
+                                                "filename": "https://a.storyblok.com/f/285148/1947x1500/d3866ac9fe/extract_logfile.png",
+                                                "copyright": "",
+                                                "fieldtype": "asset",
+                                                "meta_data": {},
+                                                "is_private": false,
+                                                "is_external_url": false
+                                            },
+                                            "index": "3",
+                                            "title": "Extract Logfile",
+                                            "component": "instruction-step-item",
+                                            "sourceStep": [],
+                                            "customBloks": [],
+                                            "description": {
+                                                "type": "doc",
+                                                "content": [
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "For the next step we will need access to the generated log file.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Connect your drone to the betaflight configurator, open the \"Blackbox\" tab and click on \"Activate Mass Storage Device Mode\".",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "A new USB storage device will connect / appear on your computer (like a USB stick)",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Open that device on your computer (like a USB stick) and find a file called \"btfl_all.bbl\"",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Copy this to your computer.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "component": "Content Snipped"
+                                },
+                                "slug": "extract-logfile",
+                                "full_slug": "snippets/instructions/tuning-guides/extract-logfile",
+                                "sort_by_date": null,
+                                "position": 0,
+                                "tag_list": [],
+                                "is_startpage": false,
+                                "parent_id": 481388634,
+                                "meta_data": null,
+                                "group_id": "aa743c50-b72f-4916-aa75-d989cc5bf5ad",
+                                "first_published_at": "2024-04-23T13:27:53.644Z",
+                                "release_id": null,
+                                "lang": "default",
+                                "path": null,
+                                "alternates": [],
+                                "default_full_slug": null,
+                                "translated_slugs": null,
+                                "_stopResolving": true
+                            }
+                        ],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "23bb8999-f06c-4265-8186-e76d9192ad56",
+                        "image": {
+                            "id": 15490118,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/600x562/8d30b5af4f/master_slider__analysis.gif",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "2.4",
+                        "title": "Master Slider - Analysis",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [
+                            {
+                                "_uid": "ea74a342-5695-4cb3-bd52-017fef283c31",
+                                "component": "blackbox-analyzer",
+                                "navigation": [],
+                                "activePlots": [
+                                    "responseStrength"
+                                ],
+                                "labelDelayTemplate": "",
+                                "labelDelayHeaderField": "",
+                                "labelStrengthTemplate": "#{{logIndex}} (Master {{headerValue}})",
+                                "labelThrottleTemplate": "",
+                                "labelNoiseGyroTemplate": "",
+                                "labelTraceGyroTemplate": "",
+                                "labelNoiseDTermTemplate": "",
+                                "labelNoiseDebugTemplate": "",
+                                "labelStrengthHeaderField": "simplified_master_multiplier",
+                                "labelThrottleHeaderField": "",
+                                "labelNoiseGyroHeaderField": "",
+                                "labelStrengthPeakTemplate": "",
+                                "labelTraceGyroHeaderField": "",
+                                "labelNoiseDTermHeaderField": "",
+                                "labelNoiseDebugHeaderField": "",
+                                "labelTraceSetpointTemplate": "",
+                                "labelStrengthPeakHeaderField": "",
+                                "labelTraceFeedforwardTemplate": "",
+                                "labelTraceSetpointHeaderField": "",
+                                "labelTraceFeedforwardHeaderField": "",
+                                "labelNoiseFrequenciesGyroTemplate": "",
+                                "labelNoiseFrequenciesDTermTemplate": "",
+                                "labelNoiseFrequenciesDebugTemplate": "",
+                                "labelNoiseFrequenciesGyroHeaderField": "",
+                                "labelNoiseFrequenciesDTermHeaderField": "",
+                                "labelNoiseFrequenciesDebugHeaderField": ""
+                            }
+                        ],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Now carry out the same analysis here as in step 1.4 “P & I Gain - Analysis”, with the difference that you adjust the main multiplier at the end and not the “P & I Gain” slider.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "d745fff9-8b0d-4421-b527-0b94f31b0c2e",
+                        "image": {
+                            "id": 15490162,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1947x1500/9dc3dc0338/i_gain__setup.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "3.1",
+                        "title": "I Gain- Setup Betaflight",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "We don't really need to tune the I Gain, instead, we just need to return it to the default from Betaflight.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Connect your drone to Betaflight and go into the PID tuning tab (#1).",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Enable expert mode in the top right of the configurator (#2)",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Move the \"Drift / Wobble\" (I Gain) slider back to 1.0 (#3)",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Hit \"Save\"",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "582b702b-c660-4be5-9ac2-4c17afe1ed21",
+                        "image": {
+                            "id": null,
+                            "alt": null,
+                            "name": "",
+                            "focus": null,
+                            "title": null,
+                            "source": null,
+                            "filename": "",
+                            "copyright": null,
+                            "fieldtype": "asset",
+                            "meta_data": {}
+                        },
+                        "index": "3.2",
+                        "title": "",
+                        "component": "instruction-step-item",
+                        "sourceStep": [
+                            {
+                                "name": "Clear Blackbox",
+                                "created_at": "2024-04-23T14:28:41.475Z",
+                                "published_at": "2024-04-26T10:25:16.000Z",
+                                "id": 482534505,
+                                "uuid": "acea7c28-45a1-4d9a-b07c-9792aae0bd04",
+                                "content": {
+                                    "_uid": "da845724-157a-454c-a377-b4345b73e389",
+                                    "items": [
+                                        {
+                                            "_uid": "a1e1e7cb-49d0-4dd0-b9b1-bb531f61d481",
+                                            "image": {
+                                                "id": null,
+                                                "alt": null,
+                                                "name": "",
+                                                "focus": null,
+                                                "title": null,
+                                                "source": null,
+                                                "filename": "",
+                                                "copyright": null,
+                                                "fieldtype": "asset",
+                                                "meta_data": {}
+                                            },
+                                            "index": "",
+                                            "title": "Clear Blackbox",
+                                            "component": "instruction-step-item",
+                                            "sourceStep": [],
+                                            "customBloks": [],
+                                            "description": {
+                                                "type": "doc",
+                                                "content": [
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Let's start with a fresh blackbox so we are sure there is enough space left and also we don't need to filter out any previous flights from the upcoming analysis.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Please clear your blackbox flash memory now.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "component": "Content Snipped"
+                                },
+                                "slug": "clear-blackbox",
+                                "full_slug": "snippets/instructions/tuning-guides/clear-blackbox",
+                                "sort_by_date": null,
+                                "position": -10,
+                                "tag_list": [],
+                                "is_startpage": false,
+                                "parent_id": 481388634,
+                                "meta_data": null,
+                                "group_id": "55461061-36a6-4fe5-8d48-fe50ebc4b861",
+                                "first_published_at": "2024-04-23T14:29:26.213Z",
+                                "release_id": null,
+                                "lang": "default",
+                                "path": null,
+                                "alternates": [],
+                                "default_full_slug": null,
+                                "translated_slugs": null,
+                                "_stopResolving": true
+                            }
+                        ],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "969c5627-5ae9-49d3-857b-0a4f2b49a3fa",
+                        "image": {
+                            "id": 15490213,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1523x1500/7600108bdf/feedforward__flights.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "3.3",
+                        "title": "Feedforward Slider - Log flights",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Now it's time to do some flights.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "This time, put your drone in Acro Mode. This is important!",
+                                            "type": "text",
+                                            "marks": [
+                                                {
+                                                    "type": "textStyle",
+                                                    "attrs": {
+                                                        "color": "rgb(255, 255, 255)"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "highlight",
+                                                    "attrs": {
+                                                        "color": "#FF0000"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "You cannot use angle mode for this, since feedforward is disabled in angle mode.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "The idea is to take a flight, then move the feedforward slider a step further up, and repeat until you hit the maximum slider position.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "We suggest to move it by 0.2.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "bullet_list",
+                                    "content": [
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Fly for ~20 seconds every time.",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Do quick roll and pitch movements (left, right, forward, backward)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "d63c86b3-d997-4219-a327-c328eada2691",
+                        "image": {
+                            "id": null,
+                            "alt": null,
+                            "name": "",
+                            "focus": null,
+                            "title": null,
+                            "source": null,
+                            "filename": "",
+                            "copyright": null,
+                            "fieldtype": "asset",
+                            "meta_data": {}
+                        },
+                        "index": "3.4",
+                        "title": "Feedforward Slider - Analysis",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [
+                            {
+                                "_uid": "1b033ac0-06a0-4697-ac5b-ae458246304c",
+                                "title": "Tip",
+                                "content": {
+                                    "type": "doc",
+                                    "content": [
+                                        {
+                                            "type": "paragraph",
+                                            "content": [
+                                                {
+                                                    "text": "You can easily zoom into the plot by clicking on the icon on the top right that looks like a square with a plus on the top left corner and then selecting an area of interest in the plot.",
+                                                    "type": "text"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "component": "highlight-card"
+                            },
+                            {
+                                "_uid": "857464fc-f778-416f-a808-c4a7c199e07a",
+                                "component": "blackbox-analyzer",
+                                "navigation": [
+                                    "showActiveAxisSelection"
+                                ],
+                                "activePlots": [
+                                    "responseTrace"
+                                ],
+                                "labelDelayTemplate": "",
+                                "labelDelayHeaderField": "",
+                                "labelStrengthTemplate": "#{{logIndex}} (FF {{headerValue}})",
+                                "labelThrottleTemplate": "",
+                                "labelNoiseGyroTemplate": "",
+                                "labelTraceGyroTemplate": "",
+                                "labelNoiseDTermTemplate": "",
+                                "labelNoiseDebugTemplate": "",
+                                "labelStrengthHeaderField": "simplified_feedforward_gain",
+                                "labelThrottleHeaderField": "",
+                                "labelNoiseGyroHeaderField": "",
+                                "labelStrengthPeakTemplate": "",
+                                "labelTraceGyroHeaderField": "",
+                                "labelNoiseDTermHeaderField": "",
+                                "labelNoiseDebugHeaderField": "",
+                                "labelTraceSetpointTemplate": "",
+                                "labelStrengthPeakHeaderField": "",
+                                "labelTraceFeedforwardTemplate": "",
+                                "labelTraceSetpointHeaderField": "",
+                                "labelTraceFeedforwardHeaderField": "",
+                                "labelNoiseFrequenciesGyroTemplate": "",
+                                "labelNoiseFrequenciesDTermTemplate": "",
+                                "labelNoiseFrequenciesDebugTemplate": "",
+                                "labelNoiseFrequenciesGyroHeaderField": "",
+                                "labelNoiseFrequenciesDTermHeaderField": "",
+                                "labelNoiseFrequenciesDebugHeaderField": ""
+                            }
+                        ],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Let's run your flight logs through the analyzer and find out which slider values resulted in the best response.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "This time we need a different kind of analysis.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "This time you can see two lines per flight.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "One is called setpoint and the other is called gyro.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "The setpoint is essentially the position that the drone should have based on your stick position.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "And the gyro is the actual position of the drone measured by the gyroscope.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "To tune feedforward, we want that these two lines are as identical as possible. If they are further apart, it means your drone has more delay and feels less snappy.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph"
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Be aware:",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "The plot includes a third line \"feedforward\", this shows how much feedforward is working, just ignore it.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph"
+                                },
+                                {
+                                    "type": "ordered_list",
+                                    "attrs": {
+                                        "order": 1
+                                    },
+                                    "content": [
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Upload your \"btfl_all.bbl\" file into the analyzer (big button below) and compare the flights (you can toggle visibility of each flight line in the plot by clicking its label in the legend on top of the plot)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Find the flight that is closest to the desired state.",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Set your feedforward Slider to the value which was used during that flight and hit save (you can find the value in the legend/label of the plot)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph"
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "You successfully tuned your feedforward.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "3a699928-c2bf-41c6-a625-cc426605cf35",
+                        "image": {
+                            "id": 15490300,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1523x1500/53c0a68e1d/dynamic_idle.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "4.1",
+                        "title": "Dynamic Idle",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [
+                            {
+                                "_uid": "8b8628b6-5501-402e-9fe1-b19f494f022d",
+                                "component": "dynamic-idle-calculator"
+                            }
+                        ],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Now we need to set your Dynamic Idle.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "This is really simple, just enter your prop size (in inches) into the corresponding field and our calculator will calculate the needed Dynamic Idle value which you can then save into the Dynamic Idle field in Betaflight (see the attached picture)",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "component": "instructions",
+                "prerequisitesImage": {
+                    "id": 15483592,
+                    "alt": "",
+                    "name": "",
+                    "focus": "",
+                    "title": "",
+                    "source": "",
+                    "filename": "https://a.storyblok.com/f/285148/1947x1500/8264fc8295/pid_tuning__blackbox_setup.png",
+                    "copyright": "",
+                    "fieldtype": "asset",
+                    "meta_data": {},
+                    "is_private": false,
+                    "is_external_url": false
+                },
+                "prerequisitesItems": [
+                    {
+                        "_uid": "6ca01c84-86cb-46cd-9223-89b5e3aceb71",
+                        "label": "Your FC has a blackbox",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "8f8f0be4-a10a-4c7e-9722-382ac3b7b71b",
+                        "label": "Betaflight Version is 4.3 newer (#1)",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "ef3d0679-b6f0-429b-a25e-9ed1c65f9bbd",
+                        "label": "Blackbox Logging Device is set correctly (#2)",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "2662afdd-d1dd-4d0a-ab53-59d6e6960694",
+                        "label": "Logging Rate is set to 1kHz or higher (#3)",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "3f072211-0bfc-4e93-b2a4-8be61866285d",
+                        "label": "Blackbox Debug is set to \"GYRO_SCALED\" (#4)",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "785b7a33-f06e-4bfe-85b1-b44ebb8c03e5",
+                        "label": "Blackbox Flash is Cleared / Empty / Deleted (#5)",
+                        "component": "instructions-prerequesite-item"
+                    }
+                ],
+                "prerequisitesTitle": "Setup"
+            },
+            {
+                "_uid": "fcc27126-1b41-474d-b567-5c8b6d156ad5",
+                "component": "cms-snippet",
+                "reference": [
+                    {
+                        "name": "Guide Footer",
+                        "created_at": "2024-04-21T19:21:30.606Z",
+                        "published_at": "2024-04-26T10:25:16.000Z",
+                        "id": 481388387,
+                        "uuid": "9319df31-f71c-4433-9160-574a1efd3dd0",
+                        "content": {
+                            "_uid": "647ebec6-183e-4d6d-92d0-bf31d6dc1b56",
+                            "items": [
+                                {
+                                    "_uid": "ee093098-30c5-45f4-a69d-6840824112ee",
+                                    "component": "cms-snippet",
+                                    "reference": [
+                                        {
+                                            "name": "Support Button Section",
+                                            "created_at": "2024-04-19T08:14:56.565Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480904623,
+                                            "uuid": "e90d1d06-ccff-4da5-b994-23a98b3e0aa4",
+                                            "content": {
+                                                "_uid": "bffcba63-407f-42ab-b69b-af9544558320",
+                                                "items": [
+                                                    {
+                                                        "_uid": "37d97d4a-730f-4c22-b9d8-b88dd54246c2",
+                                                        "class": "",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "2f219f6c-6b83-4b0a-b2e5-e4d0f0d4753b",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "a71ec266-ae4b-4922-ab4f-7d0f11ceb3e4",
+                                                                        "class": "",
+                                                                        "items": [
+                                                                            {
+                                                                                "_uid": "9ec8a971-22a2-46b7-b664-55571263db04",
+                                                                                "text": {
+                                                                                    "type": "doc",
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "type": "heading",
+                                                                                            "attrs": {
+                                                                                                "level": 3
+                                                                                            },
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "You want to support this project?",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "paragraph"
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                "align": "center",
+                                                                                "component": "text",
+                                                                                "wrapWithSmall": false
+                                                                            }
+                                                                        ],
+                                                                        "width": "",
+                                                                        "height": "",
+                                                                        "maxWidth": "",
+                                                                        "minWidth": "",
+                                                                        "component": "css-box",
+                                                                        "marginTop": "",
+                                                                        "maxHeight": "",
+                                                                        "minHeight": "",
+                                                                        "marginLeft": "",
+                                                                        "paddingTop": "",
+                                                                        "marginRight": "",
+                                                                        "paddingLeft": "",
+                                                                        "marginBottom": "1rem",
+                                                                        "paddingRight": "",
+                                                                        "internalLabel": "",
+                                                                        "paddingBottom": ""
+                                                                    },
+                                                                    {
+                                                                        "_uid": "673c1cf4-597b-4d66-927a-19e727592d9c",
+                                                                        "slug": "uav.painkillers",
+                                                                        "label": "Buy me a smokestopper",
+                                                                        "component": "buy-me-a-racoon-button"
+                                                                    }
+                                                                ],
+                                                                "component": "centered"
+                                                            }
+                                                        ],
+                                                        "width": "",
+                                                        "height": "",
+                                                        "maxWidth": "",
+                                                        "minWidth": "",
+                                                        "component": "css-box",
+                                                        "marginTop": "5rem",
+                                                        "maxHeight": "",
+                                                        "minHeight": "",
+                                                        "marginLeft": "",
+                                                        "paddingTop": "",
+                                                        "marginRight": "",
+                                                        "paddingLeft": "",
+                                                        "marginBottom": "",
+                                                        "paddingRight": "",
+                                                        "internalLabel": "You want to support this project?",
+                                                        "paddingBottom": ""
+                                                    }
+                                                ],
+                                                "component": "Content Snipped"
+                                            },
+                                            "slug": "support-button-section",
+                                            "full_slug": "snippets/support-button-section",
+                                            "sort_by_date": null,
+                                            "position": -10,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "a2e8288f-d96b-418a-b2ff-e42259e33993",
+                                            "first_published_at": "2024-04-19T08:15:08.939Z",
+                                            "release_id": null,
+                                            "lang": "default",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        },
+                                        {
+                                            "name": "Sponsors",
+                                            "created_at": "2024-04-18T22:06:07.102Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480602120,
+                                            "uuid": "6ee18223-c77f-4942-a5c1-291ce6021a65",
+                                            "content": {
+                                                "_uid": "a1fc56ca-fcb6-457f-b631-0831aa20aaf7",
+                                                "items": [
+                                                    {
+                                                        "_uid": "b8aa4b03-0568-4b87-8ba7-17533d659443",
+                                                        "class": "",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "8bd663f7-7a49-462d-8501-5a826b9048ce",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "73c06ed2-ef0f-4985-b1c0-1746a59c7216",
+                                                                        "text": {
+                                                                            "type": "doc",
+                                                                            "content": [
+                                                                                {
+                                                                                    "type": "heading",
+                                                                                    "attrs": {
+                                                                                        "level": 3
+                                                                                    },
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "text": "Proudly sponsored by",
+                                                                                            "type": "text"
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "type": "paragraph",
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "text": "Some of these Links are affiliate links, which means UAV-Painkillers will earn a small percentage of the revenue, it wont cost you any additional money but helps funding this project.",
+                                                                                            "type": "text"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "align": "center",
+                                                                        "component": "text",
+                                                                        "wrapWithSmall": true
+                                                                    }
+                                                                ],
+                                                                "component": "centered"
+                                                            }
+                                                        ],
+                                                        "width": "",
+                                                        "height": "",
+                                                        "maxWidth": "",
+                                                        "minWidth": "",
+                                                        "component": "css-box",
+                                                        "marginTop": "5rem",
+                                                        "maxHeight": "",
+                                                        "minHeight": "",
+                                                        "marginLeft": "",
+                                                        "paddingTop": "",
+                                                        "marginRight": "",
+                                                        "paddingLeft": "",
+                                                        "marginBottom": "1rem",
+                                                        "paddingRight": "",
+                                                        "internalLabel": "Proudly sponsored by",
+                                                        "paddingBottom": ""
+                                                    },
+                                                    {
+                                                        "_uid": "6676fa87-6087-45ba-9207-d622b1961256",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "7ff201bd-fbc9-48a4-963c-118075415d2a",
+                                                                "href": {
+                                                                    "id": "",
+                                                                    "url": "http://www.gaoneng.shop/referral/painkillers",
+                                                                    "target": "_blank",
+                                                                    "linktype": "url",
+                                                                    "fieldtype": "multilink",
+                                                                    "cached_url": "http://www.gaoneng.shop/referral/painkillers"
+                                                                },
+                                                                "logo": {
+                                                                    "id": 15314995,
+                                                                    "alt": "",
+                                                                    "name": "",
+                                                                    "focus": "",
+                                                                    "title": "",
+                                                                    "source": "",
+                                                                    "filename": "https://a.storyblok.com/f/285148/537x219/4f0c74302d/gnb-logo.png",
+                                                                    "copyright": "",
+                                                                    "fieldtype": "asset",
+                                                                    "meta_data": {},
+                                                                    "is_private": false,
+                                                                    "is_external_url": false
+                                                                },
+                                                                "name": "GAONENG (GNB)",
+                                                                "component": "nested-sponsor"
+                                                            },
+                                                            {
+                                                                "_uid": "97c39f7a-dec3-4b3b-ab25-c5e256d4d0b8",
+                                                                "href": {
+                                                                    "id": "",
+                                                                    "url": "https://www.flyfish-rc.com/?ref=zAf51UvR9eaKyG",
+                                                                    "target": "_blank",
+                                                                    "linktype": "url",
+                                                                    "fieldtype": "multilink",
+                                                                    "cached_url": "https://www.flyfish-rc.com/?ref=zAf51UvR9eaKyG"
+                                                                },
+                                                                "logo": {
+                                                                    "id": 15314994,
+                                                                    "alt": "",
+                                                                    "name": "",
+                                                                    "focus": "",
+                                                                    "title": "",
+                                                                    "source": "",
+                                                                    "filename": "https://a.storyblok.com/f/285148/2000x418/76a803f6bf/flyfishrc-logo.png",
+                                                                    "copyright": "",
+                                                                    "fieldtype": "asset",
+                                                                    "meta_data": {},
+                                                                    "is_private": false,
+                                                                    "is_external_url": false
+                                                                },
+                                                                "name": "FlyFishRC",
+                                                                "component": "nested-sponsor"
+                                                            },
+                                                            {
+                                                                "_uid": "cc7c2aac-a227-4eac-8a7a-e2b8d31003b6",
+                                                                "href": {
+                                                                    "id": "",
+                                                                    "url": "https://www.jumper-rc.com/",
+                                                                    "target": "_blank",
+                                                                    "linktype": "url",
+                                                                    "fieldtype": "multilink",
+                                                                    "cached_url": "https://www.jumper-rc.com/"
+                                                                },
+                                                                "logo": {
+                                                                    "id": 15314996,
+                                                                    "alt": "",
+                                                                    "name": "",
+                                                                    "focus": "",
+                                                                    "title": "",
+                                                                    "source": "",
+                                                                    "filename": "https://a.storyblok.com/f/285148/658x256/cfef5d3c69/jumperrc-logo.png",
+                                                                    "copyright": "",
+                                                                    "fieldtype": "asset",
+                                                                    "meta_data": {},
+                                                                    "is_private": false,
+                                                                    "is_external_url": false
+                                                                },
+                                                                "name": "Jumper RC",
+                                                                "component": "nested-sponsor"
+                                                            }
+                                                        ],
+                                                        "component": "sponsors-list"
+                                                    }
+                                                ],
+                                                "component": "Content Snipped",
+                                                "internalName": "Sponsors"
+                                            },
+                                            "slug": "sponsors",
+                                            "full_slug": "snippets/sponsors",
+                                            "sort_by_date": null,
+                                            "position": 0,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "d762372b-a0e7-4b3c-88a0-1976772bea81",
+                                            "first_published_at": "2024-04-19T11:19:11.308Z",
+                                            "release_id": null,
+                                            "lang": "default",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        }
+                                    ],
+                                    "internalLabel": "support | sponsors "
+                                },
+                                {
+                                    "_uid": "dcb7b5de-807f-4d78-8450-999df62e38a3",
+                                    "class": "",
+                                    "items": [
+                                        {
+                                            "_uid": "1803f118-00fb-426a-8181-64b57e1fec51",
+                                            "text": {
+                                                "type": "doc",
+                                                "content": [
+                                                    {
+                                                        "type": "heading",
+                                                        "attrs": {
+                                                            "level": 1
+                                                        },
+                                                        "content": [
+                                                            {
+                                                                "text": "Credits",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "I want to give a big shoutout to the folks behind the open-source projects that have been used (as inspiration) and modified for this. These tools wouldn't be possible without the groundwork laid by projects like ",
+                                                                "type": "text"
+                                                            },
+                                                            {
+                                                                "text": "PID-Analyzer by VolkerGoeschl",
+                                                                "type": "text",
+                                                                "marks": [
+                                                                    {
+                                                                        "type": "link",
+                                                                        "attrs": {
+                                                                            "href": "https://github.com/VolkerGoeschl/PID-Analyzer",
+                                                                            "uuid": null,
+                                                                            "anchor": null,
+                                                                            "custom": null,
+                                                                            "target": "_blank",
+                                                                            "linktype": "url"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "text": " and ",
+                                                                "type": "text"
+                                                            },
+                                                            {
+                                                                "text": "blackbox-tools by the cleanflight team",
+                                                                "type": "text",
+                                                                "marks": [
+                                                                    {
+                                                                        "type": "link",
+                                                                        "attrs": {
+                                                                            "href": "https://github.com/VolkerGoeschl/PID-Analyzer",
+                                                                            "uuid": null,
+                                                                            "anchor": null,
+                                                                            "custom": null,
+                                                                            "target": "_blank",
+                                                                            "linktype": "url"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "text": ".",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "A big thank you to these authors for their awesome work!",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "align": "center",
+                                            "component": "text",
+                                            "wrapWithSmall": false
+                                        }
+                                    ],
+                                    "width": "",
+                                    "height": "",
+                                    "maxWidth": "",
+                                    "minWidth": "",
+                                    "component": "css-box",
+                                    "marginTop": "7rem",
+                                    "maxHeight": "",
+                                    "minHeight": "",
+                                    "marginLeft": "",
+                                    "paddingTop": "",
+                                    "marginRight": "",
+                                    "paddingLeft": "",
+                                    "marginBottom": "",
+                                    "paddingRight": "",
+                                    "internalLabel": "Credits",
+                                    "paddingBottom": ""
+                                }
+                            ],
+                            "component": "Content Snipped"
+                        },
+                        "slug": "guide-footer",
+                        "full_slug": "snippets/guide-footer",
+                        "sort_by_date": null,
+                        "position": -40,
+                        "tag_list": [],
+                        "is_startpage": false,
+                        "parent_id": 480602118,
+                        "meta_data": null,
+                        "group_id": "36292466-4366-405a-bed1-5be33aaf1258",
+                        "first_published_at": "2024-04-21T19:22:02.501Z",
+                        "release_id": null,
+                        "lang": "default",
+                        "path": null,
+                        "alternates": [],
+                        "default_full_slug": null,
+                        "translated_slugs": null,
+                        "_stopResolving": true
+                    }
+                ],
+                "internalLabel": "Guide Footer"
+            }
+        ],
+        "title": "PID Tuning Guide",
+        "ogTitle": "PID Tuning Guide",
+        "subtitle": "bye bye propwash, hello wall!",
+        "component": "page",
+        "description": "PID tuning takes hours, is complicated and you need to watch long videos to understand it?\nNot at all! Our guide takes you step-by-step though the process!",
+        "ogDescription": "OMG it's easy!",
+        "backButtonHref": {
+            "id": "0b5fbf53-4a93-4d9c-8015-4a28a7232893",
+            "url": "",
+            "linktype": "story",
+            "fieldtype": "multilink",
+            "cached_url": "tools/tuning-tools/noob/"
+        },
+        "backButtonLabel": "Tuning Tools - Noob Mode",
+        "previewImageAsset": {
+            "id": 15323995,
+            "alt": "",
+            "name": "",
+            "focus": "",
+            "title": "",
+            "source": "",
+            "filename": "https://a.storyblok.com/f/285148/1600x1161/30c76d4e16/racoon_direction_cropped_pid.png",
+            "copyright": "",
+            "fieldtype": "asset",
+            "meta_data": {},
+            "is_private": false,
+            "is_external_url": false
+        },
+        "previewImageObjectFit": "contain"
+    },
+    "slug": "pid",
+    "full_slug": "tools/tuning-tools/noob/pid",
+    "sort_by_date": null,
+    "position": -10,
+    "tag_list": [],
+    "is_startpage": false,
+    "parent_id": 480592305,
+    "meta_data": null,
+    "group_id": "5d404803-885f-4c0f-9f9f-a80e9fc032e3",
+    "first_published_at": "2024-04-18T21:46:51.256Z",
+    "release_id": null,
+    "lang": "default",
+    "path": null,
+    "alternates": [],
+    "default_full_slug": null,
+    "translated_slugs": null
+}

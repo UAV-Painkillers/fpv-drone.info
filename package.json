@@ -30,7 +30,8 @@
     "upgrade-packages": "npx npm-check-updates --interactive",
     "vercell-install": "npm ci && npm run i18n:download",
     "qwik": "qwik",
-    "i18n:download": "npx tsx ./scripts/i18n_download.ts"
+    "i18n:download": "npx tsx ./scripts/i18n_download.ts",
+    "i18n:extract-stories": "npx tsx ./scripts/extract_i18n_all_stories.ts"
   },
   "devDependencies": {
     "@builder.io/qwik": "^1.5.2",

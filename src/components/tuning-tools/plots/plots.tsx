@@ -259,19 +259,9 @@ export const Plots = component$((props: Props) => {
         )}
       </div>
       {(analyzerContext.results?.length ?? 0) > 0 && (
-        <>
+        <div class={styles.finalSpacing}>
           {/* not beautiful but needed for the sticky navigation to not overlay the last chart */}
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-        </>
+        </div>
       )}
     </>
   );

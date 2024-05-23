@@ -1,0 +1,319 @@
+{
+    "name": "Data Privacy",
+    "created_at": "2024-04-19T10:34:26.871Z",
+    "published_at": "2024-04-26T08:47:08.015Z",
+    "id": 481060649,
+    "uuid": "c4d70e49-427e-4f92-a69c-bf60aa4cfd10",
+    "content": {
+        "_uid": "c5f6eeba-a544-44ac-83dc-caec9815e047",
+        "type": "page",
+        "bloks": [
+            {
+                "_uid": "ffc2ae81-6acd-4d56-82e8-a2fd328c7958",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Data protection policy",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "The controller responsible for data processing on this website within the meaning of the General Data Protection Regulation (GDPR) is",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Jaap and Piskun GbR - UAV Painkillers",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Platanenallee 2a",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "22529 Hamburg",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Hamburg, Germany",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "E-mail: ",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": "info@uav-painkillers.de",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "link",
+                                            "attrs": {
+                                                "href": "mailto:info@uav-painkillers.de",
+                                                "uuid": null,
+                                                "anchor": null,
+                                                "custom": null,
+                                                "target": null,
+                                                "linktype": "url"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "587ac97c-12fc-4ef9-8493-ee724202329a",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Collection of data",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "When you visit our website, no personal data such as your name, e-mail address or telephone number is collected. However, technical data required for the operation of the website is automatically collected, as well as data for analyzing website performance. This includes IP addresses, device information and usage data. This data is used by ",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": "vercel.com",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "link",
+                                            "attrs": {
+                                                "href": "https://vercel.com",
+                                                "uuid": null,
+                                                "anchor": null,
+                                                "custom": {},
+                                                "target": "_blank",
+                                                "linktype": "url"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "text": " to analyze website performance to see which pages are visited most frequently by users. This data is not passed on to third parties.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "4b60926c-cafe-4cad-aae0-327954d0b7a6",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Use of cookies",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "This website uses cookies for analysis purposes and for performance analysis. Cookies are small text files that are stored by your browser to collect anonymous information about how the website is used. You can deactivate the use of cookies in your browser settings.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "e9cef7d1-1f34-4f28-916c-f160c4eec271",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Your rights",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "You have the right to obtain information about the processing of your personal data. You also have the right to rectification, erasure or restriction of processing of your data. You also have the right to data portability. If you believe that the processing of your data violates data protection law, you have the right to lodge a complaint with a supervisory authority.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "ef1d163c-fea1-4db7-bb3c-406dcec09bec",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Changes to this privacy policy",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "We reserve the right to amend this privacy policy in order to adapt it to changes in legal requirements or changes in the operation of our website. Please check this page regularly for updates.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "6bead803-9b0d-4b72-b6d7-d9e1fa5d5621",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "As of: March 2024",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "textStyle",
+                                            "attrs": {
+                                                "color": "rgb(62, 62, 62)"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            }
+        ],
+        "title": "Data-Privacy",
+        "ogTitle": "Data-Privacy",
+        "subtitle": "",
+        "component": "page",
+        "description": "Data-Privacy statement of fpv-drone.info",
+        "ogDescription": "we ain't looking!",
+        "previewImageAsset": {
+            "id": null,
+            "alt": null,
+            "name": "",
+            "focus": null,
+            "title": null,
+            "source": null,
+            "filename": "",
+            "copyright": null,
+            "fieldtype": "asset",
+            "meta_data": {}
+        },
+        "previewImageObjectFit": "cover"
+    },
+    "slug": "data-privacy",
+    "full_slug": "data-privacy",
+    "sort_by_date": null,
+    "position": -10,
+    "tag_list": [],
+    "is_startpage": false,
+    "parent_id": 0,
+    "meta_data": null,
+    "group_id": "7b508337-9139-4a56-a5aa-f0971aa7e466",
+    "first_published_at": "2024-04-19T10:38:40.337Z",
+    "release_id": null,
+    "lang": "default",
+    "path": null,
+    "alternates": [],
+    "default_full_slug": null,
+    "translated_slugs": null
+}

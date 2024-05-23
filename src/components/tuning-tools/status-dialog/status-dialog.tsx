@@ -9,6 +9,7 @@ import type { StepProps } from "./step/step";
 import { Step } from "./step/step";
 import { RacoonLoader } from "../racoon-animations/racoon-animation";
 import { inlineTranslate } from "qwik-speak";
+import styles from "./status-dialog.module.css";
 
 interface Props {
   isOpen: boolean;
@@ -40,7 +41,7 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
   const steps = useComputed$(() => {
     const getStateOfItemInIndexArray = (
       indexArray: AnalyzerStepStatusIndexArray,
-      index: number,
+      index: number
     ): AnalyzerStepStatus => {
       const item = indexArray.find((i) => i.index === index);
       return item ? item.state : AnalyzerStepStatus.PENDING;
@@ -64,7 +65,7 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
           ({
             state: getStateOfItemInIndexArray(
               props.analyzerProgress.subLogs.state,
-              flightIndex,
+              flightIndex
             ),
             label: t2("blackboxAnalyzer.progress.analyzingSubLog", {
               flightIndex: flightIndex + 1,
@@ -73,14 +74,14 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.readingHeaders,
-                  flightIndex,
+                  flightIndex
                 ),
                 label: translations.value.readingHeaders,
               },
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.decoding,
-                  flightIndex,
+                  flightIndex
                 ),
                 label: translations.value.decoding,
               },
@@ -88,13 +89,13 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
                 label: translations.value.readingDecodedLog,
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.readingCSV,
-                  flightIndex,
+                  flightIndex
                 ),
               },
               {
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.writingHeadDictToJson,
-                  flightIndex,
+                  flightIndex
                 ),
                 label: translations.value.exportingHeaders,
               },
@@ -102,14 +103,14 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
                 label: translations.value.runningAnalysis,
                 state: getStateOfItemInIndexArray(
                   props.analyzerProgress.subLogs.analyzingPID,
-                  flightIndex,
+                  flightIndex
                 ),
                 subSteps: ["roll", "pitch", "yaw"].map((axis) => ({
                   state: getStateOfItemInIndexArray(
                     props.analyzerProgress.subLogs.analyzingPIDTrace[
                       axis as "roll" | "pitch" | "yaw"
                     ],
-                    flightIndex,
+                    flightIndex
                   ),
                   label:
                     translations.value[
@@ -118,7 +119,7 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
                 })),
               },
             ],
-          }) as StepProps,
+          }) as StepProps
       ),
     });
 
@@ -134,21 +135,14 @@ export const BlackboxAnalyzerStatusDialog = component$((props: Props) => {
           flexDirection: "column",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            height: "calc(100vh - 4rem)",
-          }}
-        >
-          <div style={{ maxHeight: "calc(100vh - 5rem)", overflowY: "auto" }}>
+        <div class={styles.content}>
+          <div class={styles.statusItems}>
             {steps.value.map((step, index) => (
               <Step {...step} key={`${index}_${step.label}`} />
             ))}
           </div>
 
-          <div>
+          <div class={styles.racoonLoader}>
             <RacoonLoader />
           </div>
         </div>

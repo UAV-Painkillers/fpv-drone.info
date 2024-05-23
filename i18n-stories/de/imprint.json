@@ -1,0 +1,313 @@
+{
+    "name": "Imprint",
+    "created_at": "2024-04-19T10:34:38.987Z",
+    "published_at": "2024-04-26T08:47:07.302Z",
+    "id": 481060651,
+    "uuid": "93c8cd9c-72e5-42c3-9fc9-525e01ed0307",
+    "content": {
+        "_uid": "322b6a22-8d29-4b7f-ac79-3e7e6c1c0767",
+        "type": "page",
+        "bloks": [
+            {
+                "_uid": "5e74a71c-efbc-46fb-92ff-23c930c93401",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Angaben gemäß § 5 TMG:",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "bold"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Jaap und Piskun GbR - UAV Painkillers",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Platanenallee 2a",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "22529 Hamburg",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Deutschland",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Vertreten durch:",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Jan Jaap",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 3
+                            },
+                            "content": [
+                                {
+                                    "text": "Kontakt:",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "E-Mail: ",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": "info@uav-painkillers.de",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "link",
+                                            "attrs": {
+                                                "href": "mailto:info@uav-painkillers.de",
+                                                "uuid": null,
+                                                "anchor": null,
+                                                "custom": null,
+                                                "target": null,
+                                                "linktype": "url"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "2bead709-7956-4570-a34b-e9c570ee2694",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Disclaimer of liability:",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "The operators of this website assume no liability for the topicality, correctness and completeness of the content provided. Liability claims against the operators relating to material or immaterial damage caused by the use or non-use of the information provided or by the use of incorrect or incomplete content are fundamentally excluded, unless there is evidence of wilful intent or gross negligence on the part of the operators.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "c221bd43-5cc2-4723-8a3e-d59efa8ca022",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Copyright notice:",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "The content and works on this website created by the operators are subject to German copyright law. Duplication, processing, distribution and any kind of exploitation outside the limits of copyright law require the written consent of the respective author or creator. Downloads and copies of this site are only permitted for private, non-commercial use. Insofar as the content on this site was not created by the operator, the copyrights of third parties are respected. In particular, third-party content is identified as such. Should you nevertheless become aware of a copyright infringement, please inform us accordingly. If we become aware of any infringements, we will remove such content immediately.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "deddbf44-71ad-434f-9054-560e41ecaa40",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Liability for links:",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Our website contains links to external third-party websites over whose content we have no influence. Therefore, we cannot accept any liability for this third-party content. The respective provider or operator of the pages is always responsible for the content of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal content was not recognizable at the time of linking. However, permanent monitoring of the content of the linked pages is not reasonable without concrete evidence of an infringement. If we become aware of any legal infringements, we will remove such links immediately.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "e0545c35-3a2e-46a5-83f1-df8a7b589c8c",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Data protection:",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Information on data protection can be found in our ",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": "privacy policy",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "link",
+                                            "attrs": {
+                                                "href": "/data-privacy",
+                                                "uuid": "c4d70e49-427e-4f92-a69c-bf60aa4cfd10",
+                                                "anchor": null,
+                                                "custom": {},
+                                                "target": "_self",
+                                                "linktype": "story"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            }
+        ],
+        "title": "Impressum",
+        "ogTitle": "Impressum",
+        "subtitle": "",
+        "component": "page",
+        "description": "Impressum für fpv-drone.info",
+        "ogDescription": "Wer bist du?!?",
+        "previewImageAsset": {
+            "id": null,
+            "alt": null,
+            "name": "",
+            "focus": null,
+            "title": null,
+            "source": null,
+            "filename": "",
+            "copyright": null,
+            "fieldtype": "asset",
+            "meta_data": {}
+        },
+        "previewImageObjectFit": "cover"
+    },
+    "slug": "imprint",
+    "full_slug": "de/imprint",
+    "sort_by_date": null,
+    "position": -20,
+    "tag_list": [],
+    "is_startpage": false,
+    "parent_id": 0,
+    "meta_data": null,
+    "group_id": "80e07c7d-c672-48c5-8c1e-2ce52cd23b19",
+    "first_published_at": "2024-04-19T11:19:12.306Z",
+    "release_id": null,
+    "lang": "de",
+    "path": null,
+    "alternates": [],
+    "default_full_slug": null,
+    "translated_slugs": null
+}

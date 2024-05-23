@@ -124,7 +124,7 @@ export default component$(() => {
               <Logo />
             </Link>
             <Navigation class={styles.navigation} />
-            <SearchButton class={styles.search} />
+            {/*<SearchButton class={styles.search} />*/}
           </>
         )}
         <main class={styles.main}>
