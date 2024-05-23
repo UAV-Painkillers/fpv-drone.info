@@ -11,6 +11,13 @@ the height of each element should be determined by its width and the aspect-rati
   width: 100%;
 }
 
+/** is mobile */
+@media screen and (max-width: 768px) {
+  .plotGrid {
+    display: block;
+  }
+}
+
 .plot {
   aspect-ratio: 1;
   width: 100%;
@@ -26,4 +33,8 @@ the height of each element should be determined by its width and the aspect-rati
 
 .throttlePlot {
   aspect-ratio: 3/1;
+}
+
+.finalSpacing {
+  padding-bottom: 22rem;
 }

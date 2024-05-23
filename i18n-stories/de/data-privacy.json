@@ -1,0 +1,336 @@
+{
+    "name": "Data Privacy",
+    "created_at": "2024-04-19T10:34:26.871Z",
+    "published_at": "2024-04-26T08:47:08.015Z",
+    "id": 481060649,
+    "uuid": "c4d70e49-427e-4f92-a69c-bf60aa4cfd10",
+    "content": {
+        "_uid": "c5f6eeba-a544-44ac-83dc-caec9815e047",
+        "type": "page",
+        "bloks": [
+            {
+                "_uid": "ffc2ae81-6acd-4d56-82e8-a2fd328c7958",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Datenschutzerklärung",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Verantwortlicher für die Datenverarbeitung auf dieser Website im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Jaap und Piskun GbR - UAV Painkillers",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Platanenallee 2a",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "22529 Hamburg",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Deutschland",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "E-Mail: ",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": "info@uav-painkillers.de",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "link",
+                                            "attrs": {
+                                                "href": "mailto:info@uav-painkillers.de",
+                                                "uuid": null,
+                                                "anchor": null,
+                                                "custom": null,
+                                                "target": null,
+                                                "linktype": "url"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "587ac97c-12fc-4ef9-8493-ee724202329a",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Erhebung von Daten",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Beim Besuch unserer Website werden keine personenbezogenen Daten wie Name, E-Mail-Adresse oder Telefonnummer erhoben. Es werden jedoch automatisch technische Daten erhoben, die für den Betrieb der Website erforderlich sind, sowie Daten für die Analyse der Website-Performance. Dazu gehören IP-Adressen, Geräteinformationen und Nutzungsdaten. Diese Daten werden von ",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": "vercel",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "link",
+                                            "attrs": {
+                                                "href": "https://vercel.com/",
+                                                "uuid": null,
+                                                "anchor": null,
+                                                "custom": {},
+                                                "target": "_blank",
+                                                "linktype": "url"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "text": ".com ",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "link",
+                                            "attrs": {
+                                                "href": "http://Builder.io",
+                                                "uuid": null,
+                                                "anchor": null,
+                                                "custom": null,
+                                                "target": null,
+                                                "linktype": "url"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "text": "zur Analyse der Website-Performance verwendet, um zu sehen, welche Seiten besonders häufig von den Nutzern besucht werden. Diese Daten werden nicht an Dritte weitergegeben.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "4b60926c-cafe-4cad-aae0-327954d0b7a6",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Verwendung von Cookies",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Diese Website verwendet Cookies zu Analysezwecken und zur Performance-Analyse. Cookies sind kleine Textdateien, die von Ihrem Browser gespeichert werden, um anonyme Informationen darüber zu sammeln, wie die Website genutzt wird. Sie können die Verwendung von Cookies in den Einstellungen Ihres Browsers deaktivieren.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "e9cef7d1-1f34-4f28-916c-f160c4eec271",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Ihre Rechte",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Sie haben das Recht, Auskunft über die Verarbeitung Ihrer personenbezogenen Daten zu erhalten. Weiterhin haben Sie das Recht auf Berichtigung, Löschung oder Einschränkung der Verarbeitung Ihrer Daten. Darüber hinaus steht Ihnen das Recht auf Datenübertragbarkeit zu. Wenn Sie der Meinung sind, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt, haben Sie das Recht, Beschwerde bei einer Aufsichtsbehörde einzulegen.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "ef1d163c-fea1-4db7-bb3c-406dcec09bec",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "heading",
+                            "attrs": {
+                                "level": 2
+                            },
+                            "content": [
+                                {
+                                    "text": "Änderungen dieser Datenschutzerklärung",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an geänderte rechtliche Anforderungen oder bei Änderungen des Betriebs unserer Website anzupassen. Bitte überprüfen Sie diese Seite regelmäßig auf Aktualisierungen.",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            },
+            {
+                "_uid": "6bead803-9b0d-4b72-b6d7-d9e1fa5d5621",
+                "text": {
+                    "type": "doc",
+                    "content": [
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "text": "Stand: März 2024",
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "textStyle",
+                                            "attrs": {
+                                                "color": "rgb(62, 62, 62)"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "align": "",
+                "component": "text",
+                "wrapWithSmall": false
+            }
+        ],
+        "title": "Datenschutzerklärung",
+        "ogTitle": "Datenschutzerklärung",
+        "subtitle": "",
+        "component": "page",
+        "description": "Datenschutzerklärung für fpv-drone.info",
+        "ogDescription": "deine Daten, in sicheren Händen.",
+        "previewImageAsset": {
+            "id": null,
+            "alt": null,
+            "name": "",
+            "focus": null,
+            "title": null,
+            "source": null,
+            "filename": "",
+            "copyright": null,
+            "fieldtype": "asset",
+            "meta_data": {}
+        },
+        "previewImageObjectFit": "cover"
+    },
+    "slug": "data-privacy",
+    "full_slug": "de/data-privacy",
+    "sort_by_date": null,
+    "position": -10,
+    "tag_list": [],
+    "is_startpage": false,
+    "parent_id": 0,
+    "meta_data": null,
+    "group_id": "7b508337-9139-4a56-a5aa-f0971aa7e466",
+    "first_published_at": "2024-04-19T10:38:40.337Z",
+    "release_id": null,
+    "lang": "de",
+    "path": null,
+    "alternates": [],
+    "default_full_slug": null,
+    "translated_slugs": null
+}

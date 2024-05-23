@@ -14,3 +14,12 @@
   border-radius: 10px;
   color: rgb(var(--body-background));
 }
+
+/** is mobile */
+@media screen and (max-width: 768px) {
+  .plotNavigation {
+    flex-direction: column;
+    width: auto;
+    top: calc(100% - 5rem);
+  }
+}

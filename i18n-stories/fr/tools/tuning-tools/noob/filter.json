@@ -1,0 +1,1532 @@
+{
+    "name": "Filter Tuning Guide",
+    "created_at": "2024-04-18T21:39:13.308Z",
+    "published_at": "2024-04-26T08:47:07.000Z",
+    "id": 480595095,
+    "uuid": "c856bbdd-b0b3-4919-927d-a87716d358b1",
+    "content": {
+        "_uid": "27bbfc92-59dd-45bc-8902-4df4228611fa",
+        "type": "page",
+        "bloks": [
+            {
+                "_uid": "0b5ee25f-ff85-4baa-89e0-a230ad9d9e53",
+                "component": "cms-snippet",
+                "reference": [
+                    {
+                        "name": "Guide Header",
+                        "created_at": "2024-04-21T19:22:40.350Z",
+                        "published_at": "2024-04-26T10:25:16.000Z",
+                        "id": 481388389,
+                        "uuid": "92a594b3-4523-4a7a-9f11-adb825f87642",
+                        "content": {
+                            "_uid": "2044744c-f40e-482d-8d12-57ff3e681bc7",
+                            "items": [
+                                {
+                                    "_uid": "7e1d728f-98d4-4ae4-827b-63d55e77c482",
+                                    "component": "cms-snippet",
+                                    "reference": [
+                                        {
+                                            "name": "Clear SW Cache and Reload",
+                                            "created_at": "2024-04-19T08:17:23.037Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480904789,
+                                            "uuid": "00ed4694-1f05-423e-8280-8059f8469921",
+                                            "content": {
+                                                "_uid": "990d37ed-fc0c-4eb4-ab05-510d8d282136",
+                                                "items": [
+                                                    {
+                                                        "_uid": "f0174992-ff0d-45c3-846a-ad31986171f5",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "ac0ce5ad-f98f-4851-b699-6f6c6a282607",
+                                                                "text": {
+                                                                    "type": "doc",
+                                                                    "content": [
+                                                                        {
+                                                                            "type": "paragraph",
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "We are using an extensive amount of caching in order to give you the best performance and also the option to use the Tuning Tools offline without any Internet at all.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "paragraph",
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "But this comes with a downside, sometimes this prevents the site from updating certain elements and you might be stuck with an old version of the Tuning Tools.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "paragraph",
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Having problems? Or just wanting to make sure you got the latest version of the Analyzer in cache? Just hit this button to clear all caches and start with a fresh copy.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "align": "left",
+                                                                "component": "text",
+                                                                "wrapWithSmall": false
+                                                            },
+                                                            {
+                                                                "_uid": "d967095d-7f70-4d46-9bf2-bd91f659b421",
+                                                                "class": "",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "dd550a1e-2d0f-4f0c-af35-9d8c322c0db6",
+                                                                        "component": "sw-clear-cache-button"
+                                                                    }
+                                                                ],
+                                                                "width": "",
+                                                                "height": "",
+                                                                "maxWidth": "",
+                                                                "minWidth": "",
+                                                                "component": "css-box",
+                                                                "marginTop": "1rem",
+                                                                "maxHeight": "",
+                                                                "minHeight": "",
+                                                                "marginLeft": "",
+                                                                "paddingTop": "",
+                                                                "marginRight": "",
+                                                                "paddingLeft": "",
+                                                                "marginBottom": "4rem",
+                                                                "paddingRight": "",
+                                                                "internalLabel": "Clear Cache Button",
+                                                                "paddingBottom": ""
+                                                            }
+                                                        ],
+                                                        "component": "centered",
+                                                        "internalLabel": "Clear Cache notice"
+                                                    }
+                                                ],
+                                                "component": "Content Snipped"
+                                            },
+                                            "slug": "clear-sw-cache-and-reload",
+                                            "full_slug": "snippets/clear-sw-cache-and-reload",
+                                            "sort_by_date": null,
+                                            "position": -30,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "efbec660-0fde-42b8-bb30-f7af75b6a99b",
+                                            "first_published_at": "2024-04-19T08:17:54.892Z",
+                                            "release_id": null,
+                                            "lang": "default",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        },
+                                        {
+                                            "name": "Join Discord",
+                                            "created_at": "2024-04-19T08:16:36.861Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480904773,
+                                            "uuid": "5a9b6cbe-de1a-487e-9050-d3871ab13fad",
+                                            "content": {
+                                                "_uid": "6d71648f-12d4-4187-b062-2bb6dc6ccff6",
+                                                "items": [
+                                                    {
+                                                        "_uid": "3c701efe-981e-4ee4-acea-5af0a527b853",
+                                                        "class": "",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "d9b09006-7267-4b47-b003-8c612f52033d",
+                                                                "text": {
+                                                                    "type": "doc",
+                                                                    "content": [
+                                                                        {
+                                                                            "type": "heading",
+                                                                            "attrs": {
+                                                                                "level": 3
+                                                                            },
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Got questions? Need help? Have a suggestion?",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "heading",
+                                                                            "attrs": {
+                                                                                "level": 3
+                                                                            },
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Just want to talk?",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "align": "center",
+                                                                "component": "text",
+                                                                "wrapWithSmall": false
+                                                            },
+                                                            {
+                                                                "_uid": "61f91d49-8643-4413-9731-2554fb75618e",
+                                                                "class": "",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "bc60a98e-0f5f-4b55-b616-038f9706a255",
+                                                                        "text": {
+                                                                            "type": "doc",
+                                                                            "content": [
+                                                                                {
+                                                                                    "type": "paragraph",
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "text": "Join the fpv-drone.info Discord Server!",
+                                                                                            "type": "text",
+                                                                                            "marks": [
+                                                                                                {
+                                                                                                    "type": "link",
+                                                                                                    "attrs": {
+                                                                                                        "href": "https://discord.gg/eBv6Mke9NS",
+                                                                                                        "uuid": null,
+                                                                                                        "anchor": null,
+                                                                                                        "custom": {
+                                                                                                            "class": "button"
+                                                                                                        },
+                                                                                                        "target": "_blank",
+                                                                                                        "linktype": "url"
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "align": "center",
+                                                                        "component": "text",
+                                                                        "wrapWithSmall": false
+                                                                    }
+                                                                ],
+                                                                "width": "",
+                                                                "height": "",
+                                                                "maxWidth": "",
+                                                                "minWidth": "",
+                                                                "component": "css-box",
+                                                                "marginTop": "2rem",
+                                                                "maxHeight": "",
+                                                                "minHeight": "",
+                                                                "marginLeft": "",
+                                                                "paddingTop": "",
+                                                                "marginRight": "",
+                                                                "paddingLeft": "",
+                                                                "marginBottom": "2rem",
+                                                                "paddingRight": "",
+                                                                "internalLabel": "",
+                                                                "paddingBottom": ""
+                                                            }
+                                                        ],
+                                                        "width": "",
+                                                        "height": "",
+                                                        "maxWidth": "",
+                                                        "minWidth": "",
+                                                        "component": "css-box",
+                                                        "marginTop": "4rem",
+                                                        "maxHeight": "",
+                                                        "minHeight": "",
+                                                        "marginLeft": "",
+                                                        "paddingTop": "",
+                                                        "marginRight": "",
+                                                        "paddingLeft": "",
+                                                        "marginBottom": "4rem",
+                                                        "paddingRight": "",
+                                                        "internalLabel": "Join Discord",
+                                                        "paddingBottom": ""
+                                                    }
+                                                ],
+                                                "component": "Content Snipped"
+                                            },
+                                            "slug": "join-discord",
+                                            "full_slug": "snippets/join-discord",
+                                            "sort_by_date": null,
+                                            "position": -20,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "206180ca-e841-49a8-82c8-5bfa66b119fa",
+                                            "first_published_at": "2024-04-19T08:16:43.133Z",
+                                            "release_id": null,
+                                            "lang": "default",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        }
+                                    ],
+                                    "internalLabel": "SW Reload | Discord"
+                                }
+                            ],
+                            "component": "Content Snipped"
+                        },
+                        "slug": "guide-header",
+                        "full_slug": "snippets/guide-header",
+                        "sort_by_date": null,
+                        "position": -50,
+                        "tag_list": [],
+                        "is_startpage": false,
+                        "parent_id": 480602118,
+                        "meta_data": null,
+                        "group_id": "0ee9e04d-c27c-418b-b765-2383387538af",
+                        "first_published_at": "2024-04-21T19:22:57.420Z",
+                        "release_id": null,
+                        "lang": "default",
+                        "path": null,
+                        "alternates": [],
+                        "default_full_slug": null,
+                        "translated_slugs": null,
+                        "_stopResolving": true
+                    }
+                ],
+                "internalLabel": "Guide Header"
+            },
+            {
+                "_uid": "dbc0f05f-e32f-4313-81b7-f5d7f0c4aa02",
+                "steps": [
+                    {
+                        "_uid": "0871a098-d978-451e-8ecb-ab60b01601c2",
+                        "image": {
+                            "id": 15417745,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1504x1500/c201a57ad1/filter_tuning_step_1.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "1",
+                        "title": "Gyro Filters",
+                        "component": "instruction-step-item",
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Let's start of by configuring the basics.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Connect your drone to Betaflight and navigate to the \"PID Tuning\" tab.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "In the \"PID Tuning\" tab (#1), you will see a tab bar with three items, open on the \"Filter Settings\" tab (#2).",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Now apply the following",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "ordered_list",
+                                    "attrs": {
+                                        "order": 1
+                                    },
+                                    "content": [
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Disable \"Gyro Lowpass 1\" (#3)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "If your \"Gyro update frequency\" is the same as your \"PID loop frequency\" (You can find these in the \"Configuration\" tab), disable \"Gyro Lowpass 2\" (#4) as well",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "If your \"Gyro update frequency\" is NOT the same as your \"PID loop frequency\", move the \"Gyro Filter Multiplier\" Slider (#5) to the maximum of 2.0",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "If you are unsure about what to do, take a look at the attached picture which highlights where you can find all of the input fields / information.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "b6bea2cc-4d35-4a37-af75-b403e124b40f",
+                        "image": {
+                            "id": null,
+                            "alt": null,
+                            "name": "",
+                            "focus": null,
+                            "title": null,
+                            "source": null,
+                            "filename": "",
+                            "copyright": null,
+                            "fieldtype": "asset",
+                            "meta_data": {}
+                        },
+                        "index": "2",
+                        "title": "Flying",
+                        "component": "instruction-step-item",
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Now it's time to do some flying to get one or more good blackbox logs for the upcoming filter tunings.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "No need to do anything crazy,",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Fly for 20 seconds to one minute, do some rolls, flips, and throttle punches.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "You should definitely fly at all available throttle ranges (throttle punch up to the maximum or just fast flying forwards with increasing throttle up to maximum)",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Feel free to do multiple flights, this way you can compare logs in case one contains more or less noise than the other.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "c5fb2e23-4df4-48b1-839e-4b1469eaecfe",
+                        "image": {
+                            "id": null,
+                            "alt": null,
+                            "name": "",
+                            "focus": null,
+                            "title": null,
+                            "filename": null,
+                            "copyright": null,
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_external_url": false
+                        },
+                        "index": "3",
+                        "title": "",
+                        "component": "instruction-step-item",
+                        "sourceStep": [
+                            {
+                                "name": "Extract Logfile",
+                                "created_at": "2024-04-23T13:27:24.502Z",
+                                "published_at": "2024-04-26T10:25:16.000Z",
+                                "id": 482454796,
+                                "uuid": "c66b472f-fa0f-49f1-ab38-349d59f691c4",
+                                "content": {
+                                    "_uid": "c85171bb-f032-4032-baaf-ee65a7f5cdfd",
+                                    "items": [
+                                        {
+                                            "_uid": "f787c0ed-6c53-4595-93c9-3396bf8e68af",
+                                            "image": {
+                                                "id": 15417794,
+                                                "alt": "",
+                                                "name": "",
+                                                "focus": "",
+                                                "title": "",
+                                                "source": "",
+                                                "filename": "https://a.storyblok.com/f/285148/1947x1500/d3866ac9fe/extract_logfile.png",
+                                                "copyright": "",
+                                                "fieldtype": "asset",
+                                                "meta_data": {},
+                                                "is_private": false,
+                                                "is_external_url": false
+                                            },
+                                            "index": "3",
+                                            "title": "Extract Logfile",
+                                            "component": "instruction-step-item",
+                                            "sourceStep": [],
+                                            "customBloks": [],
+                                            "description": {
+                                                "type": "doc",
+                                                "content": [
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "For the next step we will need access to the generated log file.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Connect your drone to the betaflight configurator, open the \"Blackbox\" tab and click on \"Activate Mass Storage Device Mode\".",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "A new USB storage device will connect / appear on your computer (like a USB stick)",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Open that device on your computer (like a USB stick) and find a file called \"btfl_all.bbl\"",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Copy this to your computer.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "component": "Content Snipped"
+                                },
+                                "slug": "extract-logfile",
+                                "full_slug": "snippets/instructions/tuning-guides/extract-logfile",
+                                "sort_by_date": null,
+                                "position": 0,
+                                "tag_list": [],
+                                "is_startpage": false,
+                                "parent_id": 481388634,
+                                "meta_data": null,
+                                "group_id": "aa743c50-b72f-4916-aa75-d989cc5bf5ad",
+                                "first_published_at": "2024-04-23T13:27:53.644Z",
+                                "release_id": null,
+                                "lang": "default",
+                                "path": null,
+                                "alternates": [],
+                                "default_full_slug": null,
+                                "translated_slugs": null,
+                                "_stopResolving": true
+                            }
+                        ],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "1be4bbbb-1515-47cf-ba0d-b3306e619930",
+                        "image": {
+                            "id": 15483223,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/2000x1347/b7568550e1/rpm_filters__analysis.jpeg",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "4.1",
+                        "title": "RPM Filters - Analysis",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [
+                            {
+                                "_uid": "d1f26e8d-4bd7-46d9-abf7-759492a3e5ae",
+                                "component": "blackbox-analyzer",
+                                "navigation": [
+                                    "showMainLogSelection",
+                                    "showActiveAxisSelection"
+                                ],
+                                "activePlots": [
+                                    "noiseGyroDebug"
+                                ],
+                                "labelDelayTemplate": "",
+                                "labelDelayHeaderField": "",
+                                "labelStrengthTemplate": "",
+                                "labelThrottleTemplate": "",
+                                "labelNoiseGyroTemplate": "",
+                                "labelTraceGyroTemplate": "",
+                                "labelNoiseDTermTemplate": "",
+                                "labelNoiseDebugTemplate": "",
+                                "labelStrengthHeaderField": "",
+                                "labelThrottleHeaderField": "",
+                                "labelNoiseGyroHeaderField": "",
+                                "labelStrengthPeakTemplate": "",
+                                "labelTraceGyroHeaderField": "",
+                                "labelNoiseDTermHeaderField": "",
+                                "labelNoiseDebugHeaderField": "",
+                                "labelTraceSetpointTemplate": "",
+                                "labelStrengthPeakHeaderField": "",
+                                "labelTraceFeedforwardTemplate": "",
+                                "labelTraceSetpointHeaderField": "",
+                                "labelTraceFeedforwardHeaderField": "",
+                                "labelNoiseFrequenciesGyroTemplate": "",
+                                "labelNoiseFrequenciesDTermTemplate": "",
+                                "labelNoiseFrequenciesDebugTemplate": "",
+                                "labelNoiseFrequenciesGyroHeaderField": "",
+                                "labelNoiseFrequenciesDTermHeaderField": "",
+                                "labelNoiseFrequenciesDebugHeaderField": ""
+                            }
+                        ],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Now it's getting interesting, let's do our first analysis.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Your job is pretty easy:",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "ordered_list",
+                                    "attrs": {
+                                        "order": 1
+                                    },
+                                    "content": [
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Upload your saved logfile (btfl_all.bbl) into the analyzer below",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Count the Diagonal \"lines\" (harmonics) in your plot (see attached picture for reference) and remember that number (or write it down somewhere)",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Now you need to find the lowest frequency at which any of these lines start (the most left point of any of these lines) and also remeber that one / write it down",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "793a1e4d-182e-4d96-8832-8201a146fc95",
+                        "image": {
+                            "id": 15483270,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1465x1500/23f420fa91/rpm_filters__config.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "4.2",
+                        "title": "RPM Filters - Config",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Now you just need to put these numbers into the correct fields in Betaflight.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Connect your drone to Betaflight again and navigate back to the \"PID Tuning\" tabs \"Filter Settings\" section.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "ordered_list",
+                                    "attrs": {
+                                        "order": 1
+                                    },
+                                    "content": [
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Set the \"Gyro RPM Filter Harmonics Number\" (#1) to the amount of lines you counted.",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "list_item",
+                                            "content": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content": [
+                                                        {
+                                                            "text": "Set the \"Gyro RPM Filter Min Frequency (Hz)\" (#2) to the lowest frequency that you have written down before.",
+                                                            "type": "text"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "If you have troubles finding these inputs, take a look at the attached image.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "6da7ccde-649e-4e5e-abc6-a829e2237ec0",
+                        "image": {
+                            "id": 15483292,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1465x1500/0e0be6fc0d/dynamic_notch_filter.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "5",
+                        "title": "Dynamic Notch Filter",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Let's take a look at the Dynamic Notch filter.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "We can take the previous plot / analysis for this.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Find the amount of vertical bars in the plot (see attached picture to see what i mean) and set it as the \"Dynamic Notch Count\" (#1)",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "In some cases it might be that there are no vertical bars at all, if this is the case for your drone: Just turn off the Dynamic Notch Filter.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "You also need to determine the beginning and end of the notch filter area.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Set the \"Dynamic Notch Min Frequency Hz\" (#2) to the frequency at which the first bar begins and subtract ~25Hz.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "Leave the \"Dynamic Notch Max Hz\" at the default value, its fine as it is.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_uid": "0d64b837-54a3-4ee3-a4ab-74bbdbecc8ad",
+                        "image": {
+                            "id": 15483300,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1465x1500/d0227aeb00/dterm_filter.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "index": "6",
+                        "title": "D Term Filter",
+                        "component": "instruction-step-item",
+                        "sourceStep": [],
+                        "customBloks": [],
+                        "description": {
+                            "type": "doc",
+                            "content": [
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "This one is pretty simple and does not require analyzing any plots.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "All you need to do is to slightly increase the \"D Term Filter Multiplier\" slider until your motors become hot during flight or you hear oscillations.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "paragraph",
+                                    "content": [
+                                        {
+                                            "text": "When one of these happen, turn the slider back down a bit and you're done.",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "component": "instructions",
+                "prerequisitesImage": {
+                    "id": 15417735,
+                    "alt": "",
+                    "name": "",
+                    "focus": "",
+                    "title": "",
+                    "source": "",
+                    "filename": "https://a.storyblok.com/f/285148/1947x1500/945ccef2b4/filter_tuning_prerequesites.png",
+                    "copyright": "",
+                    "fieldtype": "asset",
+                    "meta_data": {},
+                    "is_private": false,
+                    "is_external_url": false
+                },
+                "prerequisitesItems": [
+                    {
+                        "_uid": "41ce7dd9-e52c-4452-87ef-e1cddb0313e7",
+                        "label": "Your FC has a blackbox",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "913d33a4-b864-43fa-a319-af8f59a4baee",
+                        "label": "Betaflight Version is 4.3 newer (#1)",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "452863a4-3a2f-4351-a7c2-8734ddc39281",
+                        "label": "Blackbox Logging Device is set correctly (#2)",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "687400e7-ce59-4a9d-81c8-44e9924cf55f",
+                        "label": "Logging Rate is set to 1kHz or higher (#3)",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "3f0b6215-f419-4a13-88f0-a8502292beda",
+                        "label": "Blackbox Debug is set to \"GYRO_SCALED\" (#4)",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "615c195c-628a-4944-a524-281992371ae5",
+                        "label": "Blackbox Flash is Cleared / Empty / Deleted (#5)",
+                        "component": "instructions-prerequesite-item"
+                    },
+                    {
+                        "_uid": "cb34b908-cfab-450e-ad60-99021a34c1c8",
+                        "label": "Enable Expert Mode (Top right, close to the Disconnect button)",
+                        "component": "instructions-prerequesite-item"
+                    }
+                ],
+                "prerequisitesTitle": "Setup"
+            },
+            {
+                "_uid": "f91f338c-cb36-40b3-9b2c-5131b9d8a118",
+                "component": "cms-snippet",
+                "reference": [
+                    {
+                        "name": "Guide Footer",
+                        "created_at": "2024-04-21T19:21:30.606Z",
+                        "published_at": "2024-04-26T10:25:16.000Z",
+                        "id": 481388387,
+                        "uuid": "9319df31-f71c-4433-9160-574a1efd3dd0",
+                        "content": {
+                            "_uid": "647ebec6-183e-4d6d-92d0-bf31d6dc1b56",
+                            "items": [
+                                {
+                                    "_uid": "ee093098-30c5-45f4-a69d-6840824112ee",
+                                    "component": "cms-snippet",
+                                    "reference": [
+                                        {
+                                            "name": "Support Button Section",
+                                            "created_at": "2024-04-19T08:14:56.565Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480904623,
+                                            "uuid": "e90d1d06-ccff-4da5-b994-23a98b3e0aa4",
+                                            "content": {
+                                                "_uid": "bffcba63-407f-42ab-b69b-af9544558320",
+                                                "items": [
+                                                    {
+                                                        "_uid": "37d97d4a-730f-4c22-b9d8-b88dd54246c2",
+                                                        "class": "",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "2f219f6c-6b83-4b0a-b2e5-e4d0f0d4753b",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "a71ec266-ae4b-4922-ab4f-7d0f11ceb3e4",
+                                                                        "class": "",
+                                                                        "items": [
+                                                                            {
+                                                                                "_uid": "9ec8a971-22a2-46b7-b664-55571263db04",
+                                                                                "text": {
+                                                                                    "type": "doc",
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "type": "heading",
+                                                                                            "attrs": {
+                                                                                                "level": 3
+                                                                                            },
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "You want to support this project?",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "paragraph"
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                "align": "center",
+                                                                                "component": "text",
+                                                                                "wrapWithSmall": false
+                                                                            }
+                                                                        ],
+                                                                        "width": "",
+                                                                        "height": "",
+                                                                        "maxWidth": "",
+                                                                        "minWidth": "",
+                                                                        "component": "css-box",
+                                                                        "marginTop": "",
+                                                                        "maxHeight": "",
+                                                                        "minHeight": "",
+                                                                        "marginLeft": "",
+                                                                        "paddingTop": "",
+                                                                        "marginRight": "",
+                                                                        "paddingLeft": "",
+                                                                        "marginBottom": "1rem",
+                                                                        "paddingRight": "",
+                                                                        "internalLabel": "",
+                                                                        "paddingBottom": ""
+                                                                    },
+                                                                    {
+                                                                        "_uid": "673c1cf4-597b-4d66-927a-19e727592d9c",
+                                                                        "slug": "uav.painkillers",
+                                                                        "label": "Buy me a smokestopper",
+                                                                        "component": "buy-me-a-racoon-button"
+                                                                    }
+                                                                ],
+                                                                "component": "centered"
+                                                            }
+                                                        ],
+                                                        "width": "",
+                                                        "height": "",
+                                                        "maxWidth": "",
+                                                        "minWidth": "",
+                                                        "component": "css-box",
+                                                        "marginTop": "5rem",
+                                                        "maxHeight": "",
+                                                        "minHeight": "",
+                                                        "marginLeft": "",
+                                                        "paddingTop": "",
+                                                        "marginRight": "",
+                                                        "paddingLeft": "",
+                                                        "marginBottom": "",
+                                                        "paddingRight": "",
+                                                        "internalLabel": "You want to support this project?",
+                                                        "paddingBottom": ""
+                                                    }
+                                                ],
+                                                "component": "Content Snipped"
+                                            },
+                                            "slug": "support-button-section",
+                                            "full_slug": "snippets/support-button-section",
+                                            "sort_by_date": null,
+                                            "position": -10,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "a2e8288f-d96b-418a-b2ff-e42259e33993",
+                                            "first_published_at": "2024-04-19T08:15:08.939Z",
+                                            "release_id": null,
+                                            "lang": "default",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        },
+                                        {
+                                            "name": "Sponsors",
+                                            "created_at": "2024-04-18T22:06:07.102Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480602120,
+                                            "uuid": "6ee18223-c77f-4942-a5c1-291ce6021a65",
+                                            "content": {
+                                                "_uid": "a1fc56ca-fcb6-457f-b631-0831aa20aaf7",
+                                                "items": [
+                                                    {
+                                                        "_uid": "b8aa4b03-0568-4b87-8ba7-17533d659443",
+                                                        "class": "",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "8bd663f7-7a49-462d-8501-5a826b9048ce",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "73c06ed2-ef0f-4985-b1c0-1746a59c7216",
+                                                                        "text": {
+                                                                            "type": "doc",
+                                                                            "content": [
+                                                                                {
+                                                                                    "type": "heading",
+                                                                                    "attrs": {
+                                                                                        "level": 3
+                                                                                    },
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "text": "Proudly sponsored by",
+                                                                                            "type": "text"
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "type": "paragraph",
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "text": "Some of these Links are affiliate links, which means UAV-Painkillers will earn a small percentage of the revenue, it wont cost you any additional money but helps funding this project.",
+                                                                                            "type": "text"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "align": "center",
+                                                                        "component": "text",
+                                                                        "wrapWithSmall": true
+                                                                    }
+                                                                ],
+                                                                "component": "centered"
+                                                            }
+                                                        ],
+                                                        "width": "",
+                                                        "height": "",
+                                                        "maxWidth": "",
+                                                        "minWidth": "",
+                                                        "component": "css-box",
+                                                        "marginTop": "5rem",
+                                                        "maxHeight": "",
+                                                        "minHeight": "",
+                                                        "marginLeft": "",
+                                                        "paddingTop": "",
+                                                        "marginRight": "",
+                                                        "paddingLeft": "",
+                                                        "marginBottom": "1rem",
+                                                        "paddingRight": "",
+                                                        "internalLabel": "Proudly sponsored by",
+                                                        "paddingBottom": ""
+                                                    },
+                                                    {
+                                                        "_uid": "6676fa87-6087-45ba-9207-d622b1961256",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "7ff201bd-fbc9-48a4-963c-118075415d2a",
+                                                                "href": {
+                                                                    "id": "",
+                                                                    "url": "http://www.gaoneng.shop/referral/painkillers",
+                                                                    "target": "_blank",
+                                                                    "linktype": "url",
+                                                                    "fieldtype": "multilink",
+                                                                    "cached_url": "http://www.gaoneng.shop/referral/painkillers"
+                                                                },
+                                                                "logo": {
+                                                                    "id": 15314995,
+                                                                    "alt": "",
+                                                                    "name": "",
+                                                                    "focus": "",
+                                                                    "title": "",
+                                                                    "source": "",
+                                                                    "filename": "https://a.storyblok.com/f/285148/537x219/4f0c74302d/gnb-logo.png",
+                                                                    "copyright": "",
+                                                                    "fieldtype": "asset",
+                                                                    "meta_data": {},
+                                                                    "is_private": false,
+                                                                    "is_external_url": false
+                                                                },
+                                                                "name": "GAONENG (GNB)",
+                                                                "component": "nested-sponsor"
+                                                            },
+                                                            {
+                                                                "_uid": "97c39f7a-dec3-4b3b-ab25-c5e256d4d0b8",
+                                                                "href": {
+                                                                    "id": "",
+                                                                    "url": "https://www.flyfish-rc.com/?ref=zAf51UvR9eaKyG",
+                                                                    "target": "_blank",
+                                                                    "linktype": "url",
+                                                                    "fieldtype": "multilink",
+                                                                    "cached_url": "https://www.flyfish-rc.com/?ref=zAf51UvR9eaKyG"
+                                                                },
+                                                                "logo": {
+                                                                    "id": 15314994,
+                                                                    "alt": "",
+                                                                    "name": "",
+                                                                    "focus": "",
+                                                                    "title": "",
+                                                                    "source": "",
+                                                                    "filename": "https://a.storyblok.com/f/285148/2000x418/76a803f6bf/flyfishrc-logo.png",
+                                                                    "copyright": "",
+                                                                    "fieldtype": "asset",
+                                                                    "meta_data": {},
+                                                                    "is_private": false,
+                                                                    "is_external_url": false
+                                                                },
+                                                                "name": "FlyFishRC",
+                                                                "component": "nested-sponsor"
+                                                            },
+                                                            {
+                                                                "_uid": "cc7c2aac-a227-4eac-8a7a-e2b8d31003b6",
+                                                                "href": {
+                                                                    "id": "",
+                                                                    "url": "https://www.jumper-rc.com/",
+                                                                    "target": "_blank",
+                                                                    "linktype": "url",
+                                                                    "fieldtype": "multilink",
+                                                                    "cached_url": "https://www.jumper-rc.com/"
+                                                                },
+                                                                "logo": {
+                                                                    "id": 15314996,
+                                                                    "alt": "",
+                                                                    "name": "",
+                                                                    "focus": "",
+                                                                    "title": "",
+                                                                    "source": "",
+                                                                    "filename": "https://a.storyblok.com/f/285148/658x256/cfef5d3c69/jumperrc-logo.png",
+                                                                    "copyright": "",
+                                                                    "fieldtype": "asset",
+                                                                    "meta_data": {},
+                                                                    "is_private": false,
+                                                                    "is_external_url": false
+                                                                },
+                                                                "name": "Jumper RC",
+                                                                "component": "nested-sponsor"
+                                                            }
+                                                        ],
+                                                        "component": "sponsors-list"
+                                                    }
+                                                ],
+                                                "component": "Content Snipped",
+                                                "internalName": "Sponsors"
+                                            },
+                                            "slug": "sponsors",
+                                            "full_slug": "snippets/sponsors",
+                                            "sort_by_date": null,
+                                            "position": 0,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "d762372b-a0e7-4b3c-88a0-1976772bea81",
+                                            "first_published_at": "2024-04-19T11:19:11.308Z",
+                                            "release_id": null,
+                                            "lang": "default",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        }
+                                    ],
+                                    "internalLabel": "support | sponsors "
+                                },
+                                {
+                                    "_uid": "dcb7b5de-807f-4d78-8450-999df62e38a3",
+                                    "class": "",
+                                    "items": [
+                                        {
+                                            "_uid": "1803f118-00fb-426a-8181-64b57e1fec51",
+                                            "text": {
+                                                "type": "doc",
+                                                "content": [
+                                                    {
+                                                        "type": "heading",
+                                                        "attrs": {
+                                                            "level": 1
+                                                        },
+                                                        "content": [
+                                                            {
+                                                                "text": "Credits",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "I want to give a big shoutout to the folks behind the open-source projects that have been used (as inspiration) and modified for this. These tools wouldn't be possible without the groundwork laid by projects like ",
+                                                                "type": "text"
+                                                            },
+                                                            {
+                                                                "text": "PID-Analyzer by VolkerGoeschl",
+                                                                "type": "text",
+                                                                "marks": [
+                                                                    {
+                                                                        "type": "link",
+                                                                        "attrs": {
+                                                                            "href": "https://github.com/VolkerGoeschl/PID-Analyzer",
+                                                                            "uuid": null,
+                                                                            "anchor": null,
+                                                                            "custom": null,
+                                                                            "target": "_blank",
+                                                                            "linktype": "url"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "text": " and ",
+                                                                "type": "text"
+                                                            },
+                                                            {
+                                                                "text": "blackbox-tools by the cleanflight team",
+                                                                "type": "text",
+                                                                "marks": [
+                                                                    {
+                                                                        "type": "link",
+                                                                        "attrs": {
+                                                                            "href": "https://github.com/VolkerGoeschl/PID-Analyzer",
+                                                                            "uuid": null,
+                                                                            "anchor": null,
+                                                                            "custom": null,
+                                                                            "target": "_blank",
+                                                                            "linktype": "url"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "text": ".",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "A big thank you to these authors for their awesome work!",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "align": "center",
+                                            "component": "text",
+                                            "wrapWithSmall": false
+                                        }
+                                    ],
+                                    "width": "",
+                                    "height": "",
+                                    "maxWidth": "",
+                                    "minWidth": "",
+                                    "component": "css-box",
+                                    "marginTop": "7rem",
+                                    "maxHeight": "",
+                                    "minHeight": "",
+                                    "marginLeft": "",
+                                    "paddingTop": "",
+                                    "marginRight": "",
+                                    "paddingLeft": "",
+                                    "marginBottom": "",
+                                    "paddingRight": "",
+                                    "internalLabel": "Credits",
+                                    "paddingBottom": ""
+                                }
+                            ],
+                            "component": "Content Snipped"
+                        },
+                        "slug": "guide-footer",
+                        "full_slug": "snippets/guide-footer",
+                        "sort_by_date": null,
+                        "position": -40,
+                        "tag_list": [],
+                        "is_startpage": false,
+                        "parent_id": 480602118,
+                        "meta_data": null,
+                        "group_id": "36292466-4366-405a-bed1-5be33aaf1258",
+                        "first_published_at": "2024-04-21T19:22:02.501Z",
+                        "release_id": null,
+                        "lang": "default",
+                        "path": null,
+                        "alternates": [],
+                        "default_full_slug": null,
+                        "translated_slugs": null,
+                        "_stopResolving": true
+                    }
+                ],
+                "internalLabel": "Guide Footer"
+            }
+        ],
+        "title": "Filter Tuning Guide",
+        "ogTitle": "Filter Tuning Guide",
+        "subtitle": "are motors supposed to smoke?",
+        "component": "page",
+        "description": "Tune your Betaflight filters to reduce noise while keeping latency low. Sounds complicated?\nNot at all, this step-by-step guide is focused on noobs, everyone can do it!",
+        "ogDescription": "clean gyro. The easy way!",
+        "backButtonHref": {
+            "id": "0b5fbf53-4a93-4d9c-8015-4a28a7232893",
+            "url": "",
+            "linktype": "story",
+            "fieldtype": "multilink",
+            "cached_url": "tools/tuning-tools/noob/"
+        },
+        "backButtonLabel": "Tuning Tools - Noob Mode",
+        "previewImageAsset": {
+            "id": 15323994,
+            "alt": "",
+            "name": "",
+            "focus": "",
+            "title": "",
+            "source": "",
+            "filename": "https://a.storyblok.com/f/285148/1600x1161/fba193f56d/racoon_direction_cropped_filter.png",
+            "copyright": "",
+            "fieldtype": "asset",
+            "meta_data": {},
+            "is_private": false,
+            "is_external_url": false
+        },
+        "previewImageObjectFit": "contain"
+    },
+    "slug": "filter",
+    "full_slug": "tools/tuning-tools/noob/filter",
+    "sort_by_date": null,
+    "position": -30,
+    "tag_list": [],
+    "is_startpage": false,
+    "parent_id": 480592305,
+    "meta_data": null,
+    "group_id": "4224349b-af30-4316-9eb0-63b64c55ce37",
+    "first_published_at": "2024-04-18T21:46:52.972Z",
+    "release_id": null,
+    "lang": "default",
+    "path": null,
+    "alternates": [],
+    "default_full_slug": null,
+    "translated_slugs": null
+}

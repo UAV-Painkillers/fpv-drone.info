@@ -1,0 +1,892 @@
+{
+    "name": "Index",
+    "created_at": "2024-04-18T21:38:44.039Z",
+    "published_at": "2024-04-29T19:08:50.150Z",
+    "id": 480592945,
+    "uuid": "0b5fbf53-4a93-4d9c-8015-4a28a7232893",
+    "content": {
+        "_uid": "e6a6ed42-c7e6-4110-9a64-0e81dd7ef53a",
+        "type": "page",
+        "bloks": [
+            {
+                "_uid": "fbb3d2f0-8f39-40b9-a228-23381bcfd8cc",
+                "component": "cms-snippet",
+                "reference": [
+                    {
+                        "name": "Guide Header",
+                        "created_at": "2024-04-21T19:22:40.350Z",
+                        "published_at": "2024-04-26T10:25:16.000Z",
+                        "id": 481388389,
+                        "uuid": "92a594b3-4523-4a7a-9f11-adb825f87642",
+                        "content": {
+                            "_uid": "2044744c-f40e-482d-8d12-57ff3e681bc7",
+                            "items": [
+                                {
+                                    "_uid": "7e1d728f-98d4-4ae4-827b-63d55e77c482",
+                                    "component": "cms-snippet",
+                                    "reference": [
+                                        {
+                                            "name": "Clear SW Cache and Reload",
+                                            "created_at": "2024-04-19T08:17:23.037Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480904789,
+                                            "uuid": "00ed4694-1f05-423e-8280-8059f8469921",
+                                            "content": {
+                                                "_uid": "990d37ed-fc0c-4eb4-ab05-510d8d282136",
+                                                "items": [
+                                                    {
+                                                        "_uid": "f0174992-ff0d-45c3-846a-ad31986171f5",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "ac0ce5ad-f98f-4851-b699-6f6c6a282607",
+                                                                "text": {
+                                                                    "type": "doc",
+                                                                    "content": [
+                                                                        {
+                                                                            "type": "paragraph",
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Wir verwenden eine umfangreiche Caching-Lösung, um dir die beste Performace zu bieten und auch die Möglichkeit, die Tuning Tools offline und ohne Internet zu nutzen.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "paragraph",
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Dies hat jedoch einen Nachteil: Manchmal werden dadurch bestimmte Elemente nicht mehr aktualisiert und du könntest in einer alten Version der Tuning Tools feststecken.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "paragraph",
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Hast du Probleme? Oder möchtest du nur sicherstellen, dass du die neueste Version des Analysators im Cache hast? Dann klicke einfach auf diese Schaltfläche, um alle Caches zu löschen und mit der neuesten Version fortzufahren.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "align": "left",
+                                                                "component": "text",
+                                                                "wrapWithSmall": false
+                                                            },
+                                                            {
+                                                                "_uid": "d967095d-7f70-4d46-9bf2-bd91f659b421",
+                                                                "class": "",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "dd550a1e-2d0f-4f0c-af35-9d8c322c0db6",
+                                                                        "component": "sw-clear-cache-button"
+                                                                    }
+                                                                ],
+                                                                "width": "",
+                                                                "height": "",
+                                                                "maxWidth": "",
+                                                                "minWidth": "",
+                                                                "component": "css-box",
+                                                                "marginTop": "1rem",
+                                                                "maxHeight": "",
+                                                                "minHeight": "",
+                                                                "marginLeft": "",
+                                                                "paddingTop": "",
+                                                                "marginRight": "",
+                                                                "paddingLeft": "",
+                                                                "marginBottom": "4rem",
+                                                                "paddingRight": "",
+                                                                "internalLabel": "Clear Cache Button",
+                                                                "paddingBottom": ""
+                                                            }
+                                                        ],
+                                                        "component": "centered",
+                                                        "internalLabel": "Clear Cache notice"
+                                                    }
+                                                ],
+                                                "component": "Content Snipped"
+                                            },
+                                            "slug": "clear-sw-cache-and-reload",
+                                            "full_slug": "de/snippets/clear-sw-cache-and-reload",
+                                            "sort_by_date": null,
+                                            "position": -30,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "efbec660-0fde-42b8-bb30-f7af75b6a99b",
+                                            "first_published_at": "2024-04-19T08:17:54.892Z",
+                                            "release_id": null,
+                                            "lang": "de",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        },
+                                        {
+                                            "name": "Join Discord",
+                                            "created_at": "2024-04-19T08:16:36.861Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480904773,
+                                            "uuid": "5a9b6cbe-de1a-487e-9050-d3871ab13fad",
+                                            "content": {
+                                                "_uid": "6d71648f-12d4-4187-b062-2bb6dc6ccff6",
+                                                "items": [
+                                                    {
+                                                        "_uid": "3c701efe-981e-4ee4-acea-5af0a527b853",
+                                                        "class": "",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "d9b09006-7267-4b47-b003-8c612f52033d",
+                                                                "text": {
+                                                                    "type": "doc",
+                                                                    "content": [
+                                                                        {
+                                                                            "type": "heading",
+                                                                            "attrs": {
+                                                                                "level": 3
+                                                                            },
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Du hast Fragen? Du brauchst Hilfe? Du hast eine Anregung?",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "heading",
+                                                                            "attrs": {
+                                                                                "level": 3
+                                                                            },
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Du willst einfach nur reden?",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "align": "center",
+                                                                "component": "text",
+                                                                "wrapWithSmall": false
+                                                            },
+                                                            {
+                                                                "_uid": "61f91d49-8643-4413-9731-2554fb75618e",
+                                                                "class": "",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "bc60a98e-0f5f-4b55-b616-038f9706a255",
+                                                                        "text": {
+                                                                            "type": "doc",
+                                                                            "content": [
+                                                                                {
+                                                                                    "type": "paragraph",
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "text": "Tritt dem fpv-drone.info Discord Server bei!",
+                                                                                            "type": "text",
+                                                                                            "marks": [
+                                                                                                {
+                                                                                                    "type": "link",
+                                                                                                    "attrs": {
+                                                                                                        "href": "https://discord.gg/eBv6Mke9NS",
+                                                                                                        "uuid": null,
+                                                                                                        "anchor": null,
+                                                                                                        "custom": {
+                                                                                                            "class": "button"
+                                                                                                        },
+                                                                                                        "target": "_blank",
+                                                                                                        "linktype": "url"
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "align": "center",
+                                                                        "component": "text",
+                                                                        "wrapWithSmall": false
+                                                                    }
+                                                                ],
+                                                                "width": "",
+                                                                "height": "",
+                                                                "maxWidth": "",
+                                                                "minWidth": "",
+                                                                "component": "css-box",
+                                                                "marginTop": "2rem",
+                                                                "maxHeight": "",
+                                                                "minHeight": "",
+                                                                "marginLeft": "",
+                                                                "paddingTop": "",
+                                                                "marginRight": "",
+                                                                "paddingLeft": "",
+                                                                "marginBottom": "2rem",
+                                                                "paddingRight": "",
+                                                                "internalLabel": "",
+                                                                "paddingBottom": ""
+                                                            }
+                                                        ],
+                                                        "width": "",
+                                                        "height": "",
+                                                        "maxWidth": "",
+                                                        "minWidth": "",
+                                                        "component": "css-box",
+                                                        "marginTop": "4rem",
+                                                        "maxHeight": "",
+                                                        "minHeight": "",
+                                                        "marginLeft": "",
+                                                        "paddingTop": "",
+                                                        "marginRight": "",
+                                                        "paddingLeft": "",
+                                                        "marginBottom": "4rem",
+                                                        "paddingRight": "",
+                                                        "internalLabel": "Join Discord",
+                                                        "paddingBottom": ""
+                                                    }
+                                                ],
+                                                "component": "Content Snipped"
+                                            },
+                                            "slug": "join-discord",
+                                            "full_slug": "de/snippets/join-discord",
+                                            "sort_by_date": null,
+                                            "position": -20,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "206180ca-e841-49a8-82c8-5bfa66b119fa",
+                                            "first_published_at": "2024-04-19T08:16:43.133Z",
+                                            "release_id": null,
+                                            "lang": "de",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        }
+                                    ],
+                                    "internalLabel": "SW Reload | Discord"
+                                }
+                            ],
+                            "component": "Content Snipped"
+                        },
+                        "slug": "guide-header",
+                        "full_slug": "de/snippets/guide-header",
+                        "sort_by_date": null,
+                        "position": -50,
+                        "tag_list": [],
+                        "is_startpage": false,
+                        "parent_id": 480602118,
+                        "meta_data": null,
+                        "group_id": "0ee9e04d-c27c-418b-b765-2383387538af",
+                        "first_published_at": "2024-04-21T19:22:57.420Z",
+                        "release_id": null,
+                        "lang": "de",
+                        "path": null,
+                        "alternates": [],
+                        "default_full_slug": null,
+                        "translated_slugs": null,
+                        "_stopResolving": true
+                    }
+                ],
+                "internalLabel": "Guide Header"
+            },
+            {
+                "_uid": "e3307ffc-3060-4f8c-a58d-7301c1c68a33",
+                "columns": [
+                    {
+                        "_uid": "fd3b648e-8c0b-4fc4-9b69-2f87558f4a12",
+                        "href": {
+                            "id": "c856bbdd-b0b3-4919-927d-a87716d358b1",
+                            "url": "",
+                            "linktype": "story",
+                            "fieldtype": "multilink",
+                            "cached_url": "/de/tools/tuning-tools/noob/filter",
+                            "prep": true
+                        },
+                        "title": "Filter Tuning",
+                        "variant": "large",
+                        "component": "card",
+                        "isLoading": false,
+                        "description": "deine Antenne wackelt",
+                        "headerImage": {
+                            "id": 15323994,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1600x1161/fba193f56d/racoon_direction_cropped_filter.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "headerImageObjectFit": "contain"
+                    },
+                    {
+                        "_uid": "180f3ab6-b963-4bf1-b2e9-fdf80e1316a2",
+                        "href": {
+                            "id": "e2d8d227-1eb7-4640-acda-3ef9c2661d96",
+                            "url": "",
+                            "linktype": "story",
+                            "fieldtype": "multilink",
+                            "cached_url": "/de/tools/tuning-tools/noob/pid",
+                            "prep": true
+                        },
+                        "title": "PID Tuning",
+                        "variant": "large",
+                        "component": "card",
+                        "isLoading": false,
+                        "description": "passt? wackelt? hat Luft!",
+                        "headerImage": {
+                            "id": 15323995,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1600x1161/30c76d4e16/racoon_direction_cropped_pid.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "headerImageObjectFit": "contain"
+                    }
+                ],
+                "component": "columns",
+                "internalLabel": "filter | pid"
+            },
+            {
+                "_uid": "b1d317a9-7caf-46d9-8ada-8f24c08f6c60",
+                "columns": [
+                    {
+                        "_uid": "78975404-f52c-4e48-b2be-e18a264bf1df",
+                        "href": {
+                            "id": "",
+                            "url": "",
+                            "linktype": "story",
+                            "fieldtype": "multilink",
+                            "cached_url": "/de/",
+                            "prep": true
+                        },
+                        "title": "Rates Tuning",
+                        "variant": "large",
+                        "component": "card",
+                        "isLoading": false,
+                        "description": "... demnächst",
+                        "headerImage": {
+                            "id": 15323996,
+                            "alt": "",
+                            "name": "",
+                            "focus": "",
+                            "title": "",
+                            "source": "",
+                            "filename": "https://a.storyblok.com/f/285148/1600x1161/36b3f67481/racoon_direction_cropped_rates.png",
+                            "copyright": "",
+                            "fieldtype": "asset",
+                            "meta_data": {},
+                            "is_private": false,
+                            "is_external_url": false
+                        },
+                        "headerImageObjectFit": "contain"
+                    }
+                ],
+                "component": "columns",
+                "rowMinLength": "2",
+                "internalLabel": "rates"
+            },
+            {
+                "_uid": "1c823345-7527-4587-8de0-4e0d7d45419c",
+                "component": "cms-snippet",
+                "reference": [
+                    {
+                        "name": "Guide Footer",
+                        "created_at": "2024-04-21T19:21:30.606Z",
+                        "published_at": "2024-04-26T10:25:16.000Z",
+                        "id": 481388387,
+                        "uuid": "9319df31-f71c-4433-9160-574a1efd3dd0",
+                        "content": {
+                            "_uid": "647ebec6-183e-4d6d-92d0-bf31d6dc1b56",
+                            "items": [
+                                {
+                                    "_uid": "ee093098-30c5-45f4-a69d-6840824112ee",
+                                    "component": "cms-snippet",
+                                    "reference": [
+                                        {
+                                            "name": "Support Button Section",
+                                            "created_at": "2024-04-19T08:14:56.565Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480904623,
+                                            "uuid": "e90d1d06-ccff-4da5-b994-23a98b3e0aa4",
+                                            "content": {
+                                                "_uid": "bffcba63-407f-42ab-b69b-af9544558320",
+                                                "items": [
+                                                    {
+                                                        "_uid": "37d97d4a-730f-4c22-b9d8-b88dd54246c2",
+                                                        "class": "",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "2f219f6c-6b83-4b0a-b2e5-e4d0f0d4753b",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "a71ec266-ae4b-4922-ab4f-7d0f11ceb3e4",
+                                                                        "class": "",
+                                                                        "items": [
+                                                                            {
+                                                                                "_uid": "9ec8a971-22a2-46b7-b664-55571263db04",
+                                                                                "text": {
+                                                                                    "type": "doc",
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "type": "heading",
+                                                                                            "attrs": {
+                                                                                                "level": 3
+                                                                                            },
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "Du möchtest dieses Project unterstützen?",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                "align": "center",
+                                                                                "component": "text",
+                                                                                "wrapWithSmall": false
+                                                                            }
+                                                                        ],
+                                                                        "width": "",
+                                                                        "height": "",
+                                                                        "maxWidth": "",
+                                                                        "minWidth": "",
+                                                                        "component": "css-box",
+                                                                        "marginTop": "",
+                                                                        "maxHeight": "",
+                                                                        "minHeight": "",
+                                                                        "marginLeft": "",
+                                                                        "paddingTop": "",
+                                                                        "marginRight": "",
+                                                                        "paddingLeft": "",
+                                                                        "marginBottom": "1rem",
+                                                                        "paddingRight": "",
+                                                                        "internalLabel": "",
+                                                                        "paddingBottom": ""
+                                                                    },
+                                                                    {
+                                                                        "_uid": "673c1cf4-597b-4d66-927a-19e727592d9c",
+                                                                        "slug": "uav.painkillers",
+                                                                        "label": "Kaufe mir einen Smokestopper",
+                                                                        "component": "buy-me-a-racoon-button"
+                                                                    }
+                                                                ],
+                                                                "component": "centered"
+                                                            }
+                                                        ],
+                                                        "width": "",
+                                                        "height": "",
+                                                        "maxWidth": "",
+                                                        "minWidth": "",
+                                                        "component": "css-box",
+                                                        "marginTop": "5rem",
+                                                        "maxHeight": "",
+                                                        "minHeight": "",
+                                                        "marginLeft": "",
+                                                        "paddingTop": "",
+                                                        "marginRight": "",
+                                                        "paddingLeft": "",
+                                                        "marginBottom": "",
+                                                        "paddingRight": "",
+                                                        "internalLabel": "You want to support this project?",
+                                                        "paddingBottom": ""
+                                                    }
+                                                ],
+                                                "component": "Content Snipped"
+                                            },
+                                            "slug": "support-button-section",
+                                            "full_slug": "de/snippets/support-button-section",
+                                            "sort_by_date": null,
+                                            "position": -10,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "a2e8288f-d96b-418a-b2ff-e42259e33993",
+                                            "first_published_at": "2024-04-19T08:15:08.939Z",
+                                            "release_id": null,
+                                            "lang": "de",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        },
+                                        {
+                                            "name": "Sponsors",
+                                            "created_at": "2024-04-18T22:06:07.102Z",
+                                            "published_at": "2024-04-26T10:25:16.000Z",
+                                            "id": 480602120,
+                                            "uuid": "6ee18223-c77f-4942-a5c1-291ce6021a65",
+                                            "content": {
+                                                "_uid": "a1fc56ca-fcb6-457f-b631-0831aa20aaf7",
+                                                "items": [
+                                                    {
+                                                        "_uid": "b8aa4b03-0568-4b87-8ba7-17533d659443",
+                                                        "class": "",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "8bd663f7-7a49-462d-8501-5a826b9048ce",
+                                                                "items": [
+                                                                    {
+                                                                        "_uid": "73c06ed2-ef0f-4985-b1c0-1746a59c7216",
+                                                                        "text": {
+                                                                            "type": "doc",
+                                                                            "content": [
+                                                                                {
+                                                                                    "type": "heading",
+                                                                                    "attrs": {
+                                                                                        "level": 3
+                                                                                    },
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "text": "gesponsert von",
+                                                                                            "type": "text"
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "type": "paragraph",
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "text": "Einige dieser Links sind Affiliate-Links, was bedeutet, dass UAV-Painkillers einen kleinen Prozentsatz der Einnahmen erhält. Das kostet dich kein zusätzliches Geld, hilft aber bei der Finanzierung dieses Projekts.",
+                                                                                            "type": "text"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "align": "center",
+                                                                        "component": "text",
+                                                                        "wrapWithSmall": true
+                                                                    }
+                                                                ],
+                                                                "component": "centered"
+                                                            }
+                                                        ],
+                                                        "width": "",
+                                                        "height": "",
+                                                        "maxWidth": "",
+                                                        "minWidth": "",
+                                                        "component": "css-box",
+                                                        "marginTop": "5rem",
+                                                        "maxHeight": "",
+                                                        "minHeight": "",
+                                                        "marginLeft": "",
+                                                        "paddingTop": "",
+                                                        "marginRight": "",
+                                                        "paddingLeft": "",
+                                                        "marginBottom": "1rem",
+                                                        "paddingRight": "",
+                                                        "internalLabel": "Proudly sponsored by",
+                                                        "paddingBottom": ""
+                                                    },
+                                                    {
+                                                        "_uid": "6676fa87-6087-45ba-9207-d622b1961256",
+                                                        "items": [
+                                                            {
+                                                                "_uid": "7ff201bd-fbc9-48a4-963c-118075415d2a",
+                                                                "href": {
+                                                                    "id": "",
+                                                                    "url": "http://www.gaoneng.shop/referral/painkillers",
+                                                                    "target": "_blank",
+                                                                    "linktype": "url",
+                                                                    "fieldtype": "multilink",
+                                                                    "cached_url": "http://www.gaoneng.shop/referral/painkillers"
+                                                                },
+                                                                "logo": {
+                                                                    "id": 15314995,
+                                                                    "alt": "",
+                                                                    "name": "",
+                                                                    "focus": "",
+                                                                    "title": "",
+                                                                    "source": "",
+                                                                    "filename": "https://a.storyblok.com/f/285148/537x219/4f0c74302d/gnb-logo.png",
+                                                                    "copyright": "",
+                                                                    "fieldtype": "asset",
+                                                                    "meta_data": {},
+                                                                    "is_private": false,
+                                                                    "is_external_url": false
+                                                                },
+                                                                "name": "GAONENG (GNB)",
+                                                                "component": "nested-sponsor"
+                                                            },
+                                                            {
+                                                                "_uid": "97c39f7a-dec3-4b3b-ab25-c5e256d4d0b8",
+                                                                "href": {
+                                                                    "id": "",
+                                                                    "url": "https://www.flyfish-rc.com/?ref=zAf51UvR9eaKyG",
+                                                                    "target": "_blank",
+                                                                    "linktype": "url",
+                                                                    "fieldtype": "multilink",
+                                                                    "cached_url": "https://www.flyfish-rc.com/?ref=zAf51UvR9eaKyG"
+                                                                },
+                                                                "logo": {
+                                                                    "id": 15314994,
+                                                                    "alt": "",
+                                                                    "name": "",
+                                                                    "focus": "",
+                                                                    "title": "",
+                                                                    "source": "",
+                                                                    "filename": "https://a.storyblok.com/f/285148/2000x418/76a803f6bf/flyfishrc-logo.png",
+                                                                    "copyright": "",
+                                                                    "fieldtype": "asset",
+                                                                    "meta_data": {},
+                                                                    "is_private": false,
+                                                                    "is_external_url": false
+                                                                },
+                                                                "name": "FlyFishRC",
+                                                                "component": "nested-sponsor"
+                                                            },
+                                                            {
+                                                                "_uid": "cc7c2aac-a227-4eac-8a7a-e2b8d31003b6",
+                                                                "href": {
+                                                                    "id": "",
+                                                                    "url": "https://www.jumper-rc.com/",
+                                                                    "target": "_blank",
+                                                                    "linktype": "url",
+                                                                    "fieldtype": "multilink",
+                                                                    "cached_url": "https://www.jumper-rc.com/"
+                                                                },
+                                                                "logo": {
+                                                                    "id": 15314996,
+                                                                    "alt": "",
+                                                                    "name": "",
+                                                                    "focus": "",
+                                                                    "title": "",
+                                                                    "source": "",
+                                                                    "filename": "https://a.storyblok.com/f/285148/658x256/cfef5d3c69/jumperrc-logo.png",
+                                                                    "copyright": "",
+                                                                    "fieldtype": "asset",
+                                                                    "meta_data": {},
+                                                                    "is_private": false,
+                                                                    "is_external_url": false
+                                                                },
+                                                                "name": "Jumper RC",
+                                                                "component": "nested-sponsor"
+                                                            }
+                                                        ],
+                                                        "component": "sponsors-list"
+                                                    }
+                                                ],
+                                                "component": "Content Snipped",
+                                                "internalName": "Sponsors"
+                                            },
+                                            "slug": "sponsors",
+                                            "full_slug": "de/snippets/sponsors",
+                                            "sort_by_date": null,
+                                            "position": 0,
+                                            "tag_list": [],
+                                            "is_startpage": false,
+                                            "parent_id": 480602118,
+                                            "meta_data": null,
+                                            "group_id": "d762372b-a0e7-4b3c-88a0-1976772bea81",
+                                            "first_published_at": "2024-04-19T11:19:11.308Z",
+                                            "release_id": null,
+                                            "lang": "de",
+                                            "path": null,
+                                            "alternates": [],
+                                            "default_full_slug": null,
+                                            "translated_slugs": null,
+                                            "_stopResolving": true
+                                        }
+                                    ],
+                                    "internalLabel": "support | sponsors "
+                                },
+                                {
+                                    "_uid": "dcb7b5de-807f-4d78-8450-999df62e38a3",
+                                    "class": "",
+                                    "items": [
+                                        {
+                                            "_uid": "1803f118-00fb-426a-8181-64b57e1fec51",
+                                            "text": {
+                                                "type": "doc",
+                                                "content": [
+                                                    {
+                                                        "type": "heading",
+                                                        "attrs": {
+                                                            "level": 1
+                                                        },
+                                                        "content": [
+                                                            {
+                                                                "text": "Danksagung",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Ich möchte ein großes Lob an die Leute aussprechen, die hinter den Open-Source-Projekten stehen, die für dieses Projekt verwendet (als Inspiration) und modifiziert wurden. Diese Tools wären ohne die Vorarbeit von Projekten wie ",
+                                                                "type": "text"
+                                                            },
+                                                            {
+                                                                "text": "PID-Analyzer von Volker Goeschl",
+                                                                "type": "text",
+                                                                "marks": [
+                                                                    {
+                                                                        "type": "link",
+                                                                        "attrs": {
+                                                                            "href": "https://github.com/VolkerGoeschl/PID-Analyzer",
+                                                                            "uuid": null,
+                                                                            "anchor": null,
+                                                                            "custom": {},
+                                                                            "target": "_blank",
+                                                                            "linktype": "url"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "text": " und ",
+                                                                "type": "text"
+                                                            },
+                                                            {
+                                                                "text": "blackbox-tools vom cleanflight-Team",
+                                                                "type": "text",
+                                                                "marks": [
+                                                                    {
+                                                                        "type": "link",
+                                                                        "attrs": {
+                                                                            "href": "https://github.com/VolkerGoeschl/PID-Analyzer",
+                                                                            "uuid": null,
+                                                                            "anchor": null,
+                                                                            "custom": {},
+                                                                            "target": "_blank",
+                                                                            "linktype": "url"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "text": " nicht möglich.",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "paragraph",
+                                                        "content": [
+                                                            {
+                                                                "text": "Ein großes Dankeschön an diese Autoren für ihre großartige Arbeit!",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "align": "center",
+                                            "component": "text",
+                                            "wrapWithSmall": false
+                                        }
+                                    ],
+                                    "width": "",
+                                    "height": "",
+                                    "maxWidth": "",
+                                    "minWidth": "",
+                                    "component": "css-box",
+                                    "marginTop": "7rem",
+                                    "maxHeight": "",
+                                    "minHeight": "",
+                                    "marginLeft": "",
+                                    "paddingTop": "",
+                                    "marginRight": "",
+                                    "paddingLeft": "",
+                                    "marginBottom": "",
+                                    "paddingRight": "",
+                                    "internalLabel": "Credits",
+                                    "paddingBottom": ""
+                                }
+                            ],
+                            "component": "Content Snipped"
+                        },
+                        "slug": "guide-footer",
+                        "full_slug": "de/snippets/guide-footer",
+                        "sort_by_date": null,
+                        "position": -40,
+                        "tag_list": [],
+                        "is_startpage": false,
+                        "parent_id": 480602118,
+                        "meta_data": null,
+                        "group_id": "36292466-4366-405a-bed1-5be33aaf1258",
+                        "first_published_at": "2024-04-21T19:22:02.501Z",
+                        "release_id": null,
+                        "lang": "de",
+                        "path": null,
+                        "alternates": [],
+                        "default_full_slug": null,
+                        "translated_slugs": null,
+                        "_stopResolving": true
+                    }
+                ],
+                "internalLabel": "Guide Footer"
+            }
+        ],
+        "title": "Tuning Tools - Noob Modus",
+        "ogTitle": "Drohnen Tuning Anleitungen",
+        "subtitle": "für den BNF Liebhaber",
+        "component": "page",
+        "description": "Eine Sammlung interaktiver Schritt-für-Schritt-Anleitungen, die dir helfen, deine PID- und Filterwerte einzustellen.\nDiese Anleitungen richten sich an Noobs und Anfänger und setzen keine Vorkenntnisse voraus.",
+        "ogDescription": "Interaktiv, Einfach, Genial",
+        "backButtonHref": {
+            "id": "669f462e-4045-4c28-b2b0-3eb60a7d4db9",
+            "url": "",
+            "linktype": "story",
+            "fieldtype": "multilink",
+            "cached_url": "/de/tools/tuning-tools/",
+            "prep": true
+        },
+        "backButtonLabel": "Tuning Tools",
+        "previewImageAsset": {
+            "id": 15324052,
+            "alt": "",
+            "name": "",
+            "focus": "",
+            "title": "",
+            "source": "",
+            "filename": "https://a.storyblok.com/f/285148/1301x1212/00a2fa13cd/racoon_magician_pablo_noob_cropped.png",
+            "copyright": "",
+            "fieldtype": "asset",
+            "meta_data": {},
+            "is_private": false,
+            "is_external_url": false
+        },
+        "previewImageObjectFit": "contain"
+    },
+    "slug": "noob",
+    "full_slug": "de/tools/tuning-tools/noob/",
+    "sort_by_date": null,
+    "position": -40,
+    "tag_list": [],
+    "is_startpage": true,
+    "parent_id": 480592305,
+    "meta_data": null,
+    "group_id": "c9b2c75b-7954-4b91-9bc9-267301ed3ff8",
+    "first_published_at": "2024-04-18T21:49:45.615Z",
+    "release_id": null,
+    "lang": "de",
+    "path": null,
+    "alternates": [],
+    "default_full_slug": null,
+    "translated_slugs": null
+}

@@ -1,0 +1,50 @@
+{
+    "name": "Index",
+    "created_at": "2024-04-17T21:14:55.739Z",
+    "published_at": "2024-04-26T08:47:06.000Z",
+    "id": 479987334,
+    "uuid": "1401297b-f64c-448e-b065-a9d7fbdb2f1e",
+    "content": {
+        "_uid": "3fd8f468-ef61-40e9-8955-7b095588bf48",
+        "type": "page",
+        "bloks": [
+            {
+                "_uid": "c6a6cc5a-5fdf-4e80-8cac-04d4d9ddab25",
+                "href": {
+                    "id": "",
+                    "url": "",
+                    "linktype": "story",
+                    "fieldtype": "multilink",
+                    "cached_url": "/de/",
+                    "prep": true
+                },
+                "title": "",
+                "pageType": "guide",
+                "component": "page-grid",
+                "hideTitleIfEmpty": ""
+            }
+        ],
+        "title": "Let's see",
+        "ogTitle": "Guides",
+        "subtitle": "how it's done...",
+        "component": "page",
+        "description": "Helpful guides for different topics.",
+        "ogDescription": "hardware, software, etc."
+    },
+    "slug": "guides",
+    "full_slug": "de/guides/",
+    "sort_by_date": null,
+    "position": -30,
+    "tag_list": [],
+    "is_startpage": true,
+    "parent_id": 480264469,
+    "meta_data": null,
+    "group_id": "01655993-a09c-4443-933f-26e5432ea6dc",
+    "first_published_at": "2024-04-17T21:30:51.038Z",
+    "release_id": null,
+    "lang": "de",
+    "path": null,
+    "alternates": [],
+    "default_full_slug": null,
+    "translated_slugs": null
+}
