@@ -6,7 +6,7 @@ import { Logo } from "~/components/logo/logo";
 import { Link, routeLoader$, useLocation } from "@builder.io/qwik-city";
 import { Navigation } from "~/components/navigation/navigation";
 import { AppContext } from "~/app.ctx";
-import { SearchButton } from "~/components/search/search-button";
+// import { SearchButton } from "~/components/search/search-button";
 import { QwikCityNprogress } from "@quasarwork/qwik-city-nprogress";
 import { PWAInstallBanner } from "~/components/pwa-install-banner/pwa-install-banner";
 import { ServiceWorkerBanners } from "~/components/service-worker-banners/service-worker-banners";
