@@ -25,7 +25,7 @@ export const Logo = component$<QwikIntrinsicElements["img"]>((props) => {
   return <LogoImage {...imageProps} />;
 });
 
-export const LogoRegistryInformation: CMSRegisteredComponent = {
+export const LogoRegistryDefinition: CMSRegisteredComponent = {
   component: Logo,
   name: "Logo",
 };
