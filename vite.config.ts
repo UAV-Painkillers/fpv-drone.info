@@ -22,7 +22,7 @@ export default defineConfig(() => {
       }),
       qwikVite(),
       tsconfigPaths(),
-      // mkcert(),
+      mkcert(),
       qwikSpeakInline({
         supportedLangs: ['en', 'de'],
         defaultLang: 'en',
