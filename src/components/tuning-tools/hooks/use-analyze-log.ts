@@ -437,11 +437,11 @@ export function useAnalyzeLog() {
         state.value = AnalyzerState.ERROR;
       }
 
-      trackEvent('TUNING_TOOLS', 'ANALYZE_FILE_COMPLETE', undefined, analyzerResult.length);
+      trackEvent('TUNING_TOOLS', 'ANALYZE_FILE_COMPLETE');
     } catch (e) {
       console.error("Error analyzing file", e);
 
-      trackEvent('TUNING_TOOLS', 'ANALYZE_FILE_ERROR', (e as Error).message);
+      trackEvent('TUNING_TOOLS', 'ANALYZE_FILE_ERROR');
       state.value = AnalyzerState.ERROR;
 
       let message = (e as Error).message;

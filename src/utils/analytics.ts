@@ -7,24 +7,24 @@ declare global {
     }
 }
 
-export function trackEvent(category: string, action: string, eventName?: string, numericValue?: number) {
-    trackMatomoEvent(category, action, eventName, numericValue);
-    trackVercelEvent(category, action, eventName, numericValue);
+export function trackEvent(category: string, action: string) {
+    trackMatomoEvent(category, action);
+    trackVercelEvent(category, action);
 }
 
-function trackVercelEvent(category: string, action: string, eventName?: string, numericValue?: number) {
+function trackVercelEvent(category: string, action: string) {
     track(`${category}:${action}`, {
         eventName,
         numericValue,
     } as Record<string, any>);
 }
 
-function trackMatomoEvent(category: string, action: string, eventName?: string, numericValue?: number) {
+function trackMatomoEvent(category: string, action: string) {
     if (!window.Matomo) {
         return;
     }
 
     const tracker = window.Matomo.getTracker();
 
-    tracker.trackEvent(category, action, eventName, numericValue);
+    tracker.trackEvent(category, action, `${category}:${action}`);
 }
