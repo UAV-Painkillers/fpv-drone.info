@@ -1,7 +1,9 @@
 import { Slot, component$, useComputed$ } from "@builder.io/qwik";
 import { useStoryblok } from "~/routes/layout";
-import { CMSRegisteredComponent } from "../cms-registered-component";
+import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { storyblokEditable } from "@storyblok/js";
+import { CMSComponents } from "../cms-components";
+import { StoryBlokComponent } from "../storyblok/component";
 
 interface Props {
   whitelist?: string[];
@@ -32,12 +34,17 @@ export const LangBlocker = component$((props: Props) => {
 export const LangBlockerRegistryDefintion: CMSRegisteredComponent = {
   name: "LangBlocker",
   component: (story: any) => {
+    console.log(story);
     return (
       <LangBlocker
-        whitelist={story.whitelist.split(",")}
-        blacklist={story.blacklist.split(",")}
+        whitelist={story.whitelist}
+        blacklist={story.blacklist}
         {...storyblokEditable(story)}
-      />
+      >
+        {story.bloks.map((blok: any, index: number) => (
+          <StoryBlokComponent key={index} blok={blok} />
+        ))}
+      </LangBlocker>
     );
   },
 };
