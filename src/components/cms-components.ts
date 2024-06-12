@@ -1,5 +1,5 @@
 import { ProductRegistryDefinition } from "./product/product";
-import { LogoRegistryInformation } from "./logo/logo";
+import { LogoRegistryDefinition } from "./logo/logo";
 import { CardRegistryDefinition } from "./card/card";
 import { ExpandableImageRegistryDefinition } from "./expandable-image/expandable-image";
 import { InstructionsRegistryDefinition } from "./instructions/instructions";
@@ -20,6 +20,7 @@ import { ColumnsRegistryDefinition } from "./columns/columns";
 import { CenteredRegistryDefinition } from "./centered/centered";
 import { CSSBoxRegistryDefinition } from "./css-box/css-box";
 import { CMSSnippetRegistryDefinition } from "./cms-snippet/cms-snippet";
+import { LangBlockerRegistryDefintion as LangBlockerRegistryDefinition } from "./lang-blocker/lang-blocker";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -36,7 +37,7 @@ export const CMSComponents: CMSRegisteredComponent[] = [
   PageGridRegistryDefinition,
   CardRegistryDefinition,
   InstructionsRegistryDefinition,
-  LogoRegistryInformation,
+  LogoRegistryDefinition,
   PageHeadlineRegistryDefinition,
   ExpandableImageRegistryDefinition,
   TextRegistryDefinition,
@@ -54,4 +55,5 @@ export const CMSComponents: CMSRegisteredComponent[] = [
   CenteredRegistryDefinition,
   CSSBoxRegistryDefinition,
   CMSSnippetRegistryDefinition,
+  LangBlockerRegistryDefinition,
 ];
