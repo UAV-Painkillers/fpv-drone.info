@@ -13,10 +13,7 @@ export function trackEvent(category: string, action: string) {
 }
 
 function trackVercelEvent(category: string, action: string) {
-    track(`${category}:${action}`, {
-        eventName,
-        numericValue,
-    } as Record<string, any>);
+    track(`${category}:${action}`);
 }
 
 function trackMatomoEvent(category: string, action: string) {
@@ -26,5 +23,5 @@ function trackMatomoEvent(category: string, action: string) {
 
     const tracker = window.Matomo.getTracker();
 
-    tracker.trackEvent(category, action, `${category}:${action}`);
+    tracker.trackEvent(category, action, `${category}:${action}`, 1);
 }

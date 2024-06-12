@@ -56,27 +56,31 @@ export default component$(() => {
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
-    const matomoHost = import.meta.env.VITE_MATOMO_HOST;
-    if (!matomoHost) {
+    const matomoHostEnv = import.meta.env.VITE_MATOMO_HOST;
+    if (!matomoHostEnv) {
       return;
     }
 
+    const matomoHost = `//${matomoHostEnv}/`;
+
     const _paq = (window._paq = window._paq || []);
+
     /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
     _paq.push(["trackPageView"]);
-    _paq.push(['trackVisibleContentImpressions']);
+    _paq.push(["trackVisibleContentImpressions"]);
     _paq.push(["enableLinkTracking"]);
-    (function () {
-      const u = `//${matomoHost}/`;
-      _paq.push(["setTrackerUrl", u + "matomo.php"]);
-      _paq.push(["setSiteId", "1"]);
-      const d = document,
-        g = d.createElement("script"),
-        s = d.getElementsByTagName("script")[0];
-      g.async = true;
-      g.src = u + "matomo.js";
-      s.parentNode!.insertBefore(g, s);
-    })();
+    _paq.push(["setTrackerUrl", matomoHost + "matomo.php"]);
+    _paq.push(["setSiteId", "1"]);
+
+    const matomoScriptTag = document.createElement("script");
+    matomoScriptTag.async = true;
+    matomoScriptTag.src = matomoHost + "not_matomo.js";
+
+    const firstScriptTagInDocument = document.getElementsByTagName("script")[0];
+    firstScriptTagInDocument.parentNode!.insertBefore(
+      matomoScriptTag,
+      firstScriptTagInDocument
+    );
   });
 
   const isDarkmode = useDarkmode();
