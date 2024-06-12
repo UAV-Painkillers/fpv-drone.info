@@ -64,6 +64,7 @@ export default component$(() => {
     const _paq = (window._paq = window._paq || []);
     /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
     _paq.push(["trackPageView"]);
+    _paq.push(['trackVisibleContentImpressions']);
     _paq.push(["enableLinkTracking"]);
     (function () {
       const u = `//${matomoHost}/`;

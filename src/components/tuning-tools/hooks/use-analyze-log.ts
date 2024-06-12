@@ -13,7 +13,7 @@ import {
 } from "@uav.painkillers/pid-analyzer-wasm";
 import type { AnalyzerProgress } from "./types";
 import { AnalyzerStepStatus, makeEmptyProgress } from "./types";
-import { track } from "@vercel/analytics";
+import { trackEvent } from "~/utils/analytics";
 
 export enum AnalyzerState {
   LOADING = "loading",
@@ -389,7 +389,7 @@ export function useAnalyzeLog() {
       return;
     }
 
-    track("PID_ANALYZER__ANALYZE_FILE__START");
+    trackEvent('TUNING_TOOLS', 'ANALYZE_FILE_START');
 
     try {
       state.value = AnalyzerState.RUNNING;
@@ -437,19 +437,11 @@ export function useAnalyzeLog() {
         state.value = AnalyzerState.ERROR;
       }
 
-      track("PID_ANALYZER__ANALYZE_FILE__COMPLETE", {
-        numLogs: analyzerResult.length,
-      });
+      trackEvent('TUNING_TOOLS', 'ANALYZE_FILE_COMPLETE', undefined, analyzerResult.length);
     } catch (e) {
       console.error("Error analyzing file", e);
 
-      track("PID_ANALYZER__ANALYZE_FILE__ERROR", {
-        // first 255 characters of the error message
-        error: (e as Error).message.slice(0, 255),
-
-        // first 255 characters of the error stack
-        stack: (e as Error).stack?.slice(0, 255) ?? "",
-      });
+      trackEvent('TUNING_TOOLS', 'ANALYZE_FILE_ERROR', (e as Error).message);
       state.value = AnalyzerState.ERROR;
 
       let message = (e as Error).message;
