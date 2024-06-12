@@ -2,7 +2,6 @@ import { Slot, component$, useComputed$ } from "@builder.io/qwik";
 import { useStoryblok } from "~/routes/layout";
 import type { CMSRegisteredComponent } from "../cms-registered-component";
 import { storyblokEditable } from "@storyblok/js";
-import { CMSComponents } from "../cms-components";
 import { StoryBlokComponent } from "../storyblok/component";
 
 interface Props {
