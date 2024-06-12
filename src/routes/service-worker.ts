@@ -167,11 +167,26 @@ async function checkDidCachePIDAnalyzerDependencies() {
   return false;
 }
 
-setDefaultHandler(
-  new NetworkFirst({
-    cacheName: CACHE_NAMES.DYNAMIC,
-  }),
-);
+const networkFirstHandler = new NetworkFirst({
+  cacheName: CACHE_NAMES.DYNAMIC,
+});
+setDefaultHandler((params) => {
+  const url = new URL(params.request.url);
+  console.log("request", url, url.origin);
+  if (url.host === import.meta.env.VITE_MATOMO_HOST) {
+    console.log("skipping matomo request", url);
+    return fetch(params.request).then((response) => {
+      // log all response headers
+      console.log(response.headers);
+      return response;
+    }).catch((error) => {
+      console.log('failed', error);
+      return fetch(params.request);
+    });
+  }
+
+  return networkFirstHandler.handle(params);
+});
 
 self.addEventListener("install", () => {
   self.skipWaiting();

@@ -23,5 +23,5 @@ function trackMatomoEvent(category: string, action: string) {
 
     const tracker = window.Matomo.getTracker();
 
-    tracker.trackEvent(category, action, `${category}:${action}`);
+    tracker.trackEvent(category, action, `${category}:${action}`, 1);
 }
