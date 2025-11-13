@@ -90,8 +90,11 @@ export default component$(() => {
       <head>
         <RouterHead />
 
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7620103917010301"
-     crossorigin="anonymous"></script>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7620103917010301"
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body lang="en" class={classNames({ dark: isDarkmode.value })}>
         <RouterOutlet />
