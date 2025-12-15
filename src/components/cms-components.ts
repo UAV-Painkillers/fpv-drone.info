@@ -21,6 +21,7 @@ import { CenteredRegistryDefinition } from "./centered/centered";
 import { CSSBoxRegistryDefinition } from "./css-box/css-box";
 import { CMSSnippetRegistryDefinition } from "./cms-snippet/cms-snippet";
 import { LangBlockerRegistryDefintion as LangBlockerRegistryDefinition } from "./lang-blocker/lang-blocker";
+import { LinkRegistryDefinition } from "./link";
 
 /**
  * This array is used to integrate custom components within Builder.
@@ -56,4 +57,5 @@ export const CMSComponents: CMSRegisteredComponent[] = [
   CSSBoxRegistryDefinition,
   CMSSnippetRegistryDefinition,
   LangBlockerRegistryDefinition,
+  LinkRegistryDefinition
 ];
