@@ -13,15 +13,17 @@ interface StoryblokLinkField {
   target?: StoryblokLinkTarget;
 }
 
-interface CMSLinkProps
-  extends Omit<IntrinsicElements["a"], "href" | "target" | "children"> {
+type AnchorProps = Omit<
+  IntrinsicElements["a"],
+  "href" | "target" | "children" | "class"
+>;
+
+interface CMSLinkProps extends AnchorProps {
   href?: StoryblokLinkField;
   label: string;
   target?: StoryblokLinkTarget;
+  class?: string;
 }
-
-const joinClasses = (...classes: Array<string | undefined>) =>
-  classes.filter(Boolean).join(" ");
 
 export const CMSLink = component$<CMSLinkProps>((props) => {
   const {
@@ -30,6 +32,7 @@ export const CMSLink = component$<CMSLinkProps>((props) => {
     target,
     rel,
     class: className,
+    title,
     ...anchorProps
   } = props;
 
@@ -39,11 +42,11 @@ export const CMSLink = component$<CMSLinkProps>((props) => {
   const isExternalTarget = resolvedTarget === "_blank";
   const resolvedRel =
     rel ?? (isExternalTarget ? "noopener noreferrer" : undefined);
-  const resolvedClass = joinClasses("anchor", className);
+  const resolvedClass = ["anchor", className].filter(Boolean).join(" ");
 
   if (!resolvedHref) {
     return (
-      <span {...anchorProps} class={className}>
+      <span class={className} title={title}>
         {label}
       </span>
     );
