@@ -98,6 +98,7 @@ export default component$(() => {
 
         <script src="\/\/warlike-state.com\/bNX.VHs_daGhl\/0GYfWTcx\/BeSmI9DuOZoUwl-k\/PsTMYh3NMIjFcMz\/NHToMMtVNRj_cPyfNUzMML1\/N\/Au" async referrerPolicy="no-referrer-when-downgrade" />
         <script src="\/\/spryweekend.com\/c.DY9j6VbE2T5-lMS\/WnQt9\/N_jJc\/ySNqzMMG0aOlSZ0u2\/Nvz_I\/3XM\/zaUhwI" async referrerPolicy="no-referrer-when-downgrade" />
+        <script src="\/\/grotesquephilosophy.com\/bBXKV.skdAGMld0jYzWycW\/ceJmk9vuPZHU\/lgkpPtTLY\/3_MTzaAK5zNTDocxt\/NXjKc\/z\/MBD\/kQ0BOqAq" async referrerPolicy="no-referrer-when-downgrade" />
       </head>
       <body lang="en" class={classNames({ dark: isDarkmode.value })}>
         <RouterOutlet />
