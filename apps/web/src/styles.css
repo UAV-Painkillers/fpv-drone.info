@@ -1,0 +1,4 @@
+/* Tailwind + design tokens land here in Phase 3 */
+body {
+  font-family: system-ui, sans-serif;
+}
