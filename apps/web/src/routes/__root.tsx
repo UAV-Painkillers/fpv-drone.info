@@ -8,8 +8,10 @@ import {
   Outlet,
   Scripts,
   useParams,
+  useRouter,
 } from '@tanstack/react-router';
 import { useEffect, type ReactNode } from 'react';
+import { initAnalytics, trackPageView } from '../analytics';
 import appCss from '../styles.css?url';
 
 export const Route = createRootRoute({
@@ -35,8 +37,15 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
+  const router = useRouter();
   useEffect(() => {
     registerServiceWorker();
+    initAnalytics();
+    // SPA page views on client-side navigation
+    return router.subscribe('onResolved', ({ toLocation }) => {
+      trackPageView(toLocation.href);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <Outlet />;
 }

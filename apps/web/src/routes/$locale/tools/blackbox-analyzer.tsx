@@ -1,5 +1,6 @@
 import { getPage } from '@fpv/content';
-import { useT, type Locale } from '@fpv/i18n';
+import { MESSAGES, useT, type Locale } from '@fpv/i18n';
+import { buildSeo } from '../../../seo';
 import { OfflineDownloadCard } from '@fpv/pwa';
 import { ClientOnly } from '@fpv/ui';
 import { createFileRoute } from '@tanstack/react-router';
@@ -7,6 +8,15 @@ import { MDX_TOOLS } from '../../../components/analyzer/mdx-tools';
 import { MdxArticle } from '../../../components/mdx-page';
 
 export const Route = createFileRoute('/$locale/tools/blackbox-analyzer')({
+  head: ({ params }) => {
+    const t = MESSAGES[params.locale as Locale] ?? MESSAGES.en;
+    return buildSeo({
+      locale: params.locale,
+      path: '/tools/blackbox-analyzer',
+      title: t.analyzer.title,
+      description: t.analyzer.description,
+    });
+  },
   component: BlackboxAnalyzerPage,
 });
 

@@ -1,9 +1,19 @@
 import { getGuideManifest } from '@fpv/content';
 import { useT, type Locale } from '@fpv/i18n';
+import { buildSeo } from '../../../../seo';
 import { Card, ExpandableImage, MascotImage } from '@fpv/ui';
 import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/$locale/guides/$guideSlug/')({
+  head: ({ params }) => {
+    const guide = getGuideManifest(params.locale as Locale, params.guideSlug);
+    return buildSeo({
+      locale: params.locale,
+      path: `/guides/${params.guideSlug}`,
+      title: guide?.title ?? params.guideSlug,
+      description: guide?.description ?? guide?.subtitle,
+    });
+  },
   component: GuideLanding,
 });
 

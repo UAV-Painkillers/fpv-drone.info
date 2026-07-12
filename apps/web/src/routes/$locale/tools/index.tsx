@@ -1,8 +1,18 @@
-import { useT } from '@fpv/i18n';
+import { MESSAGES, useT, type Locale } from '@fpv/i18n';
+import { buildSeo } from '../../../seo';
 import { Card } from '@fpv/ui';
 import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/$locale/tools/')({
+  head: ({ params }) => {
+    const t = MESSAGES[params.locale as Locale] ?? MESSAGES.en;
+    return buildSeo({
+      locale: params.locale,
+      path: '/tools',
+      title: t.tools.title,
+      description: t.tools.subtitle,
+    });
+  },
   component: ToolsIndex,
 });
 

@@ -25,6 +25,7 @@ import {
 } from '@fpv/plots';
 import clsx from 'clsx';
 import { useEffect, useMemo, useRef, useState, type DragEvent } from 'react';
+import { trackEvent } from '../../analytics';
 import { ProgressSteps } from './progress-steps';
 
 const DOWNLOAD_SIZE_MB = 90;
@@ -91,7 +92,7 @@ function AnalyzerContent(props: BlackboxAnalyzerProps) {
   const t = useT();
   const ctx = useAnalyzerContext();
   const { init, analyzeFile, progress, state, error, hasAnalysisInMemory } =
-    useAnalyzeLog();
+    useAnalyzeLog({ onEvent: trackEvent });
 
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);

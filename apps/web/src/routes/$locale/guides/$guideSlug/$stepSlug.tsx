@@ -6,6 +6,7 @@ import {
   getGuideStepMeta,
 } from '@fpv/content';
 import { format, useT, type Locale } from '@fpv/i18n';
+import { buildSeo } from '../../../../seo';
 import { DonateCta, ExpandableImage, ProgressBar, Spinner } from '@fpv/ui';
 import { MDXProvider } from '@mdx-js/react';
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
@@ -19,6 +20,21 @@ export const Route = createFileRoute('/$locale/guides/$guideSlug/$stepSlug')({
     ) {
       throw notFound();
     }
+  },
+  head: ({ params }) => {
+    const guide = getGuideManifest(params.locale as Locale, params.guideSlug);
+    const step = getGuideStepMeta(
+      params.locale as Locale,
+      params.guideSlug,
+      params.stepSlug,
+    );
+    return buildSeo({
+      locale: params.locale,
+      path: `/guides/${params.guideSlug}/${params.stepSlug}`,
+      title: step ? `${step.index} ${step.title}` : params.stepSlug,
+      description: guide?.title,
+      image: `/og/${params.locale}/guides/${params.guideSlug}.png`,
+    });
   },
   component: GuideStepPage,
 });

@@ -1,10 +1,20 @@
-import { useLocale, useT } from '@fpv/i18n';
+import { MESSAGES, useLocale, useT, type Locale } from '@fpv/i18n';
+import { buildSeo } from '../../seo';
 import { InstallBanner } from '@fpv/pwa';
 import { Card, ClientOnly, DonateCta, MascotImage, type MascotName } from '@fpv/ui';
 import { createFileRoute, Link, type LinkProps } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
 
 export const Route = createFileRoute('/$locale/')({
+  head: ({ params }) => {
+    const t = MESSAGES[params.locale as Locale] ?? MESSAGES.en;
+    return buildSeo({
+      locale: params.locale,
+      path: '',
+      title: t.meta.siteName,
+      description: t.meta.description,
+    });
+  },
   component: Home,
 });
 
