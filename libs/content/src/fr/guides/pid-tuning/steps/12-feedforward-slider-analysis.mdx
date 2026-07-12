@@ -1,37 +1,37 @@
 ---
-title: "Feedforward Slider - Analysis"
+title: "Slider feedforward - Analyse"
 index: "3.4"
 order: 12
 slug: "feedforward-slider-analysis"
 ---
 
-Let's run your flight logs through the analyzer and find out which slider values resulted in the best response.
+Passons tes logs de vol dans l'analyseur pour découvrir quelles valeurs de slider ont donné la meilleure réponse.
 
-This time we need a different kind of analysis.
+Cette fois, il nous faut un autre type d'analyse.
 
-This time you can see two lines per flight.
+Tu verras désormais deux courbes par vol.
 
-One is called setpoint and the other is called gyro.
+L'une s'appelle setpoint et l'autre gyro.
 
-The setpoint is essentially the position that the drone should have based on your stick position.
+Le setpoint correspond en gros à la position que le drone devrait avoir en fonction de la position de tes sticks.
 
-And the gyro is the actual position of the drone measured by the gyroscope.
+Et le gyro est la position réelle du drone mesurée par le gyroscope.
 
-To tune feedforward, we want that these two lines are as identical as possible. If they are further apart, it means your drone has more delay and feels less snappy.
+Pour régler le feedforward, nous voulons que ces deux courbes soient aussi identiques que possible. Plus elles sont éloignées, plus ton drone a de latence et moins il est réactif.
 
-Be aware:
+Attention :
 
-The plot includes a third line "feedforward", this shows how much feedforward is working, just ignore it.
+Le graphique contient une troisième courbe "feedforward", qui montre à quel point le feedforward travaille ; ignore-la simplement.
 
-1. Upload your "btfl\_all.bbl" file into the analyzer (big button below) and compare the flights (you can toggle visibility of each flight line in the plot by clicking its label in the legend on top of the plot)
-2. Find the flight that is closest to the desired state.
-3. Set your feedforward Slider to the value which was used during that flight and hit save (you can find the value in the legend/label of the plot)
+1. Charge ton fichier "btfl\_all.bbl" dans l'analyseur (gros bouton ci-dessous) et compare les vols (tu peux afficher/masquer chaque courbe de vol dans le graphique en cliquant sur son libellé dans la légende au-dessus du graphique)
+2. Trouve le vol qui se rapproche le plus de l'état recherché.
+3. Règle ton slider feedforward sur la valeur utilisée pendant ce vol et clique sur Save (tu trouveras la valeur dans la légende / le libellé du graphique)
 
-You successfully tuned your feedforward.
+Tu as réglé ton feedforward avec succès.
 
-<Callout tone="tldr" title="Tip">
+<Callout tone="tldr" title="Astuce">
 
-You can easily zoom into the plot by clicking on the icon on the top right that looks like a square with a plus on the top left corner and then selecting an area of interest in the plot.
+Tu peux facilement zoomer dans le graphique : clique sur l'icône en haut à droite qui ressemble à un carré avec un plus dans le coin supérieur gauche, puis sélectionne la zone qui t'intéresse dans le graphique.
 
 </Callout>
 
