@@ -1,0 +1,101 @@
+/**
+ * fpv-drone.info design tokens.
+ *
+ * Brand carried over from the original site: green→blue gradient,
+ * Montserrat, 15px card rounding, raccoon mascots. Semantic surface/text
+ * tokens flip under `.dark` (class set by the no-flash script in the app
+ * shell; OS preference is the default, a manual toggle overrides it).
+ */
+
+:root {
+  --fpv-surface: #f7f8fa;
+  --fpv-surface-raised: #ffffff;
+  --fpv-surface-sunken: #eef0f4;
+  --fpv-text: #26282c;
+  --fpv-text-muted: #5f6673;
+  --fpv-border: #e2e5ea;
+  --fpv-brand-green: #16c99e;
+  --fpv-brand-blue: #1653c9;
+  --fpv-brand-green-soft: #16c99e26;
+  --fpv-brand-blue-soft: #1653c926;
+}
+
+.dark {
+  --fpv-surface: #101114;
+  --fpv-surface-raised: #1a1c20;
+  --fpv-surface-sunken: #0a0b0d;
+  --fpv-text: #e8eaed;
+  --fpv-text-muted: #9aa1ac;
+  --fpv-border: #2a2d33;
+  --fpv-brand-green: #19d6a9;
+  --fpv-brand-blue: #4d84f0;
+  --fpv-brand-green-soft: #19d6a91f;
+  --fpv-brand-blue-soft: #4d84f01f;
+}
+
+@theme inline {
+  --color-surface: var(--fpv-surface);
+  --color-surface-raised: var(--fpv-surface-raised);
+  --color-surface-sunken: var(--fpv-surface-sunken);
+  --color-ink: var(--fpv-text);
+  --color-ink-muted: var(--fpv-text-muted);
+  --color-line: var(--fpv-border);
+  --color-brand-green: var(--fpv-brand-green);
+  --color-brand-blue: var(--fpv-brand-blue);
+  --color-brand-green-soft: var(--fpv-brand-green-soft);
+  --color-brand-blue-soft: var(--fpv-brand-blue-soft);
+}
+
+@theme {
+  --color-success: #16c969;
+  --color-warning: #c98716;
+  --color-danger: #c91652;
+
+  --font-sans: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 15px;
+  --radius-control: 10px;
+
+  --animate-fade-in: fade-in 0.25s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--fpv-surface);
+    color: var(--fpv-text);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@utility text-gradient {
+  background-image: linear-gradient(
+    45deg,
+    var(--fpv-brand-green),
+    var(--fpv-brand-blue)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility bg-brand-gradient {
+  background-image: linear-gradient(
+    45deg,
+    var(--fpv-brand-green),
+    var(--fpv-brand-blue)
+  );
+}

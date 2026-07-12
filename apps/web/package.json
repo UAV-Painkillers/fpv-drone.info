@@ -5,17 +5,24 @@
   "type": "module",
   "nx": {
     "projectType": "application",
-    "tags": ["scope:app"]
+    "tags": [
+      "scope:app"
+    ]
   },
   "dependencies": {
+    "@fontsource-variable/montserrat": "^5.2.8",
     "@fpv/i18n": "workspace:*",
     "@fpv/ui": "workspace:*",
     "@tanstack/react-router": "^1.170.17",
     "@tanstack/react-start": "^1.168.27",
+    "clsx": "^2.1.1",
+    "radix-ui": "^1.6.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^6.0.0"
+    "@tailwindcss/vite": "^4.3.2",
+    "@vitejs/plugin-react": "^6.0.0",
+    "tailwindcss": "^4.3.2"
   }
 }

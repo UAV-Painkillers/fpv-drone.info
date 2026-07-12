@@ -13,6 +13,14 @@ import { Route as R404RouteImport } from './routes/404'
 import { Route as LocaleRouteRouteImport } from './routes/$locale/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
+import { Route as LocaleImprintRouteImport } from './routes/$locale/imprint'
+import { Route as LocaleDataPrivacyRouteImport } from './routes/$locale/data-privacy'
+import { Route as LocaleToolsIndexRouteImport } from './routes/$locale/tools/index'
+import { Route as LocaleGuidesIndexRouteImport } from './routes/$locale/guides/index'
+import { Route as LocaleToolsDynamicIdleCalculatorRouteImport } from './routes/$locale/tools/dynamic-idle-calculator'
+import { Route as LocaleToolsBlackboxAnalyzerRouteImport } from './routes/$locale/tools/blackbox-analyzer'
+import { Route as LocaleGuidesPidTuningRouteImport } from './routes/$locale/guides/pid-tuning'
+import { Route as LocaleGuidesFilterTuningRouteImport } from './routes/$locale/guides/filter-tuning'
 
 const R404Route = R404RouteImport.update({
   id: '/404',
@@ -34,31 +42,134 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRouteRoute,
 } as any)
+const LocaleImprintRoute = LocaleImprintRouteImport.update({
+  id: '/imprint',
+  path: '/imprint',
+  getParentRoute: () => LocaleRouteRoute,
+} as any)
+const LocaleDataPrivacyRoute = LocaleDataPrivacyRouteImport.update({
+  id: '/data-privacy',
+  path: '/data-privacy',
+  getParentRoute: () => LocaleRouteRoute,
+} as any)
+const LocaleToolsIndexRoute = LocaleToolsIndexRouteImport.update({
+  id: '/tools/',
+  path: '/tools/',
+  getParentRoute: () => LocaleRouteRoute,
+} as any)
+const LocaleGuidesIndexRoute = LocaleGuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => LocaleRouteRoute,
+} as any)
+const LocaleToolsDynamicIdleCalculatorRoute =
+  LocaleToolsDynamicIdleCalculatorRouteImport.update({
+    id: '/tools/dynamic-idle-calculator',
+    path: '/tools/dynamic-idle-calculator',
+    getParentRoute: () => LocaleRouteRoute,
+  } as any)
+const LocaleToolsBlackboxAnalyzerRoute =
+  LocaleToolsBlackboxAnalyzerRouteImport.update({
+    id: '/tools/blackbox-analyzer',
+    path: '/tools/blackbox-analyzer',
+    getParentRoute: () => LocaleRouteRoute,
+  } as any)
+const LocaleGuidesPidTuningRoute = LocaleGuidesPidTuningRouteImport.update({
+  id: '/guides/pid-tuning',
+  path: '/guides/pid-tuning',
+  getParentRoute: () => LocaleRouteRoute,
+} as any)
+const LocaleGuidesFilterTuningRoute =
+  LocaleGuidesFilterTuningRouteImport.update({
+    id: '/guides/filter-tuning',
+    path: '/guides/filter-tuning',
+    getParentRoute: () => LocaleRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteRouteWithChildren
   '/404': typeof R404Route
+  '/$locale/data-privacy': typeof LocaleDataPrivacyRoute
+  '/$locale/imprint': typeof LocaleImprintRoute
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/guides/filter-tuning': typeof LocaleGuidesFilterTuningRoute
+  '/$locale/guides/pid-tuning': typeof LocaleGuidesPidTuningRoute
+  '/$locale/tools/blackbox-analyzer': typeof LocaleToolsBlackboxAnalyzerRoute
+  '/$locale/tools/dynamic-idle-calculator': typeof LocaleToolsDynamicIdleCalculatorRoute
+  '/$locale/guides/': typeof LocaleGuidesIndexRoute
+  '/$locale/tools/': typeof LocaleToolsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
+  '/$locale/data-privacy': typeof LocaleDataPrivacyRoute
+  '/$locale/imprint': typeof LocaleImprintRoute
   '/$locale': typeof LocaleIndexRoute
+  '/$locale/guides/filter-tuning': typeof LocaleGuidesFilterTuningRoute
+  '/$locale/guides/pid-tuning': typeof LocaleGuidesPidTuningRoute
+  '/$locale/tools/blackbox-analyzer': typeof LocaleToolsBlackboxAnalyzerRoute
+  '/$locale/tools/dynamic-idle-calculator': typeof LocaleToolsDynamicIdleCalculatorRoute
+  '/$locale/guides': typeof LocaleGuidesIndexRoute
+  '/$locale/tools': typeof LocaleToolsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteRouteWithChildren
   '/404': typeof R404Route
+  '/$locale/data-privacy': typeof LocaleDataPrivacyRoute
+  '/$locale/imprint': typeof LocaleImprintRoute
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/guides/filter-tuning': typeof LocaleGuidesFilterTuningRoute
+  '/$locale/guides/pid-tuning': typeof LocaleGuidesPidTuningRoute
+  '/$locale/tools/blackbox-analyzer': typeof LocaleToolsBlackboxAnalyzerRoute
+  '/$locale/tools/dynamic-idle-calculator': typeof LocaleToolsDynamicIdleCalculatorRoute
+  '/$locale/guides/': typeof LocaleGuidesIndexRoute
+  '/$locale/tools/': typeof LocaleToolsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$locale' | '/404' | '/$locale/'
+  fullPaths:
+    | '/'
+    | '/$locale'
+    | '/404'
+    | '/$locale/data-privacy'
+    | '/$locale/imprint'
+    | '/$locale/'
+    | '/$locale/guides/filter-tuning'
+    | '/$locale/guides/pid-tuning'
+    | '/$locale/tools/blackbox-analyzer'
+    | '/$locale/tools/dynamic-idle-calculator'
+    | '/$locale/guides/'
+    | '/$locale/tools/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/404' | '/$locale'
-  id: '__root__' | '/' | '/$locale' | '/404' | '/$locale/'
+  to:
+    | '/'
+    | '/404'
+    | '/$locale/data-privacy'
+    | '/$locale/imprint'
+    | '/$locale'
+    | '/$locale/guides/filter-tuning'
+    | '/$locale/guides/pid-tuning'
+    | '/$locale/tools/blackbox-analyzer'
+    | '/$locale/tools/dynamic-idle-calculator'
+    | '/$locale/guides'
+    | '/$locale/tools'
+  id:
+    | '__root__'
+    | '/'
+    | '/$locale'
+    | '/404'
+    | '/$locale/data-privacy'
+    | '/$locale/imprint'
+    | '/$locale/'
+    | '/$locale/guides/filter-tuning'
+    | '/$locale/guides/pid-tuning'
+    | '/$locale/tools/blackbox-analyzer'
+    | '/$locale/tools/dynamic-idle-calculator'
+    | '/$locale/guides/'
+    | '/$locale/tools/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -97,15 +208,87 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRouteRoute
     }
+    '/$locale/imprint': {
+      id: '/$locale/imprint'
+      path: '/imprint'
+      fullPath: '/$locale/imprint'
+      preLoaderRoute: typeof LocaleImprintRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
+    '/$locale/data-privacy': {
+      id: '/$locale/data-privacy'
+      path: '/data-privacy'
+      fullPath: '/$locale/data-privacy'
+      preLoaderRoute: typeof LocaleDataPrivacyRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
+    '/$locale/tools/': {
+      id: '/$locale/tools/'
+      path: '/tools'
+      fullPath: '/$locale/tools/'
+      preLoaderRoute: typeof LocaleToolsIndexRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
+    '/$locale/guides/': {
+      id: '/$locale/guides/'
+      path: '/guides'
+      fullPath: '/$locale/guides/'
+      preLoaderRoute: typeof LocaleGuidesIndexRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
+    '/$locale/tools/dynamic-idle-calculator': {
+      id: '/$locale/tools/dynamic-idle-calculator'
+      path: '/tools/dynamic-idle-calculator'
+      fullPath: '/$locale/tools/dynamic-idle-calculator'
+      preLoaderRoute: typeof LocaleToolsDynamicIdleCalculatorRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
+    '/$locale/tools/blackbox-analyzer': {
+      id: '/$locale/tools/blackbox-analyzer'
+      path: '/tools/blackbox-analyzer'
+      fullPath: '/$locale/tools/blackbox-analyzer'
+      preLoaderRoute: typeof LocaleToolsBlackboxAnalyzerRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
+    '/$locale/guides/pid-tuning': {
+      id: '/$locale/guides/pid-tuning'
+      path: '/guides/pid-tuning'
+      fullPath: '/$locale/guides/pid-tuning'
+      preLoaderRoute: typeof LocaleGuidesPidTuningRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
+    '/$locale/guides/filter-tuning': {
+      id: '/$locale/guides/filter-tuning'
+      path: '/guides/filter-tuning'
+      fullPath: '/$locale/guides/filter-tuning'
+      preLoaderRoute: typeof LocaleGuidesFilterTuningRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
   }
 }
 
 interface LocaleRouteRouteChildren {
+  LocaleDataPrivacyRoute: typeof LocaleDataPrivacyRoute
+  LocaleImprintRoute: typeof LocaleImprintRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleGuidesFilterTuningRoute: typeof LocaleGuidesFilterTuningRoute
+  LocaleGuidesPidTuningRoute: typeof LocaleGuidesPidTuningRoute
+  LocaleToolsBlackboxAnalyzerRoute: typeof LocaleToolsBlackboxAnalyzerRoute
+  LocaleToolsDynamicIdleCalculatorRoute: typeof LocaleToolsDynamicIdleCalculatorRoute
+  LocaleGuidesIndexRoute: typeof LocaleGuidesIndexRoute
+  LocaleToolsIndexRoute: typeof LocaleToolsIndexRoute
 }
 
 const LocaleRouteRouteChildren: LocaleRouteRouteChildren = {
+  LocaleDataPrivacyRoute: LocaleDataPrivacyRoute,
+  LocaleImprintRoute: LocaleImprintRoute,
   LocaleIndexRoute: LocaleIndexRoute,
+  LocaleGuidesFilterTuningRoute: LocaleGuidesFilterTuningRoute,
+  LocaleGuidesPidTuningRoute: LocaleGuidesPidTuningRoute,
+  LocaleToolsBlackboxAnalyzerRoute: LocaleToolsBlackboxAnalyzerRoute,
+  LocaleToolsDynamicIdleCalculatorRoute: LocaleToolsDynamicIdleCalculatorRoute,
+  LocaleGuidesIndexRoute: LocaleGuidesIndexRoute,
+  LocaleToolsIndexRoute: LocaleToolsIndexRoute,
 }
 
 const LocaleRouteRouteWithChildren = LocaleRouteRoute._addFileChildren(

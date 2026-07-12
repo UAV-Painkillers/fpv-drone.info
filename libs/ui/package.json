@@ -14,9 +14,14 @@
     "./package.json": "./package.json"
   },
   "nx": {
-    "tags": ["scope:ui"]
+    "tags": [
+      "scope:ui"
+    ]
   },
   "dependencies": {
+    "@fontsource-variable/montserrat": "^5.2.8",
+    "clsx": "^2.1.1",
+    "radix-ui": "^1.6.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }

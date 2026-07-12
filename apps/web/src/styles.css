@@ -1,4 +1,6 @@
-/* Tailwind + design tokens land here in Phase 3 */
-body {
-  font-family: system-ui, sans-serif;
-}
+@import 'tailwindcss';
+@import '@fontsource-variable/montserrat';
+@import '@fpv/ui/theme.css';
+
+/* Tailwind class detection outside the Vite root */
+@source '../../../libs';
