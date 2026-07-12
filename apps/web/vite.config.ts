@@ -16,6 +16,12 @@ export default defineConfig({
         enabled: true,
         crawlLinks: true,
       },
+      pages: [
+        {
+          path: '/404',
+          prerender: { enabled: true, outputPath: '/404.html' },
+        },
+      ],
     }),
     viteReact(),
   ],
