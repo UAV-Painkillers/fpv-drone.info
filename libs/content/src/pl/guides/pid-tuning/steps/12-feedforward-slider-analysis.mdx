@@ -1,37 +1,37 @@
 ---
-title: "Feedforward Slider - Analysis"
+title: "Suwak feedforward - analiza"
 index: "3.4"
 order: 12
 slug: "feedforward-slider-analysis"
 ---
 
-Let's run your flight logs through the analyzer and find out which slider values resulted in the best response.
+Przepuśćmy twoje logi lotów przez analizator i sprawdźmy, które wartości suwaka dały najlepszą odpowiedź.
 
-This time we need a different kind of analysis.
+Tym razem potrzebujemy innego rodzaju analizy.
 
-This time you can see two lines per flight.
+Tym razem dla każdego lotu zobaczysz dwie linie.
 
-One is called setpoint and the other is called gyro.
+Jedna nazywa się setpoint, a druga gyro.
 
-The setpoint is essentially the position that the drone should have based on your stick position.
+Setpoint to w zasadzie pozycja, jaką dron powinien mieć na podstawie wychylenia twoich drążków.
 
-And the gyro is the actual position of the drone measured by the gyroscope.
+A gyro to rzeczywista pozycja drona zmierzona przez żyroskop.
 
-To tune feedforward, we want that these two lines are as identical as possible. If they are further apart, it means your drone has more delay and feels less snappy.
+Strojąc feedforward, chcemy, aby te dwie linie były możliwie identyczne. Jeśli są od siebie bardziej oddalone, oznacza to, że dron ma większe opóźnienie i reaguje mniej "sztywno".
 
-Be aware:
+Uwaga:
 
-The plot includes a third line "feedforward", this shows how much feedforward is working, just ignore it.
+Wykres zawiera trzecią linię "feedforward" — pokazuje ona, jak mocno działa feedforward; po prostu ją zignoruj.
 
-1. Upload your "btfl\_all.bbl" file into the analyzer (big button below) and compare the flights (you can toggle visibility of each flight line in the plot by clicking its label in the legend on top of the plot)
-2. Find the flight that is closest to the desired state.
-3. Set your feedforward Slider to the value which was used during that flight and hit save (you can find the value in the legend/label of the plot)
+1. Wgraj swój plik "btfl\_all.bbl" do analizatora (duży przycisk poniżej) i porównaj loty (możesz włączać i wyłączać widoczność linii każdego lotu na wykresie, klikając jego etykietę w legendzie nad wykresem)
+2. Znajdź lot, który jest najbliższy pożądanemu stanowi.
+3. Ustaw suwak feedforward na wartość użytą podczas tego lotu i kliknij save (wartość znajdziesz w legendzie/etykiecie wykresu)
 
-You successfully tuned your feedforward.
+Udało ci się wystroić feedforward.
 
-<Callout tone="tldr" title="Tip">
+<Callout tone="tldr" title="Wskazówka">
 
-You can easily zoom into the plot by clicking on the icon on the top right that looks like a square with a plus on the top left corner and then selecting an area of interest in the plot.
+Możesz łatwo przybliżyć fragment wykresu, klikając ikonę w prawym górnym rogu, która wygląda jak kwadrat z plusem w lewym górnym rogu, a następnie zaznaczając interesujący cię obszar na wykresie.
 
 </Callout>
 

@@ -1,23 +1,23 @@
 ---
-title: "P & I Gains - Analysis"
+title: "P & I Gain - analiza"
 index: "1.4"
 order: 4
 slug: "p-and-i-gains-analysis"
 image: "/guide-images/pi_gains__analysis.webp"
 ---
 
-Let's run your flight logs through the analyzer and find out which slider values resulted in the best response.
+Przepuśćmy twoje logi lotów przez analizator i sprawdźmy, które wartości suwaka dały najlepszą odpowiedź.
 
-The goal is to find the flight / response curve that gets the fastest and closest to a value of 1, without overshooting and without too much "waving" around a value of 1.
+Celem jest znalezienie lotu / krzywej odpowiedzi, która najszybciej i najbliżej dochodzi do wartości 1, bez przestrzelenia (overshoot) i bez nadmiernego "falowania" wokół wartości 1.
 
-See the example Animation attached to this step for an example analysis.
+Spójrz na animację załączoną do tego kroku, aby zobaczyć przykładową analizę.
 
-We want to achieve that our quad responds quickly (quick move from bottom to the center line) and precisely (no overshoot / wobbles) without the need to correct itself afterwards.
+Chcemy osiągnąć stan, w którym quad reaguje szybko (szybkie przejście od dołu do linii środkowej) i precyzyjnie (bez przestrzelenia / drgań), bez konieczności późniejszego korygowania się.
 
-1. Upload your "btfl\_all.bbl" file into the analyzer (big button below) and compare the flights (you can toggle visibility of each flight line in the plot by clicking its label in the legend on top of the plot)
-2. Find the flight that is closest to the desired state.
-3. Set your P & I gains Slider to the value which was used during that flight and hit save (you can find the value in the legend/label of the plot)
+1. Wgraj swój plik "btfl\_all.bbl" do analizatora (duży przycisk poniżej) i porównaj loty (możesz włączać i wyłączać widoczność linii każdego lotu na wykresie, klikając jego etykietę w legendzie nad wykresem)
+2. Znajdź lot, który jest najbliższy pożądanemu stanowi.
+3. Ustaw suwak P & I Gain na wartość użytą podczas tego lotu i kliknij save (wartość znajdziesz w legendzie/etykiecie wykresu)
 
-You successfully tuned your P & I gains.
+Udało ci się wystroić P i I Gain.
 
 <BlackboxAnalyzer activePlots={["responseStrength"]} plotLabels={{"strength":{"template":"#{{logIndex}} (PI {{headerValue}})","headerField":"simplified_pi_gain"}}} />
