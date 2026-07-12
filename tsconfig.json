@@ -3,8 +3,17 @@
   "compileOnSave": false,
   "files": [],
   "references": [
-    { "path": "./apps/web" },
-    { "path": "./libs/ui" },
-    { "path": "./libs/i18n" }
+    {
+      "path": "./apps/web"
+    },
+    {
+      "path": "./libs/ui"
+    },
+    {
+      "path": "./libs/i18n"
+    },
+    {
+      "path": "./libs/content"
+    }
   ]
 }

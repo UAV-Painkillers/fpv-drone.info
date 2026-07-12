@@ -1,0 +1,17 @@
+---
+title: "RPM Filters - Analysis"
+index: "4.1"
+order: 4
+slug: "rpm-filters-analysis"
+image: "/guide-images/rpm_filters__analysis.webp"
+---
+
+Now it's getting interesting, let's do our first analysis.
+
+Your job is pretty easy:
+
+1. Upload your saved logfile (btfl\_all.bbl) into the analyzer below
+2. Count the Diagonal "lines" (harmonics) in your plot (see attached picture for reference) and remember that number (or write it down somewhere)
+3. Now you need to find the lowest frequency at which any of these lines start (the most left point of any of these lines) and also remeber that one / write it down
+
+<BlackboxAnalyzer activePlots={["noiseGyroDebug"]} navigation={["showMainLogSelection","showActiveAxisSelection"]} />

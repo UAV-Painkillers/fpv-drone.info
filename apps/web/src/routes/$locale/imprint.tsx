@@ -1,16 +1,19 @@
-import { useT } from '@fpv/i18n';
+import { getPage } from '@fpv/content';
+import { type Locale } from '@fpv/i18n';
 import { createFileRoute } from '@tanstack/react-router';
+import { MdxArticle } from '../../components/mdx-page';
 
 export const Route = createFileRoute('/$locale/imprint')({
   component: ImprintPage,
 });
 
 function ImprintPage() {
-  const t = useT();
+  const { locale } = Route.useParams();
+  const { Content, meta } = getPage(locale as Locale, 'imprint');
   return (
-    <div className="prose-page animate-fade-in">
-      <h1 className="text-2xl font-extrabold">{t.nav.imprint}</h1>
-      {/* Migrated legal content lands here in Phase 4 */}
+    <div className="animate-fade-in">
+      <h1 className="mb-4 text-2xl font-extrabold">{meta.title}</h1>
+      <MdxArticle Content={Content} />
     </div>
   );
 }

@@ -1,0 +1,23 @@
+---
+title: "P & I Gains - Analysis"
+index: "1.4"
+order: 4
+slug: "p-and-i-gains-analysis"
+image: "/guide-images/pi_gains__analysis.webp"
+---
+
+Let's run your flight logs through the analyzer and find out which slider values resulted in the best response.
+
+The goal is to find the flight / response curve that gets the fastest and closest to a value of 1, without overshooting and without too much "waving" around a value of 1.
+
+See the example Animation attached to this step for an example analysis.
+
+We want to achieve that our quad responds quickly (quick move from bottom to the center line) and precisely (no overshoot / wobbles) without the need to correct itself afterwards.
+
+1. Upload your "btfl\_all.bbl" file into the analyzer (big button below) and compare the flights (you can toggle visibility of each flight line in the plot by clicking its label in the legend on top of the plot)
+2. Find the flight that is closest to the desired state.
+3. Set your P & I gains Slider to the value which was used during that flight and hit save (you can find the value in the legend/label of the plot)
+
+You successfully tuned your P & I gains.
+
+<BlackboxAnalyzer activePlots={["responseStrength"]} plotLabels={{"strength":{"template":"#{{logIndex}} (PI {{headerValue}})","headerField":"simplified_pi_gain"}}} />

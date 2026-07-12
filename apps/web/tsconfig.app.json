@@ -22,7 +22,14 @@
     "src/**/*.test.tsx"
   ],
   "references": [
-    { "path": "../../libs/ui/tsconfig.lib.json" },
-    { "path": "../../libs/i18n/tsconfig.lib.json" }
+    {
+      "path": "../../libs/ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/i18n/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/content/tsconfig.lib.json"
+    }
   ]
 }

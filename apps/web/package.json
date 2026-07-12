@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.2.8",
+    "@fpv/content": "workspace:*",
     "@fpv/i18n": "workspace:*",
     "@fpv/ui": "workspace:*",
+    "@mdx-js/react": "^3.1.1",
     "@tanstack/react-router": "^1.170.17",
     "@tanstack/react-start": "^1.168.27",
     "clsx": "^2.1.1",
@@ -21,8 +23,12 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@mdx-js/rollup": "^3.1.1",
     "@tailwindcss/vite": "^4.3.2",
     "@vitejs/plugin-react": "^6.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx-frontmatter": "^5.2.0",
     "tailwindcss": "^4.3.2"
   }
 }
