@@ -1,5 +1,6 @@
 import { useLocale, useT } from '@fpv/i18n';
-import { Card, DonateCta, MascotImage, type MascotName } from '@fpv/ui';
+import { InstallBanner } from '@fpv/pwa';
+import { Card, ClientOnly, DonateCta, MascotImage, type MascotName } from '@fpv/ui';
 import { createFileRoute, Link, type LinkProps } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
 
@@ -43,6 +44,9 @@ function Home() {
 
   return (
     <div className="animate-fade-in">
+      <ClientOnly>
+        <InstallBanner />
+      </ClientOnly>
       <section className="py-6 text-center md:py-10">
         <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">
           {t.home.title}

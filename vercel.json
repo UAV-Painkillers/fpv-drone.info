@@ -1,10 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm nx build web",
+  "buildCommand": "pnpm nx build web && pnpm tsx tools/scripts/build-sw.mts",
   "outputDirectory": "apps/web/dist/client",
   "trailingSlash": false,
   "headers": [
+    {
+      "source": "/sw.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
     {
       "source": "/pid-analyzer-dependencies/(.*)",
       "headers": [

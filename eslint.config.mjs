@@ -42,6 +42,10 @@ export default tseslint.config(
               onlyDependOnLibsWithTags: ['scope:analyzer', 'scope:i18n'],
             },
             {
+              sourceTag: 'scope:pwa',
+              onlyDependOnLibsWithTags: ['scope:i18n', 'scope:ui'],
+            },
+            {
               sourceTag: 'scope:content',
               onlyDependOnLibsWithTags: [
                 'scope:ui',

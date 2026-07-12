@@ -1,4 +1,5 @@
 import { DEFAULT_LOCALE, isLocale } from '@fpv/i18n';
+import { registerServiceWorker } from '@fpv/pwa';
 import { ErrorRaccoon, THEME_INIT_SCRIPT } from '@fpv/ui';
 import {
   createRootRoute,
@@ -8,7 +9,7 @@ import {
   Scripts,
   useParams,
 } from '@tanstack/react-router';
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import appCss from '../styles.css?url';
 
 export const Route = createRootRoute({
@@ -24,13 +25,21 @@ export const Route = createRootRoute({
       { rel: 'icon', href: '/pwa/favicon.ico', sizes: '48x48' },
       { rel: 'icon', href: '/pwa/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
       { rel: 'apple-touch-icon', href: '/pwa/apple-touch-icon.png' },
+      { rel: 'manifest', href: '/pwa/site.webmanifest' },
     ],
     scripts: [{ children: THEME_INIT_SCRIPT }],
   }),
   shellComponent: RootDocument,
   notFoundComponent: NotFound,
-  component: Outlet,
+  component: RootComponent,
 });
+
+function RootComponent() {
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
+  return <Outlet />;
+}
 
 function RootDocument({ children }: { children: ReactNode }) {
   const params = useParams({ strict: false }) as { locale?: string };

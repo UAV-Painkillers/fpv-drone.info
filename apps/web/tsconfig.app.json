@@ -26,6 +26,9 @@
       "path": "../../libs/ui/tsconfig.lib.json"
     },
     {
+      "path": "../../libs/pwa/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/plots/tsconfig.lib.json"
     },
     {

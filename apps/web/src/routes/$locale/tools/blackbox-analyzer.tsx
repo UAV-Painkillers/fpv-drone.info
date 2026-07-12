@@ -1,5 +1,7 @@
 import { getPage } from '@fpv/content';
 import { useT, type Locale } from '@fpv/i18n';
+import { OfflineDownloadCard } from '@fpv/pwa';
+import { ClientOnly } from '@fpv/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { MDX_TOOLS } from '../../../components/analyzer/mdx-tools';
 import { MdxArticle } from '../../../components/mdx-page';
@@ -20,6 +22,9 @@ function BlackboxAnalyzerPage() {
       <div className="mt-6">
         <MdxArticle Content={Content} tools={MDX_TOOLS} />
       </div>
+      <ClientOnly>
+        <OfflineDownloadCard />
+      </ClientOnly>
     </div>
   );
 }
