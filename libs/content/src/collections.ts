@@ -1,10 +1,10 @@
 import type { Locale } from '@fpv/i18n';
 import type { MDXContent } from 'mdx/types';
+import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 import rawManifest from './manifest.json';
 import {
   localeManifestSchema,
   pageMetaSchema,
-  stepMetaSchema,
   type GuideManifest,
   type LocaleManifest,
   type PageMeta,
@@ -51,19 +51,37 @@ export function getPage(
   return { Content: mod.default, meta: pageMetaSchema.parse(mod.frontmatter) };
 }
 
-export async function loadGuideStep(
+export function getGuideStepMeta(
   locale: Locale,
   guide: string,
   stepSlug: string,
-): Promise<{ Content: MDXContent; meta: StepMeta } | null> {
+): StepMeta | null {
   const manifest = getGuideManifest(locale, guide);
-  const step = manifest?.steps.find((s) => s.slug === stepSlug);
+  return manifest?.steps.find((s) => s.slug === stepSlug) ?? null;
+}
+
+const lazyStepCache = new Map<string, LazyExoticComponent<ComponentType>>();
+
+/**
+ * Step bodies are code-split per MDX file. React.lazy + Suspense keeps them
+ * prerender- and hydration-safe while only the visited step's chunk loads.
+ */
+export function getGuideStepComponent(
+  locale: Locale,
+  guide: string,
+  stepSlug: string,
+): LazyExoticComponent<ComponentType> | null {
+  const step = getGuideStepMeta(locale, guide, stepSlug);
   if (!step) return null;
   const key = `./${locale}/guides/${guide}/steps/${String(step.order).padStart(2, '0')}-${step.slug}.mdx`;
   const loader = stepModules[key];
   if (!loader) throw new Error(`Missing content module: ${key}`);
-  const mod = await loader();
-  return { Content: mod.default, meta: stepMetaSchema.parse(mod.frontmatter) };
+  let cached = lazyStepCache.get(key);
+  if (!cached) {
+    cached = lazy(async () => ({ default: (await loader()).default }));
+    lazyStepCache.set(key, cached);
+  }
+  return cached;
 }
 
 /** All module keys, for integrity tests. */

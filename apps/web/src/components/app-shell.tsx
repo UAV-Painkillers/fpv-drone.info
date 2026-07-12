@@ -23,6 +23,7 @@ interface NavItem {
   label: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   exact?: boolean;
+  params?: Record<string, string>;
 }
 
 function useNav(): { primary: NavItem[]; sections: { title: string; items: NavItem[] }[] } {
@@ -52,9 +53,15 @@ function useNav(): { primary: NavItem[]; sections: { title: string; items: NavIt
       {
         title: t.nav.guides,
         items: [
-          { to: '/$locale/guides/pid-tuning', label: t.nav.pidGuide, icon: CompassIcon },
           {
-            to: '/$locale/guides/filter-tuning',
+            to: '/$locale/guides/$guideSlug',
+            params: { guideSlug: 'pid-tuning' },
+            label: t.nav.pidGuide,
+            icon: CompassIcon,
+          },
+          {
+            to: '/$locale/guides/$guideSlug',
+            params: { guideSlug: 'filter-tuning' },
             label: t.nav.filterGuide,
             icon: CompassIcon,
           },
@@ -70,7 +77,7 @@ function NavLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void 
     <Link
       to={item.to}
       // `to` is a union of routes here, so params can't be narrowed statically
-      params={{ locale } as never}
+      params={{ locale, ...item.params } as never}
       onClick={onNavigate}
       activeOptions={{ exact: item.exact ?? false }}
       activeProps={{

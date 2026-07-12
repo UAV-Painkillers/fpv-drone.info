@@ -19,8 +19,9 @@ import { Route as LocaleToolsIndexRouteImport } from './routes/$locale/tools/ind
 import { Route as LocaleGuidesIndexRouteImport } from './routes/$locale/guides/index'
 import { Route as LocaleToolsDynamicIdleCalculatorRouteImport } from './routes/$locale/tools/dynamic-idle-calculator'
 import { Route as LocaleToolsBlackboxAnalyzerRouteImport } from './routes/$locale/tools/blackbox-analyzer'
-import { Route as LocaleGuidesPidTuningRouteImport } from './routes/$locale/guides/pid-tuning'
-import { Route as LocaleGuidesFilterTuningRouteImport } from './routes/$locale/guides/filter-tuning'
+import { Route as LocaleGuidesGuideSlugRouteRouteImport } from './routes/$locale/guides/$guideSlug/route'
+import { Route as LocaleGuidesGuideSlugIndexRouteImport } from './routes/$locale/guides/$guideSlug/index'
+import { Route as LocaleGuidesGuideSlugStepSlugRouteImport } from './routes/$locale/guides/$guideSlug/$stepSlug'
 
 const R404Route = R404RouteImport.update({
   id: '/404',
@@ -74,16 +75,23 @@ const LocaleToolsBlackboxAnalyzerRoute =
     path: '/tools/blackbox-analyzer',
     getParentRoute: () => LocaleRouteRoute,
   } as any)
-const LocaleGuidesPidTuningRoute = LocaleGuidesPidTuningRouteImport.update({
-  id: '/guides/pid-tuning',
-  path: '/guides/pid-tuning',
-  getParentRoute: () => LocaleRouteRoute,
-} as any)
-const LocaleGuidesFilterTuningRoute =
-  LocaleGuidesFilterTuningRouteImport.update({
-    id: '/guides/filter-tuning',
-    path: '/guides/filter-tuning',
+const LocaleGuidesGuideSlugRouteRoute =
+  LocaleGuidesGuideSlugRouteRouteImport.update({
+    id: '/guides/$guideSlug',
+    path: '/guides/$guideSlug',
     getParentRoute: () => LocaleRouteRoute,
+  } as any)
+const LocaleGuidesGuideSlugIndexRoute =
+  LocaleGuidesGuideSlugIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => LocaleGuidesGuideSlugRouteRoute,
+  } as any)
+const LocaleGuidesGuideSlugStepSlugRoute =
+  LocaleGuidesGuideSlugStepSlugRouteImport.update({
+    id: '/$stepSlug',
+    path: '/$stepSlug',
+    getParentRoute: () => LocaleGuidesGuideSlugRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -93,12 +101,13 @@ export interface FileRoutesByFullPath {
   '/$locale/data-privacy': typeof LocaleDataPrivacyRoute
   '/$locale/imprint': typeof LocaleImprintRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/guides/filter-tuning': typeof LocaleGuidesFilterTuningRoute
-  '/$locale/guides/pid-tuning': typeof LocaleGuidesPidTuningRoute
+  '/$locale/guides/$guideSlug': typeof LocaleGuidesGuideSlugRouteRouteWithChildren
   '/$locale/tools/blackbox-analyzer': typeof LocaleToolsBlackboxAnalyzerRoute
   '/$locale/tools/dynamic-idle-calculator': typeof LocaleToolsDynamicIdleCalculatorRoute
   '/$locale/guides/': typeof LocaleGuidesIndexRoute
   '/$locale/tools/': typeof LocaleToolsIndexRoute
+  '/$locale/guides/$guideSlug/$stepSlug': typeof LocaleGuidesGuideSlugStepSlugRoute
+  '/$locale/guides/$guideSlug/': typeof LocaleGuidesGuideSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -106,12 +115,12 @@ export interface FileRoutesByTo {
   '/$locale/data-privacy': typeof LocaleDataPrivacyRoute
   '/$locale/imprint': typeof LocaleImprintRoute
   '/$locale': typeof LocaleIndexRoute
-  '/$locale/guides/filter-tuning': typeof LocaleGuidesFilterTuningRoute
-  '/$locale/guides/pid-tuning': typeof LocaleGuidesPidTuningRoute
   '/$locale/tools/blackbox-analyzer': typeof LocaleToolsBlackboxAnalyzerRoute
   '/$locale/tools/dynamic-idle-calculator': typeof LocaleToolsDynamicIdleCalculatorRoute
   '/$locale/guides': typeof LocaleGuidesIndexRoute
   '/$locale/tools': typeof LocaleToolsIndexRoute
+  '/$locale/guides/$guideSlug/$stepSlug': typeof LocaleGuidesGuideSlugStepSlugRoute
+  '/$locale/guides/$guideSlug': typeof LocaleGuidesGuideSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -121,12 +130,13 @@ export interface FileRoutesById {
   '/$locale/data-privacy': typeof LocaleDataPrivacyRoute
   '/$locale/imprint': typeof LocaleImprintRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/guides/filter-tuning': typeof LocaleGuidesFilterTuningRoute
-  '/$locale/guides/pid-tuning': typeof LocaleGuidesPidTuningRoute
+  '/$locale/guides/$guideSlug': typeof LocaleGuidesGuideSlugRouteRouteWithChildren
   '/$locale/tools/blackbox-analyzer': typeof LocaleToolsBlackboxAnalyzerRoute
   '/$locale/tools/dynamic-idle-calculator': typeof LocaleToolsDynamicIdleCalculatorRoute
   '/$locale/guides/': typeof LocaleGuidesIndexRoute
   '/$locale/tools/': typeof LocaleToolsIndexRoute
+  '/$locale/guides/$guideSlug/$stepSlug': typeof LocaleGuidesGuideSlugStepSlugRoute
+  '/$locale/guides/$guideSlug/': typeof LocaleGuidesGuideSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,12 +147,13 @@ export interface FileRouteTypes {
     | '/$locale/data-privacy'
     | '/$locale/imprint'
     | '/$locale/'
-    | '/$locale/guides/filter-tuning'
-    | '/$locale/guides/pid-tuning'
+    | '/$locale/guides/$guideSlug'
     | '/$locale/tools/blackbox-analyzer'
     | '/$locale/tools/dynamic-idle-calculator'
     | '/$locale/guides/'
     | '/$locale/tools/'
+    | '/$locale/guides/$guideSlug/$stepSlug'
+    | '/$locale/guides/$guideSlug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -150,12 +161,12 @@ export interface FileRouteTypes {
     | '/$locale/data-privacy'
     | '/$locale/imprint'
     | '/$locale'
-    | '/$locale/guides/filter-tuning'
-    | '/$locale/guides/pid-tuning'
     | '/$locale/tools/blackbox-analyzer'
     | '/$locale/tools/dynamic-idle-calculator'
     | '/$locale/guides'
     | '/$locale/tools'
+    | '/$locale/guides/$guideSlug/$stepSlug'
+    | '/$locale/guides/$guideSlug'
   id:
     | '__root__'
     | '/'
@@ -164,12 +175,13 @@ export interface FileRouteTypes {
     | '/$locale/data-privacy'
     | '/$locale/imprint'
     | '/$locale/'
-    | '/$locale/guides/filter-tuning'
-    | '/$locale/guides/pid-tuning'
+    | '/$locale/guides/$guideSlug'
     | '/$locale/tools/blackbox-analyzer'
     | '/$locale/tools/dynamic-idle-calculator'
     | '/$locale/guides/'
     | '/$locale/tools/'
+    | '/$locale/guides/$guideSlug/$stepSlug'
+    | '/$locale/guides/$guideSlug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -250,29 +262,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleToolsBlackboxAnalyzerRouteImport
       parentRoute: typeof LocaleRouteRoute
     }
-    '/$locale/guides/pid-tuning': {
-      id: '/$locale/guides/pid-tuning'
-      path: '/guides/pid-tuning'
-      fullPath: '/$locale/guides/pid-tuning'
-      preLoaderRoute: typeof LocaleGuidesPidTuningRouteImport
+    '/$locale/guides/$guideSlug': {
+      id: '/$locale/guides/$guideSlug'
+      path: '/guides/$guideSlug'
+      fullPath: '/$locale/guides/$guideSlug'
+      preLoaderRoute: typeof LocaleGuidesGuideSlugRouteRouteImport
       parentRoute: typeof LocaleRouteRoute
     }
-    '/$locale/guides/filter-tuning': {
-      id: '/$locale/guides/filter-tuning'
-      path: '/guides/filter-tuning'
-      fullPath: '/$locale/guides/filter-tuning'
-      preLoaderRoute: typeof LocaleGuidesFilterTuningRouteImport
-      parentRoute: typeof LocaleRouteRoute
+    '/$locale/guides/$guideSlug/': {
+      id: '/$locale/guides/$guideSlug/'
+      path: '/'
+      fullPath: '/$locale/guides/$guideSlug/'
+      preLoaderRoute: typeof LocaleGuidesGuideSlugIndexRouteImport
+      parentRoute: typeof LocaleGuidesGuideSlugRouteRoute
+    }
+    '/$locale/guides/$guideSlug/$stepSlug': {
+      id: '/$locale/guides/$guideSlug/$stepSlug'
+      path: '/$stepSlug'
+      fullPath: '/$locale/guides/$guideSlug/$stepSlug'
+      preLoaderRoute: typeof LocaleGuidesGuideSlugStepSlugRouteImport
+      parentRoute: typeof LocaleGuidesGuideSlugRouteRoute
     }
   }
 }
+
+interface LocaleGuidesGuideSlugRouteRouteChildren {
+  LocaleGuidesGuideSlugStepSlugRoute: typeof LocaleGuidesGuideSlugStepSlugRoute
+  LocaleGuidesGuideSlugIndexRoute: typeof LocaleGuidesGuideSlugIndexRoute
+}
+
+const LocaleGuidesGuideSlugRouteRouteChildren: LocaleGuidesGuideSlugRouteRouteChildren =
+  {
+    LocaleGuidesGuideSlugStepSlugRoute: LocaleGuidesGuideSlugStepSlugRoute,
+    LocaleGuidesGuideSlugIndexRoute: LocaleGuidesGuideSlugIndexRoute,
+  }
+
+const LocaleGuidesGuideSlugRouteRouteWithChildren =
+  LocaleGuidesGuideSlugRouteRoute._addFileChildren(
+    LocaleGuidesGuideSlugRouteRouteChildren,
+  )
 
 interface LocaleRouteRouteChildren {
   LocaleDataPrivacyRoute: typeof LocaleDataPrivacyRoute
   LocaleImprintRoute: typeof LocaleImprintRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
-  LocaleGuidesFilterTuningRoute: typeof LocaleGuidesFilterTuningRoute
-  LocaleGuidesPidTuningRoute: typeof LocaleGuidesPidTuningRoute
+  LocaleGuidesGuideSlugRouteRoute: typeof LocaleGuidesGuideSlugRouteRouteWithChildren
   LocaleToolsBlackboxAnalyzerRoute: typeof LocaleToolsBlackboxAnalyzerRoute
   LocaleToolsDynamicIdleCalculatorRoute: typeof LocaleToolsDynamicIdleCalculatorRoute
   LocaleGuidesIndexRoute: typeof LocaleGuidesIndexRoute
@@ -283,8 +317,7 @@ const LocaleRouteRouteChildren: LocaleRouteRouteChildren = {
   LocaleDataPrivacyRoute: LocaleDataPrivacyRoute,
   LocaleImprintRoute: LocaleImprintRoute,
   LocaleIndexRoute: LocaleIndexRoute,
-  LocaleGuidesFilterTuningRoute: LocaleGuidesFilterTuningRoute,
-  LocaleGuidesPidTuningRoute: LocaleGuidesPidTuningRoute,
+  LocaleGuidesGuideSlugRouteRoute: LocaleGuidesGuideSlugRouteRouteWithChildren,
   LocaleToolsBlackboxAnalyzerRoute: LocaleToolsBlackboxAnalyzerRoute,
   LocaleToolsDynamicIdleCalculatorRoute: LocaleToolsDynamicIdleCalculatorRoute,
   LocaleGuidesIndexRoute: LocaleGuidesIndexRoute,
