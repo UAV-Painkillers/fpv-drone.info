@@ -1,137 +1,95 @@
-# fpv-drone.info - A page for the FPV drone community
+# fpv-drone.info
 
-- [Qwik Docs](https://qwik.builder.io/)
-- [Discord](https://qwik.builder.io/chat)
-- [Qwik GitHub](https://github.com/BuilderIO/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+**Free, in-browser FPV drone tuning tools.** Analyze Betaflight blackbox logs
+(step response, noise heatmaps, response delay), follow step-by-step PID and
+filter tuning guides, and calculate your dynamic idle — all client-side, no
+uploads, no accounts. Available in English, German, Spanish, French and Polish.
 
----
+A [UAV Painkillers](https://uav-painkillers.de) project. 🦝
 
-## Project Structure
+## Stack
 
-This project is using Qwik with [QwikCity](https://qwik.builder.io/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
+- **Nx monorepo** with pnpm workspaces
+- **React 19 + Vite + TanStack Start** — every route is prerendered to static
+  HTML (pure static hosting on Vercel, no server functions)
+- **Tailwind CSS 4** design system with light/dark themes
+- **MDX content** per locale (no CMS — content lives in this repo)
+- **[@uav.painkillers/pid-analyzer-wasm](https://www.npmjs.com/package/@uav.painkillers/pid-analyzer-wasm)**
+  — the PID analysis engine (Python via Pyodide, runs entirely in the browser)
+- **Apache ECharts** for all plots
+- **PWA** with offline support; the ~90 MB analyzer runtime is an opt-in
+  offline download
 
-Inside your project, you'll see the following directory structure:
+## Workspace layout
 
 ```
-├── public/
-│   └── ...
-└── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── ...
-```
-
-- `src/routes`: Provides the directory-based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.builder.io/qwikcity/routing/overview/) for more info.
-
-- `src/components`: Recommended directory for components.
-
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
-
-## Add Integrations and deployment
-
-Use the `npm run qwik add` command to add additional integrations. Some examples of integrations includes: Cloudflare, Netlify or Express Server, and the [Static Site Generator (SSG)](https://qwik.builder.io/qwikcity/guides/static-site-generation/).
-
-```shell
-npm run qwik add # or `yarn qwik add`
+apps/
+  web/          the app: TanStack file routes, service worker, public assets
+                (incl. the Pyodide analyzer runtime in pid-analyzer-dependencies/)
+  web-e2e/      Playwright smoke tests against the built static output
+libs/
+  analyzer/     framework-free progress reducers + React hook around the WASM engine
+  plots/        ECharts ResponsePlotter + React plot components
+  ui/           design system: tokens, components, raccoon mascots
+  content/      MDX content per locale + typed collections (zod-validated)
+  i18n/         locales + typed UI-string dictionaries (compiler-enforced parity)
+  pwa/          service-worker client, offline download card, install banner
+tools/scripts/  build steps (service worker, sitemap/OG images) and utilities
 ```
 
 ## Development
 
-Development mode uses [Vite's development server](https://vitejs.dev/). The `dev` command will server-side render (SSR) the output during development.
-
-```shell
-npm start # or `yarn start`
+```sh
+pnpm install
+pnpm nx dev @fpv/web          # dev server on http://localhost:4200
+pnpm nx run-many -t lint typecheck test build
 ```
 
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
+The production build prerenders all ~137 pages:
 
-## Preview
-
-The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to preview a production build locally and should not be used as a production server.
-
-```shell
-npm run preview # or `yarn preview`
+```sh
+pnpm nx build web                          # static output in apps/web/dist/client
+pnpm tsx tools/scripts/build-sw.mts        # service worker + analyzer deps manifest
+pnpm tsx tools/scripts/generate-seo.mts    # sitemap.xml, robots.txt, OG images
+node tools/scripts/serve-static.mjs        # preview on http://localhost:4300
 ```
 
-## Production
+E2E smoke suite (needs a prior build):
 
-The production build will generate client and server modules by running both client and server build commands. The build command will use Typescript to run a type check on the source code.
-
-```shell
-npm run build # or `yarn build`
+```sh
+pnpm nx e2e @fpv/web-e2e
 ```
 
-## Builder.io + Qwik
+Tip: open `/en/tools/blackbox-analyzer/?mock-data` to see the plots with
+canned analysis results without downloading the Pyodide runtime.
 
-An example of using [Builder.io's](https://www.builder.io/) visual editor with Qwik.
+## Content & translations
 
-See the catchall route at [src/routes/[...index]/index.tsx](src/routes/[...index]/index.tsx) for the integration code.
+All page content is MDX under `libs/content/src/{en,de,es,fr,pl}/`; guide
+navigation metadata lives in `manifest.json` next to it. UI strings are typed
+TypeScript dictionaries in `libs/i18n/src/messages/` — the `Messages` type
+makes missing translations a compile error. Content was migrated once from
+the old Storyblok CMS by `tools/scripts/migrate-storyblok.mts` (kept for
+reference); the MDX files are now the single source of truth — edit them
+directly.
 
-Registered components can be found in [src/components/builder-registry.ts](src/components/builder-registry.ts)
+## Deployment
 
-### Docs
+Vercel builds via `vercel.json` (install → build → SW → SEO) and serves
+`apps/web/dist/client` as a static site, including permanent redirects for
+all legacy URLs. The only runtime configuration is the optional
+`VITE_MATOMO_HOST` for self-hosted, ad-free analytics.
 
-See our full integration guides [here](https://www.builder.io/c/docs/developers)
+## Credits
 
-Also, when you push your integration to production, go back and update your preview URL to your production URL so now anyone on your team can visuall create content in your Qwik app!
+Built on the groundwork of
+[PID-Analyzer by Florian Melsheimer](https://github.com/Plasmatree/PID-Analyzer)
+(via [VolkerGoeschl's fork](https://github.com/VolkerGoeschl/PID-Analyzer)) and
+[blackbox-tools by the Cleanflight team](https://github.com/cleanflight/blackbox-tools).
+Raccoon artwork by UAV Painkillers.
 
-Also, to integrate structured data, see [this guide](https://www.builder.io/c/docs/integrate-cms-data)
+## Support
 
-## Static Site Generator (Node.js)
-
-```shell
-npm run build.server
-```
-
-## Vercel Edge
-
-This starter site is configured to deploy to [Vercel Edge Functions](https://vercel.com/docs/concepts/functions/edge-functions), which means it will be rendered at an edge location near to your users.
-
-## Installation
-
-The adaptor will add a new `vite.config.ts` within the `adapters/` directory, and a new entry file will be created, such as:
-
-```
-└── adapters/
-    └── vercel-edge/
-        └── vite.config.ts
-└── src/
-    └── entry.vercel-edge.tsx
-```
-
-Additionally, within the `package.json`, the `build.server` script will be updated with the Vercel Edge build.
-
-## Production build
-
-To build the application for production, use the `build` command, this command will automatically run `npm run build.server` and `npm run build.client`:
-
-```shell
-npm run build
-```
-
-[Read the full guide here](https://github.com/BuilderIO/qwik/blob/main/starters/adapters/vercel-edge/README.md)
-
-## Dev deploy
-
-To deploy the application for development:
-
-```shell
-npm run deploy
-```
-
-Notice that you might need a [Vercel account](https://docs.Vercel.com/get-started/) in order to complete this step!
-
-## Production deploy
-
-The project is ready to be deployed to Vercel. However, you will need to create a git repository and push the code to it.
-
-You can [deploy your site to Vercel](https://vercel.com/docs/concepts/deployments/overview) either via a Git provider integration or through the Vercel CLI.
-
-## Static Site Generator (Node.js)
-
-```shell
-npm run build.server
-```
+If these tools saved your tune, consider
+[buying the raccoons a snack](https://buymeacoffee.com/uav.painkillers) ☕🦝
+or join the [Discord](https://discord.gg/eBv6Mke9NS).
