@@ -26,10 +26,16 @@
       "path": "../../libs/ui/tsconfig.lib.json"
     },
     {
+      "path": "../../libs/plots/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/i18n/tsconfig.lib.json"
     },
     {
       "path": "../../libs/content/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/analyzer/tsconfig.lib.json"
     }
   ]
 }

@@ -16,6 +16,13 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2022"
+    "target": "es2022",
+    "paths": {
+      // the package's exports map has no "types" condition, so point TS at
+      // its shipped declarations directly (runtime resolution is unaffected)
+      "@uav.painkillers/pid-analyzer-wasm": [
+        "./libs/analyzer/node_modules/@uav.painkillers/pid-analyzer-wasm/dist/types/index.d.ts"
+      ]
+    }
   }
 }

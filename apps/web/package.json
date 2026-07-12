@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.2.8",
+    "@fpv/analyzer": "workspace:*",
     "@fpv/content": "workspace:*",
     "@fpv/i18n": "workspace:*",
+    "@fpv/plots": "workspace:*",
     "@fpv/ui": "workspace:*",
     "@mdx-js/react": "^3.1.1",
     "@tanstack/react-router": "^1.170.17",

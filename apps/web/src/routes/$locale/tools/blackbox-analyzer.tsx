@@ -1,6 +1,7 @@
 import { getPage } from '@fpv/content';
 import { useT, type Locale } from '@fpv/i18n';
 import { createFileRoute } from '@tanstack/react-router';
+import { MDX_TOOLS } from '../../../components/analyzer/mdx-tools';
 import { MdxArticle } from '../../../components/mdx-page';
 
 export const Route = createFileRoute('/$locale/tools/blackbox-analyzer')({
@@ -17,8 +18,7 @@ function BlackboxAnalyzerPage() {
       <h1 className="text-2xl font-extrabold">{t.analyzer.title}</h1>
       <p className="mt-1 text-ink-muted">{t.analyzer.description}</p>
       <div className="mt-6">
-        {/* Real analyzer widget is injected in Phase 5 via the tools prop */}
-        <MdxArticle Content={Content} />
+        <MdxArticle Content={Content} tools={MDX_TOOLS} />
       </div>
     </div>
   );

@@ -19,7 +19,12 @@ export const Route = createRootRoute({
       { title: 'fpv-drone.info' },
       { name: 'theme-color', content: '#16c99e' },
     ],
-    links: [{ rel: 'stylesheet', href: appCss }],
+    links: [
+      { rel: 'stylesheet', href: appCss },
+      { rel: 'icon', href: '/pwa/favicon.ico', sizes: '48x48' },
+      { rel: 'icon', href: '/pwa/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { rel: 'apple-touch-icon', href: '/pwa/apple-touch-icon.png' },
+    ],
     scripts: [{ children: THEME_INIT_SCRIPT }],
   }),
   shellComponent: RootDocument,

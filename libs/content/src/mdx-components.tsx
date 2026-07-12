@@ -97,13 +97,16 @@ export function buildMdxComponents(tools: ToolComponents = {}): MDXComponents {
     DynamicIdleCalculator:
       tools.DynamicIdleCalculator ??
       (() => <MissingTool name="Dynamic Idle Calculator" />),
-    // long-form typography for markdown elements
-    h2: (props) => <h2 className="mt-8 mb-3 text-xl font-bold" {...props} />,
-    h3: (props) => <h3 className="mt-6 mb-2 text-lg font-bold" {...props} />,
-    h4: (props) => <h4 className="mt-4 mb-2 font-bold" {...props} />,
-    p: (props) => <p className="my-3 leading-relaxed" {...props} />,
-    ul: (props) => <ul className="my-3 list-disc space-y-1 pl-6" {...props} />,
-    ol: (props) => <ol className="my-3 list-decimal space-y-2 pl-6" {...props} />,
+    // long-form typography for markdown elements; text stays at a readable
+    // measure while interactive embeds (plots!) can use the full width
+    h2: (props) => <h2 className="mt-8 mb-3 max-w-2xl text-xl font-bold" {...props} />,
+    h3: (props) => <h3 className="mt-6 mb-2 max-w-2xl text-lg font-bold" {...props} />,
+    h4: (props) => <h4 className="mt-4 mb-2 max-w-2xl font-bold" {...props} />,
+    p: (props) => <p className="my-3 max-w-2xl leading-relaxed" {...props} />,
+    ul: (props) => <ul className="my-3 max-w-2xl list-disc space-y-1 pl-6" {...props} />,
+    ol: (props) => (
+      <ol className="my-3 max-w-2xl list-decimal space-y-2 pl-6" {...props} />
+    ),
     li: (props) => <li className="leading-relaxed" {...props} />,
     a: ContentLink,
     img: ({ src, alt }) => (
@@ -126,5 +129,5 @@ export function buildMdxComponents(tools: ToolComponents = {}): MDXComponents {
 }
 
 export function ContentArticle({ children }: { children: ReactNode }) {
-  return <article className="max-w-2xl text-[15px]">{children}</article>;
+  return <article className="text-[15px]">{children}</article>;
 }
