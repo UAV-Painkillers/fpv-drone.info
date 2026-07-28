@@ -1,0 +1,38 @@
+---
+title: "Slider de feedforward - Análisis"
+index: "3.4"
+order: 12
+slug: "feedforward-slider-analysis"
+---
+
+Vamos a pasar tus logs de vuelo por el analizador para descubrir qué valores del slider dieron la mejor respuesta.
+
+Esta vez necesitamos un tipo de análisis diferente.
+
+Esta vez verás dos líneas por vuelo.
+
+Una se llama setpoint y la otra se llama gyro.
+
+El setpoint es, básicamente, la posición que debería tener el dron según la posición de tus sticks.
+
+Y el gyro es la posición real del dron medida por el giroscopio.
+
+Para ajustar el feedforward, queremos que estas dos líneas sean lo más idénticas posible. Si están más separadas, significa que tu dron tiene más retardo y se siente menos ágil.
+
+Ten en cuenta:
+
+El gráfico incluye una tercera línea, "feedforward", que muestra cuánto está trabajando el feedforward; simplemente ignórala.
+
+1. Sube tu archivo "btfl\_all.bbl" al analizador (botón grande de abajo) y compara los vuelos (puedes mostrar u ocultar la línea de cada vuelo en el gráfico haciendo clic en su etiqueta en la leyenda situada encima del gráfico)
+2. Encuentra el vuelo que más se acerque al estado deseado.
+3. Pon el slider de feedforward en el valor que se usó durante ese vuelo y pulsa Save (puedes encontrar el valor en la leyenda/etiqueta del gráfico)
+
+Has ajustado con éxito tu feedforward.
+
+<Callout tone="tldr" title="Consejo">
+
+Puedes hacer zoom fácilmente en el gráfico haciendo clic en el icono de la parte superior derecha que parece un cuadrado con un signo más en la esquina superior izquierda y seleccionando después la zona del gráfico que te interese.
+
+</Callout>
+
+<BlackboxAnalyzer activePlots={["responseTrace"]} navigation={["showActiveAxisSelection"]} plotLabels={{"strength":{"template":"#{{logIndex}} (FF {{headerValue}})","headerField":"simplified_feedforward_gain"}}} />

@@ -1,0 +1,38 @@
+---
+title: "Slider feedforward - Analyse"
+index: "3.4"
+order: 12
+slug: "feedforward-slider-analysis"
+---
+
+Passons tes logs de vol dans l'analyseur pour découvrir quelles valeurs de slider ont donné la meilleure réponse.
+
+Cette fois, il nous faut un autre type d'analyse.
+
+Tu verras désormais deux courbes par vol.
+
+L'une s'appelle setpoint et l'autre gyro.
+
+Le setpoint correspond en gros à la position que le drone devrait avoir en fonction de la position de tes sticks.
+
+Et le gyro est la position réelle du drone mesurée par le gyroscope.
+
+Pour régler le feedforward, nous voulons que ces deux courbes soient aussi identiques que possible. Plus elles sont éloignées, plus ton drone a de latence et moins il est réactif.
+
+Attention :
+
+Le graphique contient une troisième courbe "feedforward", qui montre à quel point le feedforward travaille ; ignore-la simplement.
+
+1. Charge ton fichier "btfl\_all.bbl" dans l'analyseur (gros bouton ci-dessous) et compare les vols (tu peux afficher/masquer chaque courbe de vol dans le graphique en cliquant sur son libellé dans la légende au-dessus du graphique)
+2. Trouve le vol qui se rapproche le plus de l'état recherché.
+3. Règle ton slider feedforward sur la valeur utilisée pendant ce vol et clique sur Save (tu trouveras la valeur dans la légende / le libellé du graphique)
+
+Tu as réglé ton feedforward avec succès.
+
+<Callout tone="tldr" title="Astuce">
+
+Tu peux facilement zoomer dans le graphique : clique sur l'icône en haut à droite qui ressemble à un carré avec un plus dans le coin supérieur gauche, puis sélectionne la zone qui t'intéresse dans le graphique.
+
+</Callout>
+
+<BlackboxAnalyzer activePlots={["responseTrace"]} navigation={["showActiveAxisSelection"]} plotLabels={{"strength":{"template":"#{{logIndex}} (FF {{headerValue}})","headerField":"simplified_feedforward_gain"}}} />

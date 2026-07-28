@@ -1,0 +1,25 @@
+---
+title: "P & I Verstärkung - Analyse"
+index: "1.4"
+order: 4
+slug: "p-and-i-verst-rkung-analyse"
+image: "/guide-images/pi_gains__analysis.webp"
+---
+
+Wir wollen nun deine Flugprotokolle durch den Analysator laufen lassen und herausfinden, welche Schiebereglerwerte zu der besten Reaktion geführt haben.
+
+Das Ziel ist es, die Flug-/Reaktionskurve zu finden, die sich am schnellsten und am nächsten an den Wert 1 annähert, ohne darüber hinauszuschießen und ohne zu sehr um den Wert 1 zu pendeln.
+
+In der diesem Schritt beigefügten Beispielanimation findest du ein Analysebeispiel.
+
+Wir wollen erreichen, dass unsere Drohne schnell (schnelle Bewegung vom Boden zur Mittellinie) und präzise (kein Überschwingen/Pendeln) reagiert, ohne dass sie sich anschließend korrigieren muss.
+
+Lade deine „btfl\_all.bbl“-Datei in den Analysator hoch (große Schaltfläche unten) und vergleiche die Flüge (du kannst die Sichtbarkeit jeder Fluglinie in der Darstellung umschalten, indem du auf ihre Bezeichnung in der Legende oben in der Darstellung klickst)
+
+Suche den Flug, der dem gewünschten Zustand am nächsten ist.
+
+Setze den Schieberegler für die P & I-Verstärkung auf den Wert, der bei diesem Flug verwendet wurde, und drücke auf „Speichern“ (den Wert findest du in der Legende/Beschriftung der Grafik).
+
+Du hast deine P & I Verstärkung erfolgreich eingestellt.
+
+<BlackboxAnalyzer activePlots={["responseStrength"]} plotLabels={{"strength":{"template":"#{{logIndex}} (PI {{headerValue}})","headerField":"simplified_pi_gain"}}} />

@@ -1,0 +1,23 @@
+---
+title: "P & I Gain - analiza"
+index: "1.4"
+order: 4
+slug: "p-and-i-gains-analysis"
+image: "/guide-images/pi_gains__analysis.webp"
+---
+
+Przepuśćmy twoje logi lotów przez analizator i sprawdźmy, które wartości suwaka dały najlepszą odpowiedź.
+
+Celem jest znalezienie lotu / krzywej odpowiedzi, która najszybciej i najbliżej dochodzi do wartości 1, bez przestrzelenia (overshoot) i bez nadmiernego "falowania" wokół wartości 1.
+
+Spójrz na animację załączoną do tego kroku, aby zobaczyć przykładową analizę.
+
+Chcemy osiągnąć stan, w którym quad reaguje szybko (szybkie przejście od dołu do linii środkowej) i precyzyjnie (bez przestrzelenia / drgań), bez konieczności późniejszego korygowania się.
+
+1. Wgraj swój plik "btfl\_all.bbl" do analizatora (duży przycisk poniżej) i porównaj loty (możesz włączać i wyłączać widoczność linii każdego lotu na wykresie, klikając jego etykietę w legendzie nad wykresem)
+2. Znajdź lot, który jest najbliższy pożądanemu stanowi.
+3. Ustaw suwak P & I Gain na wartość użytą podczas tego lotu i kliknij save (wartość znajdziesz w legendzie/etykiecie wykresu)
+
+Udało ci się wystroić P i I Gain.
+
+<BlackboxAnalyzer activePlots={["responseStrength"]} plotLabels={{"strength":{"template":"#{{logIndex}} (PI {{headerValue}})","headerField":"simplified_pi_gain"}}} />

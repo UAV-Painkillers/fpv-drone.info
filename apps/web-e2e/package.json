@@ -1,0 +1,14 @@
+{
+  "name": "@fpv/web-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "nx": {
+    "projectType": "application",
+    "tags": ["scope:e2e"],
+    "implicitDependencies": ["@fpv/web"]
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}

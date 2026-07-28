@@ -1,12 +1,110 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm nx build web && pnpm tsx tools/scripts/build-sw.mts && pnpm tsx tools/scripts/generate-seo.mts",
+  "outputDirectory": "apps/web/dist/client",
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:locale(en|de|es|fr|pl)/tools/tuning-tools/noob/pid",
+      "destination": "/:locale/guides/pid-tuning",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|de|es|fr|pl)/tools/tuning-tools/noob/filter",
+      "destination": "/:locale/guides/filter-tuning",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|de|es|fr|pl)/tools/tuning-tools/pro",
+      "destination": "/:locale/tools/blackbox-analyzer",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|de|es|fr|pl)/tools/tuning-tools/:rest*",
+      "destination": "/:locale/guides",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|de|es|fr|pl)/tools/tuning-tool",
+      "destination": "/:locale/tools",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|de|es|fr|pl)/guide",
+      "destination": "/:locale/guides",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|de|es|fr|pl)/products/:rest*",
+      "destination": "/:locale",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|de|es|fr|pl)/product",
+      "destination": "/:locale",
+      "permanent": true
+    },
+    {
+      "source": "/tools/tuning-tools/noob/pid",
+      "destination": "/en/guides/pid-tuning",
+      "permanent": true
+    },
+    {
+      "source": "/tools/tuning-tools/noob/filter",
+      "destination": "/en/guides/filter-tuning",
+      "permanent": true
+    },
+    {
+      "source": "/tools/tuning-tools/pro",
+      "destination": "/en/tools/blackbox-analyzer",
+      "permanent": true
+    },
+    {
+      "source": "/tools/tuning-tools/:rest*",
+      "destination": "/en/guides",
+      "permanent": true
+    },
+    {
+      "source": "/tools/tuning-tool",
+      "destination": "/en/tools",
+      "permanent": true
+    },
+    { "source": "/tools", "destination": "/en/tools", "permanent": true },
+    { "source": "/guide", "destination": "/en/guides", "permanent": true },
+    { "source": "/guides", "destination": "/en/guides", "permanent": true },
+    { "source": "/products/:rest*", "destination": "/en", "permanent": true },
+    { "source": "/product", "destination": "/en", "permanent": true },
+    { "source": "/imprint", "destination": "/en/imprint", "permanent": true },
+    {
+      "source": "/data-privacy",
+      "destination": "/en/data-privacy",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
-      "source": "/build/(.*)",
+      "source": "/sw.js",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/pid-analyzer-dependencies/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/guide-images/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800" }
       ]
     }
   ]

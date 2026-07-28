@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "fpv-drone.info",
+  "short_name": "fpv-drone.info",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": [
+    "fullscreen",
+    "minimal-ui"
+  ],
+  "background_color": "#f7f8fa",
+  "theme_color": "#16c99e",
+  "description": "FPV drone tuning tools: blackbox analyzer, PID & filter tuning guides \u2014 free and in your browser.",
+  "icons": [
+    {
+      "src": "/pwa/android-chrome-192x192.png?v=13",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa/android-chrome-512x512.png?v=13",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

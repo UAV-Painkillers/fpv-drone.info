@@ -1,0 +1,38 @@
+---
+title: "Suwak feedforward - analiza"
+index: "3.4"
+order: 12
+slug: "feedforward-slider-analysis"
+---
+
+Przepuśćmy twoje logi lotów przez analizator i sprawdźmy, które wartości suwaka dały najlepszą odpowiedź.
+
+Tym razem potrzebujemy innego rodzaju analizy.
+
+Tym razem dla każdego lotu zobaczysz dwie linie.
+
+Jedna nazywa się setpoint, a druga gyro.
+
+Setpoint to w zasadzie pozycja, jaką dron powinien mieć na podstawie wychylenia twoich drążków.
+
+A gyro to rzeczywista pozycja drona zmierzona przez żyroskop.
+
+Strojąc feedforward, chcemy, aby te dwie linie były możliwie identyczne. Jeśli są od siebie bardziej oddalone, oznacza to, że dron ma większe opóźnienie i reaguje mniej "sztywno".
+
+Uwaga:
+
+Wykres zawiera trzecią linię "feedforward" — pokazuje ona, jak mocno działa feedforward; po prostu ją zignoruj.
+
+1. Wgraj swój plik "btfl\_all.bbl" do analizatora (duży przycisk poniżej) i porównaj loty (możesz włączać i wyłączać widoczność linii każdego lotu na wykresie, klikając jego etykietę w legendzie nad wykresem)
+2. Znajdź lot, który jest najbliższy pożądanemu stanowi.
+3. Ustaw suwak feedforward na wartość użytą podczas tego lotu i kliknij save (wartość znajdziesz w legendzie/etykiecie wykresu)
+
+Udało ci się wystroić feedforward.
+
+<Callout tone="tldr" title="Wskazówka">
+
+Możesz łatwo przybliżyć fragment wykresu, klikając ikonę w prawym górnym rogu, która wygląda jak kwadrat z plusem w lewym górnym rogu, a następnie zaznaczając interesujący cię obszar na wykresie.
+
+</Callout>
+
+<BlackboxAnalyzer activePlots={["responseTrace"]} navigation={["showActiveAxisSelection"]} plotLabels={{"strength":{"template":"#{{logIndex}} (FF {{headerValue}})","headerField":"simplified_feedforward_gain"}}} />

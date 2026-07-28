@@ -1,0 +1,17 @@
+---
+title: "RPM Filters - Analyse"
+index: "4.1"
+order: 4
+slug: "rpm-filters-analysis"
+image: "/guide-images/rpm_filters__analysis.webp"
+---
+
+Là, ça devient intéressant : faisons notre première analyse.
+
+Ta mission est plutôt simple :
+
+1. Charge ton fichier de log sauvegardé (btfl\_all.bbl) dans l'analyseur ci-dessous
+2. Compte les "lignes" diagonales (harmoniques) dans ton graphique (voir l'image jointe pour référence) et retiens ce nombre (ou note-le quelque part)
+3. Trouve ensuite la fréquence la plus basse à laquelle l'une de ces lignes commence (le point le plus à gauche de n'importe laquelle de ces lignes) et retiens-la aussi / note-la
+
+<BlackboxAnalyzer activePlots={["noiseGyroDebug"]} navigation={["showMainLogSelection","showActiveAxisSelection"]} />

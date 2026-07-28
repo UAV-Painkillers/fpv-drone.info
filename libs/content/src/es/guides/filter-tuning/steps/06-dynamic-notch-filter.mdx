@@ -1,0 +1,21 @@
+---
+title: "Dynamic Notch Filter"
+index: "5"
+order: 6
+slug: "dynamic-notch-filter"
+image: "/guide-images/dynamic_notch_filter.webp"
+---
+
+Echemos un vistazo al filtro Dynamic Notch.
+
+Podemos usar el gráfico / análisis anterior para esto.
+
+Cuenta la cantidad de barras verticales en el gráfico (mira la imagen adjunta para ver a qué me refiero) y ponla como "Dynamic Notch Count" (#1)
+
+En algunos casos puede que no haya ninguna barra vertical; si es el caso de tu dron: simplemente desactiva el Dynamic Notch Filter.
+
+También necesitas determinar el comienzo y el final de la zona del filtro notch.
+
+Pon en "Dynamic Notch Min Frequency Hz" (#2) la frecuencia a la que empieza la primera barra y réstale ~25Hz.
+
+Deja el "Dynamic Notch Max Hz" en su valor por defecto; está bien tal como está.

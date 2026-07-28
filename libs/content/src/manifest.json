@@ -1,0 +1,962 @@
+{
+  "en": {
+    "pages": {
+      "imprint": {
+        "title": "Imprint",
+        "description": "Imprint for fpv-drone.info"
+      },
+      "data-privacy": {
+        "title": "Data Privacy",
+        "description": "Privacy policy of fpv-drone.info"
+      },
+      "analyzer": {
+        "title": "Tuning Tools (Pro)",
+        "subtitle": "as if you know what you're doing...",
+        "description": "Step Response, Noise Charts, and more"
+      }
+    },
+    "guides": {
+      "pid-tuning": {
+        "title": "PID Tuning Guide",
+        "subtitle": "bye bye propwash, hello wall!",
+        "description": "PID tuning takes hours, is complicated and you need to watch long videos to understand it?\nNot at all! Our guide takes you step-by-step though the process!",
+        "prerequisitesTitle": "Setup",
+        "prerequisites": [
+          "Your FC has a blackbox",
+          "Betaflight Version is 4.3 newer (#1)",
+          "Blackbox Logging Device is set correctly (#2)",
+          "Logging Rate is set to 1kHz or higher (#3)",
+          "Blackbox Debug is set to \"GYRO_SCALED\" (#4)",
+          "Blackbox Flash is Cleared / Empty / Deleted (#5)"
+        ],
+        "prerequisitesImage": "/guide-images/pid_tuning__blackbox_setup.webp",
+        "stepCount": 13,
+        "steps": [
+          {
+            "title": "P & I Gains - Setup Betaflight",
+            "index": "1.1",
+            "order": 1,
+            "slug": "p-and-i-gains-setup-betaflight",
+            "image": "/guide-images/pi_gains_setup.webp"
+          },
+          {
+            "title": "P & I Gains - Log flights",
+            "index": "1.2",
+            "order": 2,
+            "slug": "p-and-i-gains-log-flights",
+            "image": "/guide-images/pi_gains_flights.webp"
+          },
+          {
+            "title": "Extract Logfile",
+            "index": "1.3",
+            "order": 3,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "P & I Gains - Analysis",
+            "index": "1.4",
+            "order": 4,
+            "slug": "p-and-i-gains-analysis",
+            "image": "/guide-images/pi_gains__analysis.webp"
+          },
+          {
+            "title": "Clear Blackbox",
+            "index": "2.1",
+            "order": 5,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Master Slider - Log flights",
+            "index": "2.2",
+            "order": 6,
+            "slug": "master-slider-log-flights",
+            "image": "/guide-images/master_slider__flights.webp"
+          },
+          {
+            "title": "Extract Logfile",
+            "index": "2.3",
+            "order": 7,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "Master Slider - Analysis",
+            "index": "2.4",
+            "order": 8,
+            "slug": "master-slider-analysis",
+            "image": "/guide-images/master_slider__analysis.webp"
+          },
+          {
+            "title": "I Gain- Setup Betaflight",
+            "index": "3.1",
+            "order": 9,
+            "slug": "i-gain-setup-betaflight",
+            "image": "/guide-images/i_gain__setup.webp"
+          },
+          {
+            "title": "Clear Blackbox",
+            "index": "3.2",
+            "order": 10,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Feedforward Slider - Log flights",
+            "index": "3.3",
+            "order": 11,
+            "slug": "feedforward-slider-log-flights",
+            "image": "/guide-images/feedforward__flights.webp"
+          },
+          {
+            "title": "Feedforward Slider - Analysis",
+            "index": "3.4",
+            "order": 12,
+            "slug": "feedforward-slider-analysis"
+          },
+          {
+            "title": "Dynamic Idle",
+            "index": "4.1",
+            "order": 13,
+            "slug": "dynamic-idle",
+            "image": "/guide-images/dynamic_idle.webp"
+          }
+        ]
+      },
+      "filter-tuning": {
+        "title": "Filter Tuning Guide",
+        "subtitle": "are motors supposed to smoke?",
+        "description": "Tune your Betaflight filters to reduce noise while keeping latency low. Sounds complicated?\nNot at all, this step-by-step guide is focused on noobs, everyone can do it!",
+        "prerequisitesTitle": "Setup",
+        "prerequisites": [
+          "Your FC has a blackbox",
+          "Betaflight Version is 4.3 newer (#1)",
+          "Blackbox Logging Device is set correctly (#2)",
+          "Logging Rate is set to 1kHz or higher (#3)",
+          "Blackbox Debug is set to \"GYRO_SCALED\" (#4)",
+          "Blackbox Flash is Cleared / Empty / Deleted (#5)",
+          "Enable Expert Mode (Top right, close to the Disconnect button)"
+        ],
+        "prerequisitesImage": "/guide-images/filter_tuning_prerequesites.webp",
+        "stepCount": 7,
+        "steps": [
+          {
+            "title": "Gyro Filters",
+            "index": "1",
+            "order": 1,
+            "slug": "gyro-filters",
+            "image": "/guide-images/filter_tuning_step_1.webp"
+          },
+          {
+            "title": "Flying",
+            "index": "2",
+            "order": 2,
+            "slug": "flying"
+          },
+          {
+            "title": "Extract Logfile",
+            "index": "3",
+            "order": 3,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "RPM Filters - Analysis",
+            "index": "4.1",
+            "order": 4,
+            "slug": "rpm-filters-analysis",
+            "image": "/guide-images/rpm_filters__analysis.webp"
+          },
+          {
+            "title": "RPM Filters - Config",
+            "index": "4.2",
+            "order": 5,
+            "slug": "rpm-filters-config",
+            "image": "/guide-images/rpm_filters__config.webp"
+          },
+          {
+            "title": "Dynamic Notch Filter",
+            "index": "5",
+            "order": 6,
+            "slug": "dynamic-notch-filter",
+            "image": "/guide-images/dynamic_notch_filter.webp"
+          },
+          {
+            "title": "D Term Filter",
+            "index": "6",
+            "order": 7,
+            "slug": "d-term-filter",
+            "image": "/guide-images/dterm_filter.webp"
+          }
+        ]
+      }
+    }
+  },
+  "de": {
+    "pages": {
+      "imprint": {
+        "title": "Impressum",
+        "description": "Impressum von fpv-drone.info"
+      },
+      "data-privacy": {
+        "title": "Datenschutz",
+        "description": "Datenschutzerklärung von fpv-drone.info"
+      },
+      "analyzer": {
+        "title": "Tuning Tools (Profi)",
+        "subtitle": "als wenn du wüsstest was du tust...",
+        "description": "Step Response, Noise Charts und mehr"
+      }
+    },
+    "guides": {
+      "pid-tuning": {
+        "title": "PID Tuning Guide",
+        "subtitle": "tschüss Propwash. Hallo Wand!",
+        "description": "PID-Tuning dauert Stunden, ist kompliziert und man muss sich lange Videos ansehen, um es zu verstehen?\nKeineswegs! Unser Leitfaden führt dich Schritt für Schritt durch den Prozess!",
+        "prerequisitesTitle": "Vorbereitung",
+        "prerequisites": [
+          "Dein FC hat eine Blackbox",
+          "Betaflight Version ist 4.3 oder neuer (#1)",
+          "Blackbox Log-Gerät ist korrekt eingestellt (#2)",
+          "Blackbox Log-Geschwindigkeit steht auf 1kHz oder höher (#3)",
+          "Blackbox Debug Modus steht auf \"GYRO_SCALED\" (#4)",
+          "Blackbox Speicher ist gelöscht / geleert (#5)"
+        ],
+        "prerequisitesImage": "/guide-images/pid_tuning__blackbox_setup.webp",
+        "stepCount": 13,
+        "steps": [
+          {
+            "title": "P & I Verstärkung - Betaflight Vorbereitung",
+            "index": "1.1",
+            "order": 1,
+            "slug": "p-and-i-verst-rkung-betaflight-vorbereitung",
+            "image": "/guide-images/pi_gains_setup.webp"
+          },
+          {
+            "title": "P & I Verstärkung - Flüge",
+            "index": "1.2",
+            "order": 2,
+            "slug": "p-and-i-verst-rkung-fl-ge",
+            "image": "/guide-images/pi_gains_flights.webp"
+          },
+          {
+            "title": "Logdatei extrahieren",
+            "index": "1.3",
+            "order": 3,
+            "slug": "logdatei-extrahieren",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "P & I Verstärkung - Analyse",
+            "index": "1.4",
+            "order": 4,
+            "slug": "p-and-i-verst-rkung-analyse",
+            "image": "/guide-images/pi_gains__analysis.webp"
+          },
+          {
+            "title": "Clear Blackbox",
+            "index": "2.1",
+            "order": 5,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Hauptmultiplikator - Flüge",
+            "index": "2.2",
+            "order": 6,
+            "slug": "hauptmultiplikator-fl-ge",
+            "image": "/guide-images/master_slider__flights.webp"
+          },
+          {
+            "title": "Logdatei extrahieren",
+            "index": "2.3",
+            "order": 7,
+            "slug": "logdatei-extrahieren",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "Hauptmultiplikator - Analyse",
+            "index": "2.4",
+            "order": 8,
+            "slug": "hauptmultiplikator-analyse",
+            "image": "/guide-images/master_slider__analysis.webp"
+          },
+          {
+            "title": "I Verstärkung - Betaflight Vorbereitung",
+            "index": "3.1",
+            "order": 9,
+            "slug": "i-verst-rkung-betaflight-vorbereitung",
+            "image": "/guide-images/i_gain__setup.webp"
+          },
+          {
+            "title": "Clear Blackbox",
+            "index": "3.2",
+            "order": 10,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Feedforward - Flüge",
+            "index": "3.3",
+            "order": 11,
+            "slug": "feedforward-fl-ge",
+            "image": "/guide-images/feedforward__flights.webp"
+          },
+          {
+            "title": "Feedforward - Analyse",
+            "index": "3.4",
+            "order": 12,
+            "slug": "feedforward-analyse"
+          },
+          {
+            "title": "Dynamischer Leerlaufwert",
+            "index": "4.1",
+            "order": 13,
+            "slug": "dynamischer-leerlaufwert",
+            "image": "/guide-images/dynamic_idle.webp"
+          }
+        ]
+      },
+      "filter-tuning": {
+        "title": "Filter Tuning Guide",
+        "subtitle": "sollen Motoren qualmen?",
+        "description": "Stimme deine Betaflight-Filter ab, um das Rauschen zu reduzieren und gleichzeitig die Latenz gering zu halten. Klingt kompliziert?\nGanz und gar nicht, diese Schritt-für-Schritt-Anleitung richtet sich an Laien, jeder kann es schaffen!",
+        "prerequisitesTitle": "Vorbereitung",
+        "prerequisites": [
+          "Dein FC hat eine Blackbox",
+          "Betaflight Version ist 4.3 oder neuer (#1)",
+          "Blackbox Log-Gerät ist korrekt eingestellt (#2)",
+          "Blackbox Log-Geschwindigkeit steht auf 1kHz oder höher (#3)",
+          "Blackbox Debug Modus steht auf \"GYRO_SCALED\" (#4)",
+          "Blackbox Speicher ist gelöscht / geleert (#5)",
+          "Expertenmodus ist eingeschaltet (Oben Rechts, neben Firmware aktualisieren Knopf)"
+        ],
+        "prerequisitesImage": "/guide-images/filter_tuning_prerequesites.webp",
+        "stepCount": 7,
+        "steps": [
+          {
+            "title": "Gyro Filter",
+            "index": "1",
+            "order": 1,
+            "slug": "gyro-filter",
+            "image": "/guide-images/filter_tuning_step_1.webp"
+          },
+          {
+            "title": "Fliegen",
+            "index": "2",
+            "order": 2,
+            "slug": "fliegen"
+          },
+          {
+            "title": "Logdatei extrahieren",
+            "index": "3",
+            "order": 3,
+            "slug": "logdatei-extrahieren",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "RPM Filter - Analyse",
+            "index": "4.1",
+            "order": 4,
+            "slug": "rpm-filter-analyse",
+            "image": "/guide-images/rpm_filters__analysis.webp"
+          },
+          {
+            "title": "RPM Filter - Konfiguration",
+            "index": "4.2",
+            "order": 5,
+            "slug": "rpm-filter-konfiguration",
+            "image": "/guide-images/rpm_filters__config.webp"
+          },
+          {
+            "title": "Dynamischer Notch Filter",
+            "index": "5",
+            "order": 6,
+            "slug": "dynamischer-notch-filter",
+            "image": "/guide-images/dynamic_notch_filter.webp"
+          },
+          {
+            "title": "D-Wert Filter",
+            "index": "6",
+            "order": 7,
+            "slug": "d-wert-filter",
+            "image": "/guide-images/dterm_filter.webp"
+          }
+        ]
+      }
+    }
+  },
+  "es": {
+    "pages": {
+      "imprint": {
+        "title": "Aviso legal",
+        "description": "Aviso legal de fpv-drone.info"
+      },
+      "data-privacy": {
+        "title": "Privacidad de datos",
+        "description": "Política de privacidad de fpv-drone.info"
+      },
+      "analyzer": {
+        "title": "Tuning Tools (Pro)",
+        "subtitle": "como si supieras lo que estás haciendo...",
+        "description": "Step Response, gráficos de ruido y mucho más"
+      }
+    },
+    "guides": {
+      "pid-tuning": {
+        "title": "Guía de tuning de PID",
+        "subtitle": "¡adiós propwash, hola pared!",
+        "description": "¿El tuning de PID lleva horas, es complicado y hay que ver vídeos larguísimos para entenderlo?\n¡Para nada! ¡Nuestra guía te lleva paso a paso por todo el proceso!",
+        "prerequisitesTitle": "Preparación",
+        "prerequisites": [
+          "Tu FC tiene blackbox",
+          "La versión de Betaflight es 4.3 o más reciente (#1)",
+          "El Blackbox Logging Device está configurado correctamente (#2)",
+          "El Logging Rate está configurado a 1kHz o más (#3)",
+          "El Blackbox Debug está configurado en \"GYRO_SCALED\" (#4)",
+          "La memoria flash de la blackbox está borrada / vacía (#5)"
+        ],
+        "prerequisitesImage": "/guide-images/pid_tuning__blackbox_setup.webp",
+        "stepCount": 13,
+        "steps": [
+          {
+            "title": "P & I Gains - Configurar Betaflight",
+            "index": "1.1",
+            "order": 1,
+            "slug": "p-and-i-gains-setup-betaflight",
+            "image": "/guide-images/pi_gains_setup.webp"
+          },
+          {
+            "title": "P & I Gains - Registrar vuelos",
+            "index": "1.2",
+            "order": 2,
+            "slug": "p-and-i-gains-log-flights",
+            "image": "/guide-images/pi_gains_flights.webp"
+          },
+          {
+            "title": "Extraer el log",
+            "index": "1.3",
+            "order": 3,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "P & I Gains - Análisis",
+            "index": "1.4",
+            "order": 4,
+            "slug": "p-and-i-gains-analysis",
+            "image": "/guide-images/pi_gains__analysis.webp"
+          },
+          {
+            "title": "Borrar la blackbox",
+            "index": "2.1",
+            "order": 5,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Master Slider - Registrar vuelos",
+            "index": "2.2",
+            "order": 6,
+            "slug": "master-slider-log-flights",
+            "image": "/guide-images/master_slider__flights.webp"
+          },
+          {
+            "title": "Extraer el log",
+            "index": "2.3",
+            "order": 7,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "Master Slider - Análisis",
+            "index": "2.4",
+            "order": 8,
+            "slug": "master-slider-analysis",
+            "image": "/guide-images/master_slider__analysis.webp"
+          },
+          {
+            "title": "I Gain - Configurar Betaflight",
+            "index": "3.1",
+            "order": 9,
+            "slug": "i-gain-setup-betaflight",
+            "image": "/guide-images/i_gain__setup.webp"
+          },
+          {
+            "title": "Borrar la blackbox",
+            "index": "3.2",
+            "order": 10,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Slider de feedforward - Registrar vuelos",
+            "index": "3.3",
+            "order": 11,
+            "slug": "feedforward-slider-log-flights",
+            "image": "/guide-images/feedforward__flights.webp"
+          },
+          {
+            "title": "Slider de feedforward - Análisis",
+            "index": "3.4",
+            "order": 12,
+            "slug": "feedforward-slider-analysis"
+          },
+          {
+            "title": "Dynamic Idle",
+            "index": "4.1",
+            "order": 13,
+            "slug": "dynamic-idle",
+            "image": "/guide-images/dynamic_idle.webp"
+          }
+        ]
+      },
+      "filter-tuning": {
+        "title": "Guía de tuning de filtros",
+        "subtitle": "¿se supone que los motores deben echar humo?",
+        "description": "Ajusta los filtros de Betaflight para reducir el ruido manteniendo la latencia baja. ¿Suena complicado?\n¡Para nada! Esta guía paso a paso está pensada para novatos, ¡cualquiera puede hacerlo!",
+        "prerequisitesTitle": "Preparación",
+        "prerequisites": [
+          "Tu FC tiene blackbox",
+          "La versión de Betaflight es 4.3 o más reciente (#1)",
+          "El Blackbox Logging Device está configurado correctamente (#2)",
+          "El Logging Rate está configurado a 1kHz o más (#3)",
+          "El Blackbox Debug está configurado en \"GYRO_SCALED\" (#4)",
+          "La memoria flash de la blackbox está borrada / vacía (#5)",
+          "Activa el Expert Mode (arriba a la derecha, junto al botón Disconnect)"
+        ],
+        "prerequisitesImage": "/guide-images/filter_tuning_prerequesites.webp",
+        "stepCount": 7,
+        "steps": [
+          {
+            "title": "Filtros del gyro",
+            "index": "1",
+            "order": 1,
+            "slug": "gyro-filters",
+            "image": "/guide-images/filter_tuning_step_1.webp"
+          },
+          {
+            "title": "Volar",
+            "index": "2",
+            "order": 2,
+            "slug": "flying"
+          },
+          {
+            "title": "Extraer el log",
+            "index": "3",
+            "order": 3,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "RPM Filters - Análisis",
+            "index": "4.1",
+            "order": 4,
+            "slug": "rpm-filters-analysis",
+            "image": "/guide-images/rpm_filters__analysis.webp"
+          },
+          {
+            "title": "RPM Filters - Configuración",
+            "index": "4.2",
+            "order": 5,
+            "slug": "rpm-filters-config",
+            "image": "/guide-images/rpm_filters__config.webp"
+          },
+          {
+            "title": "Dynamic Notch Filter",
+            "index": "5",
+            "order": 6,
+            "slug": "dynamic-notch-filter",
+            "image": "/guide-images/dynamic_notch_filter.webp"
+          },
+          {
+            "title": "Filtro del D-Term",
+            "index": "6",
+            "order": 7,
+            "slug": "d-term-filter",
+            "image": "/guide-images/dterm_filter.webp"
+          }
+        ]
+      }
+    }
+  },
+  "fr": {
+    "pages": {
+      "imprint": {
+        "title": "Mentions légales",
+        "description": "Mentions légales de fpv-drone.info"
+      },
+      "data-privacy": {
+        "title": "Confidentialité",
+        "description": "Politique de confidentialité de fpv-drone.info"
+      },
+      "analyzer": {
+        "title": "Tuning Tools (Pro)",
+        "subtitle": "comme si tu savais ce que tu faisais...",
+        "description": "Step Response, graphiques de bruit et plus encore"
+      }
+    },
+    "guides": {
+      "pid-tuning": {
+        "title": "Guide de réglage PID",
+        "subtitle": "bye bye le propwash, bonjour le mur !",
+        "description": "Le réglage des PID prend des heures, c'est compliqué et il faut regarder de longues vidéos pour comprendre ?\nPas du tout ! Notre guide te fait suivre le processus étape par étape !",
+        "prerequisitesTitle": "Configuration",
+        "prerequisites": [
+          "Ta FC dispose d'une blackbox",
+          "La version de Betaflight est 4.3 ou plus récente (#1)",
+          "Le périphérique de log de la blackbox est correctement défini (#2)",
+          "La fréquence de log est réglée sur 1 kHz ou plus (#3)",
+          "Le debug de la blackbox est réglé sur \"GYRO_SCALED\" (#4)",
+          "La mémoire flash de la blackbox est effacée / vide (#5)"
+        ],
+        "prerequisitesImage": "/guide-images/pid_tuning__blackbox_setup.webp",
+        "stepCount": 13,
+        "steps": [
+          {
+            "title": "P & I Gains - Configuration de Betaflight",
+            "index": "1.1",
+            "order": 1,
+            "slug": "p-and-i-gains-setup-betaflight",
+            "image": "/guide-images/pi_gains_setup.webp"
+          },
+          {
+            "title": "P & I Gains - Enregistrer des vols",
+            "index": "1.2",
+            "order": 2,
+            "slug": "p-and-i-gains-log-flights",
+            "image": "/guide-images/pi_gains_flights.webp"
+          },
+          {
+            "title": "Extraire le fichier de log",
+            "index": "1.3",
+            "order": 3,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "P & I Gains - Analyse",
+            "index": "1.4",
+            "order": 4,
+            "slug": "p-and-i-gains-analysis",
+            "image": "/guide-images/pi_gains__analysis.webp"
+          },
+          {
+            "title": "Effacer la blackbox",
+            "index": "2.1",
+            "order": 5,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Master Slider - Enregistrer des vols",
+            "index": "2.2",
+            "order": 6,
+            "slug": "master-slider-log-flights",
+            "image": "/guide-images/master_slider__flights.webp"
+          },
+          {
+            "title": "Extraire le fichier de log",
+            "index": "2.3",
+            "order": 7,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "Master Slider - Analyse",
+            "index": "2.4",
+            "order": 8,
+            "slug": "master-slider-analysis",
+            "image": "/guide-images/master_slider__analysis.webp"
+          },
+          {
+            "title": "I Gain - Configuration de Betaflight",
+            "index": "3.1",
+            "order": 9,
+            "slug": "i-gain-setup-betaflight",
+            "image": "/guide-images/i_gain__setup.webp"
+          },
+          {
+            "title": "Effacer la blackbox",
+            "index": "3.2",
+            "order": 10,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Slider feedforward - Enregistrer des vols",
+            "index": "3.3",
+            "order": 11,
+            "slug": "feedforward-slider-log-flights",
+            "image": "/guide-images/feedforward__flights.webp"
+          },
+          {
+            "title": "Slider feedforward - Analyse",
+            "index": "3.4",
+            "order": 12,
+            "slug": "feedforward-slider-analysis"
+          },
+          {
+            "title": "Dynamic Idle",
+            "index": "4.1",
+            "order": 13,
+            "slug": "dynamic-idle",
+            "image": "/guide-images/dynamic_idle.webp"
+          }
+        ]
+      },
+      "filter-tuning": {
+        "title": "Guide de réglage des filtres",
+        "subtitle": "les moteurs sont censés fumer ?",
+        "description": "Règle tes filtres Betaflight pour réduire le bruit tout en gardant une latence faible. Ça a l'air compliqué ?\nPas du tout, ce guide pas à pas est pensé pour les débutants, tout le monde peut y arriver !",
+        "prerequisitesTitle": "Configuration",
+        "prerequisites": [
+          "Ta FC dispose d'une blackbox",
+          "La version de Betaflight est 4.3 ou plus récente (#1)",
+          "Le périphérique de log de la blackbox est correctement défini (#2)",
+          "La fréquence de log est réglée sur 1 kHz ou plus (#3)",
+          "Le debug de la blackbox est réglé sur \"GYRO_SCALED\" (#4)",
+          "La mémoire flash de la blackbox est effacée / vide (#5)",
+          "Active l'Expert Mode (en haut à droite, près du bouton Disconnect)"
+        ],
+        "prerequisitesImage": "/guide-images/filter_tuning_prerequesites.webp",
+        "stepCount": 7,
+        "steps": [
+          {
+            "title": "Filtres gyro",
+            "index": "1",
+            "order": 1,
+            "slug": "gyro-filters",
+            "image": "/guide-images/filter_tuning_step_1.webp"
+          },
+          {
+            "title": "Voler",
+            "index": "2",
+            "order": 2,
+            "slug": "flying"
+          },
+          {
+            "title": "Extraire le fichier de log",
+            "index": "3",
+            "order": 3,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "RPM Filters - Analyse",
+            "index": "4.1",
+            "order": 4,
+            "slug": "rpm-filters-analysis",
+            "image": "/guide-images/rpm_filters__analysis.webp"
+          },
+          {
+            "title": "RPM Filters - Configuration",
+            "index": "4.2",
+            "order": 5,
+            "slug": "rpm-filters-config",
+            "image": "/guide-images/rpm_filters__config.webp"
+          },
+          {
+            "title": "Filtre Dynamic Notch",
+            "index": "5",
+            "order": 6,
+            "slug": "dynamic-notch-filter",
+            "image": "/guide-images/dynamic_notch_filter.webp"
+          },
+          {
+            "title": "Filtre D-Term",
+            "index": "6",
+            "order": 7,
+            "slug": "d-term-filter",
+            "image": "/guide-images/dterm_filter.webp"
+          }
+        ]
+      }
+    }
+  },
+  "pl": {
+    "pages": {
+      "imprint": {
+        "title": "Impressum",
+        "description": "Impressum strony fpv-drone.info"
+      },
+      "data-privacy": {
+        "title": "Prywatność danych",
+        "description": "Polityka prywatności fpv-drone.info"
+      },
+      "analyzer": {
+        "title": "Tuning Tools (Pro)",
+        "subtitle": "jakbyś wiedział, co robisz...",
+        "description": "Step response, wykresy szumów i więcej"
+      }
+    },
+    "guides": {
+      "pid-tuning": {
+        "title": "Poradnik strojenia PID",
+        "subtitle": "żegnaj propwashu, witaj ściano!",
+        "description": "Strojenie PID zajmuje godziny, jest skomplikowane i trzeba oglądać długie filmy, żeby je zrozumieć?\nWcale nie! Nasz poradnik przeprowadzi cię przez cały proces krok po kroku!",
+        "prerequisitesTitle": "Przygotowanie",
+        "prerequisites": [
+          "Twój FC ma blackbox",
+          "Wersja Betaflight to 4.3 lub nowsza (#1)",
+          "Urządzenie zapisu blackbox (Logging Device) jest ustawione poprawnie (#2)",
+          "Częstotliwość logowania jest ustawiona na 1 kHz lub wyżej (#3)",
+          "Blackbox Debug jest ustawiony na \"GYRO_SCALED\" (#4)",
+          "Pamięć flash blackboxa jest wyczyszczona / pusta / skasowana (#5)"
+        ],
+        "prerequisitesImage": "/guide-images/pid_tuning__blackbox_setup.webp",
+        "stepCount": 13,
+        "steps": [
+          {
+            "title": "P & I Gain - konfiguracja Betaflight",
+            "index": "1.1",
+            "order": 1,
+            "slug": "p-and-i-gains-setup-betaflight",
+            "image": "/guide-images/pi_gains_setup.webp"
+          },
+          {
+            "title": "P & I Gain - loty z logowaniem",
+            "index": "1.2",
+            "order": 2,
+            "slug": "p-and-i-gains-log-flights",
+            "image": "/guide-images/pi_gains_flights.webp"
+          },
+          {
+            "title": "Pobranie pliku logu",
+            "index": "1.3",
+            "order": 3,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "P & I Gain - analiza",
+            "index": "1.4",
+            "order": 4,
+            "slug": "p-and-i-gains-analysis",
+            "image": "/guide-images/pi_gains__analysis.webp"
+          },
+          {
+            "title": "Wyczyszczenie blackboxa",
+            "index": "2.1",
+            "order": 5,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Suwak Master - loty z logowaniem",
+            "index": "2.2",
+            "order": 6,
+            "slug": "master-slider-log-flights",
+            "image": "/guide-images/master_slider__flights.webp"
+          },
+          {
+            "title": "Pobranie pliku logu",
+            "index": "2.3",
+            "order": 7,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "Suwak Master - analiza",
+            "index": "2.4",
+            "order": 8,
+            "slug": "master-slider-analysis",
+            "image": "/guide-images/master_slider__analysis.webp"
+          },
+          {
+            "title": "I Gain - konfiguracja Betaflight",
+            "index": "3.1",
+            "order": 9,
+            "slug": "i-gain-setup-betaflight",
+            "image": "/guide-images/i_gain__setup.webp"
+          },
+          {
+            "title": "Wyczyszczenie blackboxa",
+            "index": "3.2",
+            "order": 10,
+            "slug": "clear-blackbox"
+          },
+          {
+            "title": "Suwak feedforward - loty z logowaniem",
+            "index": "3.3",
+            "order": 11,
+            "slug": "feedforward-slider-log-flights",
+            "image": "/guide-images/feedforward__flights.webp"
+          },
+          {
+            "title": "Suwak feedforward - analiza",
+            "index": "3.4",
+            "order": 12,
+            "slug": "feedforward-slider-analysis"
+          },
+          {
+            "title": "Dynamic Idle",
+            "index": "4.1",
+            "order": 13,
+            "slug": "dynamic-idle",
+            "image": "/guide-images/dynamic_idle.webp"
+          }
+        ]
+      },
+      "filter-tuning": {
+        "title": "Poradnik strojenia filtrów",
+        "subtitle": "czy silniki powinny dymić?",
+        "description": "Wystrój filtry Betaflight, aby zredukować szumy przy zachowaniu niskich opóźnień. Brzmi skomplikowanie?\nWcale nie, ten poradnik krok po kroku jest przeznaczony dla początkujących — każdy da radę!",
+        "prerequisitesTitle": "Przygotowanie",
+        "prerequisites": [
+          "Twój FC ma blackbox",
+          "Wersja Betaflight to 4.3 lub nowsza (#1)",
+          "Urządzenie zapisu blackbox (Logging Device) jest ustawione poprawnie (#2)",
+          "Częstotliwość logowania jest ustawiona na 1 kHz lub wyżej (#3)",
+          "Blackbox Debug jest ustawiony na \"GYRO_SCALED\" (#4)",
+          "Pamięć flash blackboxa jest wyczyszczona / pusta / skasowana (#5)",
+          "Włącz Expert Mode (u góry po prawej, obok przycisku Disconnect)"
+        ],
+        "prerequisitesImage": "/guide-images/filter_tuning_prerequesites.webp",
+        "stepCount": 7,
+        "steps": [
+          {
+            "title": "Filtry gyro",
+            "index": "1",
+            "order": 1,
+            "slug": "gyro-filters",
+            "image": "/guide-images/filter_tuning_step_1.webp"
+          },
+          {
+            "title": "Latanie",
+            "index": "2",
+            "order": 2,
+            "slug": "flying"
+          },
+          {
+            "title": "Pobranie pliku logu",
+            "index": "3",
+            "order": 3,
+            "slug": "extract-logfile",
+            "image": "/guide-images/extract_logfile.webp"
+          },
+          {
+            "title": "RPM Filter - analiza",
+            "index": "4.1",
+            "order": 4,
+            "slug": "rpm-filters-analysis",
+            "image": "/guide-images/rpm_filters__analysis.webp"
+          },
+          {
+            "title": "RPM Filter - konfiguracja",
+            "index": "4.2",
+            "order": 5,
+            "slug": "rpm-filters-config",
+            "image": "/guide-images/rpm_filters__config.webp"
+          },
+          {
+            "title": "Filtr Dynamic Notch",
+            "index": "5",
+            "order": 6,
+            "slug": "dynamic-notch-filter",
+            "image": "/guide-images/dynamic_notch_filter.webp"
+          },
+          {
+            "title": "Filtr D-Term",
+            "index": "6",
+            "order": 7,
+            "slug": "d-term-filter",
+            "image": "/guide-images/dterm_filter.webp"
+          }
+        ]
+      }
+    }
+  }
+}

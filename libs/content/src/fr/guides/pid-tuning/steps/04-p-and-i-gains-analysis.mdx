@@ -1,0 +1,23 @@
+---
+title: "P & I Gains - Analyse"
+index: "1.4"
+order: 4
+slug: "p-and-i-gains-analysis"
+image: "/guide-images/pi_gains__analysis.webp"
+---
+
+Passons tes logs de vol dans l'analyseur pour découvrir quelles valeurs de slider ont donné la meilleure réponse.
+
+L'objectif est de trouver le vol / la courbe de réponse qui atteint le plus vite et le plus précisément la valeur 1, sans dépassement (overshoot) et sans trop "onduler" autour de la valeur 1.
+
+Regarde l'animation d'exemple jointe à cette étape pour voir à quoi ressemble une analyse.
+
+Nous voulons que le quad réponde rapidement (montée rapide du bas vers la ligne centrale) et précisément (pas d'overshoot / de wobbles), sans avoir besoin de se corriger ensuite.
+
+1. Charge ton fichier "btfl\_all.bbl" dans l'analyseur (gros bouton ci-dessous) et compare les vols (tu peux afficher/masquer chaque courbe de vol dans le graphique en cliquant sur son libellé dans la légende au-dessus du graphique)
+2. Trouve le vol qui se rapproche le plus de l'état recherché.
+3. Règle ton slider P & I Gains sur la valeur utilisée pendant ce vol et clique sur Save (tu trouveras la valeur dans la légende / le libellé du graphique)
+
+Tu as réglé tes P & I Gains avec succès.
+
+<BlackboxAnalyzer activePlots={["responseStrength"]} plotLabels={{"strength":{"template":"#{{logIndex}} (PI {{headerValue}})","headerField":"simplified_pi_gain"}}} />

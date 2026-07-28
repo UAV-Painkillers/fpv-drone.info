@@ -1,0 +1,40 @@
+---
+title: "Feedforward - Analyse"
+index: "3.4"
+order: 12
+slug: "feedforward-analyse"
+---
+
+Lass uns deine Flugprotokolle durch den Analysator jagen und herausfinden, welche Schiebereglerwerte zu den besten Reaktionen führten.
+
+Dieses Mal müssen wir eine andere Art von Analyse durchführen.
+
+Nun sehen wir pro Flug zwei Linien.
+
+Die eine wird als Setpoint und die andere als Gyro bezeichnet.
+
+Der Setpoint ist im Wesentlichen die Position, die die Drohne basierend auf deiner Knüppelposition haben sollte.
+
+Und der Gyro ist die tatsächliche Position der Drohne, die mit dem Gyroskop gemessen wird.
+
+Für die Abstimmung von Feedforward ist es wichtig, dass diese beiden Linien so identisch wie möglich sind. Wenn sie weiter auseinander liegen, bedeutet das, dass deine Drohne mehr Verzögerung hat und sich weniger präzise anfühlt.
+
+Bitte beachte:
+
+Das Diagramm enthält eine dritte Linie „feedforward“, die anzeigt, wie viel feedforward arbeitet, ignoriere sie einfach.
+
+Lade deine „btfl\_all.bbl“-Datei in den Analysator hoch (große Schaltfläche unten) und vergleiche die Flüge (du kannst die Sichtbarkeit jeder Fluglinie im Diagramm umschalten, indem du auf ihre Bezeichnung in der Legende oben im Diagramm klickst)
+
+Suche den Flug, der dem gewünschten Zustand am nächsten ist.
+
+Setze deinen Feedforward-Schieberegler auf den Wert, der während dieses Fluges verwendet wurde, und drücke auf Speichern (du findest den Wert in der Legende/Beschriftung des Diagramms)
+
+Du hast dein Feedforward erfolgreich eingestellt.
+
+<Callout tone="tldr" title="Tipp">
+
+Du kannst einfach in das Diagramm hineinzoomen, indem du auf das Symbol oben rechts klickst, das wie ein Quadrat mit einem Plus in der oberen linken Ecke aussieht, und dann einen Bereich von Interesse im Diagramm auswählst.
+
+</Callout>
+
+<BlackboxAnalyzer activePlots={["responseTrace"]} navigation={["showActiveAxisSelection"]} plotLabels={{"strength":{"template":"#{{logIndex}} (FF {{headerValue}})","headerField":"simplified_feedforward_gain"}}} />

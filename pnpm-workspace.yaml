@@ -1,0 +1,10 @@
+packages:
+  - 'apps/*'
+  - 'libs/*'
+onlyBuiltDependencies:
+  - nx
+  - "@swc/core"
+  - esbuild
+  - "@tailwindcss/oxide"
+  - "@resvg/resvg-js"
+  - sharp

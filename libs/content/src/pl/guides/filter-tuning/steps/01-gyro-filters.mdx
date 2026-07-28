@@ -1,0 +1,21 @@
+---
+title: "Filtry gyro"
+index: "1"
+order: 1
+slug: "gyro-filters"
+image: "/guide-images/filter_tuning_step_1.webp"
+---
+
+Zacznijmy od skonfigurowania podstaw.
+
+Podłącz drona do Betaflight i przejdź do zakładki "PID Tuning".
+
+W zakładce "PID Tuning" (#1) zobaczysz pasek z trzema zakładkami — otwórz zakładkę "Filter Settings" (#2).
+
+Teraz zastosuj następujące ustawienia
+
+1. Wyłącz "Gyro Lowpass 1" (#3)
+2. Jeśli twoja "Gyro update frequency" jest taka sama jak "PID loop frequency" (znajdziesz je w zakładce "Configuration"), wyłącz również "Gyro Lowpass 2" (#4)
+3. Jeśli twoja "Gyro update frequency" NIE jest taka sama jak "PID loop frequency", przesuń suwak "Gyro Filter Multiplier" (#5) na maksimum, czyli 2.0
+
+Jeśli nie masz pewności, co zrobić, spójrz na załączony obrazek, który pokazuje, gdzie znaleźć wszystkie pola i informacje.

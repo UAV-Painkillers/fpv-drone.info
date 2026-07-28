@@ -1,0 +1,41 @@
+{
+  "name": "@fpv/web",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "nx": {
+    "projectType": "application",
+    "tags": [
+      "scope:app"
+    ]
+  },
+  "dependencies": {
+    "@fontsource-variable/montserrat": "^5.2.8",
+    "@fpv/analyzer": "workspace:*",
+    "@fpv/content": "workspace:*",
+    "@fpv/i18n": "workspace:*",
+    "@fpv/plots": "workspace:*",
+    "@fpv/pwa": "workspace:*",
+    "@fpv/ui": "workspace:*",
+    "@mdx-js/react": "^3.1.1",
+    "@tanstack/react-router": "^1.170.17",
+    "@tanstack/react-start": "^1.168.27",
+    "clsx": "^2.1.1",
+    "radix-ui": "^1.6.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "workbox-core": "^7.4.1",
+    "workbox-precaching": "^7.4.1",
+    "workbox-routing": "^7.4.1",
+    "workbox-strategies": "^7.4.1"
+  },
+  "devDependencies": {
+    "@mdx-js/rollup": "^3.1.1",
+    "@tailwindcss/vite": "^4.3.2",
+    "@vitejs/plugin-react": "^6.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx-frontmatter": "^5.2.0",
+    "tailwindcss": "^4.3.2"
+  }
+}

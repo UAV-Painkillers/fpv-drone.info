@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "lib": ["es2022"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2022",
+    "paths": {
+      // the package's exports map has no "types" condition, so point TS at
+      // its shipped declarations directly (runtime resolution is unaffected)
+      "@uav.painkillers/pid-analyzer-wasm": [
+        "./libs/analyzer/node_modules/@uav.painkillers/pid-analyzer-wasm/dist/types/index.d.ts"
+      ]
+    }
+  }
+}
