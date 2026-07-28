@@ -38,6 +38,17 @@ for (const locale of LOCALES) {
       steps.push(data);
     }
     steps.sort((a, b) => (a as { order: number }).order - (b as { order: number }).order);
+
+    // Steps are addressed by slug in the URL, so a duplicate slug makes the
+    // later step unreachable and sends the wizard back to the earlier one.
+    const slugs = steps.map((s) => (s as { slug: string }).slug);
+    const duplicates = [...new Set(slugs.filter((s, i) => slugs.indexOf(s) !== i))];
+    if (duplicates.length) {
+      throw new Error(
+        `Duplicate step slugs in ${locale}/${guide}: ${duplicates.join(', ')}`,
+      );
+    }
+
     guides[guide] = { ...guideMeta, stepCount: steps.length, steps };
   }
 

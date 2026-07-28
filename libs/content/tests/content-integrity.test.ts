@@ -70,6 +70,13 @@ describe('content integrity', () => {
       expect(guideManifest.steps.map((s) => s.order)).toEqual(
         guideManifest.steps.map((_, i) => i + 1),
       );
+
+      // slugs address a step in the URL, so duplicates would make the later
+      // step unreachable and bounce the wizard back to the earlier one
+      const slugs = guideManifest.steps.map((s) => s.slug);
+      expect(slugs, `${locale}/${guide} has duplicate step slugs`).toEqual([
+        ...new Set(slugs),
+      ]);
     }
   });
 
