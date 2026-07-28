@@ -9,6 +9,8 @@ export default defineConfig({
   testDir: './src',
   outputDir: './test-output',
   fullyParallel: true,
+  forbidOnly: !!process.env['CI'],
+  retries: process.env['CI'] ? 1 : 0,
   reporter: [['list']],
   use: {
     baseURL: `http://localhost:${PORT}`,
@@ -17,8 +19,8 @@ export default defineConfig({
   webServer: {
     command: `node ../../tools/scripts/serve-static.mjs ${PORT} ../../apps/web/dist/client`,
     url: `http://localhost:${PORT}/en/`,
-    reuseExistingServer: true,
-    timeout: 30_000,
+    reuseExistingServer: !process.env['CI'],
+    timeout: 60_000,
   },
   projects: [
     {
