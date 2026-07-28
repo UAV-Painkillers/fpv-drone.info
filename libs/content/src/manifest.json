@@ -77,7 +77,7 @@
             "title": "Extract Logfile",
             "index": "2.3",
             "order": 7,
-            "slug": "extract-logfile",
+            "slug": "extract-logfile-2",
             "image": "/guide-images/extract_logfile.webp"
           },
           {
@@ -98,7 +98,7 @@
             "title": "Clear Blackbox",
             "index": "3.2",
             "order": 10,
-            "slug": "clear-blackbox"
+            "slug": "clear-blackbox-2"
           },
           {
             "title": "Feedforward Slider - Log flights",
@@ -269,7 +269,7 @@
             "title": "Logdatei extrahieren",
             "index": "2.3",
             "order": 7,
-            "slug": "logdatei-extrahieren",
+            "slug": "logdatei-extrahieren-2",
             "image": "/guide-images/extract_logfile.webp"
           },
           {
@@ -290,7 +290,7 @@
             "title": "Clear Blackbox",
             "index": "3.2",
             "order": 10,
-            "slug": "clear-blackbox"
+            "slug": "clear-blackbox-2"
           },
           {
             "title": "Feedforward - Flüge",
@@ -461,7 +461,7 @@
             "title": "Extraer el log",
             "index": "2.3",
             "order": 7,
-            "slug": "extract-logfile",
+            "slug": "extract-logfile-2",
             "image": "/guide-images/extract_logfile.webp"
           },
           {
@@ -482,7 +482,7 @@
             "title": "Borrar la blackbox",
             "index": "3.2",
             "order": 10,
-            "slug": "clear-blackbox"
+            "slug": "clear-blackbox-2"
           },
           {
             "title": "Slider de feedforward - Registrar vuelos",
@@ -653,7 +653,7 @@
             "title": "Extraire le fichier de log",
             "index": "2.3",
             "order": 7,
-            "slug": "extract-logfile",
+            "slug": "extract-logfile-2",
             "image": "/guide-images/extract_logfile.webp"
           },
           {
@@ -674,7 +674,7 @@
             "title": "Effacer la blackbox",
             "index": "3.2",
             "order": 10,
-            "slug": "clear-blackbox"
+            "slug": "clear-blackbox-2"
           },
           {
             "title": "Slider feedforward - Enregistrer des vols",
@@ -845,7 +845,7 @@
             "title": "Pobranie pliku logu",
             "index": "2.3",
             "order": 7,
-            "slug": "extract-logfile",
+            "slug": "extract-logfile-2",
             "image": "/guide-images/extract_logfile.webp"
           },
           {
@@ -866,7 +866,7 @@
             "title": "Wyczyszczenie blackboxa",
             "index": "3.2",
             "order": 10,
-            "slug": "clear-blackbox"
+            "slug": "clear-blackbox-2"
           },
           {
             "title": "Suwak feedforward - loty z logowaniem",
