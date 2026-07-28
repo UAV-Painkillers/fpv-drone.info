@@ -71,6 +71,9 @@ const { count, size, warnings } = await injectManifest({
     'analyzer-deps-manifest.json',
     'mock-data.json.gz',
     'sw.js',
+    // legacy kill switch: must always be fetched from the network, never
+    // served out of the precache
+    'service-worker.js',
     'pwa/html_code.html',
   ],
   maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,

@@ -21,12 +21,41 @@ function getChannel(): BroadcastChannel | null {
   return new BroadcastChannel('service-worker');
 }
 
+const SW_URL = '/sw.js';
+
+function scriptUrlOf(registration: ServiceWorkerRegistration): string | null {
+  const worker =
+    registration.active ?? registration.waiting ?? registration.installing;
+  return worker ? new URL(worker.scriptURL).pathname : null;
+}
+
+/**
+ * The pre-rewrite site registered its worker at /service-worker.js. Such a
+ * registration outlives a redeploy, so drop anything that is not the current
+ * worker before registering — otherwise a stale worker keeps serving its own
+ * precached copy of the app.
+ */
+async function unregisterStaleWorkers() {
+  const registrations = await navigator.serviceWorker.getRegistrations();
+  await Promise.all(
+    registrations
+      .filter((registration) => {
+        const script = scriptUrlOf(registration);
+        return script !== null && script !== SW_URL;
+      })
+      .map((registration) => registration.unregister()),
+  );
+}
+
 export function registerServiceWorker() {
   if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return;
   if (!import.meta.env.PROD) return;
-  navigator.serviceWorker.register('/sw.js').catch((e) => {
-    console.warn('Service worker registration failed', e);
-  });
+  void unregisterStaleWorkers()
+    .catch(() => undefined)
+    .then(() => navigator.serviceWorker.register(SW_URL))
+    .catch((e) => {
+      console.warn('Service worker registration failed', e);
+    });
 }
 
 export async function isServiceWorkerActive(): Promise<boolean> {
