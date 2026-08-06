@@ -78,7 +78,8 @@ directly.
 Vercel builds via `vercel.json` (install → build → SW → SEO) and serves
 `apps/web/dist/client` as a static site, including permanent redirects for
 all legacy URLs. The only runtime configuration is the optional
-`VITE_MATOMO_HOST` for self-hosted, ad-free analytics.
+`VITE_UMAMI_HOST` / `VITE_UMAMI_WEBSITE_ID` pair for self-hosted, cookieless,
+ad-free analytics.
 
 ## Credits
 
