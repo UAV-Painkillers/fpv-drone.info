@@ -6,7 +6,6 @@
 **/test-output
 apps/web/public/pid-analyzer-dependencies
 apps/web/public/mock-data.json.gz
-apps/web/public/matomo.js
 **/routeTree.gen.ts
 i18n-stories
 pnpm-lock.yaml
